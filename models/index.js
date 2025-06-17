@@ -5,38 +5,30 @@ const process = require("process");
 const fs = require("fs");
 
 const basename = path.basename(__filename);
-const env = process.env.NODE_ENV || "development";
+const env = process.env.NODE_ENV || "development"; // Mantener env para logging o condicionales si los necesitas
 
 // --- ¡MODIFICACIÓN CLAVE AQUÍ! ---
-// Asegurarse de que el config.json se lea correctamente, incluso en producción
-let configPath = path.resolve(__dirname, "..", "config", "config.json");
-let config;
-try {
-  config = require(configPath)[env];
-} catch (e) {
-  console.error(
-    `Error al cargar la configuración desde ${configPath} para el entorno ${env}:`,
-    e
-  );
-  // Fallback o lanzar un error crítico si la configuración es esencial
-  throw new Error(
-    `Fallo crítico: No se pudo cargar la configuración de la base de datos para el entorno ${env}.`
-  );
-}
-// --- FIN MODIFICACIÓN ---
-
+// Eliminar la carga de config.json y usar DATABASE_URL directamente.
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  // Usar config.database, config.username, etc. directamente del objeto config
-  sequelize = new Sequelize(config.database, config.username, config.password, {
-    host: config.host,
-    port: config.port,
-    dialect: config.dialect,
-    logging: false, // Puedes cambiar a console.log para ver las consultas SQL
-  });
+// Asumimos que DATABASE_URL siempre estará disponible en Heroku.
+// La DATABASE_URL ya contiene dialecto, usuario, pass, host, puerto, dbname.
+if (!process.env.DATABASE_URL) {
+  throw new Error(
+    "Fallo crítico: La variable de entorno DATABASE_URL no está definida."
+  );
 }
+
+sequelize = new Sequelize(process.env.DATABASE_URL, {
+  dialect: "postgres", // Especificar directamente el dialecto para mayor claridad
+  logging: false, // Puedes cambiar a console.log para ver las consultas SQL
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // Para Heroku PostgreSQL
+    },
+  },
+});
+// --- FIN MODIFICACIÓN ---
 
 const db = {};
 

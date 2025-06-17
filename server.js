@@ -1,18 +1,15 @@
 // backend/server.js
 
 // 1. Cargar variables de entorno al inicio y depurar su carga
-if (process.env.NODE_ENV !== "production") {
-  const dotenv = require("dotenv");
-  const result = dotenv.config();
 
-  if (result.error) {
-    console.error("Error al cargar .env:", result.error);
-  } else {
-    console.log(
-      "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
-    );
-  }
+if (result.error) {
+  console.error("Error al cargar .env:", result.error);
+} else {
+  console.log(
+    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+  );
 }
+
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
