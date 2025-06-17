@@ -1,7 +1,7 @@
 // backend/server.js
 
 // 1. Cargar variables de entorno al inicio y depurar su carga
-
+const result = require("dotenv").config();
 if (result.error) {
   console.error("Error al cargar .env:", result.error);
 } else {
