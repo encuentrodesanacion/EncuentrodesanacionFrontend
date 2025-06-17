@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",                          // Especifica el objetivo para la compilación.
+    "useDefineForClassFields": true,              // Permite el uso de `define` para campos de clase.
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],     // Librerías utilizadas por el proyecto.
+    "module": "ESNext",                           // Utiliza módulos de la especificación ESNext.
+    "skipLibCheck": true,                         // Omite la comprobación de tipos en las bibliotecas.
+
+    /* Bundler mode */
+    "moduleResolution": "bundler",                // Resolución de módulos optimizada para bundlers.
+    "isolatedModules": true,                      // Asegura que cada archivo se pueda compilar de forma aislada.
+    "moduleDetection": "force",                   // Fuerza la detección de módulos.
+
+    /* Linting */
+    "strict": true,                               // Habilita todas las comprobaciones estrictas.
+    "noUnusedLocals": true,                       // Reporta variables locales no utilizadas.
+    "noUnusedParameters": true,                   // Reporta parámetros no utilizados en funciones.
+    "noFallthroughCasesInSwitch": true,           // Asegura que no haya fallos de casos en switch.
+
+    /* React JSX */
+    "jsx": "react-jsx",                          // Usar la nueva transformación JSX de React.
+
+    /* Configuración de proyectos compuestos */
+    "composite": true                             // Habilita la compatibilidad con proyectos compuestos.
+  },
+  "include": ["src"],                             // Incluye todos los archivos dentro de la carpeta src.
+  "references": []                                // El archivo tsconfig.app.json no necesita referencias adicionales por ahora.
+}

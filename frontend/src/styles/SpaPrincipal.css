@@ -1,0 +1,59 @@
+/* Fondo oscuro semitransparente para el modal */
+.modal-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 40;
+}
+
+/* Contenedor del modal centrado */
+.reserva-fecha-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 50;
+  background-color: white;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+.react-datepicker {
+  z-index: 9999 !important;
+}
+
+.react-datepicker__header {
+  background-color: #f3f4f6; /* Gris claro */
+}
+
+.react-datepicker__day--selected {
+  background-color: #ec4899 !important; /* Rosa fuerte */
+  color: white;
+}
+
+.react-datepicker__day--keyboard-selected {
+  background-color: #f9a8d4 !important; /* Rosa claro */
+}
+
+@keyframes fade-in-out {
+  0%,
+  100% {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  10%,
+  90% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-out {
+  animation: fade-in-out 3s ease-in-out;
+}

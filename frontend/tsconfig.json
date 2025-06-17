@@ -1,0 +1,33 @@
+{
+  "compilerOptions": {
+    "target": "ES2022", // Especifica el objetivo para la compilación.
+    "lib": ["ES2023"], // Librerías que se usarán.
+    "module": "ESNext", // Módulo de exportación.
+    "skipLibCheck": true, // Omite la comprobación de tipos de las bibliotecas.
+
+    /* Bundler mode */
+    "moduleResolution": "bundler", // Resolución de módulos según el bundler.
+    "allowImportingTsExtensions": true, // Permite importar extensiones .ts.
+    "isolatedModules": true, // Asegura que cada archivo se pueda compilar de forma aislada.
+    "moduleDetection": "force", // Detecta módulos de manera forzada.
+
+    /* Linting */
+    "strict": true, // Habilita todas las comprobaciones estrictas.
+    "noUnusedLocals": true, // Reporta variables locales no utilizadas.
+    "noUnusedParameters": true, // Reporta parámetros no utilizados en funciones.
+    "noFallthroughCasesInSwitch": true, // Asegura que no hay fallos de casos en switch.
+
+    /* Configuración para proyectos compuestos */
+    "composite": true, // Habilita la compatibilidad con proyectos compuestos.
+
+    /* Solo emite archivos de declaración (sin archivos .js) */
+    "emitDeclarationOnly": true
+  },
+  "include": ["vite.config.ts"], // Incluye el archivo de configuración de Vite.
+  "references": [
+    // Referencias a otros proyectos si es necesario.
+    {
+      "path": "./tsconfig.app.json"
+    }
+  ]
+}
