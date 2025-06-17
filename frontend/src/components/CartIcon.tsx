@@ -3,7 +3,7 @@ import { useCart } from "../pages/CartContext";
 import { ShoppingCart } from "lucide-react";
 
 const API_BASE_URL = (
-  process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"
+  import.meta.env.VITE_APP_BACKEND_URL || "http://localhost:3000"
 ).replace(/\/+$/, "");
 const CartIcon = () => {
   const { cart, removeFromCart } = useCart(); // ¡clearCart aún lo necesitamos aquí para desestructurar!
