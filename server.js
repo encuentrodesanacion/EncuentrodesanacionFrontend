@@ -1,44 +1,35 @@
-// backend/server.js
-
 // 1. Cargar variables de entorno al inicio y depurar su carga
-// --- BLOQUE DOTENV.CONFIG() SOLO PARA DESARROLLO ---
+// --- ¡ESTE BLOQUE DEBE ESTAR ASÍ! ---
 if (process.env.NODE_ENV !== "production") {
-  const dotenv = require("dotenv");
-  const result = dotenv.config();
-
-  if (result.error) {
-    console.error("Error al cargar .env:", result.error);
-  } else {
-    console.log(
-      ".env cargado correctamente. Variables cargadas:",
-      result.parsed
-    );
-  }
+  // Solo cargar dotenv en desarrollo
+  require("dotenv").config();
+  console.log(".env cargado correctamente (solo en desarrollo)."); // Log para desarrollo
 } else {
+  // Este log solo aparece en producción. Las variables ya vienen de Heroku Config Vars.
   console.log(
     "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
   );
 }
-// --- FIN BLOQUE DOTENV.CONFIG() ---
+// --- FIN DEL BLOQUE CONDICIONAL DOTENV ---
 
-// --- DECLARACIONES GLOBALES (SIEMPRE AFUERA DEL IF/ELSE) ---
+// --- TODAS LAS IMPORTACIONES Y DECLARACIONES DE EXPRESS Y LA APLICACIÓN DEBEN ESTAR AQUÍ ---
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-const app = express(); // La aplicación Express
+const app = express(); // LA APLICACIÓN EXPRESS SIEMPRE SE DEFINE
 
 // --- Importaciones de Modelos de Base de Datos ---
-const db = require("./models");
+const db = require("./models"); // DB SIEMPRE SE IMPORTA
 
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
-const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
+const googleAuthRoutes = require("./routes/googleAuth"); // ESTA RUTA DEBE ESTAR FUERA DE CONDICIONALES
 
 // --- Middlewares Globales ---
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_PROD], // Lee de Config Vars en prod
+    origin: [process.env.FRONTEND_URL_PROD],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -49,7 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // --- Rutas de la API ---
 app.use("/api/webpay", webpayRoutes);
-app.use("/", googleAuthRoutes);
+app.use("/", googleAuthRoutes); // Asegúrate de que este archivo no tenga problemas internos
 
 app.post("/api/enviar-reserva", (req, res) => {
   console.log("Reserva recibida:", req.body);
@@ -127,13 +118,10 @@ app.post("/api/terapeutas", async (req, res) => {
 });
 
 // --- Sincronizar base de datos e iniciar servidor ---
-// --- Sincronizar base de datos e iniciar servidor ---
 db.sequelize
-  .sync({ alter: true }) // <--- ¡TEMPORALMENTE USA FORCE: TRUE PARA BORRAR Y RECREAR TODO!
+  .sync({ alter: true }) // Mantenemos alter: true para producción
   .then(async () => {
-    // <--- Haz la función THEN async
     console.log("Base de datos actualizada correctamente");
-
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
       console.log(`Servidor escuchando en puerto ${PORT}`)
