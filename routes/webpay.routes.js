@@ -1,7 +1,6 @@
-// backend/routes/webpay.routes.js
 const express = require("express");
 const router = express.Router();
-const webpayController = require("../controllers/webpayController");
+const webpayController = require("../controllers/webpayController"); // Asegúrate de que la ruta sea correcta
 
 // Ruta POST para iniciar la transacción de Webpay
 router.post("/", webpayController.crearTransaccionInicial);

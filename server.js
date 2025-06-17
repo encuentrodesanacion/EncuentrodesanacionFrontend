@@ -33,7 +33,7 @@ app.use(
       "process.env.FRONTEND_URL_PROD",
       "https://encuentrodesanacion.com",
       "http://localhost:3000",
-    ], // 'https://www.encuentrodesanacion.com'
+    ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
