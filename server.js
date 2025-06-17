@@ -1,6 +1,7 @@
 // backend/server.js
 
 // 1. Cargar variables de entorno al inicio y depurar su carga
+// --- BLOQUE DOTENV.CONFIG() SOLO PARA DESARROLLO ---
 if (process.env.NODE_ENV !== "production") {
   const dotenv = require("dotenv");
   const result = dotenv.config();
@@ -9,31 +10,35 @@ if (process.env.NODE_ENV !== "production") {
     console.error("Error al cargar .env:", result.error);
   } else {
     console.log(
-      "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+      ".env cargado correctamente. Variables cargadas:",
+      result.parsed
     );
   }
+} else {
+  console.log(
+    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+  );
 }
+// --- FIN BLOQUE DOTENV.CONFIG() ---
+
+// --- DECLARACIONES GLOBALES (SIEMPRE AFUERA DEL IF/ELSE) ---
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
 
-const app = express();
+const app = express(); // La aplicación Express
 
 // --- Importaciones de Modelos de Base de Datos ---
-// ¡Importa SOLO el objeto 'db' que ya contiene todos tus modelos inicializados!
 const db = require("./models");
 
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
-
-// **ATENCIÓN:** Revisa la ruta de googleAuth. Si está en 'backend/models/Routes/googleAuth', es inusual.
-// Normalmente las rutas están en 'backend/routes/'.
-const googleAuthRoutes = require("./routes/googleAuth");
+const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
 
 // --- Middlewares Globales ---
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_PROD],
+    origin: [process.env.FRONTEND_URL_PROD], // Lee de Config Vars en prod
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
