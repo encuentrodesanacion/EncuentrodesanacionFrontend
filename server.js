@@ -19,26 +19,45 @@ const app = express(); // Inicialización de Express
 // Importaciones de Modelos de Base de Datos y Rutas
 const db = require("./models");
 const webpayRoutes = require("./routes/webpay.routes");
-const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
+const googleAuthRoutes = require("./routes/googleAuth");
 
-// --- ¡ORDEN DE MIDDLEWARES CRÍTICO PARA CORS! ---
-// 1. Middlewares para parsear el cuerpo de la solicitud (Express.json y urlencoded)
+// --- ¡ORDEN DE MIDDLEWARES Y RUTAS - CRÍTICO PARA EL 404! ---
+
+// 1. Middlewares para parsear el cuerpo de la solicitud (JSON y URL-encoded)
+//    Estos deben ir PRIMERO en los app.use()
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
+//    Este es el punto más importante para las cabeceras CORS
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_PROD],
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
+    origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
+    allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
+    credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
   })
 );
 
-// 3. Rutas de la API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
-app.use("/api/webpay", webpayRoutes);
-app.use("/", googleAuthRoutes);
+// 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
+//    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
+app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
+app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
+
+// --- ¡IMPORTANTE! Manejador de 404 (OPCIONAL, pero ayuda a debuggear) ---
+// Si la solicitud llega hasta aquí, significa que ninguna ruta anterior la manejó.
+app.use((req, res, next) => {
+  console.error(`404 Not Found for: ${req.method} ${req.originalUrl}`);
+  res.status(404).json({ message: "Recurso no encontrado" });
+});
+
+// Manejador de errores global (OPCIONAL)
+app.use((err, req, res, next) => {
+  console.error("Unhandled Error:", err.stack);
+  res
+    .status(500)
+    .json({ message: "Error interno del servidor", error: err.message });
+});
 
 app.post("/api/enviar-reserva", (req, res) => {
   console.log("Reserva recibida:", req.body);
