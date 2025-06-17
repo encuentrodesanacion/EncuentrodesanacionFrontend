@@ -11,8 +11,9 @@ const WebpayReturnPage: React.FC = () => {
   // const API_BASE_URL =
   //   process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"; // Usa la variable de entorno o localhost como fallback
   // Si usas Vite, sería:
-  const API_BASE_URL =
-    import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+  const API_BASE_URL = (
+    process.env.REACT_APP_BACKEND_URL || "http://localhost:3000"
+  ).replace(/\/+$/, "");
   // --- FIN Definición URL base ---
 
   useEffect(() => {
