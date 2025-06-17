@@ -29,9 +29,23 @@ const googleAuthRoutes = require("./routes/googleAuth"); // ESTA RUTA DEBE ESTAR
 // --- Middlewares Globales ---
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_PROD],
+    origin: function (origin, callback) {
+      const allowedOrigins = [
+        "http://localhost:5173", // Para desarrollo local
+        "https://www.encuentrodesanacion.com", // Tu dominio de producción
+        process.env.FRONTEND_URL_PROD, // Si lo pasas por variable de entorno, asegúrate de que sea una de las anteriores
+      ];
+      // Si el origen de la solicitud está en nuestra lista de permitidos
+      if (allowedOrigins.includes(origin) || !origin) {
+        // !origin permite solicitudes del mismo origen (ej. Postman, o si no hay Origin header)
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"), false);
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true, // Importante si envías cookies o cabeceras de autorización
   })
 );
 
