@@ -1,47 +1,44 @@
-// 1. Cargar variables de entorno al inicio y depurar su carga
-// --- ¡ESTE BLOQUE DEBE ESTAR ASÍ! ---
+// backend/server.js
+
+// Carga de variables de entorno (solo en desarrollo)
 if (process.env.NODE_ENV !== "production") {
-  // Solo cargar dotenv en desarrollo
   require("dotenv").config();
-  console.log(".env cargado correctamente (solo en desarrollo)."); // Log para desarrollo
 } else {
-  // Este log solo aparece en producción. Las variables ya vienen de Heroku Config Vars.
   console.log(
     "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
   );
 }
-// --- FIN DEL BLOQUE CONDICIONAL DOTENV ---
 
-// --- TODAS LAS IMPORTACIONES Y DECLARACIONES DE EXPRESS Y LA APLICACIÓN DEBEN ESTAR AQUÍ ---
+// Dependencias principales
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
+const path = require("path"); // Aunque path no se usa directamente en esta parte, se mantiene
 
-const app = express(); // LA APLICACIÓN EXPRESS SIEMPRE SE DEFINE
+const app = express(); // Inicialización de Express
 
-// --- Importaciones de Modelos de Base de Datos ---
-const db = require("./models"); // DB SIEMPRE SE IMPORTA
-
-// --- Importaciones de Rutas ---
+// Importaciones de Modelos de Base de Datos y Rutas
+const db = require("./models");
 const webpayRoutes = require("./routes/webpay.routes");
-const googleAuthRoutes = require("./routes/googleAuth"); // ESTA RUTA DEBE ESTAR FUERA DE CONDICIONALES
+const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
 
-// --- Middlewares Globales ---
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL_PROD, // <-- ¡SIMPLIFICADO AQUÍ!
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true, // Importante si envías cookies o cabeceras de autorización
-  })
-);
-
+// --- ¡ORDEN DE MIDDLEWARES CRÍTICO PARA CORS! ---
+// 1. Middlewares para parsear el cuerpo de la solicitud (Express.json y urlencoded)
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// --- Rutas de la API ---
+// 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// 3. Rutas de la API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 app.use("/api/webpay", webpayRoutes);
-app.use("/", googleAuthRoutes); // Asegúrate de que este archivo no tenga problemas internos
+app.use("/", googleAuthRoutes);
 
 app.post("/api/enviar-reserva", (req, res) => {
   console.log("Reserva recibida:", req.body);
@@ -118,9 +115,9 @@ app.post("/api/terapeutas", async (req, res) => {
   }
 });
 
-// --- Sincronizar base de datos e iniciar servidor ---
+// Sincronización de DB e inicio del servidor
 db.sequelize
-  .sync({ alter: true }) // Mantenemos alter: true para producción
+  .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente");
     const PORT = process.env.PORT || 3000;

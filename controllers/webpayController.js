@@ -200,22 +200,30 @@ const crearTransaccionInicial = async (req, res) => {
       returnUrl
     );
 
-    // Asegurarse de que 'reservas' se guarde como JSON en la base de datos si el tipo de columna es TEXT/STRING
-    await TemporalReserva.create({
-      token: response.token,
-      reservas: JSON.stringify(reservas), // Guardar como string JSON
-      montoTotal: monto,
-      clienteId: reservas[0]?.telefonoCliente || null, // Asumiendo que el clienteId es el teléfono del primer item
-    });
+    // Si no hay token de Transbank, el error ya se maneja aquí.
+    if (!response || !response.token) {
+      console.error(
+        "Error de Transbank: No se recibió un token válido en la respuesta 'create'.",
+        response
+      );
+      return res.status(500).json({
+        error:
+          "Error al iniciar el pago con Transbank: No se obtuvo un token de transacción válido.",
+        details: response,
+      });
+    }
 
+    // --- ¡CRÍTICO! Esta es la respuesta final que debería llevar las cabeceras CORS ---
     res.json({
       url: response.url,
       token: response.token,
     });
   } catch (error) {
+    // Si hay un error aquí, tu middleware de error global (si lo tienes) o Express
+    // podría estar enviando una respuesta sin las cabeceras CORS.
     console.error("Error al crear transacción inicial Webpay:", error);
+    // Asegúrate de que cada branch de este catch también envíe una respuesta (res.status().json() o res.redirect())
     if (error.constructor && error.constructor.name === "TransbankError") {
-      console.error("Detalles del error de Transbank:", error.message);
       res.status(500).json({
         mensaje: "Error de configuración o credenciales con Transbank.",
         error: error.message,
