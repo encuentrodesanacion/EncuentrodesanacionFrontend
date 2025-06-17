@@ -29,11 +29,7 @@ app.use(express.urlencoded({ extended: true }));
 // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
 app.use(
   cors({
-    origin: [
-      "process.env.FRONTEND_URL_PROD",
-      "https://encuentrodesanacion.com",
-      "http://localhost:3000",
-    ],
+    origin: [process.env.FRONTEND_URL_PROD],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
