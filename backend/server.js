@@ -1,6 +1,7 @@
 // backend/server.js
 
 // 1. Cargar variables de entorno al inicio y depurar su carga
+if (process.env.NODE_ENV !== "production");
 const dotenv = require("dotenv");
 const result = dotenv.config();
 

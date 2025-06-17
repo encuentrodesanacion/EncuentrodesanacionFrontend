@@ -6,23 +6,35 @@ const fs = require("fs");
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+
+// --- ¡MODIFICACIÓN CLAVE AQUÍ! ---
+// Asegurarse de que el config.json se lea correctamente, incluso en producción
+let configPath = path.resolve(__dirname, "..", "config", "config.json");
+let config;
+try {
+  config = require(configPath)[env];
+} catch (e) {
+  console.error(
+    `Error al cargar la configuración desde ${configPath} para el entorno ${env}:`,
+    e
+  );
+  // Fallback o lanzar un error crítico si la configuración es esencial
+  throw new Error(
+    `Fallo crítico: No se pudo cargar la configuración de la base de datos para el entorno ${env}.`
+  );
+}
+// --- FIN MODIFICACIÓN ---
 
 let sequelize;
-// Si config.json tiene la clave "use_env_variable", Sequelize la usará para la conexión.
-// De lo contrario, usará las propiedades 'database', 'username', etc. directamente de 'config'.
 if (config.use_env_variable) {
-  // Cuando config.json incluye "use_env_variable", Sequelize busca la variable de entorno
-  // con el nombre especificado (ej., "DATABASE_URL") y la usa para la conexión.
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  // Si config.json no usa "use_env_variable", entonces se esperan las propiedades
-  // 'database', 'username', 'password', 'host', 'port', 'dialect' directamente.
+  // Usar config.database, config.username, etc. directamente del objeto config
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     port: config.port,
     dialect: config.dialect,
-    logging: console.log, // Habilitar logging para ver las consultas SQL
+    logging: false, // Puedes cambiar a console.log para ver las consultas SQL
   });
 }
 
