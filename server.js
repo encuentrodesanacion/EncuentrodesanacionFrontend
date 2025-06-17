@@ -30,7 +30,7 @@ const googleAuthRoutes = require("./routes/googleAuth"); // ESTA RUTA DEBE ESTAR
 app.use(
   cors({
     origin: process.env.FRONTEND_URL_PROD, // <-- ¡SIMPLIFICADO AQUÍ!
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true, // Importante si envías cookies o cabeceras de autorización
   })
