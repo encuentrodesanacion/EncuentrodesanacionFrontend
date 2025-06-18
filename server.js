@@ -54,7 +54,7 @@ app.use(
 // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
 app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
-app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
+// app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
 app.all("*", (req, res) => {
   console.warn(
@@ -67,15 +67,15 @@ app.all("*", (req, res) => {
     .send("Ruta no encontrada por la aplicación. Debugging en curso.");
 });
 // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
-// app.use((req, res, next) => {
-//   console.error(
-//     `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
-//   );
-//   res.status(404).json({
-//     message:
-//       "Recurso no encontrado. La ruta no existe o el método no está permitido.",
-//   });
-// });
+app.use((req, res, next) => {
+  console.error(
+    `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+  );
+  res.status(404).json({
+    message:
+      "Recurso no encontrado. La ruta no existe o el método no está permitido.",
+  });
+});
 // /// Manejador de errores global
 app.use((err, req, res, next) => {
   console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
@@ -84,80 +84,80 @@ app.use((err, req, res, next) => {
     .json({ message: "Error interno del servidor", error: err.message });
 });
 
-app.post("/api/enviar-reserva", (req, res) => {
-  console.log("Reserva recibida:", req.body);
-  res.status(200).send("Reserva recibida correctamente");
-});
+// app.post("/api/enviar-reserva", (req, res) => {
+//   console.log("Reserva recibida:", req.body);
+//   res.status(200).send("Reserva recibida correctamente");
+// });
 
 // Crear reserva autenticada (ejemplo de ruta directa)
-app.post("/api/reservar", async (req, res) => {
-  try {
-    const { fechaInicio, fechaFin, usuarioId, servicio } = req.body;
+// app.post("/api/reservar", async (req, res) => {
+//   try {
+//     const { fechaInicio, fechaFin, usuarioId, servicio } = req.body;
 
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
-    const reservaExistente = await db.Reserva.findOne({
-      where: { fechaInicio, fechaFin, estado: "reservado" },
-    });
+// --- ACCESO CORREGIDO AL MODELO RESERVA ---
+// const reservaExistente = await db.Reserva.findOne({
+//   where: { fechaInicio, fechaFin, estado: "reservado" },
+// });
 
-    if (reservaExistente) {
-      return res
-        .status(400)
-        .json({ mensaje: "Ese horario ya está reservado." });
-    }
+// if (reservaExistente) {
+//   return res
+//     .status(400)
+//     .json({ mensaje: "Ese horario ya está reservado." });
+// }
 
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
-    await db.Reserva.create({
-      usuarioId,
-      servicio,
-      fechaInicio,
-      fechaFin,
-      estado: "reservado",
-    });
+// --- ACCESO CORREGIDO AL MODELO RESERVA ---
+// await db.Reserva.create({
+//   usuarioId,
+//   servicio,
+//   fechaInicio,
+//   fechaFin,
+//   estado: "reservado",
+// });
 
-    res.status(200).json({ mensaje: "Reserva creada y hora bloqueada" });
-  } catch (error) {
-    console.error("Error creando reserva:", error);
-    res
-      .status(500)
-      .json({ mensaje: "Error al crear la reserva", error: error.message });
-  }
-});
+//     res.status(200).json({ mensaje: "Reserva creada y hora bloqueada" });
+//   } catch (error) {
+//     console.error("Error creando reserva:", error);
+//     res
+//       .status(500)
+//       .json({ mensaje: "Error al crear la reserva", error: error.message });
+//   }
+// });
 
 // Obtener terapeutas
-app.get("/api/terapeutas", async (req, res) => {
-  try {
-    // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
-    const terapeutas = await db.Terapeuta.findAll();
-    res.json(terapeutas);
-  } catch (error) {
-    console.error("Error al obtener los terapeutas:", error);
-    res.status(500).json({ error: "Error al obtener los terapeutas" });
-  }
-});
-// Obtener reservas
-app.get("/api/reservas", async (req, res) => {
-  try {
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
-    const reservas = await db.Reserva.findAll();
-    res.json(reservas);
-  } catch (error) {
-    console.error("Error al obtener las reservas:", error);
-    res.status(500).json({ error: "Error al obtener las reservas" });
-  }
-});
+// app.get("/api/terapeutas", async (req, res) => {
+//   try {
+//     // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
+//     const terapeutas = await db.Terapeuta.findAll();
+//     res.json(terapeutas);
+//   } catch (error) {
+//     console.error("Error al obtener los terapeutas:", error);
+//     res.status(500).json({ error: "Error al obtener los terapeutas" });
+//   }
+// });
+// // Obtener reservas
+// app.get("/api/reservas", async (req, res) => {
+//   try {
+//     // --- ACCESO CORREGIDO AL MODELO RESERVA ---
+//     const reservas = await db.Reserva.findAll();
+//     res.json(reservas);
+//   } catch (error) {
+//     console.error("Error al obtener las reservas:", error);
+//     res.status(500).json({ error: "Error al obtener las reservas" });
+//   }
+// });
 
-// Crear terapeuta
-app.post("/api/terapeutas", async (req, res) => {
-  const { nombre, email, servicio } = req.body;
-  try {
-    // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
-    const nuevo = await db.Terapeuta.create({ nombre, email, servicio });
-    res.status(201).json(nuevo);
-  } catch (err) {
-    console.error("Error al agregar terapeuta:", err);
-    res.status(500).send("Error al guardar terapeuta");
-  }
-});
+// // Crear terapeuta
+// app.post("/api/terapeutas", async (req, res) => {
+//   const { nombre, email, servicio } = req.body;
+//   try {
+//     // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
+//     const nuevo = await db.Terapeuta.create({ nombre, email, servicio });
+//     res.status(201).json(nuevo);
+//   } catch (err) {
+//     console.error("Error al agregar terapeuta:", err);
+//     res.status(500).send("Error al guardar terapeuta");
+//   }
+// });
 //Prueba
 db.sequelize
   .sync({ alter: true })
