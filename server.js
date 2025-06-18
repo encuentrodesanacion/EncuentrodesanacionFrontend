@@ -139,39 +139,22 @@ app.post("/api/terapeutas", async (req, res) => {
   }
 });
 //Prueba
+// ... (todo el código existente de imports, app.use(), rutas) ...
+
+// --- Sincronización de DB e inicio del servidor ---
+// --- ¡MODIFICACIÓN CRÍTICA AQUÍ: COMENTAR TEMPORALMENTE EL BLOQUE db.sequelize.sync! ---
+/*
 db.sequelize
   .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente");
 
-    // --- BLOQUE DE LOGGING DE RUTAS (ya lo tienes, déjalo aquí) ---
-    app._router.stack.forEach(function (middleware) {
-      if (middleware.route) {
-        // Es una ruta directa
-        console.log(
-          `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
-            .join(", ")
-            .toUpperCase()} ${middleware.route.path}`
-        );
-      } else if (middleware.name === "router") {
-        // Es un router (como webpayRoutes)
-        middleware.handle.stack.forEach(function (handler) {
-          if (handler.route) {
-            console.log(
-              `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
-                .join(", ")
-                .toUpperCase()} ${middleware.regexp.source.replace(/\\/g, "")}${
-                handler.route.path
-              }`
-            );
-          }
-        });
-      }
-    });
-    console.log("------------------------------------------");
-    console.log("Rutas de la API cargadas.");
-    console.log("------------------------------------------");
-    // --- FIN NUEVO BLOQUE DE LOGGING ---
+    // BLOQUE DE LOGGING DE RUTAS (copiarlo afuera temporalmente si quieres ver los logs sin la DB)
+    // app._router.stack.forEach(function (middleware) { ... });
+    // console.log("------------------------------------------");
+    // console.log("Rutas de la API cargadas.");
+    // console.log("------------------------------------------");
+
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
@@ -179,18 +162,48 @@ db.sequelize
     );
   })
   .catch((err) => {
-    // --- ¡MODIFICACIÓN CRÍTICA FINAL AQUÍ! ---
-    // Simplemente loggear un mensaje estático y la presencia del error.
-    console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
-    );
+    console.error("Error crítico al sincronizar la base de datos y al iniciar el servidor.");
     if (err) {
-      console.error("Detalles del objeto de error (si existe):", String(err)); // Convertir a string para evitar TypeErrors
+      console.error("Detalles del objeto de error (si existe):", String(err));
     } else {
       console.error("El objeto de error es nulo o indefinido.");
     }
-    // Depuracion de crash final V3
-    // Asegurarse de que la aplicación crashee.
-    process.exit(1);
-    // --- FIN MODIFICACIÓN CRÍTICA ---
+    process.exit(1); 
   });
+*/
+
+// --- ¡NUEVO CÓDIGO: INICIAR EL SERVIDOR DIRECTAMENTE SIN SYNC DB! ---
+// Este bloque irá DESPUÉS del bloque comentado de db.sequelize.sync
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(
+    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+  );
+  // Si quieres ver los logs de rutas sin la DB, ponlos aquí también
+  app._router.stack.forEach(function (middleware) {
+    if (middleware.route) {
+      console.log(
+        `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
+          .join(", ")
+          .toUpperCase()} ${middleware.route.path}`
+      );
+    } else if (middleware.name === "router") {
+      middleware.handle.stack.forEach(function (handler) {
+        if (handler.route) {
+          console.log(
+            `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
+              .join(", ")
+              .toUpperCase()} ${middleware.regexp.source.replace(/\\/g, "")}${
+              handler.route.path
+            }`
+          );
+        }
+      });
+    }
+  });
+  console.log("------------------------------------------");
+  console.log("Rutas de la API cargadas (sin sincronización de DB).");
+  console.log("------------------------------------------");
+  console.log(`Servidor escuchando en puerto ${PORT}`);
+});
+// --- FIN NUEVO CÓDIGO ---
