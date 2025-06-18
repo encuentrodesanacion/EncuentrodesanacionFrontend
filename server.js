@@ -58,6 +58,13 @@ app.use(
 app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
 // // app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
+app.post("/api/webpay/create-transaction", (req, res) => {
+  console.log("[TEST_ROUTE] POST /api/webpay/create-transaction hit!");
+  console.log("[TEST_ROUTE] Request Body:", req.body);
+  res.status(200).json({
+    message: "Test route hit successfully! Payment not processed (TEST ONLY).",
+  });
+});
 // app.all("*", (req, res) => {
 //   console.warn(
 //     `[CATCH_ALL_DEBUG] Solicitud no manejada por rutas: ${req.method} ${req.originalUrl}`
@@ -69,22 +76,22 @@ app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR
 //     .send("Ruta no encontrada por la aplicación. Debugging en curso.");
 // });
 // // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
-// app.use((req, res, next) => {
-//   console.error(
-//     `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
-//   );
-//   res.status(404).json({
-//     message:
-//       "Recurso no encontrado. La ruta no existe o el método no está permitido.",
-//   });
-// });
+app.use((req, res, next) => {
+  console.error(
+    `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+  );
+  res.status(404).json({
+    message:
+      "Recurso no encontrado. La ruta no existe o el método no está permitido.",
+  });
+});
 // // /// Manejador de errores global
-// app.use((err, req, res, next) => {
-//   console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
-//   res
-//     .status(500)
-//     .json({ message: "Error interno del servidor", error: err.message });
-// });
+app.use((err, req, res, next) => {
+  console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
+  res
+    .status(500)
+    .json({ message: "Error interno del servidor", error: err.message });
+});
 
 // // app.post("/api/enviar-reserva", (req, res) => {
 // //   console.log("Reserva recibida:", req.body);
