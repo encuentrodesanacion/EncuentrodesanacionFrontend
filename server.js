@@ -31,7 +31,7 @@ const app = express(); // Inicialización de Express
 // // --- FIN NUEVO LOG ---
 // // Importaciones de Modelos de Base de Datos y Rutas
 const db = require("./models");
-// // const webpayRoutes = require("./routes/webpay.routes");
+const webpayRoutes = require("./routes/webpay.routes");
 // // const googleAuthRoutes = require("./routes/googleAuth");
 
 // // --- ¡ORDEN DE MIDDLEWARES Y RUTAS - CRÍTICO PARA EL 404! ---
@@ -55,7 +55,7 @@ app.use(
 
 // // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 // //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
-// // app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
+app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
 // // app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
 // app.all("*", (req, res) => {
