@@ -28,7 +28,7 @@ const app = express(); // Inicialización de Express
 // });
 // // --- FIN NUEVO LOG ---
 // // Importaciones de Modelos de Base de Datos y Rutas
-// // const db = require("./models");
+const db = require("./models");
 // // const webpayRoutes = require("./routes/webpay.routes");
 // // const googleAuthRoutes = require("./routes/googleAuth");
 
@@ -160,21 +160,33 @@ const app = express(); // Inicialización de Express
 // // });
 // //Prueba
 
-// // db.sequelize
-// //   .sync({ alter: true })
-// //   .then(async () => {
-// //     console.log("Base de datos actualizada correctamente");
-// //NUEVO CODIGO
-const PORT = process.env.PORT || 3000;
-app.get("/", (req, res) => {
-  res.send("Hello from Heroku backend! (Barebones App - DB disabled)");
-});
-app.listen(PORT, () => {
-  console.log(`Minimal server listening on port ${PORT}`);
-  console.log("Node.js version:", process.version);
-  console.log("Environment:", process.env.NODE_ENV);
-  console.log("--- DB INITIALIZATION DISABLED ---"); // Mensaje claro
-});
+db.sequelize
+  .sync({ alter: true })
+  .then(async () => {
+    console.log("Base de datos actualizada correctamente");
+    // //NUEVO CODIGO
+    const PORT = process.env.PORT || 3000;
+    app.get("/", (req, res) => {
+      res.send("Hello from Heroku backend! (Barebones App - DB disabled)");
+    });
+    app.listen(PORT, () => {
+      console.log(`Minimal server listening on port ${PORT}`);
+      console.log("Node.js version:", process.version);
+      console.log("Environment:", process.env.NODE_ENV);
+      console.log("--- DB INITIALIZATION DISABLED ---"); // Mensaje claro
+    });
+  })
+  .catch((err) => {
+    console.error(
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
+    );
+    if (err) {
+      console.error("Detalles del objeto de error (si existe):", String(err));
+    } else {
+      console.error("El objeto de error es nulo o indefinido.");
+    }
+    process.exit(1);
+  });
 // --- FIN NUEVO CÓDIGO ---
 
 //   const PORT = process.env.PORT || 3000;
