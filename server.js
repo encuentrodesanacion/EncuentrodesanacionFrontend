@@ -139,71 +139,65 @@ app.post("/api/terapeutas", async (req, res) => {
   }
 });
 //Prueba
-// ... (todo el código existente de imports, app.use(), rutas) ...
-
-// --- Sincronización de DB e inicio del servidor ---
-// --- ¡MODIFICACIÓN CRÍTICA AQUÍ: COMENTAR TEMPORALMENTE EL BLOQUE db.sequelize.sync! ---
-/*
 db.sequelize
   .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente");
 
-    // BLOQUE DE LOGGING DE RUTAS (copiarlo afuera temporalmente si quieres ver los logs sin la DB)
-    // app._router.stack.forEach(function (middleware) { ... });
-    // console.log("------------------------------------------");
-    // console.log("Rutas de la API cargadas.");
-    // console.log("------------------------------------------");
-
-
     const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () =>
-      console.log(`Servidor escuchando en puerto ${PORT}`)
-    );
+    app.listen(PORT, () => {
+      // <--- El logging de rutas se moverá DENTRO de esta función de callback
+      console.log(`Servidor escuchando en puerto ${PORT}`);
+
+      // --- ¡NUEVO LUGAR PARA EL BLOQUE DE LOGGING DE RUTAS! ---
+      // Se ejecuta solo UNA VEZ cuando el servidor comienza a escuchar.
+      // Y se asegura de que app._router exista antes de intentar acceder a .stack
+      if (app && app._router && app._router.stack) {
+        // Agrega verificación de app y _router
+        app._router.stack.forEach(function (middleware) {
+          if (middleware.route) {
+            // Es una ruta directa
+            console.log(
+              `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
+                .join(", ")
+                .toUpperCase()} ${middleware.route.path}`
+            );
+          } else if (middleware.name === "router") {
+            // Es un router (como webpayRoutes)
+            middleware.handle.stack.forEach(function (handler) {
+              if (handler.route) {
+                console.log(
+                  `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
+                    .join(", ")
+                    .toUpperCase()} ${middleware.regexp.source.replace(
+                    /\\/g,
+                    ""
+                  )}${handler.route.path}`
+                );
+              }
+            });
+          }
+        });
+        console.log("------------------------------------------");
+        console.log("Rutas de la API cargadas y verificadas.");
+        console.log("------------------------------------------");
+      } else {
+        console.warn(
+          "[ROUTE_DEBUG] No se pudo acceder a app._router.stack para loggear rutas."
+        );
+      }
+      // --- FIN NUEVO LUGAR PARA EL BLOQUE DE LOGGING ---
+    });
   })
   .catch((err) => {
-    console.error("Error crítico al sincronizar la base de datos y al iniciar el servidor.");
+    // Ya tienes el catch seguro aquí que loggea el error y fuerza la salida.
+    console.error(
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
+    );
     if (err) {
       console.error("Detalles del objeto de error (si existe):", String(err));
     } else {
       console.error("El objeto de error es nulo o indefinido.");
     }
-    process.exit(1); 
+    process.exit(1);
   });
-*/
-
-// --- ¡NUEVO CÓDIGO: INICIAR EL SERVIDOR DIRECTAMENTE SIN SYNC DB! ---
-// Este bloque irá DESPUÉS del bloque comentado de db.sequelize.sync
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(
-    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
-  );
-  // Si quieres ver los logs de rutas sin la DB, ponlos aquí también
-  app._router.stack.forEach(function (middleware) {
-    if (middleware.route) {
-      console.log(
-        `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
-          .join(", ")
-          .toUpperCase()} ${middleware.route.path}`
-      );
-    } else if (middleware.name === "router") {
-      middleware.handle.stack.forEach(function (handler) {
-        if (handler.route) {
-          console.log(
-            `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
-              .join(", ")
-              .toUpperCase()} ${middleware.regexp.source.replace(/\\/g, "")}${
-              handler.route.path
-            }`
-          );
-        }
-      });
-    }
-  });
-  console.log("------------------------------------------");
-  console.log("Rutas de la API cargadas (sin sincronización de DB).");
-  console.log("------------------------------------------");
-  console.log(`Servidor escuchando en puerto ${PORT}`);
-});
-// --- FIN NUEVO CÓDIGO ---
