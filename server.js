@@ -139,13 +139,12 @@ app.post("/api/terapeutas", async (req, res) => {
   }
 });
 
-// Sincronización de DB e inicio del servidor
 db.sequelize
   .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente");
 
-    // Recorre todas las rutas registradas por Express
+    // --- ¡NUEVO BLOQUE DE LOGGING DE RUTAS AL INICIAR EL SERVIDOR! ---
     app._router.stack.forEach(function (middleware) {
       if (middleware.route) {
         // Es una ruta directa
@@ -158,10 +157,13 @@ db.sequelize
         // Es un router (como webpayRoutes)
         middleware.handle.stack.forEach(function (handler) {
           if (handler.route) {
+            // console.log(`[ROUTE_DEBUG] Router: ${middleware.regexp}`); // Log del router base
             console.log(
               `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
                 .join(", ")
-                .toUpperCase()} ${middleware.regexp} ${handler.route.path}`
+                .toUpperCase()} ${middleware.regexp.source.replace(/\\/g, "")}${
+                handler.route.path
+              }`
             );
           }
         });
@@ -178,5 +180,13 @@ db.sequelize
     );
   })
   .catch((err) => {
-    console.error("Error al sincronizar la base de datos:", err);
+    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ! ---
+    // Asegurarse de que 'err' no sea undefined antes de intentar leer 'stack'
+    console.error(
+      "Error al sincronizar la base de datos:",
+      err ? err.stack : err
+    ); // Lee err.stack solo si err existe
+    // También puedes lanzar un error para que Heroku lo capture mejor si quieres que crashee
+    // throw new Error("Fallo crítico al sincronizar la base de datos.");
+    // --- FIN MODIFICACIÓN CRÍTICA ---
   });
