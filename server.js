@@ -18,11 +18,11 @@ const app = express(); // Inicialización de Express
 // --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! ---
 // Este middleware se ejecutará para CADA solicitud que llegue a Express.
 app.use((req, res, next) => {
-  console.log(`[REQUEST_LOG] ${req.method} ${req.originalUrl}`);
-  // Si la solicitud es POST, loguea el cuerpo (solo para depuración, no en prod final por seguridad)
-  if (req.method === "POST") {
-    console.log(`[REQUEST_BODY_LOG] Body: ${JSON.stringify(req.body)}`);
-  }
+  console.log(
+    `[HTTP_REQUEST] Method: ${req.method}, Path: ${
+      req.originalUrl
+    }, Body: ${JSON.stringify(req.body)}`
+  );
   next(); // Pasa al siguiente middleware
 });
 // --- FIN NUEVO LOG ---
