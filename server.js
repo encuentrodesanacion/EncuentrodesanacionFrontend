@@ -147,12 +147,14 @@ db.sequelize
     // --- BLOQUE DE LOGGING DE RUTAS (ya lo tienes, déjalo aquí) ---
     app._router.stack.forEach(function (middleware) {
       if (middleware.route) {
+        // Es una ruta directa
         console.log(
           `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
             .join(", ")
             .toUpperCase()} ${middleware.route.path}`
         );
       } else if (middleware.name === "router") {
+        // Es un router (como webpayRoutes)
         middleware.handle.stack.forEach(function (handler) {
           if (handler.route) {
             console.log(
@@ -177,26 +179,14 @@ db.sequelize
     );
   })
   .catch((err) => {
-    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ! ---
-    // Loggear el error de forma segura.
+    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ: LOGGEAR EL ERROR DIRECTAMENTE! ---
     // Esto es para la línea 148 de server.js que da TypeError: Cannot read properties of undefined (reading 'stack')
-    console.error("Error al sincronizar la base de datos:", err); // Loggear el objeto err completo
-    if (err && err.stack) {
-      console.error("Stack trace del error:", err.stack);
-    } else if (err) {
-      console.error("Error sin stack trace:", err.message || err.toString());
-    } else {
-      console.error(
-        "Error al sincronizar la base de datos: Error desconocido o nulo."
-      );
-    }
-
-    // Es importante que la aplicación crashee si la DB no se sincroniza
-    // para que Heroku sepa que no puede iniciar.
-    // No lanzar el error aquí, ya que ya se está crasheando por el TypeError.
-    // Si queremos que crashee, podemos simplemente no poner un try-catch alrededor del sync,
-    // o lanzar un nuevo Error si queremos controlar el mensaje.
-    // Ya que se está crasheando, no necesitamos hacer nada más aquí por ahora.
-    // La clave es que el console.error no falle.
+    console.error(
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor:",
+      err
+    );
+    // No intentes leer 'stack' o 'message' para evitar el TypeError si 'err' es null/undefined.
+    // Simplemente loguea el objeto completo.
+    // Heroku crasheará la app si hay un error en el startup, que es lo que queremos.
     // --- FIN MODIFICACIÓN CRÍTICA ---
   });
