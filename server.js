@@ -1,20 +1,25 @@
 // backend/server.js
 
 // Carga de variables de entorno (solo en desarrollo)
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-} else {
-  console.log(
-    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
-  );
-}
+// if (process.env.NODE_ENV !== "production") {
+//   require("dotenv").config();
+// } else {
+//   console.log(
+//     "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+//   );
+// }
 
 // Dependencias principales
 const express = require("express");
-const cors = require("cors");
-const path = require("path"); // Aunque path no se usa directamente en esta parte, se mantiene
+// const cors = require("cors");
+// const path = require("path");
 
 const app = express(); // Inicialización de Express
+
+//TEMPORAL
+app.get("/", (req, res) => {
+  res.send("Hello from Heroku backend! (Minimal App - Express v4)");
+});
 
 // --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
 // Este middleware se ejecutará para CADA solicitud que llegue a Express, independientemente del método.
@@ -28,7 +33,7 @@ const app = express(); // Inicialización de Express
 // });
 // // --- FIN NUEVO LOG ---
 // // Importaciones de Modelos de Base de Datos y Rutas
-const db = require("./models");
+// const db = require("./models");
 // // const webpayRoutes = require("./routes/webpay.routes");
 // // const googleAuthRoutes = require("./routes/googleAuth");
 
@@ -36,20 +41,20 @@ const db = require("./models");
 
 // // 1. Middlewares para parsear el cuerpo de la solicitud (JSON y URL-encoded)
 // //    Estos deben ir PRIMERO en los app.use()
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
 
 // // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
 // //    Este es el punto más importante para las cabeceras CORS
 
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
-    allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
-    credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
-  })
-);
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
+//     allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
+//     credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
+//   })
+// );
 
 // // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 // //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
@@ -160,31 +165,19 @@ app.use(
 // // });
 // //Prueba
 
-db.sequelize
-  .sync({ alter: true })
-  .then(async () => {
-    console.log("Base de datos actualizada correctamente");
-    // //NUEVO CODIGO
-    const PORT = process.env.PORT || 3000;
-    app.listen(PORT, () => {
-      console.log(`Servidor escuchando en puerto ${PORT}`);
-      console.log("Node.js version:", process.version);
-      console.log("Environment:", process.env.NODE_ENV);
-      console.log("--- DB INITIALIZATION ENABLED, ROUTES DISABLED ---"); // Mensaje claro
-    });
-  })
-  .catch((err) => {
-    console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
-    );
-    if (err) {
-      console.error("Detalles del objeto de error (si existe):", String(err));
-    } else {
-      console.error("El objeto de error es nulo o indefinido.");
-    }
-    process.exit(1);
-  });
-// --- FIN NUEVO CÓDIGO ---
+// db.sequelize
+//   .sync({ alter: true })
+//   .then(async () => {
+//     console.log("Base de datos actualizada correctamente");
+//     // //NUEVO CODIGO
+//     const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Minimal server listening on port ${PORT}`);
+  console.log("Node.js version:", process.version);
+  console.log("Environment:", process.env.NODE_ENV);
+  console.log("--- DB INITIALIZATION DISABLED ---");
+  console.log("--- TESTING EXPRESS V4 ---"); // Mensaje extra
+});
 
 //   const PORT = process.env.PORT || 3000;
 //   app.listen(PORT, () => {
