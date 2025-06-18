@@ -185,10 +185,11 @@ db.sequelize
       "Error crítico al sincronizar la base de datos y al iniciar el servidor."
     );
     if (err) {
-      console.error("Detalles del objeto de error (si existe):", err);
+      console.error("Detalles del objeto de error (si existe):", String(err)); // Convertir a string para evitar TypeErrors
     } else {
       console.error("El objeto de error es nulo o indefinido.");
     }
+    // Depuracion de crash final V3
     // Asegurarse de que la aplicación crashee.
     process.exit(1);
     // --- FIN MODIFICACIÓN CRÍTICA ---
