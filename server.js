@@ -144,6 +144,34 @@ db.sequelize
   .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente");
+
+    // Recorre todas las rutas registradas por Express
+    app._router.stack.forEach(function (middleware) {
+      if (middleware.route) {
+        // Es una ruta directa
+        console.log(
+          `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
+            .join(", ")
+            .toUpperCase()} ${middleware.route.path}`
+        );
+      } else if (middleware.name === "router") {
+        // Es un router (como webpayRoutes)
+        middleware.handle.stack.forEach(function (handler) {
+          if (handler.route) {
+            console.log(
+              `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
+                .join(", ")
+                .toUpperCase()} ${middleware.regexp} ${handler.route.path}`
+            );
+          }
+        });
+      }
+    });
+    console.log("------------------------------------------");
+    console.log("Rutas de la API cargadas.");
+    console.log("------------------------------------------");
+    // --- FIN NUEVO BLOQUE DE LOGGING ---
+
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
       console.log(`Servidor escuchando en puerto ${PORT}`)
