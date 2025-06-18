@@ -172,40 +172,40 @@ db.sequelize
       // --- ¡NUEVO LUGAR PARA EL BLOQUE DE LOGGING DE RUTAS! ---
       // Se ejecuta solo UNA VEZ cuando el servidor comienza a escuchar.
       // Y se asegura de que app._router exista antes de intentar acceder a .stack
-      if (app && app._router && app._router.stack) {
-        // Agrega verificación de app y _router
-        app._router.stack.forEach(function (middleware) {
-          if (middleware.route) {
-            // Es una ruta directa
-            console.log(
-              `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
-                .join(", ")
-                .toUpperCase()} ${middleware.route.path}`
-            );
-          } else if (middleware.name === "router") {
-            // Es un router (como webpayRoutes)
-            middleware.handle.stack.forEach(function (handler) {
-              if (handler.route) {
-                console.log(
-                  `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
-                    .join(", ")
-                    .toUpperCase()} ${middleware.regexp.source.replace(
-                    /\\/g,
-                    ""
-                  )}${handler.route.path}`
-                );
-              }
-            });
-          }
-        });
-        console.log("------------------------------------------");
-        console.log("Rutas de la API cargadas y verificadas.");
-        console.log("------------------------------------------");
-      } else {
-        console.warn(
-          "[ROUTE_DEBUG] No se pudo acceder a app._router.stack para loggear rutas."
-        );
-      }
+      // if (app && app._router && app._router.stack) {
+      // Agrega verificación de app y _router
+      // app._router.stack.forEach(function (middleware) {
+      //   if (middleware.route) {
+      // Es una ruta directa
+      //   console.log(
+      //     `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
+      //       .join(", ")
+      //       .toUpperCase()} ${middleware.route.path}`
+      //   );
+      // } else if (middleware.name === "router") {
+      // Es un router (como webpayRoutes)
+      //       middleware.handle.stack.forEach(function (handler) {
+      //         if (handler.route) {
+      //           console.log(
+      //             `[ROUTE_DEBUG] ${Object.keys(handler.route.methods)
+      //               .join(", ")
+      //               .toUpperCase()} ${middleware.regexp.source.replace(
+      //               /\\/g,
+      //               ""
+      //             )}${handler.route.path}`
+      //           );
+      //         }
+      //       });
+      //     }
+      //   });
+      //   console.log("------------------------------------------");
+      //   console.log("Rutas de la API cargadas y verificadas.");
+      //   console.log("------------------------------------------");
+      // } else {
+      //   console.warn(
+      //     "[ROUTE_DEBUG] No se pudo acceder a app._router.stack para loggear rutas."
+      //   );
+      // }
       // --- FIN NUEVO LUGAR PARA EL BLOQUE DE LOGGING ---
     });
   })
