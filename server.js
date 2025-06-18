@@ -67,16 +67,16 @@ app.all("*", (req, res) => {
     .send("Ruta no encontrada por la aplicación. Debugging en curso.");
 });
 // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
-app.use((req, res, next) => {
-  console.error(
-    `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
-  );
-  res.status(404).json({
-    message:
-      "Recurso no encontrado. La ruta no existe o el método no está permitido.",
-  });
-});
-/// Manejador de errores global
+// app.use((req, res, next) => {
+//   console.error(
+//     `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+//   );
+//   res.status(404).json({
+//     message:
+//       "Recurso no encontrado. La ruta no existe o el método no está permitido.",
+//   });
+// });
+// /// Manejador de errores global
 app.use((err, req, res, next) => {
   console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
   res
