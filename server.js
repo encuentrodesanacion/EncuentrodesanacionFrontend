@@ -1,97 +1,138 @@
 // backend/server.js
-
-// Carga de variables de entorno (solo en desarrollo)
-if (process.env.NODE_ENV !== "production") {
-  require("dotenv").config();
-} else {
-  console.log(
-    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
-  );
-}
-
-// Dependencias principales
+// Solo lo mínimo indispensable para iniciar un servidor Express
 const express = require("express");
-const cors = require("cors");
-const path = require("path");
+const app = express();
 
-const app = express(); // Inicialización de Express
+// Declara PORT globalmente
+const PORT = process.env.PORT || 3000;
 
-//TEMPORAL
-
-// --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
-// Este middleware se ejecutará para CADA solicitud que llegue a Express, independientemente del método.
-// app.use((req, res, next) => {
-//   console.log(
-//     `[VERY_EARLY_HTTP_REQUEST] Method: ${req.method}, Path: ${
-//       req.originalUrl
-//     }, Body: ${JSON.stringify(req.body)}`
-//   );
-//   next(); // Pasa al siguiente middleware
-// });
-// // --- FIN NUEVO LOG ---
-// // Importaciones de Modelos de Base de Datos y Rutas
-const db = require("./models");
-const webpayRoutes = require("./routes/webpay.routes");
-// // const googleAuthRoutes = require("./routes/googleAuth");
-
-// // --- ¡ORDEN DE MIDDLEWARES Y RUTAS - CRÍTICO PARA EL 404! ---
-
-// // 1. Middlewares para parsear el cuerpo de la solicitud (JSON y URL-encoded)
-// //    Estos deben ir PRIMERO en los app.use()
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-
-// // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
-// //    Este es el punto más importante para las cabeceras CORS
-
-app.use(
-  cors({
-    origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
-    allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
-    credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
-  })
-);
-
-// // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
-// //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
-app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
-// // app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
-
-app.post("/api/webpay/create-transaction", (req, res) => {
-  console.log("[TEST_ROUTE] POST /api/webpay/create-transaction hit!");
-  console.log("[TEST_ROUTE] Request Body:", req.body);
-  res.status(200).json({
-    message: "Test route hit successfully! Payment not processed (TEST ONLY).",
-  });
-});
-// app.all("*", (req, res) => {
-//   console.warn(
-//     `[CATCH_ALL_DEBUG] Solicitud no manejada por rutas: ${req.method} ${req.originalUrl}`
-//   );
-//   console.warn(`[CATCH_ALL_DEBUG] Headers: ${JSON.stringify(req.headers)}`);
-//   console.warn(`[CATCH_ALL_DEBUG] Body (raw): ${JSON.stringify(req.body)}`);
-//   res
-//     .status(404)
-//     .send("Ruta no encontrada por la aplicación. Debugging en curso.");
-// });
-// // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
+// Middleware de logging muy temprano (¡sin body-parser para evitar errores si no llega el body!)
 app.use((req, res, next) => {
-  console.error(
-    `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+  console.log(
+    `[ULTRA_BAREBONES_REQUEST] Method: ${req.method}, Path: ${req.originalUrl}`
   );
-  res.status(404).json({
-    message:
-      "Recurso no encontrado. La ruta no existe o el método no está permitido.",
-  });
+  next();
 });
-// // /// Manejador de errores global
-app.use((err, req, res, next) => {
-  console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
+
+// Ruta GET de prueba para la raíz
+app.get("/", (req, res) => {
+  res.send("Hello from Heroku backend! (ULTRA Minimal App)");
+});
+
+// RUTA ESPECÍFICA DE PRUEBA PARA POST A WEBPAY
+// Si esta no funciona, es casi seguro que el problema está fuera de tu control.
+app.post("/api/webpay/create-transaction", (req, res) => {
+  console.log(
+    "[ULTRA_BAREBONES_TEST_ROUTE] POST /api/webpay/create-transaction hit!"
+  );
   res
-    .status(500)
-    .json({ message: "Error interno del servidor", error: err.message });
+    .status(200)
+    .json({ message: "Ultra-barebones test route hit successfully!" });
 });
+
+// Inicio del servidor
+app.listen(PORT, () => {
+  console.log(`Ultra-minimal server listening on port ${PORT}`);
+  console.log("Node.js version:", process.version);
+  console.log("Environment:", process.env.NODE_ENV);
+  console.log(
+    "--- ALL COMPONENTS DISABLED EXCEPT EXPRESS CORE AND TEST ROUTES ---"
+  );
+});
+
+//DE AQUI ARRIBA PRUEBA --------------
+// // Carga de variables de entorno (solo en desarrollo)
+// if (process.env.NODE_ENV !== "production") {
+//   require("dotenv").config();
+// } else {
+//   console.log(
+//     "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+//   );
+// }
+
+// // Dependencias principales
+// const express = require("express");
+// const cors = require("cors");
+// const path = require("path");
+
+// const app = express(); // Inicialización de Express
+
+// //TEMPORAL
+
+// // --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
+// // Este middleware se ejecutará para CADA solicitud que llegue a Express, independientemente del método.
+// // app.use((req, res, next) => {
+// //   console.log(
+// //     `[VERY_EARLY_HTTP_REQUEST] Method: ${req.method}, Path: ${
+// //       req.originalUrl
+// //     }, Body: ${JSON.stringify(req.body)}`
+// //   );
+// //   next(); // Pasa al siguiente middleware
+// // });
+// // // --- FIN NUEVO LOG ---
+// // // Importaciones de Modelos de Base de Datos y Rutas
+// const db = require("./models");
+// const webpayRoutes = require("./routes/webpay.routes");
+// // // const googleAuthRoutes = require("./routes/googleAuth");
+
+// // // --- ¡ORDEN DE MIDDLEWARES Y RUTAS - CRÍTICO PARA EL 404! ---
+
+// // // 1. Middlewares para parsear el cuerpo de la solicitud (JSON y URL-encoded)
+// // //    Estos deben ir PRIMERO en los app.use()
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: true }));
+
+// // // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
+// // //    Este es el punto más importante para las cabeceras CORS
+
+// app.use(
+//   cors({
+//     origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
+//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
+//     allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
+//     credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
+//   })
+// );
+
+// // // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
+// // //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
+// app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
+// // // app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
+
+// app.post("/api/webpay/create-transaction", (req, res) => {
+//   console.log("[TEST_ROUTE] POST /api/webpay/create-transaction hit!");
+//   console.log("[TEST_ROUTE] Request Body:", req.body);
+//   res.status(200).json({
+//     message: "Test route hit successfully! Payment not processed (TEST ONLY).",
+//   });
+// });
+// // app.all("*", (req, res) => {
+// //   console.warn(
+// //     `[CATCH_ALL_DEBUG] Solicitud no manejada por rutas: ${req.method} ${req.originalUrl}`
+// //   );
+// //   console.warn(`[CATCH_ALL_DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+// //   console.warn(`[CATCH_ALL_DEBUG] Body (raw): ${JSON.stringify(req.body)}`);
+// //   res
+// //     .status(404)
+// //     .send("Ruta no encontrada por la aplicación. Debugging en curso.");
+// // });
+// // // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
+// app.use((req, res, next) => {
+//   console.error(
+//     `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+//   );
+//   res.status(404).json({
+//     message:
+//       "Recurso no encontrado. La ruta no existe o el método no está permitido.",
+//   });
+// });
+// // // /// Manejador de errores global
+// app.use((err, req, res, next) => {
+//   console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
+//   res
+//     .status(500)
+//     .json({ message: "Error interno del servidor", error: err.message });
+// });
 
 // // app.post("/api/enviar-reserva", (req, res) => {
 // //   console.log("Reserva recibida:", req.body);
@@ -168,38 +209,38 @@ app.use((err, req, res, next) => {
 // //   }
 // // });
 // //Prueba
-const PORT = process.env.PORT || 3000;
+// const PORT = process.env.PORT || 3000;
 // db.sequelize
 //   .sync({ alter: true })
 //   .then(async () => {
 //     console.log("Base de datos actualizada correctamente");
 //     // //NUEVO CODIGO
 //     const PORT = process.env.PORT || 3000;
-db.sequelize
-  .sync({ alter: true })
-  .then(async () => {
-    console.log("Base de datos actualizada correctamente.");
-    app.listen(PORT, () => {
-      console.log(`Servidor escuchando en puerto ${PORT}`);
-      console.log("Node.js version:", process.version);
-      console.log("Environment:", process.env.NODE_ENV);
-      console.log(
-        "--- DB ENABLED, MIDDLEWARES ENABLED, WEBPAY ROUTES ENABLED, OTHER ROUTES DISABLED ---"
-      ); // Mensaje claro
-    });
-  })
-  .catch((err) => {
-    console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
-    );
-    if (err) {
-      console.error("Detalles del objeto de error (si existe):", String(err));
-    } else {
-      console.error("El objeto de error es nulo o indefinido.");
-    }
-    process.exit(1);
-  });
-//   const PORT = process.env.PORT || 3000;
+// db.sequelize
+//   .sync({ alter: true })
+//   .then(async () => {
+//     console.log("Base de datos actualizada correctamente.");
+//     app.listen(PORT, () => {
+//       console.log(`Servidor escuchando en puerto ${PORT}`);
+//       console.log("Node.js version:", process.version);
+//       console.log("Environment:", process.env.NODE_ENV);
+//       console.log(
+//         "--- DB ENABLED, MIDDLEWARES ENABLED, WEBPAY ROUTES ENABLED, OTHER ROUTES DISABLED ---"
+//       ); // Mensaje claro
+//     });
+//   })
+//   .catch((err) => {
+//     console.error(
+//       "Error crítico al sincronizar la base de datos y al iniciar el servidor."
+//     );
+//     if (err) {
+//       console.error("Detalles del objeto de error (si existe):", String(err));
+//     } else {
+//       console.error("El objeto de error es nulo o indefinido.");
+//     }
+//     process.exit(1);
+//   });
+// //   const PORT = process.env.PORT || 3000;
 //   app.listen(PORT, () => {
 //     // <--- El logging de rutas se moverá DENTRO de esta función de callback
 //     console.log(`Servidor escuchando en puerto ${PORT}`);
