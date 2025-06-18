@@ -169,7 +169,7 @@ db.sequelize
     console.log("------------------------------------------");
     console.log("Rutas de la API cargadas.");
     console.log("------------------------------------------");
-    // --- FIN BLOQUE DE LOGGING ---
+    // --- FIN NUEVO BLOQUE DE LOGGING ---
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>
@@ -177,14 +177,13 @@ db.sequelize
     );
   })
   .catch((err) => {
-    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ! ---
+    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ: EVITAR ACCEDER A PROPIEDADES DE 'err' DIRECTAMENTE EN EL STRING TEMPLATE! ---
     // Loggear el error de la forma más segura posible.
     console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor. Detalles:",
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor. Objeto de error:",
       err
     );
-    // Para asegurarnos de que la aplicación crashee si la DB no se sincroniza
-    // y para que Heroku lo detecte como un fallo en el inicio.
+    // Para asegurar que la aplicación crashee y Heroku lo detecte como un fallo en el inicio.
     process.exit(1); // Forzar la salida con un código de error
     // --- FIN MODIFICACIÓN CRÍTICA ---
   });
