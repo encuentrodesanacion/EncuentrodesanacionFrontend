@@ -1,25 +1,23 @@
 // backend/server.js
 
 // Carga de variables de entorno (solo en desarrollo)
-// if (process.env.NODE_ENV !== "production") {
-//   require("dotenv").config();
-// } else {
-//   console.log(
-//     "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
-//   );
-// }
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+} else {
+  console.log(
+    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+  );
+}
 
 // Dependencias principales
 const express = require("express");
-// const cors = require("cors");
-// const path = require("path");
+const cors = require("cors");
+const path = require("path");
 
 const app = express(); // Inicialización de Express
 
+const PORT = process.env.PORT || 3000;
 //TEMPORAL
-app.get("/", (req, res) => {
-  res.send("Hello from Heroku backend! (Minimal App - Express v4)");
-});
 
 // --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
 // Este middleware se ejecutará para CADA solicitud que llegue a Express, independientemente del método.
@@ -171,14 +169,29 @@ app.get("/", (req, res) => {
 //     console.log("Base de datos actualizada correctamente");
 //     // //NUEVO CODIGO
 //     const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Minimal server listening on port ${PORT}`);
-  console.log("Node.js version:", process.version);
-  console.log("Environment:", process.env.NODE_ENV);
-  console.log("--- DB INITIALIZATION DISABLED ---");
-  console.log("--- TESTING EXPRESS V4 ---"); // Mensaje extra
-});
-
+db.sequelize
+  .sync({ alter: true })
+  .then(async () => {
+    console.log("Base de datos actualizada correctamente.");
+    // PORT ya está definido globalmente, solo úsalo aquí.
+    app.listen(PORT, () => {
+      console.log(`Servidor escuchando en puerto ${PORT}`);
+      console.log("Node.js version:", process.version);
+      console.log("Environment:", process.env.NODE_ENV);
+      console.log("--- DB INITIALIZATION ENABLED, ROUTES DISABLED ---");
+    });
+  })
+  .catch((err) => {
+    console.error(
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
+    );
+    if (err) {
+      console.error("Detalles del objeto de error (si existe):", String(err));
+    } else {
+      console.error("El objeto de error es nulo o indefinido.");
+    }
+    process.exit(1);
+  });
 //   const PORT = process.env.PORT || 3000;
 //   app.listen(PORT, () => {
 //     // <--- El logging de rutas se moverá DENTRO de esta función de callback
