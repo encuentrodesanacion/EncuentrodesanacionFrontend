@@ -15,11 +15,12 @@ const cors = require("cors");
 const path = require("path"); // Aunque path no se usa directamente en esta parte, se mantiene
 
 const app = express(); // Inicialización de Express
-// --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! ---
-// Este middleware se ejecutará para CADA solicitud que llegue a Express.
+
+// --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
+// Este middleware se ejecutará para CADA solicitud que llegue a Express, independientemente del método.
 app.use((req, res, next) => {
   console.log(
-    `[HTTP_REQUEST] Method: ${req.method}, Path: ${
+    `[VERY_EARLY_HTTP_REQUEST] Method: ${req.method}, Path: ${
       req.originalUrl
     }, Body: ${JSON.stringify(req.body)}`
   );
