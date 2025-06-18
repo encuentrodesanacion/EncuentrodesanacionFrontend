@@ -7,35 +7,49 @@ const fs = require("fs");
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 
-// --- ¡MODIFICACIÓN CLAVE AQUÍ! ---
-// Asegurarse de que el config.json se lea correctamente, incluso en producción
-let configPath = path.resolve(__dirname, "..", "config", "config.json");
-let config;
-try {
-  config = require(configPath)[env];
-} catch (e) {
-  console.error(
-    `Error al cargar la configuración desde ${configPath} para el entorno ${env}:`,
-    e
-  );
-  // Fallback o lanzar un error crítico si la configuración es esencial
-  throw new Error(
-    `Fallo crítico: No se pudo cargar la configuración de la base de datos para el entorno ${env}.`
-  );
-}
-// --- FIN MODIFICACIÓN ---
-
+// NO CARGAREMOS config.json en producción para la DB.
+// Asumimos que DATABASE_URL siempre estará disponible en Heroku.
 let sequelize;
-if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
-} else {
-  // Usar config.database, config.username, etc. directamente del objeto config
-  sequelize = new Sequelize(config.database, config.username, config.password, {
-    host: config.host,
-    port: config.port,
-    dialect: config.dialect,
-    logging: false, // Puedes cambiar a console.log para ver las consultas SQL
+if (process.env.DATABASE_URL) {
+  // <-- ¡IMPORTANTE! Usar DATABASE_URL directamente
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres", // Especificar directamente el dialecto
+    logging: false,
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false, // Para Heroku PostgreSQL
+      },
+    },
   });
+} else {
+  // Solo cargar config.json y usar sus propiedades en desarrollo o si DATABASE_URL no existe
+  let config;
+  try {
+    config = require(path.resolve(__dirname, "..", "config", "config.json"))[
+      env
+    ];
+    // Si estás aquí, pero aún no se usa env_variable, usa las propiedades directas
+    sequelize = new Sequelize(
+      config.database,
+      config.username,
+      config.password,
+      {
+        host: config.host,
+        port: config.port,
+        dialect: config.dialect,
+        logging: false,
+      }
+    );
+  } catch (e) {
+    console.error(
+      `Error al cargar la configuración de DB desde config.json para el entorno ${env}:`,
+      e
+    );
+    throw new Error(
+      `Fallo crítico: No se pudo cargar la configuración de la base de datos o DATABASE_URL no está definida.`
+    );
+  }
 }
 
 const db = {};
@@ -65,20 +79,24 @@ db.Sequelize = Sequelize;
 db.DataTypes = DataTypes;
 
 // --- Definir Asociaciones ---
-db.Transaccion.hasMany(db.Reserva, {
-  foreignKey: "transaccionId",
-  as: "reservasAsociadas",
-  onDelete: "CASCADE",
-});
+// Asegúrate de que db.Transaccion, db.Reserva, db.Terapeuta existan antes de definir asociaciones
+if (db.Transaccion && db.Reserva) {
+  db.Transaccion.hasMany(db.Reserva, {
+    foreignKey: "transaccionId",
+    as: "reservasAsociadas",
+    onDelete: "CASCADE",
+  });
+  db.Reserva.belongsTo(db.Transaccion, {
+    foreignKey: "transaccionId",
+    as: "transaccion",
+  });
+}
 
-db.Reserva.belongsTo(db.Transaccion, {
-  foreignKey: "transaccionId",
-  as: "transaccion",
-});
-
-db.Reserva.belongsTo(db.Terapeuta, {
-  foreignKey: "terapeutaId",
-  as: "terapeutaData",
-});
+if (db.Reserva && db.Terapeuta) {
+  db.Reserva.belongsTo(db.Terapeuta, {
+    foreignKey: "terapeutaId",
+    as: "terapeutaData",
+  });
+}
 
 module.exports = db;
