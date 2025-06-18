@@ -1,42 +1,79 @@
-// backend/server.js
-// Solo lo mínimo indispensable para iniciar un servidor Express
+// Carga de variables de entorno (solo en desarrollo)
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+} else {
+  console.log(
+    "Modo producción: variables de entorno cargadas desde el ambiente de Heroku."
+  );
+}
+
+// Dependencias principales
 const express = require("express");
-const app = express();
+const cors = require("cors"); // Mantener CORS para la prueba OPTIONS
+const app = express(); // Inicialización de Express
 
 // Declara PORT globalmente
 const PORT = process.env.PORT || 3000;
 
-// Middleware de logging muy temprano (¡sin body-parser para evitar errores si no llega el body!)
+// Middleware de logging muy temprano
 app.use((req, res, next) => {
   console.log(
-    `[ULTRA_BAREBONES_REQUEST] Method: ${req.method}, Path: ${req.originalUrl}`
+    `[ULTRA_BAREBONES_REQUEST] Method: ${req.method}, Path: ${
+      req.originalUrl
+    }, Body: ${JSON.stringify(req.body)}`
   );
   next();
 });
 
-// Ruta GET de prueba para la raíz
-app.get("/", (req, res) => {
-  res.send("Hello from Heroku backend! (ULTRA Minimal App)");
-});
+// Middlewares para parsear el cuerpo de la solicitud
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
-// RUTA ESPECÍFICA DE PRUEBA PARA POST A WEBPAY
-// Si esta no funciona, es casi seguro que el problema está fuera de tu control.
+// MIDDLEWARE CORS
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL_PROD,
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+    credentials: true,
+  })
+);
+
+// --- ¡SOLO ESTA RUTA ESPECÍFICA ESTARÁ HABILITADA! ---
 app.post("/api/webpay/create-transaction", (req, res) => {
   console.log(
-    "[ULTRA_BAREBONES_TEST_ROUTE] POST /api/webpay/create-transaction hit!"
+    "[ULTRA_BAREBONES_TEST_ROUTE] POST /api/webpay/create-transaction hit! Payload:",
+    req.body
   );
   res
     .status(200)
-    .json({ message: "Ultra-barebones test route hit successfully!" });
+    .json({
+      message: "Ultra-barebones test route hit successfully!",
+      receivedBody: req.body,
+    });
 });
 
-// Inicio del servidor
+// Manejador de 404 de respaldo (muy importante para este test)
+app.use((req, res, next) => {
+  console.warn(
+    `[DEBUG_404_FALLBACK] Request not handled: ${req.method} ${req.originalUrl}`
+  );
+  res.status(404).send("Not Found: No route matched for this request.");
+});
+
+// Manejador de errores global
+app.use((err, req, res, next) => {
+  console.error("[GLOBAL_ERROR_HANDLER]", err.stack || err.message || err);
+  res.status(500).send("Internal Server Error during processing.");
+});
+
+// Inicio del servidor (sin sincronización de DB para aislar)
 app.listen(PORT, () => {
   console.log(`Ultra-minimal server listening on port ${PORT}`);
   console.log("Node.js version:", process.version);
   console.log("Environment:", process.env.NODE_ENV);
   console.log(
-    "--- ALL COMPONENTS DISABLED EXCEPT EXPRESS CORE AND TEST ROUTES ---"
+    "--- DB INITIALIZATION DISABLED, ONLY DIRECT WEBPAY POST ROUTE ENABLED ---"
   );
 });
 
