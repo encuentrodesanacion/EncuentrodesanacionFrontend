@@ -177,7 +177,7 @@ db.sequelize
       console.log("Node.js version:", process.version);
       console.log("Environment:", process.env.NODE_ENV);
       console.log(
-        "--- DB INITIALIZATION ENABLED, MIDDLEWARES ENABLED, ROUTES DISABLED ---"
+        "--- DB ENABLED, MIDDLEWARES ENABLED, WEBPAY ROUTES ENABLED, OTHER ROUTES DISABLED ---"
       ); // Mensaje claro
     });
   })
