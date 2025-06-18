@@ -15,7 +15,12 @@ const cors = require("cors");
 const path = require("path"); // Aunque path no se usa directamente en esta parte, se mantiene
 
 const app = express(); // Inicialización de Express
-
+app.use((req, res, next) => {
+  console.log(
+    `[DEBUG_ROUTE] ${req.method} request to ${req.originalUrl} from ${req.ip}`
+  );
+  next(); // Pasa al siguiente middleware
+});
 // Importaciones de Modelos de Base de Datos y Rutas
 const db = require("./models");
 const webpayRoutes = require("./routes/webpay.routes");
