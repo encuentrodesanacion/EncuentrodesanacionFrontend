@@ -36,20 +36,20 @@ const db = require("./models");
 
 // // 1. Middlewares para parsear el cuerpo de la solicitud (JSON y URL-encoded)
 // //    Estos deben ir PRIMERO en los app.use()
-// app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
 // //    Este es el punto más importante para las cabeceras CORS
 
-// app.use(
-//   cors({
-//     origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
-//     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
-//     allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
-//     credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
-//   })
-// );
+app.use(
+  cors({
+    origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"], // Permitir explícitamente todos los métodos REST
+    allowedHeaders: ["Content-Type", "Authorization"], // Cabeceras que el frontend puede enviar
+    credentials: true, // Permite que el frontend envíe cookies o cabeceras de autorización
+  })
+);
 
 // // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 // //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
