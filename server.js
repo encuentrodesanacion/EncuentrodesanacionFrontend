@@ -166,14 +166,11 @@ db.sequelize
     console.log("Base de datos actualizada correctamente");
     // //NUEVO CODIGO
     const PORT = process.env.PORT || 3000;
-    app.get("/", (req, res) => {
-      res.send("Hello from Heroku backend! (Barebones App - DB disabled)");
-    });
     app.listen(PORT, () => {
-      console.log(`Minimal server listening on port ${PORT}`);
+      console.log(`Servidor escuchando en puerto ${PORT}`);
       console.log("Node.js version:", process.version);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("--- DB INITIALIZATION DISABLED ---"); // Mensaje claro
+      console.log("--- DB INITIALIZATION ENABLED, ROUTES DISABLED ---"); // Mensaje claro
     });
   })
   .catch((err) => {
