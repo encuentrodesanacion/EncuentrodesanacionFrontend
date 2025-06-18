@@ -15,12 +15,17 @@ const cors = require("cors");
 const path = require("path"); // Aunque path no se usa directamente en esta parte, se mantiene
 
 const app = express(); // Inicialización de Express
+// --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! ---
+// Este middleware se ejecutará para CADA solicitud que llegue a Express.
 app.use((req, res, next) => {
-  console.log(
-    `[DEBUG_ROUTE] ${req.method} request to ${req.originalUrl} from ${req.ip}`
-  );
+  console.log(`[REQUEST_LOG] ${req.method} ${req.originalUrl}`);
+  // Si la solicitud es POST, loguea el cuerpo (solo para depuración, no en prod final por seguridad)
+  if (req.method === "POST") {
+    console.log(`[REQUEST_BODY_LOG] Body: ${JSON.stringify(req.body)}`);
+  }
   next(); // Pasa al siguiente middleware
 });
+// --- FIN NUEVO LOG ---
 // Importaciones de Modelos de Base de Datos y Rutas
 const db = require("./models");
 const webpayRoutes = require("./routes/webpay.routes");
@@ -35,6 +40,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // 2. MIDDLEWARE CORS (DEBE ESTAR AQUÍ, DESPUÉS DE LOS PARSERS PERO ANTES DE LAS RUTAS)
 //    Este es el punto más importante para las cabeceras CORS
+
 app.use(
   cors({
     origin: process.env.FRONTEND_URL_PROD, // 'https://www.encuentrodesanacion.com'
@@ -49,16 +55,19 @@ app.use(
 app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
 app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
-// --- ¡IMPORTANTE! Manejador de 404 (OPCIONAL, pero ayuda a debuggear) ---
-// Si la solicitud llega hasta aquí, significa que ninguna ruta anterior la manejó.
+// --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
 app.use((req, res, next) => {
-  console.error(`404 Not Found for: ${req.method} ${req.originalUrl}`);
-  res.status(404).json({ message: "Recurso no encontrado" });
+  console.error(
+    `[HANDLER_404] 404 Not Found for: ${req.method} ${req.originalUrl}. Ninguna ruta manejó esta solicitud.`
+  );
+  res.status(404).json({
+    message:
+      "Recurso no encontrado. La ruta no existe o el método no está permitido.",
+  });
 });
-
-// Manejador de errores global (OPCIONAL)
+/// Manejador de errores global
 app.use((err, req, res, next) => {
-  console.error("Unhandled Error:", err.stack);
+  console.error("[UNHANDLED_ERROR]:", err.stack || err.message || err);
   res
     .status(500)
     .json({ message: "Error interno del servidor", error: err.message });
