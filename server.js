@@ -53,7 +53,7 @@ app.use(
 
 // 3. RUTAS DE LA API (DEBEN IR DESPUÉS DEL MIDDLEWARE DE CORS)
 //    Cualquier app.use() o app.get/post/put/delete debe ir DESPUÉS de cors
-app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
+// app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
 // app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
 app.all("*", (req, res) => {
