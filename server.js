@@ -147,12 +147,14 @@ db.sequelize
     // --- BLOQUE DE LOGGING DE RUTAS (ya lo tienes, déjalo aquí) ---
     app._router.stack.forEach(function (middleware) {
       if (middleware.route) {
+        // Es una ruta directa
         console.log(
           `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
             .join(", ")
             .toUpperCase()} ${middleware.route.path}`
         );
       } else if (middleware.name === "router") {
+        // Es un router (como webpayRoutes)
         middleware.handle.stack.forEach(function (handler) {
           if (handler.route) {
             console.log(
@@ -178,16 +180,14 @@ db.sequelize
   })
   .catch((err) => {
     // --- ¡MODIFICACIÓN CRÍTICA FINAL AQUÍ! ---
-    // Loggear un mensaje estático o el error JSON.stringify para garantizar que no falle.
+    // Simplemente loggear un mensaje estático y la presencia del error.
+    console.error(
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor."
+    );
     if (err) {
-      console.error(
-        "Error crítico al sincronizar la base de datos y al iniciar el servidor. Objeto de error:",
-        JSON.stringify(err, Object.getOwnPropertyNames(err))
-      );
+      console.error("Detalles del objeto de error (si existe):", err);
     } else {
-      console.error(
-        "Error crítico al sincronizar la base de datos y al iniciar el servidor. No se recibió objeto de error."
-      );
+      console.error("El objeto de error es nulo o indefinido.");
     }
     // Asegurarse de que la aplicación crashee.
     process.exit(1);
