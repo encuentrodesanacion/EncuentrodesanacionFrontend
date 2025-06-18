@@ -147,14 +147,12 @@ db.sequelize
     // --- BLOQUE DE LOGGING DE RUTAS (ya lo tienes, déjalo aquí) ---
     app._router.stack.forEach(function (middleware) {
       if (middleware.route) {
-        // Es una ruta directa
         console.log(
           `[ROUTE_DEBUG] ${Object.keys(middleware.route.methods)
             .join(", ")
             .toUpperCase()} ${middleware.route.path}`
         );
       } else if (middleware.name === "router") {
-        // Es un router (como webpayRoutes)
         middleware.handle.stack.forEach(function (handler) {
           if (handler.route) {
             console.log(
@@ -179,14 +177,14 @@ db.sequelize
     );
   })
   .catch((err) => {
-    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ: LOGGEAR EL ERROR DIRECTAMENTE! ---
-    // Esto es para la línea 148 de server.js que da TypeError: Cannot read properties of undefined (reading 'stack')
+    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ! ---
+    // Loggear el error de la forma más segura posible.
     console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor:",
+      "Error crítico al sincronizar la base de datos y al iniciar el servidor. Detalles:",
       err
     );
-    // No intentes leer 'stack' o 'message' para evitar el TypeError si 'err' es null/undefined.
-    // Simplemente loguea el objeto completo.
-    // Heroku crasheará la app si hay un error en el startup, que es lo que queremos.
+    // Para asegurarnos de que la aplicación crashee si la DB no se sincroniza
+    // y para que Heroku lo detecte como un fallo en el inicio.
+    process.exit(1); // Forzar la salida con un código de error
     // --- FIN MODIFICACIÓN CRÍTICA ---
   });
