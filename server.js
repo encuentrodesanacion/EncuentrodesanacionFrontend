@@ -31,7 +31,7 @@ const PORT = process.env.PORT || 3000;
 // });
 // // --- FIN NUEVO LOG ---
 // // Importaciones de Modelos de Base de Datos y Rutas
-// const db = require("./models");
+const db = require("./models");
 // // const webpayRoutes = require("./routes/webpay.routes");
 // // const googleAuthRoutes = require("./routes/googleAuth");
 
