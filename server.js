@@ -56,6 +56,16 @@ app.use(
 app.use("/api/webpay", webpayRoutes); // <-- ¡ESTA ES LA RUTA QUE DEBE MATCHEAR!
 app.use("/", googleAuthRoutes); // Asegúrate de que esta ruta no intercepte solicitudes inesperadas
 
+app.all("*", (req, res) => {
+  console.warn(
+    `[CATCH_ALL_DEBUG] Solicitud no manejada por rutas: ${req.method} ${req.originalUrl}`
+  );
+  console.warn(`[CATCH_ALL_DEBUG] Headers: ${JSON.stringify(req.headers)}`);
+  console.warn(`[CATCH_ALL_DEBUG] Body (raw): ${JSON.stringify(req.body)}`);
+  res
+    .status(404)
+    .send("Ruta no encontrada por la aplicación. Debugging en curso.");
+});
 // --- ¡MANEJADOR DE 404 (DESPUÉS DE TODAS LAS RUTAS)! ---
 app.use((req, res, next) => {
   console.error(
