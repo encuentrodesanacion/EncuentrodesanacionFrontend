@@ -16,7 +16,6 @@ const path = require("path");
 
 const app = express(); // Inicialización de Express
 
-const PORT = process.env.PORT || 3000;
 //TEMPORAL
 
 // --- ¡NUEVO LOG DE DEBUG DE CADA SOLICITUD! (Moverlo a la primera línea después de app = express()) ---
@@ -162,7 +161,7 @@ app.use(
 // //   }
 // // });
 // //Prueba
-
+const PORT = process.env.PORT || 3000;
 // db.sequelize
 //   .sync({ alter: true })
 //   .then(async () => {
@@ -173,12 +172,13 @@ db.sequelize
   .sync({ alter: true })
   .then(async () => {
     console.log("Base de datos actualizada correctamente.");
-    // PORT ya está definido globalmente, solo úsalo aquí.
     app.listen(PORT, () => {
       console.log(`Servidor escuchando en puerto ${PORT}`);
       console.log("Node.js version:", process.version);
       console.log("Environment:", process.env.NODE_ENV);
-      console.log("--- DB INITIALIZATION ENABLED, ROUTES DISABLED ---");
+      console.log(
+        "--- DB INITIALIZATION ENABLED, MIDDLEWARES ENABLED, ROUTES DISABLED ---"
+      ); // Mensaje claro
     });
   })
   .catch((err) => {
