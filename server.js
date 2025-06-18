@@ -138,7 +138,7 @@ app.post("/api/terapeutas", async (req, res) => {
     res.status(500).send("Error al guardar terapeuta");
   }
 });
-
+//Prueba
 db.sequelize
   .sync({ alter: true })
   .then(async () => {
@@ -177,13 +177,19 @@ db.sequelize
     );
   })
   .catch((err) => {
-    // --- ¡MODIFICACIÓN CRÍTICA AQUÍ: EVITAR ACCEDER A PROPIEDADES DE 'err' DIRECTAMENTE EN EL STRING TEMPLATE! ---
-    // Loggear el error de la forma más segura posible.
-    console.error(
-      "Error crítico al sincronizar la base de datos y al iniciar el servidor. Objeto de error:",
-      err
-    );
-    // Para asegurar que la aplicación crashee y Heroku lo detecte como un fallo en el inicio.
-    process.exit(1); // Forzar la salida con un código de error
+    // --- ¡MODIFICACIÓN CRÍTICA FINAL AQUÍ! ---
+    // Loggear un mensaje estático o el error JSON.stringify para garantizar que no falle.
+    if (err) {
+      console.error(
+        "Error crítico al sincronizar la base de datos y al iniciar el servidor. Objeto de error:",
+        JSON.stringify(err, Object.getOwnPropertyNames(err))
+      );
+    } else {
+      console.error(
+        "Error crítico al sincronizar la base de datos y al iniciar el servidor. No se recibió objeto de error."
+      );
+    }
+    // Asegurarse de que la aplicación crashee.
+    process.exit(1);
     // --- FIN MODIFICACIÓN CRÍTICA ---
   });
