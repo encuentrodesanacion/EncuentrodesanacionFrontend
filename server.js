@@ -29,10 +29,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL_PROD, // Asegúrate de que esta variable de entorno esté correcta en Heroku
-    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    origin: [
+      "http://localhost:5173",
+      "https://www.encuentrodesanacion.com", //
+      "https://encuentrodesanacion.com", // Si usas tanto con www como sin www
+    ],
+    methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
-    credentials: true,
   })
 );
 
