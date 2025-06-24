@@ -16,6 +16,7 @@
   "dependencies": {
     "@types/uuid": "^10.0.0",
     "body-parser": "^2.2.0",
+    "sequelize-cli": "^6.6.3",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
@@ -34,7 +35,6 @@
   "devDependencies": {
     "dotenv-cli": "^8.0.0",
     "nodemon": "^3.1.4",
-    "sequelize-cli": "^6.6.3",
     "typescript": "^5.8.3"
   }
 }
