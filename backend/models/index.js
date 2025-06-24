@@ -9,20 +9,27 @@ const env = process.env.NODE_ENV || "development";
 const config = require(__dirname + "/../config/config.json")[env];
 
 let sequelize;
-// Si config.json tiene la clave "use_env_variable", Sequelize la usará para la conexión.
-// De lo contrario, usará las propiedades 'database', 'username', etc. directamente de 'config'.
-if (config.use_env_variable) {
-  // Cuando config.json incluye "use_env_variable", Sequelize busca la variable de entorno
-  // con el nombre especificado (ej., "DATABASE_URL") y la usa para la conexión.
+// Usar DATABASE_URL para Heroku o la configuración del config.json para local
+if (process.env.DATABASE_URL) {
+  sequelize = new Sequelize(process.env.DATABASE_URL, {
+    dialect: "postgres",
+    protocol: "postgres",
+    dialectOptions: {
+      ssl: {
+        require: true,
+        rejectUnauthorized: false,
+      },
+    },
+    logging: false,
+  });
+} else if (config.use_env_variable) {
   sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  // Si config.json no usa "use_env_variable", entonces se esperan las propiedades
-  // 'database', 'username', 'password', 'host', 'port', 'dialect' directamente.
   sequelize = new Sequelize(config.database, config.username, config.password, {
     host: config.host,
     port: config.port,
     dialect: config.dialect,
-    logging: console.log, // Habilitar logging para ver las consultas SQL
+    logging: false,
   });
 }
 

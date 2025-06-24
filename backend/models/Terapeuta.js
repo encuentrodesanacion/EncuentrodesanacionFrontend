@@ -1,5 +1,4 @@
 // backend/models/terapeuta.js
-
 module.exports = (sequelize, DataTypes) => {
   const Terapeuta = sequelize.define(
     "Terapeuta",
@@ -17,13 +16,28 @@ module.exports = (sequelize, DataTypes) => {
         unique: true,
         validate: { isEmail: true },
       },
-      // Asegúrate de que el nombre del atributo en el modelo sea camelCase (serviciosOfrecidos)
       serviciosOfrecidos: {
-        type: DataTypes.TEXT, // La columna en la DB es de tipo TEXT para almacenar JSON string
+        type: DataTypes.TEXT,
         allowNull: true,
+        get() {
+          const rawValue = this.getDataValue("servicios_ofrecidos");
+          try {
+            return rawValue ? JSON.parse(rawValue) : [];
+          } catch (e) {
+            console.error(
+              "[ERROR MODELO] Error parsing serviciosOfrecidos from DB:",
+              rawValue,
+              e
+            );
+            return [];
+          }
+        },
+        set(value) {
+          this.setDataValue("servicios_ofrecidos", JSON.stringify(value));
+        },
       },
     },
-    { timestamps: true, underscored: true, tableName: "terapeutas" }
+    { timestamps: true, underscored: true, tableName: "Terapeutas" }
   );
   return Terapeuta;
 };

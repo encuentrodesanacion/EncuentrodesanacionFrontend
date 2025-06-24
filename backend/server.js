@@ -7,7 +7,7 @@ const result = dotenv.config();
 if (result.error) {
   console.error("Error al cargar .env:", result.error);
 } else {
-  console.log(".env cargado correctamente. Variables cargadas:", result.parsed);
+  // console.log(".env cargado correctamente. Variables cargadas:", result.parsed); // Comentar en producción
 }
 
 const express = require("express");
@@ -17,20 +17,20 @@ const path = require("path");
 const app = express();
 
 // --- Importaciones de Modelos de Base de Datos ---
-// ¡Importa SOLO el objeto 'db' que ya contiene todos tus modelos inicializados!
 const db = require("./models");
 
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
-
-// **ATENCIÓN:** Revisa la ruta de googleAuth. Si está en 'backend/models/Routes/googleAuth', es inusual.
-// Normalmente las rutas están en 'backend/routes/'.
-const googleAuthRoutes = require("./routes/googleAuth");
+const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
 
 // --- Middlewares Globales ---
 app.use(
   cors({
-    origin: [process.env.FRONTEND_URL_PROD],
+    origin: [
+      "http://localhost:5173", // Para tu desarrollo local
+      "https://www.encuentrodesanacion.com", // Tu dominio principal en Netlify (con HTTPS)
+      "https://encuentrodesanacion.com", // Opcional: si tu sitio también resuelve sin 'www'
+    ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
@@ -43,17 +43,11 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/webpay", webpayRoutes);
 app.use("/", googleAuthRoutes);
 
-app.post("/api/enviar-reserva", (req, res) => {
-  console.log("Reserva recibida:", req.body);
-  res.status(200).send("Reserva recibida correctamente");
-});
-
-// Crear reserva autenticada (ejemplo de ruta directa)
+// Crear reserva autenticada (ejemplo de ruta directa) - Asegúrate de que esto siga siendo relevante
 app.post("/api/reservar", async (req, res) => {
   try {
     const { fechaInicio, fechaFin, usuarioId, servicio } = req.body;
 
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
     const reservaExistente = await db.Reserva.findOne({
       where: { fechaInicio, fechaFin, estado: "reservado" },
     });
@@ -64,7 +58,6 @@ app.post("/api/reservar", async (req, res) => {
         .json({ mensaje: "Ese horario ya está reservado." });
     }
 
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
     await db.Reserva.create({
       usuarioId,
       servicio,
@@ -85,7 +78,6 @@ app.post("/api/reservar", async (req, res) => {
 // Obtener terapeutas
 app.get("/api/terapeutas", async (req, res) => {
   try {
-    // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
     const terapeutas = await db.Terapeuta.findAll();
     res.json(terapeutas);
   } catch (error) {
@@ -96,7 +88,6 @@ app.get("/api/terapeutas", async (req, res) => {
 // Obtener reservas
 app.get("/api/reservas", async (req, res) => {
   try {
-    // --- ACCESO CORREGIDO AL MODELO RESERVA ---
     const reservas = await db.Reserva.findAll();
     res.json(reservas);
   } catch (error) {
@@ -109,7 +100,6 @@ app.get("/api/reservas", async (req, res) => {
 app.post("/api/terapeutas", async (req, res) => {
   const { nombre, email, servicio } = req.body;
   try {
-    // --- ACCESO CORREGIDO AL MODELO TERAPEUTA ---
     const nuevo = await db.Terapeuta.create({ nombre, email, servicio });
     res.status(201).json(nuevo);
   } catch (err) {
@@ -119,12 +109,12 @@ app.post("/api/terapeutas", async (req, res) => {
 });
 
 // --- Sincronizar base de datos e iniciar servidor ---
-// --- Sincronizar base de datos e iniciar servidor ---
+// ¡Importante! Para producción, se recomienda ejecutar 'npx sequelize db:migrate' manualmente.
+// Si usas 'alter: true' en producción, puede haber riesgos de datos.
 db.sequelize
-  .sync({ alter: true }) // <--- ¡TEMPORALMENTE USA FORCE: TRUE PARA BORRAR Y RECREAR TODO!
+  .sync() // <--- Considera remover o cambiar esto para producción a db:migrate manual
   .then(async () => {
-    // <--- Haz la función THEN async
-    console.log("Base de datos actualizada correctamente");
+    console.log("Base de datos actualizada correctamente.");
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>

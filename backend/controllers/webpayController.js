@@ -159,35 +159,6 @@ const crearTransaccionInicial = async (req, res) => {
           error: "Formato de fecha u hora de reserva inválido.",
         });
       }
-
-      // --- NUEVAS VALIDACIONES: Nombre y Teléfono del Cliente ---
-      if (
-        typeof resItem.nombreCliente !== "string" ||
-        resItem.nombreCliente.trim() === ""
-      ) {
-        console.error(
-          "Error de validación: Reserva en carrito sin nombre de cliente válido.",
-          resItem
-        );
-        return res.status(400).json({
-          error:
-            "Reserva en carrito contiene un nombre de cliente inválido (vacío o no string).",
-        });
-      }
-      if (
-        typeof resItem.telefonoCliente !== "string" ||
-        resItem.telefonoCliente.trim() === ""
-      ) {
-        console.error(
-          "Error de validación: Reserva en carrito sin teléfono de cliente válido.",
-          resItem
-        );
-        return res.status(400).json({
-          error:
-            "Reserva en carrito contiene un teléfono de cliente inválido (vacío o no string).",
-        });
-      }
-      // --- FIN NUEVAS VALIDACIONES ---
     }
 
     const buyOrder = `orden_compra_${Date.now()}`;
@@ -200,13 +171,32 @@ const crearTransaccionInicial = async (req, res) => {
       returnUrl
     );
 
-    // Asegurarse de que 'reservas' se guarde como JSON en la base de datos si el tipo de columna es TEXT/STRING
-    await TemporalReserva.create({
-      token: response.token,
-      reservas: JSON.stringify(reservas), // Guardar como string JSON
-      montoTotal: monto,
-      clienteId: reservas[0]?.telefonoCliente || null, // Asumiendo que el clienteId es el teléfono del primer item
-    });
+    console.log(
+      `[DEBUG - crearTransaccionInicial] Token Transbank recibido: ${response.token}`
+    );
+    console.log(`[DEBUG - crearTransaccionInicial] Monto: ${monto}`);
+    console.log(`[DEBUG - crearTransaccionInicial] Reservas:`, reservas);
+
+    try {
+      const createdTempReserva = await TemporalReserva.create({
+        token: response.token,
+        reservas: JSON.stringify(reservas), // Guardar como string JSON
+        montoTotal: monto,
+        clienteId: reservas[0]?.telefonoCliente || null,
+      });
+      console.log(
+        `[DEBUG - crearTransaccionInicial] TemporalReserva creada en DB con ID: ${createdTempReserva.id} y token: ${createdTempReserva.token}`
+      );
+    } catch (dbError) {
+      console.error(
+        "[ERROR - crearTransaccionInicial] Error al guardar TemporalReserva en DB:",
+        dbError
+      );
+      return res.status(500).json({
+        mensaje: "Error interno al guardar la reserva temporal.",
+        error: dbError.message,
+      });
+    }
 
     res.json({
       url: response.url,
@@ -222,7 +212,7 @@ const crearTransaccionInicial = async (req, res) => {
       });
     } else {
       res.status(500).json({
-        mensaje: "Error interno del servidor al iniciar la transacción.",
+        mensaje: "Error al iniciar la transacción.",
         error: error.message,
       });
     }
@@ -309,15 +299,15 @@ const confirmarTransaccion = async (req, res) => {
         );
       }
 
-      // Bandera para saber si hubo un error crítico en el procesamiento de reservas
       let criticalReservationError = false;
 
       for (const reserva of reservasToProcess) {
-        if (criticalReservationError) break; // Si ya hubo un error crítico, sal del bucle
+        if (criticalReservationError) break;
 
         let errorMessages = [];
         let terapeutaEncontrado = null;
 
+        // ... Tus validaciones de reserva existentes ...
         if (
           typeof reserva.servicio !== "string" ||
           reserva.servicio.trim() === ""
@@ -392,63 +382,32 @@ const confirmarTransaccion = async (req, res) => {
             reserva
           );
           await nuevaTransaccion.update({ estadoPago: "fallo_datos_reserva" });
-          criticalReservationError = true; // Marca la bandera
-          break; // Sal del bucle
+          criticalReservationError = true;
+          break;
         }
 
-        // --- Bloque para buscar el terapeuta ---
         const terapeutaNombreNormalizado = reserva.terapeuta.trim();
 
-        // Primero intenta buscar por ID si está presente y es un número válido
-        if (
-          reserva.terapeutaId &&
-          typeof reserva.terapeutaId === "number" &&
-          !isNaN(reserva.terapeutaId)
-        ) {
+        if (reserva.terapeutaId) {
+          // Prioriza la búsqueda por ID si está presente
           console.log(
             `[DEBUG CREATERESERVA] Intento 1: Buscando terapeuta por ID: ${reserva.terapeutaId}.`
           );
           terapeutaEncontrado = await db.Terapeuta.findByPk(
             reserva.terapeutaId
           );
-          console.log(
-            `[DEBUG CREATERESERVA] Resultado ID: Terapeuta encontrado: ${!!terapeutaEncontrado}`
-          );
         }
 
-        // Si no se encontró por ID o el ID no es válido, intenta buscar por nombre
         if (!terapeutaEncontrado && terapeutaNombreNormalizado) {
+          // Si no se encontró por ID, busca por nombre
           console.log(
             `[DEBUG CREATERESERVA] Intento 2: Buscando terapeuta por nombre: "${terapeutaNombreNormalizado}".`
           );
-          // Usamos Sequelize.where y Sequelize.fn para hacer una búsqueda insensible a mayúsculas/minúsculas
           terapeutaEncontrado = await db.Terapeuta.findOne({
-            where: {
-              nombre: sequelize.where(
-                sequelize.fn("LOWER", sequelize.col("nombre")),
-                "LIKE",
-                `%${terapeutaNombreNormalizado.toLowerCase()}%`
-              ),
-            },
+            where: { nombre: terapeutaNombreNormalizado },
           });
-          console.log(
-            `[DEBUG CREATERESERVA] Resultado Nombre: Terapeuta encontrado: ${!!terapeutaEncontrado}`
-          );
-          if (!terapeutaEncontrado) {
-            // Un intento adicional de búsqueda exacta por nombre, útil si el LIKE no es deseado para todos los casos.
-            // Esto solo se ejecutará si la búsqueda LIKE falló.
-            terapeutaEncontrado = await db.Terapeuta.findOne({
-              where: {
-                nombre: terapeutaNombreNormalizado, // Búsqueda exacta
-              },
-            });
-            console.log(
-              `[DEBUG CREATERESERVA] Resultado Nombre Exacto (Fallback): Terapeuta encontrado: ${!!terapeutaEncontrado}`
-            );
-          }
         }
 
-        // --- VALIDACIÓN CRÍTICA: SI EL TERAPEUTA NO SE ENCONTRÓ ---
         console.log(
           `[DEBUG - webpayController] VERIFICACIÓN FINAL: terapeutaEncontrado es:`,
           terapeutaEncontrado
@@ -466,8 +425,8 @@ const confirmarTransaccion = async (req, res) => {
           await nuevaTransaccion.update({
             estadoPago: "fallo_terapeuta_no_encontrado",
           });
-          criticalReservationError = true; // Marca la bandera
-          break; // Sal del bucle for
+          criticalReservationError = true;
+          break;
         }
 
         const effectiveClientBookingId = reserva.id || uuidv4();
@@ -484,69 +443,76 @@ const confirmarTransaccion = async (req, res) => {
           sesiones: reserva.sesiones || 1,
           cantidad: reserva.cantidad || 1,
           terapeuta: terapeutaEncontrado.nombre,
-          terapeutaId: terapeutaEncontrado.id,
+          terapeutaId: terapeutaEncontrado.id, // Se usa el ID del terapeuta encontrado
         });
 
         console.log(
           `Reserva ${reserva.servicio} (ID: ${createdReserva.id}) guardada y asociada a Transaccion ID: ${nuevaTransaccion.id}`
         );
 
-        // --- Lógica de Notificación al Terapeuta (con parseo manual) ---
+        // --- Lógica de Notificación al Terapeuta ---
         try {
           console.log(
-            "[DEBUG NOTIFY] Terapeuta encontrado de la DB (objeto completo):",
+            "[DEBUG NOTIFY] Terapeuta encontrado de la DB (objeto completo para notificación):",
             terapeutaEncontrado ? terapeutaEncontrado.toJSON() : null
           );
 
           if (terapeutaEncontrado && terapeutaEncontrado.email) {
-            let serviciosOfrecidosArray;
-            try {
-              // Accede al valor crudo de la columna de la DB
-              const rawServicios =
-                terapeutaEncontrado.dataValues.serviciosOfrecidos;
-              console.log(
-                "[DEBUG NOTIFY] Valor crudo de serviciosOfrecidos de Terapeuta (para parseo manual):",
-                rawServicios
-              ); // NUEVO LOG CLAVE
-
-              if (rawServicios) {
-                serviciosOfrecidosArray = JSON.parse(rawServicios);
-              } else {
-                serviciosOfrecidosArray = [];
-              }
-              if (!Array.isArray(serviciosOfrecidosArray)) {
+            let serviciosOfrecidosArray =
+              terapeutaEncontrado.serviciosOfrecidos;
+            if (typeof serviciosOfrecidosArray === "string") {
+              try {
+                serviciosOfrecidosArray = JSON.parse(serviciosOfrecidosArray);
+              } catch (parseErr) {
                 console.warn(
-                  "[DEBUG NOTIFY] serviciosOfrecidos no es un array después de parseo manual, reseteando a vacío."
+                  `[DEBUG NOTIFY] No se pudo parsear serviciosOfrecidos para ${terapeutaEncontrado.nombre}:`,
+                  parseErr
                 );
                 serviciosOfrecidosArray = [];
               }
-            } catch (parseErr) {
-              console.error(
-                "[DEBUG NOTIFY] Error al parsear serviciosOfrecidos manualmente:",
-                parseErr
-              );
+            }
+            if (!Array.isArray(serviciosOfrecidosArray)) {
               serviciosOfrecidosArray = [];
             }
 
+            const servicioReservaNormalizado = reserva.servicio.trim();
+
             console.log(
-              `[DEBUG NOTIFY] Contenido de serviciosOfrecidosArray (parseo manual):`,
-              serviciosOfrecidosArray
+              `[DEBUG NOTIFY] --- INICIANDO COMPARACIÓN DE SERVICIO ---`
+            );
+            console.log(
+              `[DEBUG NOTIFY] Servicio de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
+            );
+            console.log(
+              `[DEBUG NOTIFY] Servicio de la reserva (lowercase - frontend): "${servicioReservaNormalizado.toLowerCase()}"`
             );
 
-            // --- CAMBIO AQUÍ: Usar reserva.especialidad para la comparación ---
-            const especialidadReservaNormalizada = reserva.especialidad
-              .trim()
-              .toLowerCase();
             let foundMatch = false;
             const ofreceServicio = serviciosOfrecidosArray.some((s) => {
-              if (typeof s !== "string") return false;
-              return s.trim().toLowerCase() === especialidadReservaNormalizada;
-            });
-            // --- FIN DEL CAMBIO ---
+              const servicioOfrecidoNormalizado = s.trim();
 
+              console.log(
+                `[DEBUG NOTIFY]   - Comparando con servicio ofrecido (de DB, normalizado): "${servicioOfrecidoNormalizado}" (Length: ${servicioOfrecidoNormalizado.length})`
+              );
+              console.log(
+                `[DEBUG NOTIFY]   - Comparando con servicio ofrecido (de DB, normalizado, lowercase): "${servicioOfrecidoNormalizado.toLowerCase()}"`
+              );
+
+              const isMatch =
+                servicioOfrecidoNormalizado.toLowerCase() ===
+                servicioReservaNormalizado.toLowerCase();
+              if (isMatch) {
+                foundMatch = true;
+              }
+              return isMatch;
+            });
+
+            console.log(`[DEBUG NOTIFY] ¿Hubo coincidencia?: ${foundMatch}`);
             console.log(
-              `[DEBUG NOTIFY] ¿Hubo coincidencia?: ${ofreceServicio}`
+              `[DEBUG NOTIFY] Contenido de serviciosOfrecidosArray desde DB:`,
+              serviciosOfrecidosArray
             );
+            console.log(`[DEBUG NOTIFY] --- FIN COMPARACIÓN DE SERVICIO ---`);
 
             if (ofreceServicio) {
               const subject = `¡Nueva Reserva Confirmada para ${reserva.servicio}!`;
@@ -582,7 +548,7 @@ const confirmarTransaccion = async (req, res) => {
               );
             } else {
               console.warn(
-                `[DEBUG NOTIFY] Alerta: Terapeuta "${terapeutaEncontrado.nombre}" encontrado, pero el servicio "${reserva.especialidad}" NO está en su lista de servicios ofrecidos.`
+                `[DEBUG NOTIFY] Alerta: Terapeuta "${terapeutaEncontrado.nombre}" encontrado, pero el servicio "${reserva.servicio}" NO está en su lista de servicios ofrecidos. No se enviará notificación específica de servicio.`
               );
             }
           } else {
@@ -608,8 +574,7 @@ const confirmarTransaccion = async (req, res) => {
             );
 
             if (!isNaN(startDateTime.getTime())) {
-              // También podrías querer usar especialidad aquí en el resumen si es más relevante
-              const resumenEvento = `Reserva: ${reserva.servicio} | Especialidad: ${reserva.especialidad} | Cliente: ${reserva.nombreCliente} | Teléfono: ${reserva.telefonoCliente}`;
+              const resumenEvento = `Reserva: ${reserva.servicio} | Cliente: ${reserva.nombreCliente} | Teléfono: ${reserva.telefonoCliente}`;
               await crearEventoReserva(
                 startDateTime.toISOString(),
                 endDateTime.toISOString(),
@@ -632,14 +597,12 @@ const confirmarTransaccion = async (req, res) => {
           );
         }
       } // Fin del bucle for
-      // --- REDIRECCIÓN FINAL BASADA EN SI HUBO UN ERROR CRÍTICO EN LAS RESERVAS ---
+
       if (criticalReservationError) {
-        // Si hubo un error en el bucle, redirige a pago-fallido
         return res.redirect(
           `${process.env.FRONTEND_URL}/pago-fallido?error=terapeuta_no_encontrado_en_reserva&token=${token}`
         );
       } else {
-        // Si todo salió bien con las reservas, elimina la TemporalReserva y redirige a éxito
         await TemporalReserva.destroy({ where: { token } });
         console.log("TemporalReserva eliminada.");
         return res.redirect(
