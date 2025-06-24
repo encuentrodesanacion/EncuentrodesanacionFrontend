@@ -1,28 +1,17 @@
-# Dependencias de Node (para ambos)
 node_modules/
-**/node_modules/
-
-# Archivos de entorno
 .env
 .env.*
 .env.local
 .env.development.local
 .env.test.local
 .env.production.local
-
-# Resultados de Build/Compilación
-build/
-dist/
-out/
-.next/
-.vercel/
-.netlify/
-
-# Logs
 *.log
 npm-debug.log*
-
-# Archivos de Sistema Operativo y Editor
-.DS_Store
-.idea/
-.vscode/ # Si quieres ignorar la configuración local de VSCode
+dist/
+build/
+.vercel/
+.netlify/
+node_modules/
+.env
+*.sqlite
+npm-debug.log

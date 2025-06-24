@@ -6,7 +6,24 @@ const fs = require("fs");
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
-const config = require(__dirname + "/../config/config.json")[env];
+
+// --- ¡MODIFICACIÓN CLAVE AQUÍ! ---
+// Asegurarse de que el config.json se lea correctamente, incluso en producción
+let configPath = path.resolve(__dirname, "..", "config", "config.json");
+let config;
+try {
+  config = require(configPath)[env];
+} catch (e) {
+  console.error(
+    `Error al cargar la configuración desde ${configPath} para el entorno ${env}:`,
+    e
+  );
+  // Fallback o lanzar un error crítico si la configuración es esencial
+  throw new Error(
+    `Fallo crítico: No se pudo cargar la configuración de la base de datos para el entorno ${env}.`
+  );
+}
+// --- FIN MODIFICACIÓN ---
 
 let sequelize;
 // Usar DATABASE_URL para Heroku o la configuración del config.json para local

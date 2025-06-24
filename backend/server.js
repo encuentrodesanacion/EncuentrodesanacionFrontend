@@ -1,15 +1,16 @@
 // backend/server.js
 
 // 1. Cargar variables de entorno al inicio y depurar su carga
-const dotenv = require("dotenv");
-const result = dotenv.config();
+if (process.env.NODE_ENV !== "production") {
+  const dotenv = require("dotenv");
+  const result = dotenv.config();
 
-if (result.error) {
-  console.error("Error al cargar .env:", result.error);
-} else {
-  // console.log(".env cargado correctamente. Variables cargadas:", result.parsed); // Comentar en producción
+  if (result.error) {
+    console.error("Error al cargar .env:", result.error);
+  } else {
+    // console.log(".env cargado correctamente. Variables cargadas:", result.parsed); // Comentar en producción
+  }
 }
-
 const express = require("express");
 const cors = require("cors");
 const path = require("path");
