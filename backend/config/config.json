@@ -1,10 +1,19 @@
 {
   "development": {
-    "use_env_variable": "DATABASE_URL",
-    "dialect": "postgres",
+    "username": "encuentro_sanacion_user",
+    "password": "test123",
+    "database": "encuentro_sanacion_db",
+    "host": "127.0.0.1",
     "port": 5432,
+    "dialect": "postgres",
     "seederStorage": "sequelize",
-    "seederStorageTableName": "sequelize_data"
+    "seederStorageTableName": "sequelize_data",
+    "dialectOptions": {
+      "ssl": {
+        "require": false,
+        "rejectUnauthorized": false
+      }
+    }
   },
   "test": {
     "dialect": "sqlite",

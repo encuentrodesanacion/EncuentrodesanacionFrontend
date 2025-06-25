@@ -300,6 +300,17 @@ const confirmarTransaccion = async (req, res) => {
       }
 
       let criticalReservationError = false;
+      // --- INICIO DE MODIFICACIONES WEB PAY CONTROLLER - VERIFICAR LOGS ---
+      // Estos logs te ayudarán a identificar que esta es la versión correcta
+      console.log(
+        "*************************************************************"
+      );
+      console.log(
+        "*** WEB PAY CONTROLLER: Versión con consulta RAW de Terapeuta ***"
+      );
+      console.log(
+        "*************************************************************"
+      );
 
       for (const reserva of reservasToProcess) {
         if (criticalReservationError) break;
@@ -393,26 +404,59 @@ const confirmarTransaccion = async (req, res) => {
           console.log(
             `[DEBUG CREATERESERVA] Intento 1: Buscando terapeuta por ID: ${reserva.terapeutaId}.`
           );
-          terapeutaEncontrado = await db.Terapeuta.findByPk(
-            reserva.terapeutaId
+          terapeutaRawResult = await db.sequelize.query(
+            `SELECT id, nombre, email, servicios_ofrecidos, created_at, updated_at FROM terapeutas WHERE id = :terapeutaId LIMIT 1;`,
+            {
+              replacements: { terapeutaId: reserva.terapeutaId },
+              type: db.sequelize.QueryTypes.SELECT,
+            }
+          );
+        } else if (terapeutaNombreNormalizado) {
+          console.log(
+            `[DEBUG CREATERESERVA] Intento 2 (RAW): Buscando terapeuta por nombre: "${terapeutaNombreNormalizado}".`
+          );
+          terapeutaRawResult = await db.sequelize.query(
+            `SELECT id, nombre, email, servicios_ofrecidos, created_at, updated_at FROM terapeutas WHERE nombre = :nombre LIMIT 1;`,
+            {
+              replacements: { nombre: terapeutaNombreNormalizado },
+              type: db.sequelize.QueryTypes.SELECT,
+            }
           );
         }
 
-        if (!terapeutaEncontrado && terapeutaNombreNormalizado) {
-          // Si no se encontró por ID, busca por nombre
-          console.log(
-            `[DEBUG CREATERESERVA] Intento 2: Buscando terapeuta por nombre: "${terapeutaNombreNormalizado}".`
-          );
-          terapeutaEncontrado = await db.Terapeuta.findOne({
-            where: { nombre: terapeutaNombreNormalizado },
-          });
+        // Procesar el resultado de la consulta RAW
+        terapeutaEncontrado =
+          terapeutaRawResult && terapeutaRawResult.length > 0
+            ? terapeutaRawResult[0]
+            : null;
+
+        // Si el terapeuta fue encontrado por RAW query, parsea servicios_ofrecidos
+        if (
+          terapeutaEncontrado &&
+          typeof terapeutaEncontrado.servicios_ofrecidos === "string"
+        ) {
+          try {
+            terapeutaEncontrado.serviciosOfrecidos = JSON.parse(
+              terapeutaEncontrado.servicios_ofrecidos
+            );
+          } catch (parseError) {
+            console.error(
+              "[ERROR NOTIFY] Error parseando servicios_ofrecidos desde RAW query:",
+              terapeutaEncontrado.servicios_ofrecidos,
+              parseError
+            );
+            terapeutaEncontrado.serviciosOfrecidos = [];
+          }
+        } else if (terapeutaEncontrado) {
+          // Si la columna está null o no es string, inicialízala
+          terapeutaEncontrado.serviciosOfrecidos = [];
         }
+
+        // --- FIN DE MODIFICACIONES WEB PAY CONTROLLER ---
 
         console.log(
           `[DEBUG - webpayController] VERIFICACIÓN FINAL: terapeutaEncontrado es:`,
-          terapeutaEncontrado
-            ? terapeutaEncontrado.toJSON()
-            : "NULL o UNDEFINED"
+          terapeutaEncontrado ? terapeutaEncontrado : "NULL o UNDEFINED"
         );
 
         if (!terapeutaEncontrado) {
@@ -475,16 +519,16 @@ const confirmarTransaccion = async (req, res) => {
               serviciosOfrecidosArray = [];
             }
 
-            const servicioReservaNormalizado = reserva.servicio.trim();
+            const servicioReservaNormalizado = reserva.especialidad.trim();
 
             console.log(
               `[DEBUG NOTIFY] --- INICIANDO COMPARACIÓN DE SERVICIO ---`
             );
             console.log(
-              `[DEBUG NOTIFY] Servicio de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
+              `[DEBUG NOTIFY] Especialidad de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
             );
             console.log(
-              `[DEBUG NOTIFY] Servicio de la reserva (lowercase - frontend): "${servicioReservaNormalizado.toLowerCase()}"`
+              `[DEBUG NOTIFY] Especialidad de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
             );
 
             let foundMatch = false;
@@ -515,7 +559,7 @@ const confirmarTransaccion = async (req, res) => {
             console.log(`[DEBUG NOTIFY] --- FIN COMPARACIÓN DE SERVICIO ---`);
 
             if (ofreceServicio) {
-              const subject = `¡Nueva Reserva Confirmada para ${reserva.servicio}!`;
+              const subject = `¡Nueva Reserva Confirmada para ${reserva.especialidad}!`;
               const htmlContent = `
                 <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
                 <p>¡Se ha confirmado una nueva reserva para tu servicio!</p>
@@ -548,7 +592,7 @@ const confirmarTransaccion = async (req, res) => {
               );
             } else {
               console.warn(
-                `[DEBUG NOTIFY] Alerta: Terapeuta "${terapeutaEncontrado.nombre}" encontrado, pero el servicio "${reserva.servicio}" NO está en su lista de servicios ofrecidos. No se enviará notificación específica de servicio.`
+                `[DEBUG NOTIFY] Alerta: Terapeuta "${terapeutaEncontrado.nombre}" encontrado, pero la especialidad "${reserva.especialidad}" NO está en su lista de servicios ofrecidos. No se enviará notificación específica de servicio.`
               );
             }
           } else {

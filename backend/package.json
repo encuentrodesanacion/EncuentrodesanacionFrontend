@@ -6,8 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "migrate": "npx dotenv -- npx sequelize-cli db:migrate --url $DATABASE_URL",
-    "seed": "npx dotenv -- npx sequelize-cli db:seed:all --url $DATABASE_URL"
+    "migrate": "npx sequelize db:migrate",
+    "seed": "npx sequelize db:seed:all",
+    "db:migrate:create": "npx sequelize migration:create",
+    "seed:undo:all": "npx sequelize db:seed:undo:all"
   },
   "keywords": [],
   "author": "",

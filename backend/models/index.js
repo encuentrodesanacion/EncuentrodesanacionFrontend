@@ -6,27 +6,12 @@ const fs = require("fs");
 
 const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
-
-// --- ¡MODIFICACIÓN CLAVE AQUÍ! ---
-// Asegurarse de que el config.json se lea correctamente, incluso en producción
-let configPath = path.resolve(__dirname, "..", "config", "config.json");
-let config;
-try {
-  config = require(configPath)[env];
-} catch (e) {
-  console.error(
-    `Error al cargar la configuración desde ${configPath} para el entorno ${env}:`,
-    e
-  );
-  // Fallback o lanzar un error crítico si la configuración es esencial
-  throw new Error(
-    `Fallo crítico: No se pudo cargar la configuración de la base de datos para el entorno ${env}.`
-  );
-}
-// --- FIN MODIFICACIÓN ---
+// Opcional: si realmente no usas config.json para la DB local, puedes comentarlo.
+// const config = require(__dirname + "/../config/config.json")[env];
 
 let sequelize;
-// Usar DATABASE_URL para Heroku o la configuración del config.json para local
+
+// Usar DATABASE_URL para Heroku
 if (process.env.DATABASE_URL) {
   sequelize = new Sequelize(process.env.DATABASE_URL, {
     dialect: "postgres",
@@ -39,15 +24,26 @@ if (process.env.DATABASE_URL) {
     },
     logging: false,
   });
-} else if (config.use_env_variable) {
-  sequelize = new Sequelize(process.env[config.use_env_variable], config);
 } else {
-  sequelize = new Sequelize(config.database, config.username, config.password, {
-    host: config.host,
-    port: config.port,
-    dialect: config.dialect,
-    logging: false,
-  });
+  // Configuración para entorno LOCAL usando variables de backend/.env
+  // Asegúrate de que DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_DIALECT estén en tu backend/.env
+  sequelize = new Sequelize(
+    process.env.DB_NAME, // <-- Este valor debe ser una string, no undefined
+    process.env.DB_USER, // <-- Este valor debe ser una string, no undefined
+    process.env.DB_PASSWORD, // <-- Este valor debe ser una string, no undefined
+    {
+      host: process.env.DB_HOST, // <-- Este valor debe ser una string, no undefined
+      dialect: process.env.DB_DIALECT || "postgres", // Usar 'postgres' como fallback si DB_DIALECT no está definido
+      logging: true, // Logs de SQL para depuración local
+      dialectOptions: {
+        ssl: {
+          require: false, // <-- Deshabilitar SSL para DB local
+          rejectUnauthorized: false,
+        },
+      },
+      port: process.env.DB_PORT, // Asegúrate de tener DB_PORT en tu .env si tu DB local no usa el puerto por defecto 5432
+    }
+  );
 }
 
 const db = {};
