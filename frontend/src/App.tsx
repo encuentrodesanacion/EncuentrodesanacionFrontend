@@ -10,6 +10,7 @@ import Home from "./pages/Home";
 import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./pages/CartContext";
 import WebpayReturnPage from "./pages/WebpayReturnPage"; // The intermediary page
+import SuccessPage from "./pages/SuccessPage";
 
 import CartIcon from "./components/CartIcon";
 import TratamientoHolistico from "./pages/TratamientoIntegral";
@@ -50,6 +51,7 @@ export default function App() {
           <Route path="/tallermensual" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
+          <Route path="/pago-confirmacion-exito" element={<SuccessPage />} />
           <Route path="/spaprincipal" element={<SpaPrincipal />} />
           <Route path="/findetalleres" element={<FinDeTalleres />} />
           <Route path="/nuestra-comunidad" element={<ComunidadYLeadsPage />} />

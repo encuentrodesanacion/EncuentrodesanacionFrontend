@@ -397,12 +397,13 @@ const confirmarTransaccion = async (req, res) => {
           break;
         }
 
+        // --- Bloque para buscar el terapeuta con consulta RAW ---
         const terapeutaNombreNormalizado = reserva.terapeuta.trim();
+        let terapeutaRawResult;
 
         if (reserva.terapeutaId) {
-          // Prioriza la búsqueda por ID si está presente
           console.log(
-            `[DEBUG CREATERESERVA] Intento 1: Buscando terapeuta por ID: ${reserva.terapeutaId}.`
+            `[DEBUG CREATERESERVA] Intento 1 (RAW): Buscando terapeuta por ID: ${reserva.terapeutaId}.`
           );
           terapeutaRawResult = await db.sequelize.query(
             `SELECT id, nombre, email, servicios_ofrecidos, created_at, updated_at FROM terapeutas WHERE id = :terapeutaId LIMIT 1;`,
@@ -437,12 +438,12 @@ const confirmarTransaccion = async (req, res) => {
         ) {
           try {
             terapeutaEncontrado.serviciosOfrecidos = JSON.parse(
-              terapeutaEncontrado.servicios_ofrecidos
+              terapeutaEncontrado.servicios_ofrecidos.trim()
             );
           } catch (parseError) {
             console.error(
-              "[ERROR NOTIFY] Error parseando servicios_ofrecidos desde RAW query:",
-              terapeutaEncontrado.servicios_ofrecidos,
+              "[ERROR NOTIFY] Error parseando serviciosOfrecidos desde RAW query:",
+              terapeutaEncontrado.serviciosOfrecidos,
               parseError
             );
             terapeutaEncontrado.serviciosOfrecidos = [];
@@ -451,8 +452,6 @@ const confirmarTransaccion = async (req, res) => {
           // Si la columna está null o no es string, inicialízala
           terapeutaEncontrado.serviciosOfrecidos = [];
         }
-
-        // --- FIN DE MODIFICACIONES WEB PAY CONTROLLER ---
 
         console.log(
           `[DEBUG - webpayController] VERIFICACIÓN FINAL: terapeutaEncontrado es:`,
@@ -498,27 +497,25 @@ const confirmarTransaccion = async (req, res) => {
         try {
           console.log(
             "[DEBUG NOTIFY] Terapeuta encontrado de la DB (objeto completo para notificación):",
-            terapeutaEncontrado ? terapeutaEncontrado.toJSON() : null
+            terapeutaEncontrado ? terapeutaEncontrado : null
           );
 
           if (terapeutaEncontrado && terapeutaEncontrado.email) {
+            // Asegúrate de usar directamente el array que ya creamos en terapeutaEncontrado
+            // y que sabemos que está correctamente parseado a un array.
             let serviciosOfrecidosArray =
-              terapeutaEncontrado.serviciosOfrecidos;
-            if (typeof serviciosOfrecidosArray === "string") {
-              try {
-                serviciosOfrecidosArray = JSON.parse(serviciosOfrecidosArray);
-              } catch (parseErr) {
-                console.warn(
-                  `[DEBUG NOTIFY] No se pudo parsear serviciosOfrecidos para ${terapeutaEncontrado.nombre}:`,
-                  parseErr
-                );
-                serviciosOfrecidosArray = [];
-              }
-            }
-            if (!Array.isArray(serviciosOfrecidosArray)) {
-              serviciosOfrecidosArray = [];
-            }
+              terapeutaEncontrado.serviciosOfrecidos || [];
 
+            // NO NECESITAS LA SIGUIENTE SECCIÓN, YA QUE SABEMOS QUE ES UN ARRAY AHORA:
+            // if (!Array.isArray(serviciosOfrecidosArray)) {
+            //   console.warn(
+            //     `[DEBUG NOTIFY] serviciosOfrecidosArray no es un array después de parseo RAW:`,
+            //     serviciosOfrecidosArray
+            //   );
+            //   serviciosOfrecidosArray = [];
+            // }
+
+            // Uso de reserva.especialidad para la comparación
             const servicioReservaNormalizado = reserva.especialidad.trim();
 
             console.log(
@@ -528,7 +525,7 @@ const confirmarTransaccion = async (req, res) => {
               `[DEBUG NOTIFY] Especialidad de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
             );
             console.log(
-              `[DEBUG NOTIFY] Especialidad de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
+              `[DEBUG NOTIFY] Especialidad de la reserva (lowercase - frontend): "${servicioReservaNormalizado.toLowerCase()}"`
             );
 
             let foundMatch = false;
@@ -554,7 +551,7 @@ const confirmarTransaccion = async (req, res) => {
             console.log(`[DEBUG NOTIFY] ¿Hubo coincidencia?: ${foundMatch}`);
             console.log(
               `[DEBUG NOTIFY] Contenido de serviciosOfrecidosArray desde DB:`,
-              serviciosOfrecidosArray
+              serviciosOfrecidosArray // Esto ahora debería mostrar el array completo
             );
             console.log(`[DEBUG NOTIFY] --- FIN COMPARACIÓN DE SERVICIO ---`);
 
