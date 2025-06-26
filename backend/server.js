@@ -22,6 +22,7 @@ const db = require("./models");
 
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
+const marketingRoutes = require("./routes/marketing.routes");
 const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
 
 // --- Middlewares Globales ---
@@ -43,6 +44,7 @@ app.use(express.urlencoded({ extended: true }));
 // --- Rutas de la API ---
 app.use("/api/webpay", webpayRoutes);
 app.use("/", googleAuthRoutes);
+app.use("/api/marketing", marketingRoutes);
 
 // Crear reserva autenticada (ejemplo de ruta directa) - Asegúrate de que esto siga siendo relevante
 app.post("/api/reservar", async (req, res) => {
