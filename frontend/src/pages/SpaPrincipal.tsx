@@ -6,8 +6,7 @@ import { useCart, Reserva } from "./CartContext"; // Asegúrate de que la ruta s
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
-import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta2 from "../assets/Terapeuta2.jpg";
+
 import Terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta4 from "../assets/Terapeuta4.jpg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
@@ -259,15 +258,7 @@ export default function SpaPrincipal() {
     //   precio: 16000,
     //   opciones: [{ sesiones: 1, precio: 16000 }],
     // },
-    {
-      img: Terapeuta2,
-      title: "Limpieza de Espacios",
-      terapeuta: "Betsy Bolivar",
-      description:
-        "La limpieza energética de espacios es una práctica que busca eliminar energías negativas que se acumulan en un lugar, afectando el bienestar de sus habitantes. A través de rituales, sonidos y elementos naturales, se busca restaurar la armonía y la paz del ambiente. Es un proceso terapéutico que busca identificar y liberar patrones de comportamiento, emociones y creencias que se transmiten de generación en generación dentro de una familia. Estas lealtades invisibles pueden influir en la salud, el bienestar emocional, las relaciones de las personas, la estabilidad económica.El objetivo principal es identificar y romper estos patrones para que las personas puedan vivir de manera más autónoma y alineada con sus propias necesidades y deseos.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+
     {
       img: Terapeuta3,
       title: "Liberación Memorias Uterinas",

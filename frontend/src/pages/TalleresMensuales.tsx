@@ -4,9 +4,11 @@ import "../styles/tratamientoIntegral.css"; // Revisa si necesitas este CSS, o s
 import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta
 
 import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
-import Taller1 from "../assets/Taller1.jpeg"; // Asegúrate de las rutas correctas
-import Taller2 from "../assets/Taller2.jpeg";
-
+import Mindfullness from "../assets/Mindfullness.jpeg"; // Asegúrate de las rutas correctas
+import TribuEnCalma from "../assets/TribuEnCalma.jpeg";
+import Yoga from "../assets/Yoga.jpg";
+import Alquimia from "../assets/Alquimia.jpeg";
+import EscribirDesdeRaices from "../assets/EscribirDesdeRaices.jpeg";
 // Define la interfaz para un ítem de taller
 interface TallerItem {
   id: string; // O number, un ID único para el taller
@@ -31,26 +33,59 @@ export default function TalleresMensuales() {
 
   const talleres: TallerItem[] = [
     {
-      id: "taller-meditacion-jul",
-      title: "Taller de Meditación Profunda",
+      id: "Taller-de-Mindfullness",
+      title: "Mindfullness para la Vida Diaria",
       description:
-        "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",
+        "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
       price: 25000,
-      date: "2025-07-05",
-      time: "10:30",
-      instructor: "Paulina Villablanca",
-      instructorId: 2,
+      date: "2025-03-07",
+      time: "20:00",
+      instructor: "Mónica Gatica",
+      instructorId: 5,
     },
     {
-      id: "taller-chakras-ago",
-      title: "Workshop de Armonización de Chakras",
+      id: "Taller-de-Tribu-en-Calma",
+      title: "Tribu en Calma",
       description:
-        "Explora tus centros energéticos y aprende a equilibrarlos para un bienestar integral.",
-      price: 40000,
-      date: "2025-07-06",
-      time: "15:00",
-      instructor: "Betsy Bolivar",
+        "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
+      price: 25000,
+      date: "2025-02-07",
+      time: "19:00",
+      instructor: "Vanessa Hernández",
       instructorId: 1,
+    },
+    {
+      id: "Taller-de-Yoga",
+      title: "Yoga Integral para Adultos",
+      description:
+        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación las cuales nos ayudan a mejorar nuestra salud en general. Esta maravillosa práctica dentro de sus innumerables beneficios podemos encontrar los siguientes : Reducir el estres Aumenta las hormonas de la felicidad Alivia la migraña Nos ayuda a calmar nuestra mente. Reduce los niveles de ansiedad. Entre otros.",
+      price: 25000,
+      date: "2025-05-07",
+      time: "11:00",
+      instructor: "Marlene Ramirez",
+      instructorId: 10,
+    },
+    {
+      id: "Taller-de-Alquimia",
+      title: "Alquimia de Abundancia",
+      description:
+        "Un taller poderoso donde ritual y transformación se unen para ayudarte a reconocer los bloqueos que te han mantenido lejos del merecimiento, el dinero y la plenitud.  A través de herramientas de PNL, prácticas mágicas y rituales conscientes, vas a: • Identificar tus patrones de carencia • Reprogramar creencias limitantes • Activar tu poder creador  •Conectar con tu propósito abundante Es hora de transformar la escasez en magnetismo, y abrirte a todo lo que el universo ya quiere entregarte.  Tu abundancia no es un destino… es un estado de conexión interior.",
+      price: 25000,
+      date: "2025-04-07",
+      time: "21:00",
+      instructor: "Macarena del Río",
+      instructorId: 6,
+    },
+    {
+      id: "Taller-de-Escribir-sobre-Raices",
+      title: "Escribir desde las raíces: Tarot y memoria ancestral",
+      description:
+        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
+      price: 25000,
+      date: "2025-06-07",
+      time: "12:00",
+      instructor: "Katalina Rencoret",
+      instructorId: 6,
     },
     {
       id: "taller-meditacion-jul",
@@ -168,23 +203,47 @@ export default function TalleresMensuales() {
               key={taller.id}
               className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
             >
-              {taller.id === "taller-meditacion-jul" && (
+              {taller.id === "Taller-de-Tribu-en-Calma" && (
                 <img
-                  src={Taller2} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  src={TribuEnCalma} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
               )}
-              {taller.id === "taller-chakras-ago" && (
+              {taller.id === "Taller-de-Mindfullness" && (
                 <img
-                  src={Taller1} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  src={Mindfullness} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              {taller.id === "Taller-de-Yoga" && (
+                <img
+                  src={Yoga} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              {taller.id === "Taller-de-Escribir-sobre-Raices" && (
+                <img
+                  src={EscribirDesdeRaices} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-48 object-cover"
+                />
+              )}
+              {taller.id === "Taller-de-Alquimia" && (
+                <img
+                  src={Alquimia} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
               )}
               {!(
-                taller.id === "taller-meditacion-jul" ||
-                taller.id === "taller-chakras-ago"
+                taller.id === "Taller-de-Mindfullness" ||
+                taller.id === "Taller-de-Tribu-en-Calma" ||
+                taller.id === "Taller-de-Yoga" ||
+                taller.id === "Taller-de-Alquimia" ||
+                taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller

@@ -1,24 +1,28 @@
+/* Estilos Base para todas las pantallas */
 .flip-wrapper-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 1rem;
+  justify-content: space-between; /* Mantiene el espaciado entre elementos */
+  gap: 1rem; /* Espacio entre las tarjetas */
+  max-width: 1200px; /* Ancho máximo del contenedor para pantallas grandes */
+  margin: 0 auto; /* Centrar el contenedor */
 }
 
 .flip-wrapper {
   display: flex;
   flex-direction: column;
-  width: calc(25% - 1rem);
-  height: 380px;
+  width: calc(25% - 1rem); /* Por defecto, 4 columnas (- gap) */
+  height: 380px; /* Altura fija para las tarjetas */
   margin-bottom: 1rem;
   vertical-align: top;
+  box-sizing: border-box; /* Asegura que el padding/border no afecte el width total */
 }
 
 .flip-card {
   width: 100%;
   height: 100%;
-  /* Quitamos la transición y transform aquí para evitar dobles efectos */
   position: relative;
+  /* Quitado transform y transition de aquí para no interferir con flip-inner */
 }
 
 .flip-front,
@@ -77,15 +81,7 @@
   transition: transform 0.6s;
 }
 
-/* Solo esta regla para el giro
-.flip-wrapper:hover .flip-inner {
-  transform: rotateY(180deg);
-} */
-
-/* Esta regla se elimina */
-/* .flip-wrapper:hover .flip-card {
-  transform: rotateY(180deg);
-} */
+/* Solo esta regla para el giro */
 
 .nombre-overlay {
   position: absolute;
@@ -98,4 +94,64 @@
   font-size: 1rem;
   font-weight: bold;
   z-index: 1;
+}
+
+/* --- MEDIA QUERIES para Responsive --- */
+
+/* Pantallas de escritorio (3 o 4 columnas si el ancho lo permite) */
+@media (min-width: 1024px) {
+  .flip-wrapper {
+    width: calc(
+      25% - 1rem
+    ); /* Se mantiene 4 columnas en escritorio para un diseño más denso */
+  }
+}
+
+/* Pantallas medianas (tablet): 3 columnas por fila */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .flip-wrapper-container {
+    gap: 1.5rem;
+  }
+  .flip-wrapper {
+    width: calc(33.33% - 1rem); /* 3 columnas */
+    height: 400px; /* Ajustar altura si es necesario */
+  }
+}
+
+/* Pantallas pequeñas (celular): 2 terapeutas por fila */
+@media (max-width: 767px) {
+  .flip-wrapper-container {
+    gap: 1rem; /* Espacio entre tarjetas en móvil */
+    padding: 0 0.5rem; /* Padding horizontal para el contenedor */
+    justify-content: center; /* Asegurar centrado si hay una sola tarjeta en la última fila */
+  }
+  .flip-wrapper {
+    width: calc(
+      50% - 0.5rem
+    ); /* ¡2 columnas en celulares! Ajustado por el nuevo gap */
+    height: 380px; /* Mantener la altura o ajustar si es necesario para móviles */
+    margin-bottom: 1rem; /* Mantener margen inferior */
+  }
+  /* Ajustes de fuente y padding para contenido dentro de las tarjetas en móviles */
+  .flip-back h3 {
+    font-size: 1rem;
+  }
+  .flip-back p {
+    font-size: 0.8em;
+  }
+  .flip-back .w-full.mb-2 {
+    font-size: 0.85em; /* Tamaño de texto de los botones de opciones */
+    padding: 0.5rem;
+  }
+}
+
+/* Pantallas muy pequeñas (ej. iPhone SE) - 1 columna por fila */
+@media (max-width: 480px) {
+  .flip-wrapper-container {
+    gap: 1rem;
+  }
+  .flip-wrapper {
+    width: 100%; /* 1 columna */
+    height: 420px; /* Ajustar altura para una sola columna */
+  }
 }

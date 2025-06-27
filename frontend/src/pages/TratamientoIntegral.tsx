@@ -1,19 +1,18 @@
-import React, { useState } from "react"; // Importa useState
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
-import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta para CartContext y Reserva
+import { useCart, Reserva } from "../pages/CartContext";
+import CartIcon from "../components/CartIcon";
 
-import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
-
-// Asegúrate de que las rutas de las imágenes sean correctas
+// Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta2 from "../assets/Terapeuta2.jpg";
 import Terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta4 from "../assets/Terapeuta4.jpg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
-import Terapeuta6 from "../assets/Terapeuta6.jpg";
+
 import creadorvirtual from "../assets/creadorvirtual.jpg";
-import Terapeuta10 from "../assets/Terapeuta10.jpeg";
+import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 
 interface TerapiaItem {
   img: string;
@@ -27,7 +26,6 @@ export default function TratamientoHolistico() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
-  // --- NUEVOS ESTADOS para controlar el modal de contacto ---
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
@@ -36,7 +34,7 @@ export default function TratamientoHolistico() {
     sesiones: number;
     precio: number;
     terapeutaNombre: string;
-  } | null>(null); // Para guardar los datos de la terapia seleccionada temporalmente
+  } | null>(null);
 
   const terapias: TerapiaItem[] = [
     {
@@ -47,43 +45,13 @@ export default function TratamientoHolistico() {
         "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [{ sesiones: 3, precio: 55000 }],
     },
-    {
-      img: Terapeuta2,
-      title: "La limpieza de lealtades transgeneracionales",
-      terapeuta: "Betsy Bolivar",
-      description:
-        "Un proceso terapéutico que busca identificar y liberar patrones de comportamiento, emociones y creencias que se transmiten de generación en generación dentro de una familia. Estas lealtades invisibles pueden influir en la salud, el bienestar emocional, las relaciones de las personas, la estabilidad económica.El objetivo principal es identificar y romper estos patrones para que las personas puedan vivir de manera más autónoma y alineada con sus propias necesidades y deseos.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-        { sesiones: 5, precio: 85000 },
-      ],
-    },
-    {
-      img: Terapeuta3,
-      title: "Tameana - Salush Nahí",
-      terapeuta: "Mónica García",
-      description:
-        "Es una terapia vibracional que trabaja con cristales de cuarzo y geometría sagrada para armonizar chakras, liberar bloqueos y elevar la frecuencia energética. Se recomiendan ciclos de 3 sesiones para una transformación profunda.",
-      opciones: [{ sesiones: 3, precio: 55000 }],
-    },
-    {
-      img: Terapeuta4,
-      title: "Péndulo Hebreo",
-      terapeuta: "Nicole Rojas",
-      description:
-        "Libérate del estrés, mejora tu descanso y recupera tu energía con el Péndulo Hebreo. Esta técnica detecta y corrige desequilibrios energéticos, ayudándote a sentirte más liviano, claro y vital.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
-    },
+
     {
       img: Terapeuta5,
       title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
       terapeuta: "Sandra Da Silva",
       description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
         { sesiones: 3, precio: 55000 },
         { sesiones: 4, precio: 70000 },
@@ -94,45 +62,28 @@ export default function TratamientoHolistico() {
       title: "Regresión",
       terapeuta: "Alice Basay",
       description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
         { sesiones: 3, precio: 55000 },
         { sesiones: 4, precio: 70000 },
       ],
     },
     {
-      img: Terapeuta10,
-      title: "Sanación del Alma",
-      terapeuta: "Vanessa Henríquez",
+      img: Terapeuta11,
+      title: "Bioenergía",
+      terapeuta: "Gabriel Moreno",
       description:
-        "¿Y si el dolor que cargas... ni siquiera fuera tuyo? Esta terapia es un método amoroso y profundo que te conecta con tu campo energético para identificar y sanar heridas de la infancia, lealtades familiares inconscientes, traumas de otras vidas, patrones repetitivos, interferencias energéticas y mucho más. Sanar el alma no es solo alcanzar la paz. Es volver a ti, recuperar las partes de tu esencia que quedaron atrás. Es permitirte ser complet@, libre y luminos@ otra vez.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-        { sesiones: 5, precio: 85000 },
-      ],
-    },
-    {
-      img: Terapeuta6,
-      title: "Reiki Egipcio",
-      terapeuta: "Macarena del Rio",
-      description:
-        "Sanación ancestral que canaliza energía vital y luz de alta vibración para armonizar cuerpo, mente y alma. A través de símbolos sagrados y la guía de diosas como Sekhmet, libera bloqueos energéticos, alivia ansiedad, fatiga y estrés, y te reconecta con tu poder interior. Equilibra tu energía. Despierta tu esencia.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
+        "La Bioenergía se forma en el cuerpo con nuestras emociones, Pensamientos, Sentimientos, y si todo ello está en desequilibrio nos empezamos a Enfermar, tenemos Inflamaciones, Dolores, Traumas, Miedos, entre otros malestares. La terapia de Bioenergía con imanes hace que podamos sanar nuestro cuerpo Físico,Mental,Emocional, y espiritual.",
+      opciones: [{ sesiones: 3, precio: 55000 }],
     },
   ];
 
-  // --- Función original reservarSesion modificada para ABRIR EL MODAL ---
   const reservarSesion = (
     terapiaTitle: string,
     sesiones: number,
     precio: number,
     terapeutaNombre: string
   ) => {
-    // Validaciones defensivas antes de abrir el modal
     if (
       !terapiaTitle ||
       typeof terapiaTitle !== "string" ||
@@ -148,15 +99,13 @@ export default function TratamientoHolistico() {
       return;
     }
 
-    // Guarda los datos de la terapia seleccionada en el estado para usarlos en el modal
     setCurrentTerapiaData({ terapiaTitle, sesiones, precio, terapeutaNombre });
-    setShowContactModal(true); // Abre el modal de contacto
-    setClientName(""); // Limpia los campos del formulario al abrir el modal
+    setShowContactModal(true);
+    setClientName("");
     setClientPhone("");
     console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
   };
 
-  // --- Nueva función para confirmar y añadir al carrito desde el modal ---
   const handleConfirmAndAddToCart = () => {
     if (!currentTerapiaData) {
       console.error("Error: currentTerapiaData es nulo al confirmar.");
@@ -168,30 +117,28 @@ export default function TratamientoHolistico() {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
     }
-    // --- NUEVA VALIDACIÓN PARA EL NÚMERO DE TELÉFONO ---
-    const phoneRegex = /^\+569\d{8}$/; // Formato para números de teléfono chilenos (+569XXXXXXXX)
+    const phoneRegex = /^\+569\d{8}$/;
     if (!phoneRegex.test(clientPhone.trim())) {
       alert(
         "Por favor, ingresa un número de teléfono chileno válido (ej. +56912345678)."
       );
       return;
     }
-    // --- FIN NUEVA VALIDACIÓN ---
     const now = new Date();
-    const fechaActual = now.toISOString().split("T")[0]; // YYYY-MM-DD
-    const horaGenerica = "17:00"; // Hora genérica
+    const fechaActual = now.toISOString().split("T")[0];
+    const horaGenerica = "17:00";
 
     const reserva: Reserva = {
-      id: Date.now(), // ID único para el frontend
-      servicio: "Tratamiento Integral", // Nombre genérico del servicio/formación
-      especialidad: currentTerapiaData.terapiaTitle, // Usar el título de la terapia como especialidad
+      id: Date.now(),
+      servicio: "Tratamiento Integral",
+      especialidad: currentTerapiaData.terapiaTitle,
       fecha: fechaActual,
       hora: horaGenerica,
       precio: currentTerapiaData.precio,
       sesiones: currentTerapiaData.sesiones,
-      cantidad: 1, // Por defecto 1 para tratamiento
-      nombreCliente: clientName.trim(), // Nombre ingresado por el usuario
-      telefonoCliente: clientPhone.trim(), // Teléfono ingresado por el usuario
+      cantidad: 1,
+      nombreCliente: clientName.trim(),
+      telefonoCliente: clientPhone.trim(),
       terapeuta: currentTerapiaData.terapeutaNombre,
     };
 
@@ -211,7 +158,6 @@ export default function TratamientoHolistico() {
       alert("Hubo un problema al agregar la reserva al carrito.");
     }
 
-    // Cierra el modal y resetea estados
     setShowContactModal(false);
     setCurrentTerapiaData(null);
     setClientName("");
@@ -250,46 +196,41 @@ export default function TratamientoHolistico() {
           ) => (
             <div key={i} className="flip-wrapper">
               <div className="flip-card">
-                <div className="flip-inner">
-                  <div className="flip-front">
-                    <img src={t.img} alt={t.title} />
-                    <div className="nombre-overlay">
-                      <p>{t.terapeuta}</p>
-                    </div>
+                {/* MODIFICACIÓN AQUÍ: Eliminar flip-inner y aplicar estilos directamente a flip-card */}
+                <div className="flip-front">
+                  <img src={t.img} alt={t.title} />
+                  <div className="nombre-overlay">
+                    <p>{t.terapeuta}</p>
                   </div>
-                  <div className="flip-back">
-                    <h3 className="mb-2 font-bold">{t.title}</h3>
-                    <p className="mb-2">{t.description}</p>
-                    <form
-                      className="w-full px-2"
-                      onSubmit={(e) => e.preventDefault()}
-                    >
-                      {t.opciones.map(
-                        (
-                          op: { sesiones: number; precio: number },
-                          j: number // Añadidos tipos explícitos para 'op' y 'j'
-                        ) => (
-                          <button
-                            key={j}
-                            type="button"
-                            onClick={() =>
-                              reservarSesion(
-                                // Llama a la función que abre el modal
-                                t.title,
-                                op.sesiones,
-                                op.precio,
-                                t.terapeuta
-                              )
-                            }
-                            className="w-full mb-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700"
-                          >
-                            {op.sesiones} sesiones ($
-                            {op.precio.toLocaleString()} CLP)
-                          </button>
-                        )
-                      )}
-                    </form>
-                  </div>
+                </div>
+                <div className="flip-back">
+                  <h3 className="mb-2 font-bold">{t.title}</h3>
+                  <p className="mb-2">{t.description}</p>
+                  <form
+                    className="w-full px-2"
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    {t.opciones.map(
+                      (op: { sesiones: number; precio: number }, j: number) => (
+                        <button
+                          key={j}
+                          type="button"
+                          onClick={() =>
+                            reservarSesion(
+                              t.title,
+                              op.sesiones,
+                              op.precio,
+                              t.terapeuta
+                            )
+                          }
+                          className="w-full mb-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700"
+                        >
+                          {op.sesiones} sesiones ($
+                          {op.precio.toLocaleString()} CLP)
+                        </button>
+                      )
+                    )}
+                  </form>
                 </div>
               </div>
             </div>

@@ -31,7 +31,7 @@ const imagenesData: ImagenData[] = [
       "La Canalización es la capacidad de recibir información energética a través de la intuición y los sentidos sutiles. Se caracteriza por la conexión con guías espirituales, la percepción extrasensorial y la apertura a energías elevadas. En este curso exploraremos la glándula pineal, el aura, los elementales y la comunicación animal, integrando técnicas prácticas para fortalecer la recepción de mensajes energéticos. Los beneficios son desarrollar herramientas esenciales para lograr claridad intuitiva, expansión sensorial y fortalecimiento de la conexión energética",
     link: "#",
     terapeuta: "Mónica Gatica",
-    precio: 30000,
+    precio: 40000,
   },
   {
     id: "limpieza-ankh-fabiola",
@@ -41,27 +41,7 @@ const imagenesData: ImagenData[] = [
       "El ankh, cruz ankh o llave de la vida, es un símbolo muy antiguo, muy asociada al antiguo Egipto, donde grandes Dioses y faraones. Sus bendiciones son múltiples, por ello, en esta formación viajáremos hacia el pasado, para conocer la historia y significado del Ankh y como poder poner sus virtudes al servicio de todos los involucrados. También aprenderás los tipos de contamines que podremos diagnosticar con ayuda del péndulo, en personas, espacio u objeto, y obviamente como limpiarnos con nuestra amada Cruz Ankh",
     link: "#",
     terapeuta: "Fabiola Valenzuela",
-    precio: 30000,
-  },
-  {
-    id: "tarot-niza",
-    src: terapeuta9,
-    alt: "Tarot",
-    descripcion:
-      "En esta formación aprenderás a conectar con tu intuición para ir descubriendo el lenguaje mágico del Tarot, preparar tu espacio y consagrar tus cartas. podras interpretar los símbolos y colores de los arcanos y utilizar tu tarot como una fuente inagotable de información que sera tu guía tanto de desarrollo personal como también  una forma de meditación , aprenderas diferentes tipos de tiradas que te servirán para orientar a otros y comenzar este hermoso camino espiritual",
-    link: "#",
-    terapeuta: "Niza",
-    precio: 30000,
-  },
-  {
-    id: "reprogramacion-macarena",
-    src: terapeuta6,
-    alt: "Reprogramación Neurolingüistica Emocional",
-    descripcion:
-      "¿Quieres multiplicar tus éxitos y despertar tu máximo potencial? En este curso descubrirás cómo leer e influir en el lenguaje corporal, facial y verbal para comunicar con verdadera autoridad; activar anclajes que disparen estados de alto rendimiento al instante; y derribar creencias limitantes que frenan tu crecimiento y el de quienes acompañas. Desarrollarás una empatía poderosa y un rapport inmediato que te abrirá puertas, aprenderás a diseñar objetivos claros y estrategias de automotivación infalibles, y a gestionar el estrés para mantenerte en equilibrio pleno. Ideal para terapeutas, psicólogos, gerentes, empresarios, profesores… y para todo aquel que quiera liderar con autenticidad y generar cambios extraordinarios.",
-    link: "#",
-    terapeuta: "Macarena del Río",
-    precio: 30000,
+    precio: 40000,
   },
 
   {
@@ -71,7 +51,7 @@ const imagenesData: ImagenData[] = [
     descripcion: "Prueba Correo",
     link: "#",
     terapeuta: "Alice Basay",
-    precio: 30000,
+    precio: 40000,
   },
 ];
 
