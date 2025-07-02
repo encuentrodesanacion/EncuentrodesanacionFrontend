@@ -48,5 +48,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true, underscored: true, tableName: "terapeutas" }
   );
+  Terapeuta.associate = (models) => {
+    Terapeuta.hasOne(models.Disponibilidad, {
+      foreignKey: "terapeutaId",
+      as: "disponibilidad",
+    });
+  };
   return Terapeuta;
 };

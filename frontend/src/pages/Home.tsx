@@ -353,6 +353,7 @@ const App = () => {
                   "Talleres y terapias grupales a valor amoroso durante 3 días",
                 buttonText: "Reserva tu cupo",
                 link: "/findetalleres",
+                isDisabled: true,
               },
               {
                 title: "SPA PRINCIPAL",
@@ -362,6 +363,7 @@ const App = () => {
                   "Espacio donde los terapeutas se reúnen para ofrendar sus terapias...",
                 buttonText: "Ir al Spa Principal",
                 link: "/spaprincipal",
+                isDisabled: false,
               },
               {
                 title: "SPA LITTLE",
@@ -370,6 +372,7 @@ const App = () => {
                 excerpt: "Espacio donde nuevos terapeutas están creciendo...",
                 buttonText: "Reserva tu hora",
                 link: "/spalittle",
+                isDisabled: true,
               },
             ].map((post, index) => (
               <div
@@ -384,12 +387,21 @@ const App = () => {
                 <div className="p-6">
                   <h3 className="text-xl font-light mb-2">{post.title}</h3>
                   <p className="text-gray-600">{post.excerpt}</p>
-                  <Link
-                    to={post.link}
-                    className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
-                  >
-                    {post.buttonText} →
-                  </Link>
+                  {post.isDisabled ? ( // <-- Lógica condicional para el botón
+                    <span
+                      className="text-gray-400 mt-4 inline-block font-medium cursor-not-allowed"
+                      style={{ pointerEvents: "none" }} // Evita eventos de click
+                    >
+                      {post.buttonText} →
+                    </span>
+                  ) : (
+                    <Link
+                      to={post.link}
+                      className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
+                    >
+                      {post.buttonText} →
+                    </Link>
+                  )}
                 </div>
               </div>
             ))}

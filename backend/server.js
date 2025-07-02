@@ -19,7 +19,7 @@ const app = express();
 
 // --- Importaciones de Modelos de Base de Datos ---
 const db = require("./models");
-
+const disponibilidadRoutes = require("./routes/disponibilidadRoutes");
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
 const marketingRoutes = require("./routes/marketing.routes");
@@ -45,6 +45,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/webpay", webpayRoutes);
 app.use("/", googleAuthRoutes);
 app.use("/api/marketing", marketingRoutes);
+app.use("/api/disponibilidades", disponibilidadRoutes);
 
 // Crear reserva autenticada (ejemplo de ruta directa) - Asegúrate de que esto siga siendo relevante
 app.post("/api/reservar", async (req, res) => {

@@ -6,7 +6,7 @@ import { useCart, Reserva } from "../pages/CartContext";
 import CartIcon from "../components/CartIcon";
 
 import Tallersanando from "../assets/Tallersanando.jpeg";
-import Terapeuta2 from "../assets/Terapeuta2.jpg";
+import Terapeuta2 from "../assets/creadorvirtual.jpg";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";

@@ -96,7 +96,7 @@ export default function TalleresMensuales() {
       date: "2025-07-05",
       time: "10:30",
       instructor: "Alice Basay",
-      instructorId: 5,
+      instructorId: 10,
     },
     // Añade más talleres aquí
   ];
