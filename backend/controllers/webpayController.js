@@ -392,7 +392,6 @@ const confirmarTransaccion = async (req, res) => {
       }
 
       // --- Creación de Evento en Google Calendar ---
-      // FIX: Esta lógica debe estar DENTRO del bucle `for`
       console.log(
         "[CALENDAR] Preparando creación de evento en Google Calendar."
       );
@@ -408,7 +407,7 @@ const confirmarTransaccion = async (req, res) => {
           );
         }
       }
-    } // <-- FIX: Cierre del bucle `for` movido aquí
+    }
 
     console.log("[DB] Eliminando registro de TemporalReserva...");
     await TemporalReserva.destroy({ where: { token } });
@@ -488,10 +487,12 @@ const anularTransaccion = async (req, res) => {
         `[VALIDATION-WARN] Transacción ${tokenTransaccion} no está en estado 'aprobado' o 'parcialmente_anulado'. Estado actual: ${transaccionOriginal.estadoPago}`
       );
       await t.rollback();
-      return res.status(400).json({
-        mensaje:
-          "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'.",
-      });
+      return res
+        .status(400)
+        .json({
+          mensaje:
+            "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'.",
+        });
     }
 
     const tokenToRefund = transaccionOriginal.tokenTransaccion;
@@ -502,9 +503,11 @@ const anularTransaccion = async (req, res) => {
         "[ERROR] No se encontró el tokenTransaccion en la transacción de la DB para anular."
       );
       await t.rollback();
-      return res.status(500).json({
-        mensaje: "Token de transacción no encontrado en la base de datos.",
-      });
+      return res
+        .status(500)
+        .json({
+          mensaje: "Token de transacción no encontrado en la base de datos.",
+        });
     }
 
     let refundResponse;
@@ -668,7 +671,7 @@ const anularTransaccion = async (req, res) => {
         },
         { transaction: t }
       );
-      await t.rollback(); // Rollback should happen after the update within the transaction fails or logically needs to be reverted.
+      await t.rollback();
       console.log(
         "[DB-TX] Transacción de base de datos revertida (rollback) debido a fallo de anulación."
       );
@@ -685,33 +688,14 @@ const anularTransaccion = async (req, res) => {
       error
     );
 
-    // FIX: Simplified error handling to avoid linter issues.
-    let redirectErrorType = "internal_server_error";
-    let redirectErrorMessage = error.message || "Error desconocido.";
     const tokenWs = req.query.token_ws || req.body?.token_ws;
-
     return res.redirect(
       `${process.env.FRONTEND_URL}/pago-fallido?token=${
         tokenWs || "n/a"
-      }&error=${encodeURIComponent(
-        redirectErrorMessage
-      )}&type=${redirectErrorType}`
+      }&error=${encodeURIComponent(error.message)}&type=internal_server_error`
     );
   }
 };
-
-console.log(
-  "Tipo de crearTransaccionInicial antes de exportar:",
-  typeof crearTransaccionInicial
-);
-console.log(
-  "Tipo de confirmarTransaccion antes de exportar:",
-  typeof confirmarTransaccion
-);
-console.log(
-  "Tipo de anularTransaccion antes de exportar:",
-  typeof anularTransaccion
-);
 
 module.exports = {
   crearTransaccionInicial,
