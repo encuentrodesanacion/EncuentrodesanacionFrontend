@@ -448,6 +448,8 @@ exports.anularTransaccion = async (req, res) => {
     `\n--- [WEBPAY] INICIO: Solicitud de anulación para Token: ${tokenTransaccion} ---`
   );
 
+  let transaccionOriginal; // Declarar aquí para que sea accesible en el catch
+
   try {
     if (!tokenTransaccion) {
       console.warn("[VALIDATION-FAIL] Falta el tokenTransaccion para anular.");
@@ -459,7 +461,7 @@ exports.anularTransaccion = async (req, res) => {
 
     // 1. Buscar la transacción original en tu base de datos por el token
     console.log(`[DB] Buscando Transaccion con token: ${tokenTransaccion}`);
-    const transaccionOriginal = await Transaccion.findOne({
+    transaccionOriginal = await Transaccion.findOne({
       where: { tokenTransaccion: tokenTransaccion },
       transaction: t,
       lock: t.LOCK.UPDATE, // Bloquear la fila para evitar concurrencia
@@ -484,30 +486,25 @@ exports.anularTransaccion = async (req, res) => {
         `[VALIDATION-WARN] Transacción ${tokenTransaccion} no está en estado 'aprobado' o 'parcialmente_anulado'. Estado actual: ${transaccionOriginal.estadoPago}`
       );
       await t.rollback();
-      return res
-        .status(400)
-        .json({
-          error:
-            "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'.",
-        });
+      return res.status(400).json({
+        error:
+          "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'.",
+      });
     }
 
     // 2. Anular la transacción con Transbank
     // El buy_order y el monto_total de la transacción original son necesarios para el refund en Transbank.
-    const buyOrderToRefund = transaccionOriginal.buyOrder; // Asumo que `buyOrder` está guardado en `Transaccion`
-    const originalAmount = transaccionOriginal.montoTotal;
+    const buyOrderToRefund = transaccionOriginal.buyOrder; //
+    const originalAmount = transaccionOriginal.montoTotal; //
 
     if (!buyOrderToRefund) {
       console.error(
         "[ERROR] No se encontró el buyOrder en la transacción de la DB para anular."
       );
       await t.rollback();
-      return res
-        .status(500)
-        .json({
-          error:
-            "BuyOrder no encontrado en la base de datos de la transacción.",
-        });
+      return res.status(500).json({
+        error: "BuyOrder no encontrado en la base de datos de la transacción.",
+      });
     }
 
     let refundResponse;
