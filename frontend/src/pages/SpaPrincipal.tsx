@@ -33,27 +33,27 @@ export default function SpaPrincipal() {
   const [disponibilidadesProcesadas, setDisponibilidadesProcesadas] = useState<
     Map<string, DisponibilidadTerapeuta>
   >(new Map());
-  const [error, setError] = useState<string | null>(null); // Estado para manejar errores
+  const [error, setError] = useState<string | null>(null);
 
-  // --- EFECTO PARA CARGAR Y PROCESAR LAS DISPONIBILIDADES AL MONTAR EL COMPONENTE ---
   useEffect(() => {
     const fetchAndProcessDisponibilidades = async () => {
-      // 1. Usa la variable de entorno de Netlify/Vite
+      // 1. Usa la variable de entorno configurada en Netlify
       const apiUrl = import.meta.env.VITE_API_URL;
 
-      // 2. Verifica que la variable exista
       if (!apiUrl) {
         const errorMessage =
-          "CRITICAL ERROR: La variable de entorno VITE_API_URL no está configurada.";
+          "Error: La variable de entorno VITE_API_URL no está configurada.";
         console.error(errorMessage);
-        setError(errorMessage); // Guarda el error para mostrarlo al usuario
+        setError(errorMessage);
         return;
       }
 
       try {
-        // 3. Construye la URL completa y correcta
+        // 2. Construye la URL completa y correcta.
+        // La variable apiUrl debe ser "https://.../api"
+        // La ruta del endpoint es "/disponibilidades"
         const fullUrl = `${apiUrl}/disponibilidades`;
-        console.log(`Fetching data from: ${fullUrl}`); // Log para depurar la URL
+        console.log(`Fetching data from: ${fullUrl}`); // Log para depurar
 
         const response = await fetch(fullUrl);
 
@@ -64,12 +64,7 @@ export default function SpaPrincipal() {
         }
 
         const rawData: RawDisponibilidadDBItem[] = await response.json();
-        console.log(
-          "Datos crudos de disponibilidades desde el backend:",
-          rawData
-        );
 
-        // --- Lógica para procesar los datos (sin cambios) ---
         const aggregatedDisponibilidades = new Map<
           string,
           DisponibilidadTerapeuta
@@ -102,10 +97,6 @@ export default function SpaPrincipal() {
         });
 
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
-        console.log(
-          "Disponibilidades procesadas y agregadas:",
-          aggregatedDisponibilidades
-        );
       } catch (err) {
         console.error("Error al cargar y procesar las disponibilidades:", err);
         setError(
@@ -115,9 +106,7 @@ export default function SpaPrincipal() {
     };
 
     fetchAndProcessDisponibilidades();
-  }, []); // El array vacío asegura que se ejecute solo una vez al montar
-
-  // --- El resto de tu componente (sin cambios) ---
+  }, []);
 
   const getDisponibilidadForTerapeuta = (
     terapeutaNombre: string
@@ -166,7 +155,6 @@ export default function SpaPrincipal() {
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-
     {
       img: Terapeuta14,
       title: "Armonía Magnética para la Abundancia",
@@ -197,12 +185,11 @@ export default function SpaPrincipal() {
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-
     {
       img: creadorVirtual,
       title: "Regresión",
       terapeuta: "Alice Basay",
-      terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
+      terapeuta_id: 10,
       description: "Correo de Prueba.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
@@ -218,7 +205,6 @@ export default function SpaPrincipal() {
     if (
       typeof terapiaPrecio !== "number" ||
       isNaN(terapiaPrecio) ||
-      terapiaPrecio === null ||
       terapiaPrecio < 0
     ) {
       console.error("Error: Precio de la terapia inválido al reservar.");
@@ -266,9 +252,12 @@ export default function SpaPrincipal() {
     ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
     : undefined;
 
-  // Renderizado condicional si hay un error
   if (error) {
-    return <div className="text-red-500 text-center mt-20">Error: {error}</div>;
+    return (
+      <div className="text-red-500 text-center mt-20 p-4">
+        Error al cargar datos: {error}
+      </div>
+    );
   }
 
   return (
