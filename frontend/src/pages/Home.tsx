@@ -16,7 +16,7 @@ import {
 // import ReservaHora from "../ReservaHora";
 import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
-import creadorvirtual from "../assets/creadorvirtual.jpg";
+
 import { Link } from "react-router-dom";
 import CartIcon from "../components/CartIcon";
 

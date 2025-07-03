@@ -7,8 +7,7 @@ import CartIcon from "../components/CartIcon";
 // Importaciones de imágenes
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
-import creadorvirtual from "../assets/creadorvirtual.jpg";
-import Terapeuta11 from "../assets/Terapeuta11.jpeg";
+
 import Terapeuta16 from "../assets/Terapeuta16.jpg";
 // PASO 1: Añadir 'terapeutaId' a la interfaz
 interface TerapiaItem {
@@ -40,33 +39,12 @@ export default function TratamientoHolistico() {
   // Asegúrate de que estos IDs coincidan con los de tu base de datos.
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta1,
-      title: "Canalización Energética",
-      terapeuta: "Brenda Rivas",
-      terapeutaId: 7, // <-- AÑADIDO
-      description:
-        "Es una terapia en la cual una persona actúa como un conducto...",
-      opciones: [{ sesiones: 3, precio: 55000 }],
-    },
-    {
       img: Terapeuta5,
       title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
       terapeuta: "Sandra Da Silva",
       terapeutaId: 9, // <-- AÑADIDO
       description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser...",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
-    },
-    {
-      img: creadorvirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeutaId: 10, // <-- AÑADIDO
-      description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser...",
+        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
         { sesiones: 3, precio: 55000 },
         { sesiones: 4, precio: 70000 },
@@ -78,7 +56,16 @@ export default function TratamientoHolistico() {
       terapeuta: "Gabriel Moreno",
       terapeutaId: 15, // <-- AÑADIDO
       description:
-        "La Bioenergía se forma en el cuerpo con nuestras emociones...",
+        "La Bioenergía se forma en el cuerpo con nuestras emociones, Pensamientos, Sentimientos, y si todo ello está en desequilibrio nos empezamos a Enfermar, tenemos Inflamaciones, Dolores, Traumas, Miedos, etc., La terapia de Bioenergía con imanes hace que podamos sanar nuestro cuerpo Físico,Mental,Emocional, y espiritual.",
+      opciones: [{ sesiones: 3, precio: 55000 }],
+    },
+    {
+      img: Terapeuta1,
+      title: "Canalización Energética",
+      terapeuta: "Brenda Rivas",
+      terapeutaId: 7, // <-- AÑADIDO
+      description:
+        "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, ángeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [{ sesiones: 3, precio: 55000 }],
     },
   ];

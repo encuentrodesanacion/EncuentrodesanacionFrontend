@@ -9,7 +9,7 @@ import Terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 import Terapeuta8 from "../assets/Terapeuta8.jpg";
-import creadorVirtual from "../assets/creadorvirtual.jpg";
+
 import Terapeuta13 from "../assets/Terapeuta13.jpeg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
@@ -116,16 +116,6 @@ export default function SpaPrincipal() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta3,
-      title: "Liberación Memorias Uterinas",
-      terapeuta: "Mónica Gatica",
-      terapeuta_id: 5,
-      description:
-        "Es una Terapia para conectar con nuestro Centro Creativo, el útero sagrado y liberar patrones energéticos, emocionales y ancestrales que se almacenan en esta zona. Ayuda a sanar traumas pasados, mejorar la relación con la feminidad y potenciar la creatividad y el bienestar.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
       img: Terapeuta11,
       title: "Constelaciones Familiares",
       terapeuta: "Paulina Villablanca",
@@ -136,12 +126,22 @@ export default function SpaPrincipal() {
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
-      img: Terapeuta13,
-      title: "Péndulo Hebreo",
-      terapeuta: "Rosa Santimone",
-      terapeuta_id: 12,
+      img: Terapeuta14,
+      title: "Armonía Magnética para la Abundancia",
+      terapeuta: "Ana Luisa Solervicens",
+      terapeuta_id: 13,
       description:
-        "Es una terapia de armonización energética que permite detectar y eliminar energías negativas, restaurando el equilibrio del cuerpo. También diagnostica el estado de los chakras y sistemas del cuerpo, regenera y equilibra su energía. Además, potencia el crecimiento personal, limpia y armoniza el aura y, a través de la cromoterapia, otorga mayores beneficios al consultante.",
+        "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
+      precio: 16000,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta3,
+      title: "Liberación Memorias Uterinas",
+      terapeuta: "Mónica Gatica",
+      terapeuta_id: 5,
+      description:
+        "Es una Terapia para conectar con nuestro Centro Creativo, el útero sagrado y liberar patrones energéticos, emocionales y ancestrales que se almacenan en esta zona. Ayuda a sanar traumas pasados, mejorar la relación con la feminidad y potenciar la creatividad y el bienestar.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -156,26 +156,6 @@ export default function SpaPrincipal() {
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
-      img: Terapeuta14,
-      title: "Armonía Magnética para la Abundancia",
-      terapeuta: "Ana Luisa Solvervicens",
-      terapeuta_id: 15,
-      description:
-        "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: Terapeuta15,
-      title: "Registros Akáshicos ",
-      terapeuta: "Laura Vicens",
-      terapeuta_id: 17,
-      description:
-        "Los registros Akashicos son una fuente de información espiritual donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
       img: Terapeuta8,
       title: "Tarot Predictivo y/o Terapia con Oráculos",
       terapeuta: "Paola Quintero",
@@ -186,11 +166,23 @@ export default function SpaPrincipal() {
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
-      img: creadorVirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeuta_id: 10,
-      description: "Correo de Prueba.",
+      img: Terapeuta13,
+      title: "Péndulo Hebreo",
+      terapeuta: "Rosa Santimone",
+      terapeuta_id: 12,
+      description:
+        "Es una terapia de armonización energética que permite detectar y eliminar energías negativas, restaurando el equilibrio del cuerpo. También diagnostica el estado de los chakras y sistemas del cuerpo, regenera y equilibra su energía. Además, potencia el crecimiento personal, limpia y armoniza el aura y, a través de la cromoterapia, otorga mayores beneficios al consultante.",
+      precio: 16000,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+
+    {
+      img: Terapeuta15,
+      title: "Registros Akáshicos ",
+      terapeuta: "Laura Vicens",
+      terapeuta_id: 14,
+      description:
+        "Los registros Akashicos son una fuente de información espiritual donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },

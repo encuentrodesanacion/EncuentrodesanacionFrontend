@@ -44,28 +44,6 @@ export default function TalleresMensuales() {
       instructorId: 5,
     },
     {
-      id: "Taller-de-Tribu-en-Calma",
-      title: "Tribu en Calma",
-      description:
-        "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
-      price: 25000,
-      date: "2025-02-07",
-      time: "19:00",
-      instructor: "Vanessa Hernández",
-      instructorId: 16,
-    },
-    {
-      id: "Taller-de-Yoga",
-      title: "Yoga Integral para Adultos",
-      description:
-        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación las cuales nos ayudan a mejorar nuestra salud en general. Esta maravillosa práctica dentro de sus innumerables beneficios podemos encontrar los siguientes : Reducir el estres Aumenta las hormonas de la felicidad Alivia la migraña Nos ayuda a calmar nuestra mente. Reduce los niveles de ansiedad. Entre otros.",
-      price: 25000,
-      date: "2025-05-07",
-      time: "11:00",
-      instructor: "Marlene Ramírez",
-      instructorId: 17,
-    },
-    {
       id: "Taller-de-Alquimia",
       title: "Alquimia de Abundancia",
       description:
@@ -75,6 +53,17 @@ export default function TalleresMensuales() {
       time: "21:00",
       instructor: "Macarena del Río",
       instructorId: 6,
+    },
+    {
+      id: "Taller-de-Tribu-en-Calma",
+      title: "Tribu en Calma",
+      description:
+        "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
+      price: 25000,
+      date: "2025-02-07",
+      time: "19:00",
+      instructor: "Vanessa Hernández",
+      instructorId: 16,
     },
     {
       id: "Taller-de-Escribir-sobre-Raices",
@@ -88,16 +77,17 @@ export default function TalleresMensuales() {
       instructorId: 18,
     },
     {
-      id: "taller-meditacion-jul",
-      title: "Taller de Regresión",
+      id: "Taller-de-Yoga",
+      title: "Yoga Integral para Adultos",
       description:
-        "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",
+        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación las cuales nos ayudan a mejorar nuestra salud en general. Esta maravillosa práctica dentro de sus innumerables beneficios podemos encontrar los siguientes : Reducir el estres Aumenta las hormonas de la felicidad Alivia la migraña Nos ayuda a calmar nuestra mente. Reduce los niveles de ansiedad. Entre otros.",
       price: 25000,
-      date: "2025-07-05",
-      time: "10:30",
-      instructor: "Alice Basay",
-      instructorId: 10,
+      date: "2025-05-07",
+      time: "11:00",
+      instructor: "Marlene Ramírez",
+      instructorId: 17,
     },
+
     // Añade más talleres aquí
   ];
 

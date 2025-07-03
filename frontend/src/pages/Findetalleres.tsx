@@ -228,17 +228,6 @@ export default function FinDeTalleres() {
       instructor: "Paulina Villablanca",
       instructorId: 2,
     },
-    {
-      id: "retiro-meditacion-jun-22", // Nuevo ID para el taller del viernes 20
-      title: "Regresión",
-      description:
-        "Una sesión intensiva de meditación para empezar el fin de semana.",
-      price: 10000,
-      date: "2025-06-20", // Viernes, junio 20, 2025
-      time: "20:30", // Hora específica para el viernes
-      instructor: "Alice Basay",
-      instructorId: 5,
-    },
   ];
 
   // --- Función para ABRIR EL MODAL DE RESERVA CON FECHA ---
