@@ -33,7 +33,7 @@ console.log("Tipo de disponibilidadRoutes:", typeof disponibilidadRoutes);
 app.use(
   cors({
     origin: [
-      "https://localhost:5173", // Para tu desarrollo local
+      "http://localhost:5173", // Para tu desarrollo local
       "https://www.encuentrodesanacion.com", // Tu dominio principal en Netlify (con HTTPS)
       "https://encuentrodesanacion.com", // Opcional: si tu sitio también resuelve sin 'www'
     ],
