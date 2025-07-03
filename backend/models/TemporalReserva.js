@@ -20,6 +20,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: true,
       },
+      buyOrder: {
+        // <-- Añadir este campo
+        type: DataTypes.STRING,
+        allowNull: true, // Puede ser nulo o no requerido inicialmente
+      },
     },
     {
       tableName: "TemporalReservas",

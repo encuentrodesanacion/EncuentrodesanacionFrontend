@@ -17,6 +17,12 @@ module.exports = (sequelize) => {
         allowNull: false,
         unique: true,
       },
+      buyOrder: {
+        // <-- Añadir este campo para el `buy_order` de Transbank
+        type: DataTypes.STRING,
+        allowNull: true, // `true` si una transacción antigua podría no tenerlo
+        unique: false,
+      },
       montoTotal: {
         type: DataTypes.INTEGER,
         allowNull: false,
@@ -29,6 +35,17 @@ module.exports = (sequelize) => {
       fechaPago: {
         type: DataTypes.DATE,
         allowNull: true,
+      },
+      fechaAnulacion: {
+        // <-- Nuevo campo para la fecha de anulación
+        type: DataTypes.DATE,
+        allowNull: true,
+      },
+      montoAnulado: {
+        // <-- Nuevo campo para el monto anulado (para anulaciones parciales)
+        type: DataTypes.INTEGER,
+        allowNull: true,
+        defaultValue: 0,
       },
       clienteId: {
         type: DataTypes.STRING,
@@ -49,6 +66,13 @@ module.exports = (sequelize) => {
       underscored: true,
     }
   );
+
+  Transaccion.associate = (models) => {
+    Transaccion.hasMany(models.Reserva, {
+      foreignKey: "transaccion_id", // Asegúrate de que este foreignKey exista en Reserva
+      as: "reservas",
+    });
+  };
 
   return Transaccion;
 };
