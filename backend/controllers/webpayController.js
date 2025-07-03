@@ -10,7 +10,6 @@
 // -----------------------------------------------------------------
 const { WebpayPlus, Options, Environment } = require("transbank-sdk");
 const { google } = require("googleapis");
-const path = require("path"); // Aunque importado, 'path' no se usa en el código proporcionado.
 const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
@@ -18,12 +17,11 @@ require("dotenv").config();
 const db = require("../models");
 const Reserva = db.Reserva;
 const TemporalReserva = db.TemporalReserva;
-const Terapeuta = db.Terapeuta; // Aunque importado, 'Terapeuta' no se usa directamente en el código proporcionado, solo a través de db.sequelize.query
+const Terapeuta = db.Terapeuta;
 const Transaccion = db.Transaccion;
 const Disponibilidad = db.Disponibilidad;
 
 // Importación de Sequelize para transacciones
-const { Op, Sequelize } = db.sequelize; // 'Op' y 'Sequelize' no se usan directamente aquí, pero se mantienen.
 const sequelize = db.sequelize;
 
 // Importación de servicios personalizados
@@ -52,10 +50,6 @@ const transaction = new WebpayPlus.Transaction(
 // -----------------------------------------------------------------
 // 3. FUNCIONES AUXILIARES (GOOGLE CALENDAR)
 // -----------------------------------------------------------------
-/**
- * Autoriza el cliente de Google para acceder a la API de Calendar.
- * @returns {Promise<google.auth.OAuth2>} Cliente de autenticación de Google.
- */
 async function authorize() {
   const auth = new google.auth.GoogleAuth({
     credentials: {
@@ -67,13 +61,6 @@ async function authorize() {
   return await auth.getClient();
 }
 
-/**
- * Crea un evento en Google Calendar.
- * @param {string} fechaInicioISO - Fecha y hora de inicio en formato ISO 8601.
- * @param {string} fechaFinISO - Fecha y hora de fin en formato ISO 8601.
- * @param {string} resumen - Resumen/título del evento.
- * @returns {Promise<object|null>} Datos del evento creado o null si falla.
- */
 async function crearEventoReserva(fechaInicioISO, fechaFinISO, resumen) {
   try {
     const authClient = await authorize();
@@ -105,12 +92,6 @@ async function crearEventoReserva(fechaInicioISO, fechaFinISO, resumen) {
 // -----------------------------------------------------------------
 // 4. CONTROLADORES DE RUTA
 // -----------------------------------------------------------------
-
-/**
- * Inicia una transacción de Webpay Plus y guarda la información temporal de la reserva.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
- */
 const crearTransaccionInicial = async (req, res) => {
   console.log(
     "\n--- [WEBPAY] INICIO: Solicitud para crear transacción inicial ---"
@@ -156,7 +137,7 @@ const crearTransaccionInicial = async (req, res) => {
       reservas: JSON.stringify(reservas),
       montoTotal: monto,
       clienteId: reservas[0]?.telefonoCliente || null,
-      buyOrder: buyOrder, // Guardar buyOrder aquí también es útil para referencia
+      buyOrder: buyOrder,
     });
     console.log("[DB] Registro en TemporalReserva creado exitosamente.");
     console.log("--- [WEBPAY] FIN: Redirigiendo al usuario a Webpay ---");
@@ -174,11 +155,6 @@ const crearTransaccionInicial = async (req, res) => {
   }
 };
 
-/**
- * Confirma una transacción de Webpay Plus y procesa las reservas asociadas.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
- */
 const confirmarTransaccion = async (req, res) => {
   const token = req.query.token_ws || req.body?.token_ws;
   console.log(
@@ -219,7 +195,7 @@ const confirmarTransaccion = async (req, res) => {
     nuevaTransaccion = await Transaccion.create(
       {
         tokenTransaccion: token,
-        buyOrder: temporal.buyOrder, // Asegúrate de guardar el buyOrder
+        buyOrder: temporal.buyOrder,
         montoTotal: temporal.montoTotal,
         estadoPago:
           commitResponse.status === "AUTHORIZED" ? "aprobado" : "rechazado",
@@ -233,7 +209,7 @@ const confirmarTransaccion = async (req, res) => {
     );
 
     if (commitResponse.status !== "AUTHORIZED") {
-      await t.commit(); // Confirmar la transacción de DB para registrar el fallo
+      await t.commit();
       console.warn(
         `[WEBPAY-FAIL] El pago fue rechazado por Transbank con estado: ${commitResponse.status}.`
       );
@@ -261,12 +237,11 @@ const confirmarTransaccion = async (req, res) => {
       console.log(
         `[DB] Buscando terapeuta con ID: ${reserva.terapeutaId} usando una consulta directa.`
       );
-      // Asumiendo que 'terapeutas' es el nombre de la tabla en la DB
-      const [terapeutaEncontrado] = await db.sequelize.query(
+      const [terapeutaEncontrado] = await sequelize.query(
         `SELECT * FROM terapeutas WHERE id = :terapeutaId LIMIT 1;`,
         {
           replacements: { terapeutaId: reserva.terapeutaId },
-          type: db.sequelize.QueryTypes.SELECT,
+          type: sequelize.QueryTypes.SELECT,
           transaction: t,
         }
       );
@@ -334,13 +309,14 @@ const confirmarTransaccion = async (req, res) => {
         );
       }
 
-      console.log(
-        `[NOTIFY] Preparando notificación para terapeuta: ${terapeutaEncontrado.nombre}`
-      );
+      // --- Notificación por Email ---
       try {
+        console.log(
+          `[NOTIFY] Preparando notificación para terapeuta: ${terapeutaEncontrado.nombre}`
+        );
         if (terapeutaEncontrado.email) {
           console.log(
-            `[DEBUG-NOTIFY] Raw 'servicios_ofrecidos' from DB:`,
+            "[DEBUG-NOTIFY] Raw 'servicios_ofrecidos' from DB:",
             terapeutaEncontrado.servicios_ofrecidos
           );
 
@@ -369,31 +345,31 @@ const confirmarTransaccion = async (req, res) => {
           if (ofreceServicio) {
             const subject = `¡Nueva Reserva Confirmada para ${reserva.especialidad}!`;
             const htmlContent = `
-                <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
-                <p>¡Se ha confirmado una nueva reserva para ${
-                  reserva.servicio
-                }!</p>
-                <ul>
-                  <li><strong>Servicio:</strong> ${reserva.servicio}</li>
-                  <li><strong>Especialidad:</strong> ${
-                    reserva.especialidad || "N/A"
-                  }</li>
-                  <li><strong>Cliente:</strong> ${
-                    reserva.nombreCliente || "N/A"
-                  }</li>
-                  <li><strong>Teléfono:</strong> ${
-                    reserva.telefonoCliente || "N/A"
-                  }</li>
-                  <li><strong>Fecha:</strong> ${reserva.fecha || "N/A"}</li>
-                  <li><strong>Hora:</strong> ${reserva.hora || "N/A"}</li>
-                  <li><strong>Precio:</strong> $${
-                    reserva.precio
-                      ? reserva.precio.toLocaleString("es-CL")
-                      : "N/A"
-                  } CLP</li>
-                </ul>
-                <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
-              `;
+              <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
+              <p>¡Se ha confirmado una nueva reserva para ${
+                reserva.servicio
+              }!</p>
+              <ul>
+                <li><strong>Servicio:</strong> ${reserva.servicio}</li>
+                <li><strong>Especialidad:</strong> ${
+                  reserva.especialidad || "N/A"
+                }</li>
+                <li><strong>Cliente:</strong> ${
+                  reserva.nombreCliente || "N/A"
+                }</li>
+                <li><strong>Teléfono Valiente:</strong> ${
+                  reserva.telefonoCliente || "N/A"
+                }</li>
+                <li><strong>Fecha:</strong> ${reserva.fecha || "N/A"}</li>
+                <li><strong>Hora:</strong> ${reserva.hora || "N/A"}</li>
+                <li><strong>Precio:</strong> $${
+                  reserva.precio
+                    ? reserva.precio.toLocaleString("es-CL")
+                    : "N/A"
+                } CLP</li>
+              </ul>
+              <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
+            `;
             await sendEmail(terapeutaEncontrado.email, subject, htmlContent);
             console.log(
               `[NOTIFY] Notificación por correo enviada a ${terapeutaEncontrado.email}.`
@@ -415,12 +391,14 @@ const confirmarTransaccion = async (req, res) => {
         );
       }
 
+      // --- Creación de Evento en Google Calendar ---
+      // FIX: Esta lógica debe estar DENTRO del bucle `for`
       console.log(
         "[CALENDAR] Preparando creación de evento en Google Calendar."
       );
       if (reserva.fecha && reserva.hora) {
         const startDateTime = new Date(`${reserva.fecha}T${reserva.hora}:00`);
-        const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000); // Asume 1 hora de duración
+        const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
         if (!isNaN(startDateTime.getTime())) {
           const resumenEvento = `Reserva: ${reserva.especialidad} | Cliente: ${reserva.nombreCliente}`;
           await crearEventoReserva(
@@ -428,17 +406,9 @@ const confirmarTransaccion = async (req, res) => {
             endDateTime.toISOString(),
             resumenEvento
           );
-        } else {
-          console.warn(
-            `[CALENDAR-WARN] Fecha u hora inválida para crear evento de calendario: ${reserva.fecha} ${reserva.hora}`
-          );
         }
-      } else {
-        console.warn(
-          `[CALENDAR-WARN] Falta fecha u hora para crear evento de calendario para reserva de ${reserva.especialidad}.`
-        );
       }
-    }
+    } // <-- FIX: Cierre del bucle `for` movido aquí
 
     console.log("[DB] Eliminando registro de TemporalReserva...");
     await TemporalReserva.destroy({ where: { token } });
@@ -461,13 +431,9 @@ const confirmarTransaccion = async (req, res) => {
     );
 
     if (nuevaTransaccion) {
-      // Si la transacción ya se había creado en DB, actualiza su estado a error
       await Transaccion.update(
         { estadoPago: "error_procesamiento" },
         { where: { id: nuevaTransaccion.id } }
-      );
-      console.log(
-        `[DB] Transacción ${nuevaTransaccion.id} actualizada a estado 'error_procesamiento'.`
       );
     }
     console.log("--- [WEBPAY] FIN: Redirigiendo a página de fallo ---");
@@ -477,26 +443,16 @@ const confirmarTransaccion = async (req, res) => {
       }&error=${encodeURIComponent(error.message)}`
     );
   }
-}; // <-- Esta es la llave de cierre correcta para confirmarTransaccion
+};
 
-// =================================================================
-// NUEVO CONTROLADOR: ANULAR TRANSACCIÓN
-// =================================================================
-
-/**
- * Anula una transacción de Webpay Plus (total o parcial) y revierte la disponibilidad si es anulación total.
- * @param {object} req - Objeto de solicitud.
- * @param {object} res - Objeto de respuesta.
- */
 const anularTransaccion = async (req, res) => {
-  // Se espera el token de la transacción y, opcionalmente, el monto a anular
   const { tokenTransaccion, amount } = req.body;
   const t = await sequelize.transaction();
   console.log(
     `\n--- [WEBPAY] INICIO: Solicitud de anulación para Token: ${tokenTransaccion} ---`
   );
 
-  let transaccionOriginal; // Declarar aquí para que sea accesible en el catch
+  let transaccionOriginal;
 
   try {
     if (!tokenTransaccion) {
@@ -507,10 +463,9 @@ const anularTransaccion = async (req, res) => {
         .json({ mensaje: "Falta el token de la transacción a anular." });
     }
 
-    // 1. Buscar la transacción original en tu base de datos por el token
     console.log(`[DB] Buscando Transaccion con token: ${tokenTransaccion}`);
     transaccionOriginal = await Transaccion.findOne({
-      where: { tokenTransaccion: tokenTransaccion }, // Usar camelCase
+      where: { tokenTransaccion: tokenTransaccion },
       transaction: t,
       lock: t.LOCK.UPDATE,
     });
@@ -525,15 +480,13 @@ const anularTransaccion = async (req, res) => {
         .json({ mensaje: "Transacción original no encontrada." });
     }
 
-    // Validar que la transacción original esté en un estado que permita anulación
     if (
       transaccionOriginal.estadoPago !== "aprobado" &&
       transaccionOriginal.estadoPago !== "parcialmente_anulado"
     ) {
-      // Usar camelCase
       console.warn(
         `[VALIDATION-WARN] Transacción ${tokenTransaccion} no está en estado 'aprobado' o 'parcialmente_anulado'. Estado actual: ${transaccionOriginal.estadoPago}`
-      ); // Usar camelCase
+      );
       await t.rollback();
       return res.status(400).json({
         mensaje:
@@ -541,9 +494,8 @@ const anularTransaccion = async (req, res) => {
       });
     }
 
-    // 2. Anular la transacción con Transbank
-    const tokenToRefund = transaccionOriginal.tokenTransaccion; // Usar el token guardado (camelCase)
-    const originalAmount = transaccionOriginal.montoTotal; // Usar el monto guardado (camelCase)
+    const tokenToRefund = transaccionOriginal.tokenTransaccion;
+    const originalAmount = transaccionOriginal.montoTotal;
 
     if (!tokenToRefund) {
       console.error(
@@ -562,7 +514,6 @@ const anularTransaccion = async (req, res) => {
 
     try {
       if (amount !== undefined && amount !== null) {
-        // Anulación parcial si se especifica un monto
         if (amount <= 0 || amount > originalAmount) {
           console.warn(
             `[VALIDATION-WARN] Monto de anulación (${amount}) inválido o excede el monto original (${originalAmount}).`
@@ -600,20 +551,19 @@ const anularTransaccion = async (req, res) => {
       refundResponse
     );
 
-    // 3. Actualizar el estado en tu base de datos
     if (refundResponse && refundResponse.type === "REVERSED") {
       const nuevoEstado =
         amount !== undefined && amount !== null
           ? "parcialmente_anulado"
           : "anulado";
       const montoAnuladoActualizado =
-        (transaccionOriginal.montoAnulado || 0) + (amount || originalAmount); // Usar camelCase
+        (transaccionOriginal.montoAnulado || 0) + (amount || originalAmount);
 
       await transaccionOriginal.update(
         {
-          estadoPago: nuevoEstado, // Usar camelCase
-          fechaAnulacion: new Date(), // Usar camelCase
-          montoAnulado: montoAnuladoActualizado, // Usar camelCase
+          estadoPago: nuevoEstado,
+          fechaAnulacion: new Date(),
+          montoAnulado: montoAnuladoActualizado,
         },
         { transaction: t }
       );
@@ -621,84 +571,77 @@ const anularTransaccion = async (req, res) => {
         `[DB] Transacción ${tokenTransaccion} actualizada a estado: ${nuevoEstado}`
       );
 
-      // --- 4. Lógica de Reversión de Disponibilidad (Solo si es anulación total) ---
       if (nuevoEstado === "anulado") {
         console.log(
-          `[PROCESSING] Iniciando reversión de disponibilidad para las reservas asociadas a la transacción ID: ${transaccionOriginal.id}.`
+          `[PROCESSING] Iniciando reversión de disponibilidad para las reservas asociadas a ${transaccionOriginal.id}.`
         );
         const reservasAsociadas = await Reserva.findAll({
-          // Usar Reserva
-          where: { transaccionId: transaccionOriginal.id }, // Usar camelCase
+          where: { transaccionId: transaccionOriginal.id },
           transaction: t,
         });
 
         for (const reserva of reservasAsociadas) {
-          const terapeutaId = reserva.terapeutaId; // Usar camelCase
+          const terapeutaId = reserva.terapeutaId;
           const fechaReserva = reserva.fecha;
           const horaReserva = reserva.hora;
 
           console.log(
-            `[DB] Buscando disponibilidad para terapeuta ID: ${terapeutaId} en fecha: ${fechaReserva}.`
+            `[DB] Buscando disponibilidad para ${terapeutaId} en ${fechaReserva}.`
           );
           let disponibilidad = await Disponibilidad.findOne({
-            // Usar Disponibilidad
             where: {
-              terapeutaId: terapeutaId, // Usar camelCase
-              diasDisponibles: fechaReserva, // Usar camelCase
+              terapeutaId: terapeutaId,
+              diasDisponibles: fechaReserva,
             },
             transaction: t,
             lock: t.LOCK.UPDATE,
           });
 
           if (disponibilidad) {
-            let horasActuales = disponibilidad.horasDisponibles || []; // Usar camelCase
-            // Asegurarse de que horasActuales sea un array
+            let horasActuales = disponibilidad.horasDisponibles || [];
             if (!Array.isArray(horasActuales)) {
               try {
                 horasActuales = JSON.parse(horasActuales);
               } catch (e) {
                 console.error(
-                  "[ERROR] No se pudo parsear horasDisponibles en Disponibilidad para reversión:",
+                  "[ERROR] No se pudo parsear horas_disponibles en Disponibilidad para reversión:",
                   horasActuales,
                   e
                 );
-                horasActuales = []; // Reiniciar a un array vacío si hay un error de parseo
+                horasActuales = [];
               }
             }
             if (!horasActuales.includes(horaReserva)) {
               horasActuales.push(horaReserva);
-              horasActuales.sort(); // Mantener las horas ordenadas
+              horasActuales.sort();
               await disponibilidad.update(
                 { horasDisponibles: horasActuales },
                 { transaction: t }
-              ); // Usar camelCase
+              );
               console.log(
-                `[DB] Hora ${horaReserva} revertida a Disponibilidad para fecha: ${fechaReserva}.`
+                `[DB] Hora ${horaReserva} revertida a Disponibilidad para ${fechaReserva}.`
               );
             } else {
               console.log(
-                `[DB-WARN] Hora ${horaReserva} ya estaba disponible para fecha: ${fechaReserva}. No se requiere acción.`
+                `[DB-WARN] Hora ${horaReserva} ya estaba disponible para ${fechaReserva}. No se requiere acción.`
               );
             }
           } else {
             console.log(
-              `[DB] Creando nueva entrada de Disponibilidad para terapeuta ID: ${terapeutaId} en fecha: ${fechaReserva} con hora: ${horaReserva}.`
+              `[DB] Creando nueva entrada de Disponibilidad para ${terapeutaId} en ${fechaReserva} con hora ${horaReserva}.`
             );
             await Disponibilidad.create(
               {
-                // Usar Disponibilidad
-                terapeutaId: terapeutaId, // Usar camelCase
-                diasDisponibles: fechaReserva, // Sequelize debería manejar esto si es un tipo de dato de fecha
-                horasDisponibles: [horaReserva], // Usar camelCase
+                terapeutaId: terapeutaId,
+                diasDisponibles: [fechaReserva],
+                horasDisponibles: [horaReserva],
               },
               { transaction: t }
             );
           }
-
           console.log(
             `[NOTIFY] Considerar enviar email de anulación de reserva para: ${reserva.nombreCliente}, Servicio: ${reserva.servicio}, Fecha: ${reserva.fecha}, Hora: ${reserva.hora}`
           );
-          // Aquí podrías añadir la lógica para enviar un correo al cliente informando la anulación
         }
       }
 
@@ -719,14 +662,13 @@ const anularTransaccion = async (req, res) => {
         "[WEBPAY-FAIL] Transbank rechazó o falló la anulación:",
         refundResponse
       );
-      // Actualizar el estado de la transacción a fallo_anulacion
       await transaccionOriginal.update(
         {
-          estadoPago: "fallo_anulacion", // Usar camelCase
+          estadoPago: "fallo_anulacion",
         },
         { transaction: t }
       );
-      await t.rollback();
+      await t.rollback(); // Rollback should happen after the update within the transaction fails or logically needs to be reverted.
       console.log(
         "[DB-TX] Transacción de base de datos revertida (rollback) debido a fallo de anulación."
       );
@@ -743,29 +685,18 @@ const anularTransaccion = async (req, res) => {
       error
     );
 
+    // FIX: Simplified error handling to avoid linter issues.
     let redirectErrorType = "internal_server_error";
     let redirectErrorMessage = error.message || "Error desconocido.";
+    const tokenWs = req.query.token_ws || req.body?.token_ws;
 
-    // Mejorar la categorización de errores si es necesario
-    if (error.constructor && error.constructor.name === "TransbankError") {
-      redirectErrorType = "transbank_error";
-    } else if (error.name === "SequelizeValidationError") {
-      redirectErrorType = "validation_error";
-      redirectErrorMessage =
-        "Validación de datos: " + error.errors.map((e) => e.message).join(", ");
-    } else if (error.name === "SequelizeUniqueConstraintError") {
-      redirectErrorType = "unique_constraint_error";
-      redirectErrorMessage =
-        "Error de clave única: " +
-        error.errors.map((e) => e.message).join(", ");
-    }
-    // Para errores inesperados, se envía un 500 y se redirige si es posible
-    return res.status(500).json({
-      mensaje: "Error interno del servidor al intentar anular la transacción.",
-      error: redirectErrorMessage,
-      type: redirectErrorType,
-      token: tokenTransaccion || "n/a",
-    });
+    return res.redirect(
+      `${process.env.FRONTEND_URL}/pago-fallido?token=${
+        tokenWs || "n/a"
+      }&error=${encodeURIComponent(
+        redirectErrorMessage
+      )}&type=${redirectErrorType}`
+    );
   }
 };
 
@@ -781,6 +712,7 @@ console.log(
   "Tipo de anularTransaccion antes de exportar:",
   typeof anularTransaccion
 );
+
 module.exports = {
   crearTransaccionInicial,
   confirmarTransaccion,
