@@ -14,7 +14,7 @@ module.exports = {
         references: { model: "Transacciones", key: "id" },
         onUpdate: "CASCADE",
         onDelete: "SET NULL",
-      }, // FK
+      }, // FK FK
       client_booking_id: {
         type: Sequelize.BIGINT,
         allowNull: false,
