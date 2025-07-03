@@ -349,365 +349,290 @@ const confirmarTransaccion = async (req, res) => {
         if (ofreceServicio) {
           const subject = `¡Nueva Reserva Confirmada para ${reserva.especialidad}!`;
           const htmlContent = `
-            <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
-            <p>¡Se ha confirmado una nueva reserva para ${reserva.servicio}!</p>
-            <ul>
-              <li><strong>Servicio:</strong> ${reserva.servicio}</li>
-              <li><strong>Especialidad:</strong> ${
-                reserva.especialidad || "N/A"
-              }</li>
-              <li><strong>Cliente:</strong> ${
-                reserva.nombreCliente || "N/A"
-              }</li>
-              <li><strong>Teléfono Valiente:</strong> ${
-                reserva.telefonoCliente || "N/A"
-              }</li>
-              <li><strong>Fecha:</strong> ${reserva.fecha || "N/A"}</li>
-              <li><strong>Hora:</strong> ${reserva.hora || "N/A"}</li>
-              <li><strong>Precio:</strong> $${
-                reserva.precio ? reserva.precio.toLocaleString("es-CL") : "N/A"
-              } CLP</li>
-            </ul>
-            <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
-          `;
-          await sendEmail(terapeutaEncontrado.email, subject, htmlContent);
-          console.log(
-            `[NOTIFY] Notificación por correo enviada a ${terapeutaEncontrado.email}.`
-          );
-        } else {
-          console.warn(
-            `[NOTIFY-WARN] El terapeuta no ofrece la especialidad "${reserva.especialidad}". No se enviará correo.`
+                <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
+                <p>¡Se ha confirmado una nueva reserva para ${reserva.servicio}!</p>
+                <ul>
+                  <li><strong>Servicio:</strong> ${reserva.servicio}</li>
+                  <li><strong>Especialidad:</strong> ${
+                    reserva.especialidad || "N/A"
+                  }</li>
+                  <li><strong>Cliente:</strong> ${
+                    reserva.nombreCliente || "N/A"
+                  }</li>
+                  <li><strong>Teléfono Valiente:</strong> ${
+                    reserva.telefonoCliente || "N/A"
+                  }</li>
+                  <li><strong>Fecha:</strong> ${reserva.fecha || "N/A"}</li>
+                  <li><strong>Hora:</strong> ${reserva.hora || "N/A"}</li>
+                  <li><strong>Precio:</strong> $${
+                    reserva.precio ? reserva.precio.toLocaleString("es-CL") : "N/A"
+                  } CLP</li>
+                </ul>
+                <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
+              `;
+              await sendEmail(terapeutaEncontrado.email, subject, htmlContent);
+              console.log(
+                `[NOTIFY] Notificación por correo enviada a ${terapeutaEncontrado.email}.`
+              );
+            } else {
+              console.warn(
+                `[NOTIFY-WARN] El terapeuta no ofrece la especialidad "${reserva.especialidad}". No se enviará correo.`
+              );
+            }
+          } else {
+            console.warn(
+              "[NOTIFY-WARN] El terapeuta no tiene un email registrado. No se puede notificar."
+            );
+          }
+        } catch (emailError) {
+          console.error(
+            "[NOTIFY-ERROR] Error general en la lógica de notificación al terapeuta (sendEmail):",
+            emailError
           );
         }
-      } else {
-        console.warn(
-          "[NOTIFY-WARN] El terapeuta no tiene un email registrado. No se puede notificar."
+
+        console.log(
+          "[CALENDAR] Preparando creación de evento en Google Calendar."
+        );
+        if (reserva.fecha && reserva.hora) {
+          const startDateTime = new Date(`${reserva.fecha}T${reserva.hora}:00`);
+          const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
+          if (!isNaN(startDateTime.getTime())) {
+            const resumenEvento = `Reserva: ${reserva.especialidad} | Cliente: ${reserva.nombreCliente}`;
+            await crearEventoReserva(
+              startDateTime.toISOString(),
+              endDateTime.toISOString(),
+              resumenEvento
+            );
+          }
+        }
+      }
+
+      console.log("[DB] Eliminando registro de TemporalReserva...");
+      await TemporalReserva.destroy({ where: { token } });
+      console.log("[DB] TemporalReserva eliminada.");
+
+      await t.commit();
+      console.log(
+        "[DB-TX] Transacción de base de datos confirmada (commit). ¡Flujo completado!"
+      );
+      console.log("--- [WEBPAY] FIN: Redirigiendo a página de éxito ---");
+
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/pago-confirmacion-exito?token=${token}&transactionId=${nuevaTransaccion.id}`
+      );
+    } catch (error) {
+      await t.rollback();
+      console.error(
+        "[FATAL-ERROR] Error crítico durante la confirmación, la transacción ha sido revertida (rollback).",
+        error
+      );
+
+      if (nuevaTransaccion) {
+        await Transaccion.update(
+          { estadoPago: "error_procesamiento" },
+          { where: { id: nuevaTransaccion.id } }
         );
       }
-
-      console.log(
-        "[CALENDAR] Preparando creación de evento en Google Calendar."
-      );
-      if (reserva.fecha && reserva.hora) {
-        const startDateTime = new Date(`${reserva.fecha}T${reserva.hora}:00`);
-        const endDateTime = new Date(startDateTime.getTime() + 60 * 60 * 1000);
-        if (!isNaN(startDateTime.getTime())) {
-          const resumenEvento = `Reserva: ${reserva.especialidad} | Cliente: ${reserva.nombreCliente}`;
-          await crearEventoReserva(
-            startDateTime.toISOString(),
-            endDateTime.toISOString(),
-            resumenEvento
-          );
-        }
-      }
-    }
-
-    console.log("[DB] Eliminando registro de TemporalReserva...");
-    await TemporalReserva.destroy({ where: { token } });
-    console.log("[DB] TemporalReserva eliminada.");
-
-    await t.commit();
-    console.log(
-      "[DB-TX] Transacción de base de datos confirmada (commit). ¡Flujo completado!"
-    );
-    console.log("--- [WEBPAY] FIN: Redirigiendo a página de éxito ---");
-
-    return res.redirect(
-      `${process.env.FRONTEND_URL}/pago-confirmacion-exito?token=${token}&transactionId=${nuevaTransaccion.id}`
-    );
-  } catch (error) {
-    await t.rollback();
-    console.error(
-      "[FATAL-ERROR] Error crítico durante la confirmación, la transacción ha sido revertida (rollback).",
-      error
-    );
-
-    if (nuevaTransaccion) {
-      await Transaccion.update(
-        { estadoPago: "error_procesamiento" },
-        { where: { id: nuevaTransaccion.id } }
+      console.log("--- [WEBPAY] FIN: Redirigiendo a página de fallo ---");
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/pago-fallido?token=${
+          token || "n/a"
+        }&error=${encodeURIComponent(error.message)}`
       );
     }
-    console.log("--- [WEBPAY] FIN: Redirigiendo a página de fallo ---");
-    return res.redirect(
-      `${process.env.FRONTEND_URL}/pago-fallido?token=${
-        token || "n/a"
-      }&error=${encodeURIComponent(error.message)}`
-    );
-  }
-};
+}; // <-- Aquí está la llave de cierre de 'confirmarTransaccion'
 
 // =================================================================
 // NUEVO CONTROLADOR: ANULAR TRANSACCIÓN
 // =================================================================
 // Define anularTransaccion como una constante
 const anularTransaccion = async (req, res) => {
-  // Se espera el token de la transacción y, opcionalmente, el monto a anular
-  const { tokenTransaccion, amount } = req.body;
-  const t = await sequelize.transaction();
-  console.log(
-    `\n--- [WEBPAY] INICIO: Solicitud de anulación para Token: ${tokenTransaccion} ---`
-  );
+    // Se espera el token de la transacción y, opcionalmente, el monto a anular
+    const { tokenTransaccion, amount } = req.body;
+    const t = await sequelize.transaction();
+    console.log(`\n--- [WEBPAY] INICIO: Solicitud de anulación para Token: ${tokenTransaccion} ---`);
 
-  let transaccionOriginal;
-
-  try {
-    if (!tokenTransaccion) {
-      console.warn("[VALIDATION-FAIL] Falta el tokenTransaccion para anular.");
-      await t.rollback();
-      return res
-        .status(400)
-        .json({ error: "Falta el token de la transacción a anular." });
-    }
-
-    // 1. Buscar la transacción original en tu base de datos por el token
-    console.log(`[DB] Buscando Transaccion con token: ${tokenTransaccion}`);
-    transaccionOriginal = await Transaccion.findOne({
-      where: { tokenTransaccion: tokenTransaccion },
-      transaction: t,
-      lock: t.LOCK.UPDATE,
-    });
-
-    if (!transaccionOriginal) {
-      console.warn(
-        `[DB-WARN] Transacción no encontrada para el token: ${tokenTransaccion}`
-      );
-      await t.rollback();
-      return res
-        .status(404)
-        .json({ error: "Transacción original no encontrada." });
-    }
-
-    // Validar que la transacción original esté en un estado que permita anulación
-    if (
-      transaccionOriginal.estadoPago !== "aprobado" &&
-      transaccionOriginal.estadoPago !== "parcialmente_anulado"
-    ) {
-      console.warn(
-        `[VALIDATION-WARN] Transacción ${tokenTransaccion} no está en estado 'aprobado' o 'parcialmente_anulado'. Estado actual: ${transaccionOriginal.estadoPago}`
-      );
-      await t.rollback();
-      return res.status(400).json({
-        error:
-          "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'.",
-      });
-    }
-
-    // 2. Anular la transacción con Transbank
-    const buyOrderToRefund = transaccionOriginal.buyOrder;
-    const originalAmount = transaccionOriginal.montoTotal;
-
-    if (!buyOrderToRefund) {
-      console.error(
-        "[ERROR] No se encontró el buyOrder en la transacción de la DB para anular."
-      );
-      await t.rollback();
-      return res.status(500).json({
-        error: "BuyOrder no encontrado en la base de datos de la transacción.",
-      });
-    }
-
-    let refundResponse;
-    console.log(
-      `[WEBPAY] Enviando solicitud de anulación a Transbank para buyOrder: ${buyOrderToRefund}`
-    );
+    let transaccionOriginal; // Declarar aquí para que sea accesible en el catch
 
     try {
-      if (amount !== undefined && amount !== null) {
-        if (amount <= 0 || amount > originalAmount) {
-          console.warn(
-            `[VALIDATION-WARN] Monto de anulación (${amount}) inválido o excede el monto original (${originalAmount}).`
-          );
-          await t.rollback();
-          return res
-            .status(400)
-            .json({ error: "Monto de anulación inválido." });
+        if (!tokenTransaccion) {
+            console.warn("[VALIDATION-FAIL] Falta el tokenTransaccion para anular.");
+            await t.rollback();
+            return res.status(400).json({ mensaje: "Falta el token de la transacción a anular." });
         }
-        console.log(
-          `[WEBPAY] Realizando anulación parcial de ${amount} para token: ${tokenTransaccion}`
-        );
-        refundResponse = await transaction.refund(tokenTransaccion, amount);
-      } else {
-        console.log(
-          `[WEBPAY] Realizando anulación total para token: ${tokenTransaccion}`
-        );
-        refundResponse = await transaction.refund(tokenTransaccion);
-      }
-    } catch (transbankError) {
-      console.error(
-        "[WEBPAY-ERROR] Error al comunicarse con Transbank para anular:",
-        transbankError
-      );
-      await t.rollback();
-      return res.status(500).json({
-        mensaje:
-          "Error al comunicarse con Transbank para anular la transacción.",
-        error: transbankError.message,
-      });
-    }
 
-    console.log(
-      "[WEBPAY] Respuesta de Transbank para anulación:",
-      refundResponse
-    );
-
-    // 3. Actualizar el estado en tu base de datos
-    if (refundResponse && refundResponse.type === "REVERSED") {
-      const nuevoEstado =
-        amount !== undefined && amount !== null
-          ? "parcialmente_anulado"
-          : "anulado";
-      const montoAnuladoActualizado =
-        (transaccionOriginal.montoAnulado || 0) + (amount || originalAmount);
-
-      await transaccionOriginal.update(
-        {
-          estadoPago: nuevoEstado,
-          fechaAnulacion: new Date(),
-          montoAnulado: montoAnuladoActualizado,
-        },
-        { transaction: t }
-      );
-      console.log(
-        `[DB] Transacción ${tokenTransaccion} actualizada a estado: ${nuevoEstado}`
-      );
-
-      // --- 4. Lógica de Reversión de Disponibilidad (Solo si es anulación total) ---
-      if (nuevoEstado === "anulado") {
-        console.log(
-          `[PROCESSING] Iniciando reversión de disponibilidad para las reservas asociadas a ${transaccionOriginal.id}.`
-        );
-        const reservasAsociadas = await Reserva.findAll({
-          where: { transaccionId: transaccionOriginal.id },
-          transaction: t,
-        });
-
-        for (const reserva of reservasAsociadas) {
-          const terapeutaId = reserva.terapeutaId;
-          const fechaReserva = reserva.fecha;
-          const horaReserva = reserva.hora;
-
-          console.log(
-            `[DB] Buscando disponibilidad para ${terapeutaId} en ${fechaReserva}.`
-          );
-          let disponibilidad = await Disponibilidad.findOne({
-            where: {
-              terapeutaId: terapeutaId,
-              diasDisponibles: fechaReserva,
-            },
+        // 1. Buscar la transacción original en tu base de datos por el token
+        console.log(`[DB] Buscando Transaccion con token: ${tokenTransaccion}`);
+        transaccionOriginal = await Transaccion.findOne({
+            where: { tokenTransaccion: tokenTransaccion },
             transaction: t,
             lock: t.LOCK.UPDATE,
-          });
+        });
 
-          if (disponibilidad) {
-            let horasActuales = disponibilidad.horasDisponibles || [];
-            if (!Array.isArray(horasActuales)) {
-              try {
-                horasActuales = JSON.parse(horasActuales);
-              } catch (e) {
-                console.error(
-                  "[ERROR] No se pudo parsear horas_disponibles en Disponibilidad para reversión:",
-                  horasActuales,
-                  e
-                );
-                horasActuales = [];
-              }
-            }
-            if (!horasActuales.includes(horaReserva)) {
-              horasActuales.push(horaReserva);
-              horasActuales.sort();
-              disponibilidad.horasDisponibles = horasActuales;
-              await disponibilidad.save({ transaction: t });
-              console.log(
-                `[DB] Hora ${horaReserva} revertida a Disponibilidad para ${fechaReserva}.`
-              );
-            } else {
-              console.log(
-                `[DB-WARN] Hora ${horaReserva} ya estaba disponible para ${fechaReserva}. No se requiere acción.`
-              );
-            }
-          } else {
-            console.log(
-              `[DB] Creando nueva entrada de Disponibilidad para ${terapeutaId} en ${fechaReserva} con hora ${horaReserva}.`
-            );
-            await Disponibilidad.create(
-              {
-                terapeutaId: terapeutaId,
-                diasDisponibles: [fechaReserva],
-                horasDisponibles: [horaReserva],
-              },
-              { transaction: t }
-            );
-          }
-
-          console.log(
-            `[NOTIFY] Considerar enviar email de anulación de reserva para: ${reserva.nombreCliente}, Servicio: ${reserva.servicio}, Fecha: ${reserva.fecha}, Hora: ${reserva.hora}`
-          );
+        if (!transaccionOriginal) {
+            console.warn(`[DB-WARN] Transacción no encontrada para el token: ${tokenTransaccion}`);
+            await t.rollback();
+            return res.status(404).json({ mensaje: "Transacción original no encontrada." });
         }
-      }
 
-      await t.commit();
-      console.log(
-        "[DB-TX] Transacción de base de datos confirmada (commit) para anulación."
-      );
-      console.log("--- [WEBPAY] FIN: Anulación exitosa ---");
-      return res.status(200).json({
-        mensaje: `Transacción ${
-          amount ? "parcialmente" : ""
-        } anulada exitosamente.`,
-        transaccion: transaccionOriginal,
-        transbankResponse: refundResponse,
-      });
-    } else {
-      console.error(
-        "[WEBPAY-FAIL] Transbank rechazó o falló la anulación:",
-        refundResponse
-      );
-      await transaccionOriginal.update(
-        {
-          estadoPago: "fallo_anulacion",
-        },
-        { transaction: t }
-      );
-      await t.rollback();
-      console.log(
-        "[DB-TX] Transacción de base de datos revertida (rollback) debido a fallo de anulación."
-      );
-      console.log("--- [WEBPAY] FIN: Anulación fallida ---");
-      return res.status(400).json({
-        error: "La anulación de la transacción fue rechazada por Transbank.",
-        transbankResponse: refundResponse,
-      });
+        // Validar que la transacción original esté en un estado que permita anulación
+        if (transaccionOriginal.estadoPago !== "aprobado" && transaccionOriginal.estadoPago !== "parcialmente_anulado") {
+            console.warn(`[VALIDATION-WARN] Transacción ${tokenTransaccion} no está en estado 'aprobado' o 'parcialmente_anulado'. Estado actual: ${transaccionOriginal.estadoPago}`);
+            await t.rollback();
+            return res.status(400).json({ mensaje: "Solo se pueden anular transacciones con estado 'aprobado' o 'parcialmente_anulado'." });
+        }
+
+        // 2. Anular la transacción con Transbank
+        const buyOrderToRefund = transaccionOriginal.buyOrder;
+        const originalAmount = transaccionOriginal.montoTotal;
+
+        if (!buyOrderToRefund) {
+            console.error("[ERROR] No se encontró el buyOrder en la transacción de la DB para anular.");
+            await t.rollback();
+            return res.status(500).json({ mensaje: "BuyOrder no encontrado en la base de datos de la transacción." });
+        }
+
+        let refundResponse;
+        console.log(`[WEBPAY] Enviando solicitud de anulación a Transbank para buyOrder: ${buyOrderToRefund}`);
+
+        try {
+            if (amount !== undefined && amount !== null) {
+                // Anulación parcial si se especifica un monto
+                if (amount <= 0 || amount > originalAmount) {
+                    console.warn(`[VALIDATION-WARN] Monto de anulación (${amount}) inválido o excede el monto original (${originalAmount}).`);
+                    await t.rollback();
+                    return res.status(400).json({ mensaje: "Monto de anulación inválido." });
+                }
+                console.log(`[WEBPAY] Realizando anulación parcial de ${amount} para token: ${tokenTransaccion}`);
+                refundResponse = await transaction.refund(tokenTransaccion, amount);
+            } else {
+                console.log(`[WEBPAY] Realizando anulación total para token: ${tokenTransaccion}`);
+                refundResponse = await transaction.refund(tokenTransaccion);
+            }
+        } catch (transbankError) {
+            console.error("[WEBPAY-ERROR] Error al comunicarse con Transbank para anular:", transbankError);
+            await t.rollback();
+            return res.status(500).json({
+                mensaje: "Error al comunicarse con Transbank para anular la transacción.",
+                error: transbankError.message,
+            });
+        }
+
+        console.log("[WEBPAY] Respuesta de Transbank para anulación:", refundResponse);
+
+        // 3. Actualizar el estado en tu base de datos
+        if (refundResponse && refundResponse.type === "REVERSED") {
+            const nuevoEstado = (amount !== undefined && amount !== null) ? "parcialmente_anulado" : "anulado";
+            const montoAnuladoActualizado = (transaccionOriginal.montoAnulado || 0) + (amount || originalAmount);
+
+            await transaccionOriginal.update(
+                {
+                    estadoPago: nuevoEstado,
+                    fechaAnulacion: new Date(),
+                    montoAnulado: montoAnuladoActualizado,
+                },
+                { transaction: t }
+            );
+            console.log(`[DB] Transacción ${tokenTransaccion} actualizada a estado: ${nuevoEstado}`);
+
+            // --- 4. Lógica de Reversión de Disponibilidad (Solo si es anulación total) ---
+            if (nuevoEstado === "anulado") {
+                console.log(`[PROCESSING] Iniciando reversión de disponibilidad para las reservas asociadas a ${transaccionOriginal.id}.`);
+                const reservasAsociadas = await Reserva.findAll({
+                    where: { transaccionId: transaccionOriginal.id },
+                    transaction: t,
+                });
+
+                for (const reserva of reservasAsociadas) {
+                    const terapeutaId = reserva.terapeutaId;
+                    const fechaReserva = reserva.fecha;
+                    const horaReserva = reserva.hora;
+
+                    console.log(`[DB] Buscando disponibilidad para ${terapeutaId} en ${fechaReserva}.`);
+                    let disponibilidad = await Disponibilidad.findOne({
+                        where: {
+                            terapeutaId: terapeutaId,
+                            diasDisponibles: fechaReserva,
+                        },
+                        transaction: t,
+                        lock: t.LOCK.UPDATE,
+                    });
+
+                    if (disponibilidad) {
+                        let horasActuales = disponibilidad.horasDisponibles || [];
+                        if (!Array.isArray(horasActuales)) {
+                            try {
+                                horasActuales = JSON.parse(horasActuales);
+                            } catch (e) {
+                                console.error("[ERROR] No se pudo parsear horas_disponibles en Disponibilidad para reversión:", horasActuales, e);
+                                horasActuales = [];
+                            }
+                        }
+                        if (!horasActuales.includes(horaReserva)) {
+                            horasActuales.push(horaReserva);
+                            horasActuales.sort();
+                            disponibilidad.horasDisponibles = horasActuales;
+                            await disponibilidad.save({ transaction: t });
+                            console.log(`[DB] Hora ${horaReserva} revertida a Disponibilidad para ${fechaReserva}.`);
+                        } else {
+                            console.log(`[DB-WARN] Hora ${horaReserva} ya estaba disponible para ${fechaReserva}. No se requiere acción.`);
+                        }
+                    } else {
+                        console.log(`[DB] Creando nueva entrada de Disponibilidad para ${terapeutaId} en ${fechaReserva} con hora ${horaReserva}.`);
+                        await Disponibilidad.create({
+                            terapeutaId: terapeutaId,
+                            diasDisponibles: [fechaReserva],
+                            horasDisponibles: [horaReserva],
+                        }, { transaction: t });
+                    }
+
+                    console.log(`[NOTIFY] Considerar enviar email de anulación de reserva para: ${reserva.nombreCliente}, Servicio: ${reserva.servicio}, Fecha: ${reserva.fecha}, Hora: ${reserva.hora}`);
+                }
+            }
+
+            await t.commit();
+            console.log("[DB-TX] Transacción de base de datos confirmada (commit) para anulación.");
+            console.log("--- [WEBPAY] FIN: Anulación exitosa ---");
+            return res.status(200).json({
+                mensaje: `Transacción ${amount ? "parcialmente" : ""} anulada exitosamente.`,
+                transaccion: transaccionOriginal,
+                transbankResponse: refundResponse,
+            });
+        } else {
+            console.error("[WEBPAY-FAIL] Transbank rechazó o falló la anulación:", refundResponse);
+            await transaccionOriginal.update(
+                {
+                    estadoPago: "fallo_anulacion",
+                },
+                { transaction: t }
+            );
+            await t.rollback();
+            console.log("[DB-TX] Transacción de base de datos revertida (rollback) debido a fallo de anulación.");
+            console.log("--- [WEBPAY] FIN: Anulación fallida ---");
+            return res.status(400).json({
+                error: "La anulación de la transacción fue rechazada por Transbank.",
+                transbankResponse: refundResponse,
+            });
+        }
+    } catch (error) {
+        await t.rollback();
+        console.error("[FATAL-ERROR] Error general al anular transacción (catch principal):", error);
+
+        if (transaccionOriginal) {
+            try {
+                await Transaccion.update({ estadoPago: "error_procesamiento" }, { where: { id: transaccionOriginal.id } });
+                console.log(`[DB] Transacción ${transaccionOriginal.id} actualizada a 'error_procesamiento'.`);
+            } catch (updateErr) {
+                console.error("[DB-ERROR] Error al actualizar estado de transacción a 'error_procesamiento' en caso de error general:", updateErr);
+            }
+        }
+
+        return res.status(500).json({
+            mensaje: "Error interno del servidor al anular la transacción.",
+            error: error.message,
+        });
     }
-  } catch (error) {
-    await t.rollback();
-    console.error(
-      "[FATAL-ERROR] Error general al anular transacción (catch principal):",
-      error
-    );
-
-    if (transaccionOriginal) {
-      try {
-        await Transaccion.update(
-          { estadoPago: "error_procesamiento" },
-          { where: { id: transaccionOriginal.id } }
-        );
-        console.log(
-          `[DB] Transacción ${transaccionOriginal.id} actualizada a 'error_procesamiento'.`
-        );
-      } catch (updateErr) {
-        console.error(
-          "[DB-ERROR] Error al actualizar estado de transacción a 'error_procesamiento' en caso de error general:",
-          updateErr
-        );
-      }
-    }
-
-    return res.status(500).json({
-      mensaje: "Error interno del servidor al anular la transacción.",
-      error: error.message,
-    });
-  }
 };
 
 console.log(
