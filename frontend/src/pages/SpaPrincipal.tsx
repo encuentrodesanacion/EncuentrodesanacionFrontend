@@ -40,7 +40,7 @@ export default function SpaPrincipal() {
     const fetchAndProcessDisponibilidades = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/disponibilidades"
+          "https://encsanacion-backend-app-8f3b2a393a7c.herokuapp.com/api"
         ); // **AJUSTA ESTA URL A TU BACKEND**
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
