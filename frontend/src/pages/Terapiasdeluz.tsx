@@ -6,6 +6,7 @@ import { useCart, Reserva } from "./CartContext";
 
 import terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta7 from "../assets/Terapeuta7.jpg";
+import creadorvirtual from "../assets/creadorvirtual.jpg";
 
 interface ImagenData {
   id: string;
@@ -39,6 +40,16 @@ const imagenesData: ImagenData[] = [
     link: "#",
     terapeuta: "Fabiola Valenzuela",
     terapeutaId: 3, // Asegúrate que el ID sea correcto
+    precio: 40000,
+  },
+  {
+    id: "Alice-Basay",
+    src: creadorvirtual,
+    alt: "Regresión",
+    descripcion: "Prueba Correo",
+    link: "#",
+    terapeuta: "Alice Basay",
+    terapeutaId: 10,
     precio: 40000,
   },
 ];

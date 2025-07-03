@@ -20,11 +20,15 @@ const app = express();
 // --- Importaciones de Modelos de Base de Datos ---
 const db = require("./models");
 const disponibilidadRoutes = require("./routes/disponibilidadRoutes");
+
 // --- Importaciones de Rutas ---
 const webpayRoutes = require("./routes/webpay.routes");
 const marketingRoutes = require("./routes/marketing.routes");
 const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
-
+console.log("Tipo de webpayRoutes:", typeof webpayRoutes);
+console.log("Tipo de googleAuthRoutes:", typeof googleAuthRoutes);
+console.log("Tipo de marketingRoutes:", typeof marketingRoutes); // <-- Añade este console.log
+console.log("Tipo de disponibilidadRoutes:", typeof disponibilidadRoutes);
 // --- Middlewares Globales ---
 app.use(
   cors({
