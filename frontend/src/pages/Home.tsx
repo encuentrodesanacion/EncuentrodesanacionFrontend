@@ -148,9 +148,7 @@ const App = () => {
               <a
                 href="#contacto"
                 className="text-blue-300 hover:text-white font-bold"
-              >
-                Sobre nosotros
-              </a>
+              ></a>
             </div>
           </div>
         )}
@@ -265,7 +263,7 @@ const App = () => {
                 price: "Desde los €150 / $163USD",
                 button: (
                   <a
-                    href="mailto:evaldesnew@gmail.com?subject=Consulta&body=Hola,%20me%20gustaría%20saber%20más%20sobre..."
+                    href="https://wa.me/56978557902?text=Quiero%20Aprender%20a%20manejar%20mi%20propio%20Spa%20Holístico!%C3%ADstico"
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
