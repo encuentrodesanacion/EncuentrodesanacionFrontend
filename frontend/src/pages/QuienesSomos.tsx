@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import Alice from "../assets/Alice.png";
 
 const QuiénesSomos = () => (
   <section id="quienes-somos" className="py-10 px-6 max-w-4xl mx-auto">
@@ -18,6 +19,7 @@ const Directora = () => (
   <section id="directora" className="py-10 px-6 max-w-4xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">Directora</h2>
     <p>
+      {Alice}
       Alice Basay, con más de seis años de experiencia como terapeuta, es
       educadora de párvulos de profesión y especialista en el método High Scope.
       Durante 13 años trabajó en contextos vulnerables en Santiago de Chile,
@@ -51,10 +53,14 @@ const Proposito = () => (
   <section id="proposito" className="py-10 px-6 max-w-4xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">Propósito</h2>
     <p>
-      Brindar un espacio seguro, amoroso y consciente donde las personas puedan:
-      Sanar heridas emocionales profundas Reconectar con su energía vital
-      Potenciar su despertar espiritual Fortalecer su autonomía y amor propio
-      Acompañar procesos de sanación desde la infancia
+      Somos un refugio para el alma. En Encuentro de Sanación, creamos un
+      ambiente de confianza y consciencia para que cada persona pueda iniciar o
+      continuar su viaje interior. Te acompañamos a transformar el dolor en
+      poder, a reconectar con la vitalidad que reside en ti y a expandir tu
+      consciencia espiritual. Nuestro propósito es que fortalezcas tu amor
+      propio y tu capacidad de autogestión emocional, brindándote las
+      herramientas para sanar desde la raíz y construir un presente más libre y
+      auténtico.
     </p>
   </section>
 );
