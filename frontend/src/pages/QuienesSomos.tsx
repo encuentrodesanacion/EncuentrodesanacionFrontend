@@ -22,7 +22,11 @@ const Directora = () => (
     <img
       src={Alice} // La fuente de la imagen es la importación de Alice.png
       alt="Alice Basay, Directora de Encuentro de Sanación" // Texto alternativo para accesibilidad
-      className="w-48 h-48 rounded-full mx-auto mb-6 object-cover shadow-lg" // Clases de Tailwind CSS para estilo
+      // Clases de Tailwind CSS para estilo: eliminamos 'rounded-full'
+      // y puedes ajustar w-full (ancho completo) o un ancho fijo como w-64, w-80, etc.
+      // Aquí utilizo un ancho fijo de w-64 para que no ocupe todo el espacio.
+      // Puedes ajustar 'h-auto' para mantener la proporción o un 'h-64' si quieres un cuadrado.
+      className="w-64 h-auto mx-auto mb-6 object-cover shadow-lg"
     />
     <p>
       Alice Basay, con más de seis años de experiencia como terapeuta, es
@@ -46,7 +50,6 @@ const Directora = () => (
     </p>
   </section>
 );
-
 // const Trayectoria = () => (
 //   <section id="trayectoria" className="py-10 px-6 max-w-4xl mx-auto">
 //     <h2 className="text-3xl font-bold mb-4">Trayectoria</h2>
@@ -84,37 +87,6 @@ const Mision = () => (
   </section>
 );
 
-// const Leads = () => (
-//   <section id="leads" className="py-10 px-6 max-w-4xl mx-auto text-center">
-//     <h2 className="text-3xl font-bold mb-4">Queremos Conocerte Mejor</h2>
-//     <p className="mb-6">
-//       Completa nuestro formulario y sé parte de nuestra red de transformación.
-//     </p>
-//     <a
-//       href="https://tu-enlace-formulario.com"
-//       target="_blank"
-//       rel="noopener noreferrer"
-//       className="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
-//     >
-//       Completar Formulario
-//     </a>
-//   </section>
-// );
-
-// const Testimonios = () => (
-//   <section id="testimonios" className="py-10 px-6 max-w-4xl mx-auto">
-//     <h2 className="text-3xl font-bold mb-4">Testimonios de Valientes</h2>
-//     <blockquote className="border-l-4 border-green-600 pl-4 italic mb-6">
-//       "Gracias a Encuentro de Sanación, he encontrado paz y claridad en mi
-//       vida." – Ana G.
-//     </blockquote>
-//     <blockquote className="border-l-4 border-green-600 pl-4 italic mb-6">
-//       "El apoyo y dedicación del equipo transformaron mi camino espiritual." –
-//       Carlos M.
-//     </blockquote>
-//   </section>
-// );
-
 const QuienesSomosPage = () => {
   const navigate = useNavigate();
 
@@ -122,11 +94,9 @@ const QuienesSomosPage = () => {
     <div>
       <QuiénesSomos />
       <Directora />
-      {/* <Trayectoria /> */}
       <Proposito />
       <Mision />
 
-      {/* <Testimonios /> */}
       <button
         onClick={() => navigate("/#contacto")}
         className="mt-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto"
