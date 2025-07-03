@@ -31,8 +31,7 @@ app.use(
     origin: [
       "http://localhost:5173", // Para tu desarrollo local
       "https://www.encuentrodesanacion.com", // Tu dominio principal en Netlify (con HTTPS)
-      "https://encuentrodesanacion.com", // Asegúrate de incluir AMBOS, con y sin 'www' si ambos se usan.
-      "https://encsanacion-backend-app-8f3b2a393a7c.herokuapp.com", // Aunque el backend es el que envía la cabecera, a veces se puede listar aquí si también actúa como cliente o para evitar ambigüedades. No es estrictamente necesario para este error de CORS del frontend al backend, pero no molesta.
+      "https://encuentrodesanacion.com", // Opcional: si tu sitio también resuelve sin 'www'
     ],
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
