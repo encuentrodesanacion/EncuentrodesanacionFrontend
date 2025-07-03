@@ -1,10 +1,10 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from "react"; // Importa useEffect
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
 import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
-// Importaciones de imágenes
+// Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
 import Terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
@@ -14,13 +14,14 @@ import Terapeuta13 from "../assets/Terapeuta13.jpeg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
 
+import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
   OpcionSesion,
   TerapiaItem,
-  RawDisponibilidadDBItem,
-  DisponibilidadTerapeuta,
+  RawDisponibilidadDBItem, // Para los datos crudos del backend
+  DisponibilidadTerapeuta, // Para los datos procesados y agregados
   ReservaPendiente,
   Reserva,
 } from "../types/index";
@@ -31,85 +32,114 @@ export default function SpaPrincipal() {
   const [reservaPendiente, setReservaPendiente] =
     useState<ReservaPendiente | null>(null);
   const [disponibilidadesProcesadas, setDisponibilidadesProcesadas] = useState<
-    Map<string, DisponibilidadTerapeuta>
+    Map<string, DisponibilidadTerapeuta> // Usamos un Map para almacenar por nombreTerapeuta
   >(new Map());
-  const [error, setError] = useState<string | null>(null); // Estado para manejar errores
 
   // --- EFECTO PARA CARGAR Y PROCESAR LAS DISPONIBILIDADES AL MONTAR EL COMPONENTE ---
   useEffect(() => {
     const fetchAndProcessDisponibilidades = async () => {
-      // 1. Usa la variable de entorno de Netlify/Vite
-      const apiUrl = import.meta.env.VITE_API_URL;
-
-      // 2. Verifica que la variable exista
-      if (!apiUrl) {
-        const errorMessage =
-          "CRITICAL ERROR: La variable de entorno VITE_API_URL no está configurada.";
-        console.error(errorMessage);
-        setError(errorMessage); // Guarda el error para mostrarlo al usuario
-        return;
-      }
-
       try {
-        // 3. Construye la URL completa y correcta
-        const fullUrl = `${import.meta.env.VITE_API_URL}/disponibilidades`;
-        console.log(`Fetching data from: ${fullUrl}`); // Log para depurar la URL
-
-        const response = await fetch(fullUrl);
-
+        const response = await fetch(
+          "https://encsanacion-backend-app-8f3b2a393a7c.herokuapp.com/"
+        ); // **AJUSTA ESTA URL A TU BACKEND**
         if (!response.ok) {
-          throw new Error(
-            `Error de red: ${response.status} - ${response.statusText}`
-          );
+          throw new Error(`HTTP error! status: ${response.status}`);
         }
-
+        // Recibe los datos crudos tal como vienen del backend
         const rawData: RawDisponibilidadDBItem[] = await response.json();
         console.log(
-          "Datos crudos de disponibilidades desde el backend:",
+          "Datos crudos de disponibilidades desde el backend (RawData):",
           rawData
-        );
+        ); //
 
-        // --- Lógica para procesar los datos (sin cambios) ---
         const aggregatedDisponibilidades = new Map<
           string,
           DisponibilidadTerapeuta
         >();
-        rawData.forEach((row) => {
-          if (!row.nombreTerapeuta) return;
-          if (!aggregatedDisponibilidades.has(row.nombreTerapeuta)) {
-            aggregatedDisponibilidades.set(row.nombreTerapeuta, {
-              nombreTerapeuta: row.nombreTerapeuta,
+
+        rawData.forEach((row: RawDisponibilidadDBItem) => {
+          const nombreDelTerapeuta = row.nombreTerapeuta;
+
+          if (!nombreDelTerapeuta) {
+            console.warn(
+              "Fila de disponibilidad sin nombre de terapeuta. Será ignorada.",
+              row
+            );
+            return; // Saltar esta fila si no tiene nombre de terapeuta
+          }
+
+          if (!aggregatedDisponibilidades.has(nombreDelTerapeuta)) {
+            // Si el terapeuta no existe en el mapa, créalo
+            aggregatedDisponibilidades.set(nombreDelTerapeuta, {
+              nombreTerapeuta: nombreDelTerapeuta,
               disponibilidadPorFecha: {},
             });
           }
-          const terapeutaDisp = aggregatedDisponibilidades.get(
-            row.nombreTerapeuta
-          )!;
-          const fecha =
-            typeof row.diasDisponibles === "string"
-              ? row.diasDisponibles
-              : row.diasDisponibles?.[0];
-          if (fecha && Array.isArray(row.horasDisponibles)) {
-            const horasExistentes =
-              terapeutaDisp.disponibilidadPorFecha[fecha] || [];
-            const horasNuevas = new Set([
-              ...horasExistentes,
-              ...row.horasDisponibles,
-            ]);
-            terapeutaDisp.disponibilidadPorFecha[fecha] =
-              Array.from(horasNuevas).sort();
+
+          const currentTerapeutaDisp =
+            aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+
+          let specificDate: string | null = null;
+          if (
+            Array.isArray(row.diasDisponibles) &&
+            row.diasDisponibles.length > 0
+          ) {
+            specificDate = row.diasDisponibles[0];
+          } else if (typeof row.diasDisponibles === "string") {
+            specificDate = row.diasDisponibles;
           }
-        });
+
+          if (specificDate) {
+            // **¡AQUÍ ESTÁ EL CAMBIO CRÍTICO DE LÓGICA!**
+            // Antes de asignar, obtenemos las horas existentes para esa fecha y las fusionamos
+            let existingHours: string[] =
+              currentTerapeutaDisp.disponibilidadPorFecha[specificDate] || [];
+            let incomingHours: string[] = [];
+
+            // Procesar horasDisponibles
+            // La lógica para parsear horasDisponibles desde `row.horasDisponibles`
+            // debe ser revisada basándonos en tu `Disponibilidad.js` modelo.
+            // Si `horasDisponibles` en la DB ya es un array de strings (JSON.stringified),
+            // entonces el getter ya lo parsea. Si viene como un array de 1 string que es JSON,
+            // hay que parsear el primer elemento.
+            // Según tu log `RawData`, `horasDisponibles` ya es un Array de strings directamente,
+            // así que no necesita JSON.parse en el frontend aquí.
+
+            if (Array.isArray(row.horasDisponibles)) {
+              incomingHours = row.horasDisponibles;
+            } else {
+              console.warn(
+                "DEBUG SpaPrincipal: Formato inesperado para row.horasDisponibles:",
+                row.horasDisponibles,
+                "Fila:",
+                row
+              );
+            }
+
+            // Fusionar horas existentes y nuevas, eliminando duplicados y ordenando
+            const mergedHoursSet = new Set([
+              ...existingHours,
+              ...incomingHours,
+            ]);
+            currentTerapeutaDisp.disponibilidadPorFecha[specificDate] =
+              Array.from(mergedHoursSet).sort();
+          } else {
+            console.warn(
+              "Fila de disponibilidad sin fecha válida. Será ignorada.",
+              row
+            );
+          }
+        }); // Cierre rawData.forEach
 
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
         console.log(
           "Disponibilidades procesadas y agregadas:",
           aggregatedDisponibilidades
-        );
-      } catch (err) {
-        console.error("Error al cargar y procesar las disponibilidades:", err);
-        setError(
-          err instanceof Error ? err.message : "Ocurrió un error desconocido."
+        ); //
+      } catch (error) {
+        console.error(
+          "Error al cargar y procesar las disponibilidades:",
+          error
         );
       }
     };
@@ -117,8 +147,7 @@ export default function SpaPrincipal() {
     fetchAndProcessDisponibilidades();
   }, []); // El array vacío asegura que se ejecute solo una vez al montar
 
-  // --- El resto de tu componente (sin cambios) ---
-
+  // Función para obtener la disponibilidad de un terapeuta específico
   const getDisponibilidadForTerapeuta = (
     terapeutaNombre: string
   ): DisponibilidadTerapeuta | undefined => {
@@ -231,7 +260,7 @@ export default function SpaPrincipal() {
       terapeutaNombre: terapeutaNombre,
       terapeutaId: terapeutaId,
     });
-  };
+  }; // Confirmar reserva y agregar al carrito
 
   const confirmarReserva = (
     fechaHora: Date,
@@ -241,11 +270,11 @@ export default function SpaPrincipal() {
     if (!reservaPendiente) return;
 
     const reserva: Reserva = {
-      id: Date.now(),
+      id: Date.now(), // Genera un ID único
       servicio: "Spa Principal",
-      especialidad: reservaPendiente.terapia,
+      especialidad: reservaPendiente.terapia, // Mantén esto si la especialidad es la misma que la terapia
       fecha: fechaHora.toISOString().split("T")[0],
-      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5),
+      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5), // Formato HH:MM
       precio: reservaPendiente.precio,
       nombreCliente: nombreCliente,
       telefonoCliente: telefonoCliente,
@@ -254,23 +283,30 @@ export default function SpaPrincipal() {
       sesiones: 1,
       cantidad: 1,
     };
+    console.log(
+      "DEBUG FRONTEND: Valor de reserva.terapeuta antes de addToCart:",
+      reserva.terapeuta
+    );
 
+    console.log(
+      "Objeto Reserva FINAL a añadir al carrito desde SpaPrincipal:",
+      reserva
+    );
     addToCart(reserva);
+    console.log(
+      "Objeto Reserva FINAL a añadir al carrito desde SpaPrincipal:",
+      reserva
+    );
+
     alert(
       `Reserva agregada: ${reserva.servicio} el ${reserva.fecha} a las ${reserva.hora}. Te contactaremos al ${reserva.telefonoCliente}.`
     );
-    setReservaPendiente(null);
-  };
 
+    setReservaPendiente(null); // Cierra el modal de fecha/hora
+  };
   const terapeutaSeleccionadoDisponibilidad = reservaPendiente
     ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
     : undefined;
-
-  // Renderizado condicional si hay un error
-  if (error) {
-    return <div className="text-red-500 text-center mt-20">Error: {error}</div>;
-  }
-
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">

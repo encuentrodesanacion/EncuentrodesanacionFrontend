@@ -41,6 +41,11 @@ app.use(
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.get("/test-route", (req, res) => res.send("¡La ruta de prueba funciona!"));
+app.get("/api/test-route", (req, res) =>
+  res.send("¡La ruta de prueba /api funciona!")
+);
+
 // --- Rutas de la API ---
 app.use("/api/webpay", webpayRoutes);
 app.use("/", googleAuthRoutes);
