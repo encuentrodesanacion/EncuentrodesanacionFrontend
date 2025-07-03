@@ -26,7 +26,7 @@ const ComunidadYLeads = () => (
         >
           Unirme a la Comunidad
         </a>
-      </div>
+        {/* </div>
       <div className="text-center">
         <h3 className="text-2xl font-semibold mb-4">
           Queremos Conocerte Mejor
@@ -42,7 +42,7 @@ const ComunidadYLeads = () => (
           className="inline-block bg-blue-600 text-white px-6 py-3 rounded hover:bg-blue-700 transition"
         >
           Completar Formulario
-        </a>
+        </a> */}
       </div>
     </div>
   </section>
