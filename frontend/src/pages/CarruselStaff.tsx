@@ -16,42 +16,42 @@ const alianzas = [
     descripcion:
       "Mónica Gatica; Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
   },
-  {
-    nombre: "Vanessa Henríquez",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta10,
-    descripcion:
-      "Vanessa Henríquez; Enfermera de profesión y terapeuta holística de corazón. Desde temprana edad, sentí una profunda conexión con el mundo espiritual y un llamado genuino a acompañar a otras personas en sus procesos de sanación y transformación. Mi propio camino de sanación me llevó a descubrir herramientas poderosas que hoy pongo al servicio de quienes buscan bienestar, equilibrio y reconexión interior. Las terapias que realizo resuenan profundamente con mi propósito: -Reiki -Limpieza de Chakras y espacios -Registros Akáshicos -Sanación del Alma con Radiestesia -Sanación del Niño Interior -Limpieza Uterina Actualmente estoy en formación como acupunturista para seguir complementando la medicina occidental con esta mirada más integral. Mi misión es ayudarte a sanar, reconectar con tu esencia y expandir tu energía.",
-  },
-  {
-    nombre: "Monica Gatica",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta1,
-    descripcion:
-      "Mónica Gatica; Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
-  },
+  // {
+  //   nombre: "Vanessa Henríquez",
+  //   url: "https://www.instagram.com/monicaingeborg.th/",
+  //   imagen: terapeuta10,
+  //   descripcion:
+  //     "Vanessa Henríquez; Enfermera de profesión y terapeuta holística de corazón. Desde temprana edad, sentí una profunda conexión con el mundo espiritual y un llamado genuino a acompañar a otras personas en sus procesos de sanación y transformación. Mi propio camino de sanación me llevó a descubrir herramientas poderosas que hoy pongo al servicio de quienes buscan bienestar, equilibrio y reconexión interior. Las terapias que realizo resuenan profundamente con mi propósito: -Reiki -Limpieza de Chakras y espacios -Registros Akáshicos -Sanación del Alma con Radiestesia -Sanación del Niño Interior -Limpieza Uterina Actualmente estoy en formación como acupunturista para seguir complementando la medicina occidental con esta mirada más integral. Mi misión es ayudarte a sanar, reconectar con tu esencia y expandir tu energía.",
+  // },
+  // {
+  //   nombre: "Monica Gatica",
+  //   url: "https://www.instagram.com/monicaingeborg.th/",
+  //   imagen: terapeuta1,
+  //   descripcion:
+  //     "Mónica Gatica; Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
+  // },
 
-  {
-    nombre: "Monica Gatica",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta4,
-    descripcion:
-      "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
-  },
-  {
-    nombre: "Monica Gatica",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta6,
-    descripcion:
-      "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
-  },
-  {
-    nombre: "Monica Gatica",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta2,
-    descripcion:
-      "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
-  },
+  // {
+  //   nombre: "Monica Gatica",
+  //   url: "https://www.instagram.com/monicaingeborg.th/",
+  //   imagen: terapeuta4,
+  //   descripcion:
+  //     "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
+  // },
+  // {
+  //   nombre: "Monica Gatica",
+  //   url: "https://www.instagram.com/monicaingeborg.th/",
+  //   imagen: terapeuta6,
+  //   descripcion:
+  //     "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
+  // },
+  // {
+  //   nombre: "Monica Gatica",
+  //   url: "https://www.instagram.com/monicaingeborg.th/",
+  //   imagen: terapeuta2,
+  //   descripcion:
+  //     "Mónica Gatica Sandoval, Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
+  // },
   //   {
   //     nombre: "Encuentro de sanación",
   //     url: "https://www.instagram.com/encuentrodesanacion/",
