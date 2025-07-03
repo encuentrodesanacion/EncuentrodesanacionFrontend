@@ -441,8 +441,6 @@ const confirmarTransaccion = async (req, res) => {
 // NUEVO CONTROLADOR: ANULAR TRANSACCIÓN
 // =================================================================
 // Define anularTransaccion como una constante
-// ESTA ES LA FUNCIÓN QUE FALTA EN TU CÓDIGO
-// Copia y pega la definición COMPLETA de anularTransaccion aquí:
 const anularTransaccion = async (req, res) => {
   // Se espera el token de la transacción y, opcionalmente, el monto a anular
   const { tokenTransaccion, amount } = req.body;
