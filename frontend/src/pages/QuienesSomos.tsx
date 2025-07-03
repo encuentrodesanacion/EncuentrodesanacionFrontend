@@ -19,7 +19,7 @@ const Directora = () => (
   <section id="directora" className="py-10 px-6 max-w-4xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">Directora</h2>
     <p>
-      {Alice}
+      <img>{Alice}</img>
       Alice Basay, con más de seis años de experiencia como terapeuta, es
       educadora de párvulos de profesión y especialista en el método High Scope.
       Durante 13 años trabajó en contextos vulnerables en Santiago de Chile,
