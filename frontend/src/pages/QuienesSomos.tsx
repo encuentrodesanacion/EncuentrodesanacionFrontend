@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Alice from "../assets/Alice.png";
+import Alice from "../assets/Alice.png"; // Asegúrate de que la ruta de la imagen es correcta
 
 const QuiénesSomos = () => (
   <section id="quienes-somos" className="py-10 px-6 max-w-4xl mx-auto">
@@ -18,8 +18,13 @@ const QuiénesSomos = () => (
 const Directora = () => (
   <section id="directora" className="py-10 px-6 max-w-4xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">Directora</h2>
+    {/* Imagen de Alice Basay como cabecera */}
+    <img
+      src={Alice} // La fuente de la imagen es la importación de Alice.png
+      alt="Alice Basay, Directora de Encuentro de Sanación" // Texto alternativo para accesibilidad
+      className="w-48 h-48 rounded-full mx-auto mb-6 object-cover shadow-lg" // Clases de Tailwind CSS para estilo
+    />
     <p>
-      <img>{Alice}</img>
       Alice Basay, con más de seis años de experiencia como terapeuta, es
       educadora de párvulos de profesión y especialista en el método High Scope.
       Durante 13 años trabajó en contextos vulnerables en Santiago de Chile,
