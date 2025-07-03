@@ -52,7 +52,7 @@ export default function SpaPrincipal() {
 
       try {
         // 3. Construye la URL completa y correcta
-        const fullUrl = `${apiUrl}/disponibilidades`;
+        const fullUrl = `${import.meta.env.VITE_API_URL}/disponibilidades`;
         console.log(`Fetching data from: ${fullUrl}`); // Log para depurar la URL
 
         const response = await fetch(fullUrl);
