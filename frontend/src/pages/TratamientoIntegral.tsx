@@ -9,7 +9,7 @@ import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
-
+import Terapeuta16 from "../assets/Terapeuta16.jpg";
 // PASO 1: Añadir 'terapeutaId' a la interfaz
 interface TerapiaItem {
   img: string;
@@ -43,7 +43,7 @@ export default function TratamientoHolistico() {
       img: Terapeuta1,
       title: "Canalización Energética",
       terapeuta: "Brenda Rivas",
-      terapeutaId: 3, // <-- AÑADIDO
+      terapeutaId: 7, // <-- AÑADIDO
       description:
         "Es una terapia en la cual una persona actúa como un conducto...",
       opciones: [{ sesiones: 3, precio: 55000 }],
@@ -73,10 +73,10 @@ export default function TratamientoHolistico() {
       ],
     },
     {
-      img: Terapeuta11,
+      img: Terapeuta16,
       title: "Bioenergía",
       terapeuta: "Gabriel Moreno",
-      terapeutaId: 1, // <-- AÑADIDO
+      terapeutaId: 15, // <-- AÑADIDO
       description:
         "La Bioenergía se forma en el cuerpo con nuestras emociones...",
       opciones: [{ sesiones: 3, precio: 55000 }],

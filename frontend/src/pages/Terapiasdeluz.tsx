@@ -39,7 +39,7 @@ const imagenesData: ImagenData[] = [
       "El ankh, cruz ankh o llave de la vida, es un símbolo muy antiguo, muy asociada al antiguo Egipto, donde grandes Dioses y faraones. Sus bendiciones son múltiples, por ello, en esta formación viajáremos hacia el pasado, para conocer la historia y significado del Ankh y como poder poner sus virtudes al servicio de todos los involucrados. También aprenderás los tipos de contamines que podremos diagnosticar con ayuda del péndulo, en personas, espacio u objeto, y obviamente como limpiarnos con nuestra amada Cruz Ankh",
     link: "#",
     terapeuta: "Fabiola Valenzuela",
-    terapeutaId: 8, // Asegúrate que el ID sea correcto
+    terapeutaId: 3, // Asegúrate que el ID sea correcto
     precio: 40000,
   },
   {
