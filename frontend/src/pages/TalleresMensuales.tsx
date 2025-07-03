@@ -52,7 +52,7 @@ export default function TalleresMensuales() {
       date: "2025-02-07",
       time: "19:00",
       instructor: "Vanessa Hernández",
-      instructorId: 1,
+      instructorId: 16,
     },
     {
       id: "Taller-de-Yoga",
@@ -62,8 +62,8 @@ export default function TalleresMensuales() {
       price: 25000,
       date: "2025-05-07",
       time: "11:00",
-      instructor: "Marlene Ramirez",
-      instructorId: 10,
+      instructor: "Marlene Ramírez",
+      instructorId: 17,
     },
     {
       id: "Taller-de-Alquimia",
@@ -85,7 +85,7 @@ export default function TalleresMensuales() {
       date: "2025-06-07",
       time: "12:00",
       instructor: "Katalina Rencoret",
-      instructorId: 6,
+      instructorId: 18,
     },
     {
       id: "taller-meditacion-jul",
