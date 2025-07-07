@@ -18,6 +18,7 @@ interface TerapiaItem {
   img: string;
   title: string;
   terapeuta: string;
+  terapeutaId: number;
   description: string;
   opciones: { sesiones: number; precio: number }[];
 }
@@ -34,6 +35,7 @@ export default function TratamientoHolistico() {
     sesiones: number;
     precio: number;
     terapeutaNombre: string;
+    terapeutaId: number;
   } | null>(null);
 
   const terapias: TerapiaItem[] = [
@@ -41,6 +43,7 @@ export default function TratamientoHolistico() {
       img: Terapeuta1,
       title: "Canalización Energética",
       terapeuta: "Brenda Rivas",
+      terapeutaId: 7,
       description:
         "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [{ sesiones: 3, precio: 55000 }],
@@ -50,6 +53,7 @@ export default function TratamientoHolistico() {
       img: Terapeuta5,
       title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
       terapeuta: "Sandra Da Silva",
+      terapeutaId: 9,
       description:
         "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
@@ -61,6 +65,7 @@ export default function TratamientoHolistico() {
       img: creadorvirtual,
       title: "Regresión",
       terapeuta: "Alice Basay",
+      terapeutaId: 10,
       description:
         "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
@@ -72,6 +77,7 @@ export default function TratamientoHolistico() {
       img: Terapeuta11,
       title: "Bioenergía",
       terapeuta: "Gabriel Moreno",
+      terapeutaId: 15,
       description:
         "La Bioenergía se forma en el cuerpo con nuestras emociones, Pensamientos, Sentimientos, y si todo ello está en desequilibrio nos empezamos a Enfermar, tenemos Inflamaciones, Dolores, Traumas, Miedos, entre otros malestares. La terapia de Bioenergía con imanes hace que podamos sanar nuestro cuerpo Físico,Mental,Emocional, y espiritual.",
       opciones: [{ sesiones: 3, precio: 55000 }],
@@ -82,7 +88,8 @@ export default function TratamientoHolistico() {
     terapiaTitle: string,
     sesiones: number,
     precio: number,
-    terapeutaNombre: string
+    terapeutaNombre: string,
+    terapeutaId: number
   ) => {
     if (
       !terapiaTitle ||
@@ -99,7 +106,13 @@ export default function TratamientoHolistico() {
       return;
     }
 
-    setCurrentTerapiaData({ terapiaTitle, sesiones, precio, terapeutaNombre });
+    setCurrentTerapiaData({
+      terapiaTitle,
+      sesiones,
+      precio,
+      terapeutaNombre,
+      terapeutaId,
+    });
     setShowContactModal(true);
     setClientName("");
     setClientPhone("");
@@ -140,6 +153,7 @@ export default function TratamientoHolistico() {
       nombreCliente: clientName.trim(),
       telefonoCliente: clientPhone.trim(),
       terapeuta: currentTerapiaData.terapeutaNombre,
+      terapeutaId: currentTerapiaData.terapeutaId,
     };
 
     console.log(
@@ -220,7 +234,8 @@ export default function TratamientoHolistico() {
                               t.title,
                               op.sesiones,
                               op.precio,
-                              t.terapeuta
+                              t.terapeuta,
+                              t.terapeutaId
                             )
                           }
                           className="w-full mb-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700"

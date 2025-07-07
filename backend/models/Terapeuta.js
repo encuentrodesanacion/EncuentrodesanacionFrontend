@@ -48,5 +48,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     { timestamps: true, underscored: true, tableName: "terapeutas" }
   );
+  Terapeuta.associate = (models) => {
+    Terapeuta.hasMany(models.Disponibilidad, {
+      foreignKey: "terapeuta_id",
+      as: "disponibilidades",
+    });
+  };
   return Terapeuta;
 };

@@ -43,17 +43,17 @@ export default function TalleresMensuales() {
       instructor: "Mónica Gatica",
       instructorId: 5,
     },
-    {
-      id: "Taller-de-Tribu-en-Calma",
-      title: "Tribu en Calma",
-      description:
-        "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
-      price: 25000,
-      date: "2025-02-07",
-      time: "19:00",
-      instructor: "Vanessa Hernández",
-      instructorId: 1,
-    },
+    // {
+    //   id: "Taller-de-Tribu-en-Calma",
+    //   title: "Tribu en Calma",
+    //   description:
+    //     "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
+    //   price: 25000,
+    //   date: "2025-02-07",
+    //   time: "19:00",
+    //   instructor: "Vanessa Hernández",
+    //   instructorId: 1,
+    // },
     {
       id: "Taller-de-Yoga",
       title: "Yoga Integral para Adultos",
@@ -96,7 +96,7 @@ export default function TalleresMensuales() {
       date: "2025-07-05",
       time: "10:30",
       instructor: "Alice Basay",
-      instructorId: 5,
+      instructorId: 10,
     },
     // Añade más talleres aquí
   ];
@@ -203,13 +203,13 @@ export default function TalleresMensuales() {
               key={taller.id}
               className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
             >
-              {taller.id === "Taller-de-Tribu-en-Calma" && (
+              {/* {taller.id === "Taller-de-Tribu-en-Calma" && (
                 <img
                   src={TribuEnCalma} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
-              )}
+              )} */}
               {taller.id === "Taller-de-Mindfullness" && (
                 <img
                   src={Mindfullness} // Revisa si esto es Taller1 o Taller2 para cada caso

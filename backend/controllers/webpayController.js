@@ -1,25 +1,37 @@
+// =================================================================
+// WEBPAY CONTROLLER - Encuentro de Sanación
+// =================================================================
+// Responsable del flujo de pago con Transbank, incluyendo la
+// creación, confirmación y procesamiento de transacciones.
+// =================================================================
+
+// -----------------------------------------------------------------
+// 1. IMPORTACIONES DE MÓDULOS Y SERVICIOS
+// -----------------------------------------------------------------
 const { WebpayPlus, Options, Environment } = require("transbank-sdk");
 const { google } = require("googleapis");
 const path = require("path");
 const { v4: uuidv4 } = require("uuid");
 require("dotenv").config();
 
+// Importación de modelos de la base de datos
 const db = require("../models");
 const Reserva = db.Reserva;
 const TemporalReserva = db.TemporalReserva;
 const Terapeuta = db.Terapeuta;
 const Transaccion = db.Transaccion;
+const Disponibilidad = db.Disponibilidad;
 
 const { Op, Sequelize } = db.sequelize;
 const sequelize = db.sequelize;
 
+// Importación de servicios personalizados
 const { sendEmail } = require("../services/emailService");
 
 console.log("------------------------------------------");
-console.log("Cargando configuración de Transbank en Controller:");
-console.log("process.env.TBK_COMMERCE_CODE:", process.env.TBK_COMMERCE_CODE);
-console.log("process.env.TBK_API_KEY:", process.env.TBK_API_KEY);
-console.log("process.env.TBK_ENV:", process.env.TBK_ENV);
+console.log("INICIALIZANDO WEBPAY CONTROLLER");
+console.log(`[CONFIG] Código de Comercio: ${process.env.TBK_COMMERCE_CODE}`);
+console.log(`[CONFIG] Entorno de Transbank: ${process.env.TBK_ENV}`);
 console.log("------------------------------------------");
 
 const transaction = new WebpayPlus.Transaction(
@@ -68,7 +80,11 @@ async function crearEventoReserva(fechaInicioISO, fechaFinISO, resumen) {
   }
 }
 
+// --- Controlador para iniciar una transacción con Webpay ---
 const crearTransaccionInicial = async (req, res) => {
+  console.log(
+    "\n--- [WEBPAY] INICIO: Solicitud para crear transacción inicial ---"
+  );
   try {
     const { monto, returnUrl, reservas } = req.body;
 
@@ -79,6 +95,7 @@ const crearTransaccionInicial = async (req, res) => {
       });
     }
 
+    // Validate each reservation item from the frontend
     for (const resItem of reservas) {
       if (
         typeof resItem.servicio !== "string" ||
@@ -128,7 +145,7 @@ const crearTransaccionInicial = async (req, res) => {
           "Advertencia de validación: Reserva en carrito sin especialidad válida. Se usará un valor por defecto si el modelo lo permite."
         );
       }
-      // **NUEVAS VALIDACIONES para fecha y hora**
+      // Validations for date and time
       if (typeof resItem.fecha !== "string" || resItem.fecha.trim() === "") {
         console.error(
           "Error de validación: Reserva en carrito sin fecha válida.",
@@ -149,7 +166,7 @@ const crearTransaccionInicial = async (req, res) => {
             "Reserva en carrito contiene una hora inválida (vacía o no string).",
         });
       }
-      // Opcional: Validar que la fecha y hora sean parseables
+      // Optional: Validate that date and time are parsable
       if (isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime())) {
         console.error(
           "Error de validación: Fecha/hora de reserva no es un formato válido.",
@@ -164,6 +181,7 @@ const crearTransaccionInicial = async (req, res) => {
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
 
+    // Create the transaction with Transbank
     const response = await transaction.create(
       buyOrder,
       sessionId,
@@ -177,12 +195,14 @@ const crearTransaccionInicial = async (req, res) => {
     console.log(`[DEBUG - crearTransaccionInicial] Monto: ${monto}`);
     console.log(`[DEBUG - crearTransaccionInicial] Reservas:`, reservas);
 
+    // Save temporary reservation details to DB
     try {
       const createdTempReserva = await TemporalReserva.create({
         token: response.token,
-        reservas: JSON.stringify(reservas), // Guardar como string JSON
+        reservas: JSON.stringify(reservas), // Store as JSON string
         montoTotal: monto,
-        clienteId: reservas[0]?.telefonoCliente || null,
+        clienteId: reservas[0]?.telefonoCliente || null, // Assuming client ID is first reservation's phone
+        buyOrder: buyOrder, // <-- Guardar buyOrder aquí también es útil para referencia
       });
       console.log(
         `[DEBUG - crearTransaccionInicial] TemporalReserva creada en DB con ID: ${createdTempReserva.id} y token: ${createdTempReserva.token}`
@@ -219,54 +239,71 @@ const crearTransaccionInicial = async (req, res) => {
   }
 };
 
+// --- Controlador para confirmar una transacción después de Webpay ---
 const confirmarTransaccion = async (req, res) => {
-  const token = req.query.token_ws || req.body?.token_ws;
+  let tokenWs = req.query.token_ws || req.body?.token_ws;
 
-  console.log("------------------------------------------");
-  console.log("Entrando a confirmarTransaccion");
-  console.log("req.method:", req.method);
-  console.log("req.body:", req.body);
-  console.log("req.query:", req.query);
-  console.log("Token obtenido:", token);
-  console.log("------------------------------------------");
-
-  if (!token) {
-    console.warn("Falta token de confirmación en req.body o req.query.");
-    return res.redirect(
-      `${process.env.FRONTEND_URL}/pago-fallido?error=missing_token`
-    );
-  }
-
+  let t;
   let nuevaTransaccion;
-  try {
-    const commitResponse = await transaction.commit(token);
 
-    const temporal = await TemporalReserva.findOne({ where: { token } });
+  try {
+    if (!tokenWs) {
+      console.warn("Falta token de confirmación en req.body o req.query.");
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/pago-fallido?error=missing_token`
+      );
+    }
+
+    t = await sequelize.transaction();
+
+    console.log("------------------------------------------");
+    console.log("Entrando a confirmarTransaccion");
+    console.log("req.method:", req.method);
+    console.log("req.body:", req.body);
+    console.log("req.query:", req.query);
+    console.log("Token obtenido:", tokenWs);
+    console.log("------------------------------------------");
+
+    const commitResponse = await transaction.commit(tokenWs);
+    console.log("Respuesta de commit Transbank:", commitResponse);
+
+    const temporal = await TemporalReserva.findOne({
+      where: { token: tokenWs },
+      transaction: t,
+    });
 
     if (!temporal) {
-      console.warn("TemporalReserva no encontrada para el token:", token);
+      console.warn("TemporalReserva no encontrada para el token:", tokenWs);
+      await t.rollback();
       return res.redirect(
-        `${process.env.FRONTEND_URL}/pago-fallido?error=no_temp_reservations&token=${token}`
+        `${process.env.FRONTEND_URL}/pago-fallido?error=no_temp_reservations&token=${tokenWs}`
       );
     }
 
     const montoTotal = temporal.montoTotal;
 
-    nuevaTransaccion = await Transaccion.create({
-      tokenTransaccion: token,
-      montoTotal: montoTotal,
-      estadoPago:
-        commitResponse.status === "AUTHORIZED" ? "aprobado" : "rechazado",
-      fechaPago: new Date(),
-      clienteId: temporal.clienteId,
-    });
+    nuevaTransaccion = await Transaccion.create(
+      {
+        tokenTransaccion: tokenWs,
+        buyOrder: temporal.buyOrder,
+        montoTotal: montoTotal,
+        estadoPago:
+          commitResponse.status === "AUTHORIZED" ? "aprobado" : "rechazado",
+        fechaPago: new Date(),
+        clienteId: temporal.clienteId,
+      },
+      { transaction: t }
+    );
 
     if (commitResponse.status === "AUTHORIZED") {
       if (nuevaTransaccion.estadoPago !== "aprobado") {
-        await nuevaTransaccion.update({
-          estadoPago: "aprobado",
-          fechaPago: new Date(),
-        });
+        await nuevaTransaccion.update(
+          {
+            estadoPago: "aprobado",
+            fechaPago: new Date(),
+          },
+          { transaction: t }
+        );
         console.log("Transaccion actualizada a APROBADO.");
       }
 
@@ -279,12 +316,13 @@ const confirmarTransaccion = async (req, res) => {
             "Error al parsear JSON de temporal.reservas:",
             parseError
           );
-          await nuevaTransaccion.update({
-            estadoPago: "fallo_datos_corruptos",
-          });
-          return res.redirect(
-            `${process.env.FRONTEND_URL}/pago-fallido?error=json_parse_error&token=${token}`
+          await nuevaTransaccion.update(
+            {
+              estadoPago: "fallo_datos_corruptos",
+            },
+            { transaction: t }
           );
+          throw new Error("Datos de reserva corruptos. " + parseError.message);
         }
       }
 
@@ -293,96 +331,53 @@ const confirmarTransaccion = async (req, res) => {
           "TemporalReserva encontrada pero 'reservas' no es un array o está vacío después de parsear:",
           reservasToProcess
         );
-        await nuevaTransaccion.update({ estadoPago: "fallo_sin_reservas" });
-        return res.redirect(
-          `${process.env.FRONTEND_URL}/pago-fallido?error=no_valid_reservations&token=${token}`
+        await nuevaTransaccion.update(
+          { estadoPago: "fallo_sin_reservas" },
+          { transaction: t }
         );
+        throw new Error("No hay reservas válidas para procesar.");
       }
 
-      let criticalReservationError = false;
-      // --- INICIO DE MODIFICACIONES WEB PAY CONTROLLER - VERIFICAR LOGS ---
-      // Estos logs te ayudarán a identificar que esta es la versión correcta
       console.log(
         "*************************************************************"
       );
       console.log(
-        "*** WEB PAY CONTROLLER: Versión con consulta RAW de Terapeuta ***"
+        "*** WEB PAY CONTROLLER: Procesando reservas confirmadas ***"
       );
       console.log(
         "*************************************************************"
       );
 
       for (const reserva of reservasToProcess) {
-        if (criticalReservationError) break;
-
         let errorMessages = [];
-        let terapeutaEncontrado = null;
-
-        // ... Tus validaciones de reserva existentes ...
         if (
           typeof reserva.servicio !== "string" ||
-          reserva.servicio.trim() === ""
-        ) {
-          errorMessages.push(`'servicio' inválido.`);
-        }
-        if (
+          reserva.servicio.trim() === "" ||
           typeof reserva.precio !== "number" ||
           isNaN(reserva.precio) ||
-          reserva.precio <= 0
-        ) {
-          errorMessages.push(`'precio' inválido.`);
-        }
-        if (
+          reserva.precio <= 0 ||
           typeof reserva.terapeuta !== "string" ||
-          reserva.terapeuta.trim() === ""
-        ) {
-          errorMessages.push(`'terapeuta' inválido.`);
-        }
-        if (
+          reserva.terapeuta.trim() === "" ||
           typeof reserva.especialidad !== "string" ||
-          reserva.especialidad.trim() === ""
-        ) {
-          errorMessages.push(`'especialidad' inválida.`);
-        }
-        if (typeof reserva.fecha !== "string" || reserva.fecha.trim() === "") {
-          errorMessages.push(`'fecha' inválida.`);
-        }
-        if (typeof reserva.hora !== "string" || reserva.hora.trim() === "") {
-          errorMessages.push(`'hora' inválida.`);
-        }
-        if (
+          reserva.especialidad.trim() === "" ||
+          typeof reserva.fecha !== "string" ||
+          reserva.fecha.trim() === "" ||
+          typeof reserva.hora !== "string" ||
+          reserva.hora.trim() === "" ||
           typeof reserva.nombreCliente !== "string" ||
-          reserva.nombreCliente.trim() === ""
-        ) {
-          errorMessages.push(`'nombreCliente' inválido.`);
-        }
-        if (
+          reserva.nombreCliente.trim() === "" ||
           typeof reserva.telefonoCliente !== "string" ||
-          reserva.telefonoCliente.trim() === ""
+          reserva.telefonoCliente.trim() === "" ||
+          (reserva.sesiones !== undefined &&
+            (typeof reserva.sesiones !== "number" ||
+              isNaN(reserva.sesiones) ||
+              reserva.sesiones <= 0)) ||
+          (reserva.cantidad !== undefined &&
+            (typeof reserva.cantidad !== "number" ||
+              isNaN(reserva.cantidad) ||
+              reserva.cantidad <= 0))
         ) {
-          errorMessages.push(`'telefonoCliente' inválido.`);
-        }
-        if (
-          typeof reserva.sesiones !== "number" ||
-          isNaN(reserva.sesiones) ||
-          reserva.sesiones <= 0
-        ) {
-          if (reserva.sesiones === undefined || reserva.sesiones === null) {
-            reserva.sesiones = 1;
-          } else {
-            errorMessages.push(`'sesiones' inválida.`);
-          }
-        }
-        if (
-          typeof reserva.cantidad !== "number" ||
-          isNaN(reserva.cantidad) ||
-          reserva.cantidad <= 0
-        ) {
-          if (reserva.cantidad === undefined || reserva.cantidad === null) {
-            reserva.cantidad = 1;
-          } else {
-            errorMessages.push(`'cantidad' inválida.`);
-          }
+          errorMessages.push("Datos de reserva incompletos o inválidos.");
         }
 
         if (errorMessages.length > 0) {
@@ -392,71 +387,79 @@ const confirmarTransaccion = async (req, res) => {
             "Objeto:",
             reserva
           );
-          await nuevaTransaccion.update({ estadoPago: "fallo_datos_reserva" });
-          criticalReservationError = true;
-          break;
+          await nuevaTransaccion.update(
+            { estadoPago: "fallo_datos_reserva" },
+            { transaction: t }
+          );
+          throw new Error(
+            `Datos de reserva inválidos: ${errorMessages.join(", ")}`
+          );
         }
 
-        // --- Bloque para buscar el terapeuta con consulta RAW ---
+        let terapeutaEncontrado = null;
         const terapeutaNombreNormalizado = reserva.terapeuta.trim();
-        let terapeutaRawResult;
-
         if (reserva.terapeutaId) {
-          console.log(
-            `[DEBUG CREATERESERVA] Intento 1 (RAW): Buscando terapeuta por ID: ${reserva.terapeutaId}.`
-          );
-          terapeutaRawResult = await db.sequelize.query(
-            `SELECT id, nombre, email, servicios_ofrecidos, created_at, updated_at FROM terapeutas WHERE id = :terapeutaId LIMIT 1;`,
-            {
-              replacements: { terapeutaId: reserva.terapeutaId },
-              type: db.sequelize.QueryTypes.SELECT,
-            }
-          );
+          terapeutaEncontrado = await Terapeuta.findByPk(reserva.terapeutaId, {
+            transaction: t,
+          });
         } else if (terapeutaNombreNormalizado) {
-          console.log(
-            `[DEBUG CREATERESERVA] Intento 2 (RAW): Buscando terapeuta por nombre: "${terapeutaNombreNormalizado}".`
-          );
-          terapeutaRawResult = await db.sequelize.query(
-            `SELECT id, nombre, email, servicios_ofrecidos, created_at, updated_at FROM terapeutas WHERE nombre = :nombre LIMIT 1;`,
-            {
-              replacements: { nombre: terapeutaNombreNormalizado },
-              type: db.sequelize.QueryTypes.SELECT,
-            }
-          );
+          terapeutaEncontrado = await Terapeuta.findOne({
+            where: { nombre: terapeutaNombreNormalizado },
+            transaction: t,
+          });
         }
+        // --- INICIO DE LA MODIFICACIÓN ---
+        // Forzar la recuperación del valor "raw" de serviciosOfrecidos y parsearlo manualmente si es necesario,
+        // para depurar si el problema está en el getter o en los datos.
+        let serviciosOfrecidosParsed = [];
+        if (terapeutaEncontrado) {
+          // Loguear el objeto Sequelize antes de convertirlo a plain
+          console.log(
+            "[DEBUG NOTIFY] Terapeuta encontrado (objeto Sequelize antes de .get({plain:true})):",
+            terapeutaEncontrado
+          );
 
-        // Procesar el resultado de la consulta RAW
-        terapeutaEncontrado =
-          terapeutaRawResult && terapeutaRawResult.length > 0
-            ? terapeutaRawResult[0]
-            : null;
+          // Intentar acceder al valor directamente de la instancia de Sequelize
+          const rawServicios =
+            terapeutaEncontrado.getDataValue("serviciosOfrecidos"); // Changed to 'serviciosOfrecidos'
+          console.log(
+            `[DEBUG NOTIFY] rawServiciosOfrecidos desde getDataValue: ${rawServicios}, typeof: ${typeof rawServicios}`
+          );
 
-        // Si el terapeuta fue encontrado por RAW query, parsea servicios_ofrecidos
-        if (
-          terapeutaEncontrado &&
-          typeof terapeutaEncontrado.servicios_ofrecidos === "string"
-        ) {
           try {
-            terapeutaEncontrado.serviciosOfrecidos = JSON.parse(
-              terapeutaEncontrado.servicios_ofrecidos.trim()
-            );
+            if (
+              typeof rawServicios === "string" &&
+              rawServicios.trim().startsWith("[") &&
+              rawServicios.trim().endsWith("]")
+            ) {
+              serviciosOfrecidosParsed = JSON.parse(rawServicios);
+              if (!Array.isArray(serviciosOfrecidosParsed)) {
+                serviciosOfrecidosParsed = []; // Asegurar que sea un array
+              }
+            } else {
+              // Si no es un JSON string de un array, y es un string no vacío, tratarlo como un elemento
+              if (rawServicios && typeof rawServicios === "string") {
+                serviciosOfrecidosParsed = [rawServicios];
+              } else {
+                serviciosOfrecidosParsed = [];
+              }
+            }
           } catch (parseError) {
             console.error(
-              "[ERROR NOTIFY] Error parseando serviciosOfrecidos desde RAW query:",
-              terapeutaEncontrado.serviciosOfrecidos,
+              "[ERROR NOTIFY] Fallo al parsear serviciosOfrecidos manualmente:",
+              rawServicios,
               parseError
             );
-            terapeutaEncontrado.serviciosOfrecidos = [];
+            serviciosOfrecidosParsed = [];
           }
-        } else if (terapeutaEncontrado) {
-          // Si la columna está null o no es string, inicialízala
-          terapeutaEncontrado.serviciosOfrecidos = [];
         }
 
-        console.log(
-          `[DEBUG - webpayController] VERIFICACIÓN FINAL: terapeutaEncontrado es:`,
-          terapeutaEncontrado ? terapeutaEncontrado : "NULL o UNDEFINED"
-        );
+        if (terapeutaEncontrado && terapeutaEncontrado.get) {
+          terapeutaEncontrado = terapeutaEncontrado.get({ plain: true });
+          // AHORA AÑADIR los servicios parseados al objeto plain
+          terapeutaEncontrado.serviciosOfrecidos = serviciosOfrecidosParsed;
+        }
+        // --- FIN DE LA MODIFICACIÓN ---
 
         if (!terapeutaEncontrado) {
           const errorMsg = `Error al crear reserva: Terapeuta "${
@@ -465,101 +468,204 @@ const confirmarTransaccion = async (req, res) => {
             reserva.terapeutaId || "N/A"
           }) NO FUE ENCONTRADO EN LA BASE DE DATOS.`;
           console.error(errorMsg);
-          await nuevaTransaccion.update({
-            estadoPago: "fallo_terapeuta_no_encontrado",
-          });
-          criticalReservationError = true;
-          break;
+          await nuevaTransaccion.update(
+            { estadoPago: "fallo_terapeuta_no_encontrado" },
+            { transaction: t }
+          );
+          throw new Error(errorMsg);
         }
 
         const effectiveClientBookingId = reserva.id || uuidv4();
-        const createdReserva = await Reserva.create({
-          transaccionId: nuevaTransaccion.id,
-          clientBookingId: effectiveClientBookingId,
-          servicio: reserva.servicio,
-          especialidad: reserva.especialidad,
-          fecha: reserva.fecha,
-          hora: reserva.hora,
-          precio: reserva.precio,
-          nombreCliente: reserva.nombreCliente,
-          telefonoCliente: reserva.telefonoCliente,
-          sesiones: reserva.sesiones || 1,
-          cantidad: reserva.cantidad || 1,
-          terapeuta: terapeutaEncontrado.nombre,
-          terapeutaId: terapeutaEncontrado.id, // Se usa el ID del terapeuta encontrado
-        });
-
-        console.log(
-          `Reserva ${reserva.servicio} (ID: ${createdReserva.id}) guardada y asociada a Transaccion ID: ${nuevaTransaccion.id}`
+        await Reserva.create(
+          {
+            transaccionId: nuevaTransaccion.id,
+            clientBookingId: effectiveClientBookingId,
+            servicio: reserva.servicio,
+            especialidad: reserva.especialidad,
+            fecha: reserva.fecha,
+            hora: reserva.hora,
+            precio: reserva.precio,
+            nombreCliente: reserva.nombreCliente,
+            telefonoCliente: reserva.telefonoCliente,
+            sesiones: reserva.sesiones || 1,
+            cantidad: reserva.cantidad || 1,
+            terapeuta: terapeutaEncontrado.nombre,
+            terapeutaId: terapeutaEncontrado.id,
+          },
+          { transaction: t }
         );
 
-        // --- Lógica de Notificación al Terapeuta ---
-        try {
+        console.log(
+          `Reserva ${reserva.servicio} (ID: ${effectiveClientBookingId}) guardada y asociada a Transaccion ID: ${nuevaTransaccion.id}`
+        );
+
+        const isFormacion =
+          reserva.servicio === "Formación de Terapeutas de la Luz";
+        const isTallerMensual = reserva.servicio === "Talleres Mensuales";
+        const isTratamientoIntegral =
+          reserva.servicio === "Tratamiento Integral"; // Identifica si es un Tratamiento Integral
+
+        if (isFormacion || isTallerMensual || isTratamientoIntegral) {
+          // Condición para saltar la lógica de disponibilidad
           console.log(
-            "[DEBUG NOTIFY] Terapeuta encontrado de la DB (objeto completo para notificación):",
+            `[INFO DISPONIBILIDAD] Saltando la lógica de actualización de disponibilidad para: "${reserva.servicio}" - "${reserva.especialidad}" (ID: ${reserva.id}).`
+          );
+          // Aquí iría la lógica alternativa si tuvieras un contador de cupos para estos servicios.
+          // Por ahora, simplemente la saltamos.
+        } else {
+          // --- Lógica ORIGINAL de actualización de disponibilidad (solo para servicios de sesiones individuales como "Spa Principal") ---
+          try {
+            console.log(
+              `[DEBUG DISPONIBILIDAD] Buscando entrada de Disponibilidad para eliminar hora: Terapeuta ID: ${terapeutaEncontrado.id}, Fecha: ${reserva.fecha}, Hora: ${reserva.hora}`
+            );
+            const disponibilidadEntry = await Disponibilidad.findOne({
+              where: {
+                terapeutaId: terapeutaEncontrado.id,
+                diasDisponibles: JSON.stringify([reserva.fecha]),
+                estado: "disponible",
+              },
+              transaction: t,
+              lock: t.LOCK.UPDATE,
+            });
+
+            if (!disponibilidadEntry) {
+              const msg = `CRÍTICO: La entrada de disponibilidad para ${terapeutaEncontrado.nombre} el ${reserva.fecha} (hora: ${reserva.hora}) con estado 'disponible' NO FUE ENCONTRADA o ya fue reservada/modificada.`;
+              console.error(`[ERROR DISPONIBILIDAD] ${msg}`);
+              throw new Error(`Fallo en la gestión de disponibilidad: ${msg}`);
+            }
+
+            let currentHours = disponibilidadEntry.horasDisponibles;
+            if (!Array.isArray(currentHours)) {
+              console.warn(
+                `[WARN DISPONIBILIDAD] horasDisponibles no es un array para la entrada ${disponibilidadEntry.id}. Intentando corregir a vacío. Valor:`,
+                currentHours
+              );
+              currentHours = [];
+            }
+
+            const initialHoursCount = currentHours.length;
+            const updatedHours = currentHours.filter((h) => h !== reserva.hora);
+
+            if (updatedHours.length === initialHoursCount) {
+              const msg = `CRÍTICO: La hora ${reserva.hora} NO FUE ENCONTRADA en el array de horas disponibles para ${terapeutaEncontrado.nombre} el ${reserva.fecha}. Esto indica una inconsistencia.`;
+              console.error(`[ERROR DISPONIBILIDAD] ${msg}`);
+              throw new Error(`Fallo en la gestión de disponibilidad: ${msg}`);
+            }
+
+            if (updatedHours.length === 0) {
+              await disponibilidadEntry.destroy({ transaction: t });
+              console.log(
+                `[INFO DISPONIBILIDAD] *** ÉXITO: Eliminada entrada de Disponibilidad (ID: ${disponibilidadEntry.id}) para ${terapeutaEncontrado.nombre} el ${reserva.fecha} (última hora ${reserva.hora} reservada). ***`
+              );
+            } else {
+              await disponibilidadEntry.update(
+                {
+                  horasDisponibles: updatedHours,
+                },
+                { transaction: t }
+              );
+              console.log(
+                `[INFO DISPONIBILIDAD] *** ÉXITO: Hora ${reserva.hora} eliminada del array de horas disponibles (ID: ${disponibilidadEntry.id}) para ${terapeutaEncontrado.nombre} el ${reserva.fecha}. Restantes: ${updatedHours.length} horas. ***`
+              );
+            }
+          } catch (dispError) {
+            console.error(
+              `[ERROR DISPONIBILIDAD] FALLO CRÍTICO en el bloque de actualización de disponibilidad para ${terapeutaEncontrado.nombre} (${terapeutaEncontrado.id}) el ${reserva.fecha} a las ${reserva.hora}:`,
+              dispError.message || dispError
+            );
+            throw new Error(
+              `Fallo en la gestión de disponibilidad: ${
+                dispError.message || "Error desconocido"
+              }`
+            );
+          }
+        }
+        // *** FIN MODIFICACIÓN PARA EXCLUIR FORMACIONES, TALLERES Y TRATAMIENTOS ***
+
+        // --- Therapist Notification Logic --- (-- ( ---
+        try {
+          // Loguear el objeto plain y los servicios parseados
+          console.log(
+            "[DEBUG NOTIFY] Terapeuta encontrado de la DB (objeto completo para notificación, después de parsing manual):",
             terapeutaEncontrado ? terapeutaEncontrado : null
+          );
+          console.log(
+            `[DEBUG NOTIFY]   - Servicios ofrecidos del terapeuta (Array - PARSED MANUALMENTE):`,
+            serviciosOfrecidosParsed
           );
 
           if (terapeutaEncontrado && terapeutaEncontrado.email) {
-            // Asegúrate de usar directamente el array que ya creamos en terapeutaEncontrado
-            // y que sabemos que está correctamente parseado a un array.
-            let serviciosOfrecidosArray =
-              terapeutaEncontrado.serviciosOfrecidos || [];
+            // Usar el array parseado manualmente
+            let serviciosOfrecidosArray = serviciosOfrecidosParsed;
 
-            // NO NECESITAS LA SIGUIENTE SECCIÓN, YA QUE SABEMOS QUE ES UN ARRAY AHORA:
-            // if (!Array.isArray(serviciosOfrecidosArray)) {
-            //   console.warn(
-            //     `[DEBUG NOTIFY] serviciosOfrecidosArray no es un array después de parseo RAW:`,
-            //     serviciosOfrecidosArray
-            //   );
-            //   serviciosOfrecidosArray = [];
-            // }
-
-            // Uso de reserva.especialidad para la comparación
             const servicioReservaNormalizado = reserva.especialidad.trim();
+            const servicioReservaLowerCase =
+              servicioReservaNormalizado.toLowerCase();
 
             console.log(
-              `[DEBUG NOTIFY] --- INICIANDO COMPARACIÓN DE SERVICIO ---`
+              `[DEBUG NOTIFY] --- INICIANDO COMPARACIÓN DE SERVICIO (DETALLADO) ---`
             );
             console.log(
-              `[DEBUG NOTIFY] Especialidad de la reserva (normalizado - frontend): "${servicioReservaNormalizado}" (Length: ${servicioReservaNormalizado.length})`
+              `[DEBUG NOTIFY]   - Especialidad de la reserva (original): "${reserva.especialidad}"`
             );
             console.log(
-              `[DEBUG NOTIFY] Especialidad de la reserva (lowercase - frontend): "${servicioReservaNormalizado.toLowerCase()}"`
+              `[DEBUG NOTIFY]   - Especialidad de la reserva (normalizado): "${servicioReservaNormalizado}"`
+            );
+            console.log(
+              `[DEBUG NOTIFY]   - Especialidad de la reserva (lowercase): "${servicioReservaLowerCase}"`
+            );
+
+            console.log(
+              `[DEBUG NOTIFY]   - Servicios ofrecidos del terapeuta (Array - REAL):`,
+              serviciosOfrecidosArray
             );
 
             let foundMatch = false;
-            const ofreceServicio = serviciosOfrecidosArray.some((s) => {
-              const servicioOfrecidoNormalizado = s.trim();
+            const ofreceServicio = serviciosOfrecidosArray.some((s, i) => {
+              const servicioOfrecidoNormalizado = String(s).trim(); // Asegura que 's' sea un string
+              const servicioOfrecidoLowerCase =
+                servicioOfrecidoNormalizado.toLowerCase();
 
               console.log(
-                `[DEBUG NOTIFY]   - Comparando con servicio ofrecido (de DB, normalizado): "${servicioOfrecidoNormalizado}" (Length: ${servicioOfrecidoNormalizado.length})`
+                `[DEBUG NOTIFY]     > Comparando (loop ${i}): "${servicioOfrecidoLowerCase}" (DB) con "${servicioReservaLowerCase}" (Reserva)`
               );
               console.log(
-                `[DEBUG NOTIFY]   - Comparando con servicio ofrecido (de DB, normalizado, lowercase): "${servicioOfrecidoNormalizado.toLowerCase()}"`
+                `[DEBUG NOTIFY]        (DB Length: ${servicioOfrecidoLowerCase.length}, Reserva Length: ${servicioReservaLowerCase.length})`
+              );
+              console.log(
+                `[DEBUG NOTIFY]        (DB char codes: ${[
+                  ...servicioOfrecidoLowerCase,
+                ].map((char) => char.charCodeAt(0))})`
+              );
+              console.log(
+                `[DEBUG NOTIFY]        (Reserva char codes: ${[
+                  ...servicioReservaLowerCase,
+                ].map((char) => char.charCodeAt(0))})`
               );
 
               const isMatch =
-                servicioOfrecidoNormalizado.toLowerCase() ===
-                servicioReservaNormalizado.toLowerCase();
+                servicioOfrecidoLowerCase === servicioReservaLowerCase;
               if (isMatch) {
                 foundMatch = true;
+                console.log(`[DEBUG NOTIFY]     > ¡MATCH ENCONTRADO!`);
               }
               return isMatch;
             });
 
-            console.log(`[DEBUG NOTIFY] ¿Hubo coincidencia?: ${foundMatch}`);
             console.log(
-              `[DEBUG NOTIFY] Contenido de serviciosOfrecidosArray desde DB:`,
-              serviciosOfrecidosArray // Esto ahora debería mostrar el array completo
+              `[DEBUG NOTIFY] ¿Hubo coincidencia FINAL?: ${ofreceServicio}`
             );
-            console.log(`[DEBUG NOTIFY] --- FIN COMPARACIÓN DE SERVICIO ---`);
+            console.log(
+              `[DEBUG NOTIFY] --- FIN COMPARACIÓN DE SERVICIO (DETALLADO) ---`
+            );
 
             if (ofreceServicio) {
               const subject = `¡Nueva Reserva Confirmada para ${reserva.especialidad}!`;
               const htmlContent = `
                 <p>Hola ${terapeutaEncontrado.nombre || "Terapeuta"},</p>
-                <p>¡Se ha confirmado una nueva reserva para tu servicio!</p>
+                <p>¡Se ha confirmado una nueva reserva para ${
+                  reserva.servicio
+                }!</p>
                 <ul>
                   <li><strong>Servicio:</strong> ${reserva.servicio}</li>
                   <li><strong>Especialidad:</strong> ${
@@ -585,7 +691,7 @@ const confirmarTransaccion = async (req, res) => {
               `;
               await sendEmail(terapeutaEncontrado.email, subject, htmlContent);
               console.log(
-                `[DEBUG NOTIFY] Notificación por correo enviada a ${terapeutaEncontrado.nombre} (${terapeutaEncontrado.email})`
+                `[DEBUG NOTIFY] Notificación por correo enviada a ${terapeutaEncontrado.email}.`
               );
             } else {
               console.warn(
@@ -604,7 +710,7 @@ const confirmarTransaccion = async (req, res) => {
           );
         }
 
-        // --- Lógica de Creación de Evento en Google Calendar ---
+        // --- Google Calendar Event Creation Logic ---
         if (reserva.fecha && reserva.hora) {
           try {
             const startDateTime = new Date(
@@ -613,7 +719,6 @@ const confirmarTransaccion = async (req, res) => {
             const endDateTime = new Date(
               startDateTime.getTime() + 60 * 60 * 1000
             );
-
             if (!isNaN(startDateTime.getTime())) {
               const resumenEvento = `Reserva: ${reserva.servicio} | Cliente: ${reserva.nombreCliente} | Teléfono: ${reserva.telefonoCliente}`;
               await crearEventoReserva(
@@ -637,68 +742,79 @@ const confirmarTransaccion = async (req, res) => {
             "[DEBUG GOOGLE CALENDAR] No se puede crear evento de Google Calendar: Falta fecha u hora en la reserva."
           );
         }
-      } // Fin del bucle for
+      } // End of for loop through reservations
 
-      if (criticalReservationError) {
-        return res.redirect(
-          `${process.env.FRONTEND_URL}/pago-fallido?error=terapeuta_no_encontrado_en_reserva&token=${token}`
-        );
-      } else {
-        await TemporalReserva.destroy({ where: { token } });
-        console.log("TemporalReserva eliminada.");
-        return res.redirect(
-          `${process.env.FRONTEND_URL}/pago-confirmacion-exito?token=${token}&transactionId=${nuevaTransaccion.id}`
-        );
-      }
+      await TemporalReserva.destroy({
+        where: { token: tokenWs },
+        transaction: t,
+      });
+      console.log("TemporalReserva eliminada.");
+      await t.commit(); // Commit the transaction if everything was successful
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/pago-confirmacion-exito?token=${tokenWs}&transactionId=${nuevaTransaccion.id}`
+      );
     } else {
+      // If payment is not authorized (rejected or failed by Transbank)
       console.warn("Pago no autorizado o fallido:", commitResponse);
-      if (nuevaTransaccion.estadoPago !== "rechazado") {
-        await nuevaTransaccion.update({
+      await nuevaTransaccion.update(
+        {
           estadoPago: "rechazado",
           fechaPago: new Date(),
-        });
-        console.log("Transaccion actualizada a RECHAZADO.");
-      }
+        },
+        { transaction: t }
+      );
+      await TemporalReserva.destroy({
+        where: { token: tokenWs },
+        transaction: t,
+      });
+      console.log("TemporalReserva eliminada tras pago rechazado.");
+      await t.rollback(); // Rollback the transaction for unauthorized payments
       return res.redirect(
-        `${process.env.FRONTEND_URL}/pago-fallido?token=${token}&status=${
+        `${process.env.FRONTEND_URL}/pago-fallido?token=${tokenWs}&status=${
           commitResponse.status
         }&code=${commitResponse.response_code || ""}`
       );
     }
   } catch (error) {
+    // General catch for confirmarTransaccion
+    if (t && t.finished !== "rollback" && t.finished !== "commit") {
+      // Ensure rollback if 't' was defined and not yet committed/rolled back
+      await t.rollback();
+    }
     console.error("Error general al confirmar transacción:", error);
     let errorMessage = error.message || "Error desconocido.";
 
     if (nuevaTransaccion) {
+      // Check if nuevaTransaccion was defined
       try {
-        await nuevaTransaccion.update({
-          estadoPago: "error_procesamiento",
-          fechaPago: new Date(),
-        });
-        console.log("Transacción en DB actualizada a 'error_procesamiento'.");
-      } catch (updateError) {
+        await Transaccion.update(
+          { estadoPago: "error_procesamiento" },
+          { where: { id: nuevaTransaccion.id } }
+        );
+        console.log(
+          `[DB] Transacción ${nuevaTransaccion.id} actualizada a 'error_procesamiento'.`
+        );
+      } catch (updateErr) {
         console.error(
-          "Error al intentar actualizar el estado de la transacción a 'error_procesamiento':",
-          updateError
+          `[DB-ERROR] Error al intentar actualizar estado de transacción ${nuevaTransaccion.id} a 'error_procesamiento':`,
+          updateErr
         );
       }
-    } else if (token) {
+    } else if (tokenWs) {
+      // If nuevaTransaccion wasn't created, try to find and update by token
       try {
         const transaccionEnDB = await Transaccion.findOne({
-          where: { tokenTransaccion: token },
+          where: { tokenTransaccion: tokenWs },
         });
         if (transaccionEnDB) {
-          await transaccionEnDB.update({
-            estadoPago: "error_procesamiento",
-            fechaPago: new Date(),
-          });
+          await transaccionEnDB.update({ estadoPago: "error_procesamiento" });
           console.log(
-            "Transacción encontrada por token y actualizada a 'error_procesamiento'."
+            `[DB] Transacción encontrada por token ${tokenWs} y actualizada a 'error_procesamiento'.`
           );
         }
       } catch (searchUpdateError) {
         console.error(
-          "Error al buscar/actualizar transacción por token en caso de error:",
+          `[DB-ERROR] Error al buscar/actualizar transacción por token ${tokenWs} en caso de error:`,
           searchUpdateError
         );
       }
@@ -708,7 +824,7 @@ const confirmarTransaccion = async (req, res) => {
       console.error("Detalles del error de Transbank:", errorMessage);
       return res.redirect(
         `${process.env.FRONTEND_URL}/pago-fallido?token=${
-          token || "n/a"
+          tokenWs || "n/a"
         }&error=${encodeURIComponent(errorMessage)}&type=transbank_error`
       );
     } else if (error.name === "SequelizeValidationError") {
@@ -718,7 +834,7 @@ const confirmarTransaccion = async (req, res) => {
       );
       return res.redirect(
         `${process.env.FRONTEND_URL}/pago-fallido?token=${
-          token || "n/a"
+          tokenWs || "n/a"
         }&error=${encodeURIComponent(
           "Validación de datos: " +
             error.errors.map((e) => e.message).join(", ")
@@ -731,16 +847,25 @@ const confirmarTransaccion = async (req, res) => {
       );
       return res.redirect(
         `${process.env.FRONTEND_URL}/pago-fallido?token=${
-          token || "n/a"
+          tokenWs || "n/a"
         }&error=${encodeURIComponent(
           "Error de clave única: " +
             error.errors.map((e) => e.message).join(", ")
         )}&type=unique_constraint_error`
       );
+    } else if (
+      error.message &&
+      error.message.includes("Fallo en la gestión de disponibilidad")
+    ) {
+      return res.redirect(
+        `${process.env.FRONTEND_URL}/pago-fallido?token=${
+          tokenWs || "n/a"
+        }&error=${encodeURIComponent(errorMessage)}&type=disponibilidad_error`
+      );
     } else {
       return res.redirect(
         `${process.env.FRONTEND_URL}/pago-fallido?token=${
-          token || "n/a"
+          tokenWs || "n/a"
         }&error=${encodeURIComponent(errorMessage)}&type=internal_server_error`
       );
     }
