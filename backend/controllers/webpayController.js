@@ -360,6 +360,12 @@ const confirmarTransaccion = async (req, res) => {
         "*************************************************************"
       );
 
+      const serviciosExcluidosDeDisponibilidad = [
+        "Formación de Terapeutas de la Luz",
+        "Tratamiento Integral",
+        "Talleres Mensuales",
+      ];
+
       for (const reserva of reservasToProcess) {
         let errorMessages = [];
         if (
@@ -511,17 +517,11 @@ const confirmarTransaccion = async (req, res) => {
           `Reserva ${reserva.servicio} (ID: ${effectiveClientBookingId}) guardada y asociada a Transaccion ID: ${nuevaTransaccion.id}`
         );
 
-        const isFormacion =
-          reserva.servicio === "Formación de Terapeutas de la Luz";
-        const isTallerMensual = reserva.servicio === "Talleres Mensuales";
-        const isTratamientoIntegral =
-          reserva.servicio === "Tratamiento Integral"; // Identifica si es un Tratamiento Integral
-
-        if (isFormacion || isTallerMensual || isTratamientoIntegral) {
-          // Condición para saltar la lógica de disponibilidad
+        if (serviciosExcluidosDeDisponibilidad.includes(reserva.servicio)) {
           console.log(
-            `[INFO DISPONIBILIDAD] Saltando la lógica de actualización de disponibilidad para: "${reserva.servicio}" - "${reserva.especialidad}" (ID: ${reserva.id}).`
+            `[INFO DISPONIBILIDAD] Saltando la lógica de actualización de disponibilidad para el servicio: "${reserva.servicio}" (no elimina horas).`
           );
+
           // Aquí iría la lógica alternativa si tuvieras un contador de cupos para estos servicios.
           // Por ahora, simplemente la saltamos.
         } else {
