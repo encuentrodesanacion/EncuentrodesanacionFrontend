@@ -32,17 +32,17 @@ export default function TalleresMensuales() {
   const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
   const talleres: TallerItem[] = [
-    {
-      id: "Taller-de-Mindfullness",
-      title: "Mindfullness para la Vida Diaria",
-      description:
-        "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
-      price: 25000,
-      date: "2025-03-07",
-      time: "20:00",
-      instructor: "Mónica Gatica",
-      instructorId: 5,
-    },
+    // {
+    //   id: "Taller-de-Mindfullness",
+    //   title: "Mindfullness para la Vida Diaria",
+    //   description:
+    //     "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
+    //   price: 25000,
+    //   date: "2025-03-07",
+    //   time: "20:00",
+    //   instructor: "Mónica Gatica",
+    //   instructorId: 5,
+    // },
     // {
     //   id: "Taller-de-Tribu-en-Calma",
     //   title: "Tribu en Calma",
@@ -210,13 +210,13 @@ export default function TalleresMensuales() {
                   className="w-full h-48 object-cover"
                 />
               )} */}
-              {taller.id === "Taller-de-Mindfullness" && (
+              {/* {taller.id === "Taller-de-Mindfullness" && (
                 <img
                   src={Mindfullness} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
-              )}
+              )} */}
               {taller.id === "Taller-de-Yoga" && (
                 <img
                   src={Yoga} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -239,11 +239,13 @@ export default function TalleresMensuales() {
                 />
               )}
               {!(
-                taller.id === "Taller-de-Mindfullness" ||
-                taller.id === "Taller-de-Tribu-en-Calma" ||
-                taller.id === "Taller-de-Yoga" ||
-                taller.id === "Taller-de-Alquimia" ||
-                taller.id === "Taller-de-Escribir-sobre-Raices"
+                // taller.id === "Taller-de-Mindfullness" ||
+                // taller.id === "Taller-de-Tribu-en-Calma" ||
+                (
+                  taller.id === "Taller-de-Yoga" ||
+                  taller.id === "Taller-de-Alquimia" ||
+                  taller.id === "Taller-de-Escribir-sobre-Raices"
+                )
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller

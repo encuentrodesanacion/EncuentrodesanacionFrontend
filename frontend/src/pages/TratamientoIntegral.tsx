@@ -6,13 +6,10 @@ import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta2 from "../assets/Terapeuta2.jpg";
-import Terapeuta3 from "../assets/Terapeuta3.jpg";
-import Terapeuta4 from "../assets/Terapeuta4.jpg";
+import Terapeuta16 from "../assets/Terapeuta16.jpg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
-import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 
 interface TerapiaItem {
   img: string;
@@ -74,7 +71,7 @@ export default function TratamientoHolistico() {
       ],
     },
     {
-      img: Terapeuta11,
+      img: Terapeuta16,
       title: "Bioenergía",
       terapeuta: "Gabriel Moreno",
       terapeutaId: 15,
