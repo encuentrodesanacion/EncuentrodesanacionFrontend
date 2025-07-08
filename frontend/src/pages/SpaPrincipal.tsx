@@ -223,7 +223,7 @@ export default function SpaPrincipal() {
       img: Terapeuta14,
       title: "Armonía Magnética para la Abundancia",
       terapeuta: "Ana Luisa Solvervicens",
-      terapeuta_id: 15,
+      terapeuta_id: 13,
       description:
         "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
       precio: 16000,
@@ -233,7 +233,7 @@ export default function SpaPrincipal() {
       img: Terapeuta15,
       title: "Registros Akáshicos ",
       terapeuta: "Laura Vicens",
-      terapeuta_id: 17,
+      terapeuta_id: 14,
       description:
         "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
       precio: 16000,
