@@ -211,7 +211,7 @@ export default function SpaLittle() {
       description:
         " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
       precio: 100,
-      opciones: [{ sesiones: 1, precio: 16000 }],
+      opciones: [{ sesiones: 1, precio: 100 }],
     },
     // {
     //   img: Terapeuta5,
