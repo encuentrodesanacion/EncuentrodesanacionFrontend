@@ -16,9 +16,12 @@ import {
 // import ReservaHora from "../ReservaHora";
 import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
+import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+import FindeTalleres from "../assets/FindeTalleres.jpeg";
 import { Link } from "react-router-dom";
 import CartIcon from "../components/CartIcon";
+import SpaLittle from "../assets/Spa Little.jpeg";
 
 // Importa tu imagen de fondo aquí.
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
@@ -89,7 +92,12 @@ const App = () => {
               >
                 Días de ofrenda
               </a>
-
+              <Link
+                to="/Staff-Terapéutico"
+                className="text-blue-300 hover:text-white font-bold"
+              >
+                Staff Terapeutico
+              </Link>
               <a
                 href="#contacto"
                 className="text-blue-300 hover:text-white font-bold"
@@ -145,12 +153,12 @@ const App = () => {
               >
                 Contacto
               </a>
-              <a
-                href="#contacto"
+              <Link
+                to="/Staff-Terapéutico"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Sobre nosotros
-              </a>
+                Staff Terapeutico
+              </Link>
             </div>
           </div>
         )}
@@ -265,7 +273,7 @@ const App = () => {
                 price: "Desde los €150 / $163USD",
                 button: (
                   <a
-                    href="mailto:evaldesnew@gmail.com?subject=Consulta&body=Hola,%20me%20gustaría%20saber%20más%20sobre..."
+                    href="https://wa.me/56976557902?text=%C2%A1Quiero%20expandir%20la%20sanaci%C3%B3n%20en%20mi%20pa%C3%ADs!%2C%20por%20favor%2C%20dame%20mas%20informaci%C3%B3n."
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
@@ -347,8 +355,7 @@ const App = () => {
             {[
               {
                 title: "Finde de Talleres Grupales",
-                image:
-                  "https://www.cipmex.org/wp-content/uploads/2019/05/27-1.jpg",
+                image: FindeTalleres,
                 excerpt:
                   "Talleres y terapias grupales a valor amoroso durante 3 días",
                 buttonText: "Reserva tu cupo",
@@ -357,22 +364,20 @@ const App = () => {
               },
               {
                 title: "SPA PRINCIPAL",
-                image:
-                  "https://psicoandres.cl/wp-content/uploads/2023/04/enfoque-holistico.jpg",
+                image: SpaPrincipal,
                 excerpt:
                   "Espacio donde los terapeutas se reúnen para ofrendar sus terapias...",
                 buttonText: "Ir al Spa Principal",
                 link: "/spaprincipal",
-                isDisabled: false,
+                isDisabled: true,
               },
               {
                 title: "SPA LITTLE",
-                image:
-                  "https://soyuzbilingual.edu.pa/wp-content/uploads/2022/01/aprendizaje-holistico.jpg",
+                image: SpaLittle,
                 excerpt: "Espacio donde nuevos terapeutas están creciendo...",
                 buttonText: "Reserva tu hora",
                 link: "/spalittle",
-                isDisabled: true,
+                isDisabled: false,
               },
             ].map((post, index) => (
               <div
@@ -385,7 +390,9 @@ const App = () => {
                   className="w-full h-48 object-cover"
                 />
                 <div className="p-6">
-                  <h3 className="text-xl font-light mb-2">{post.title}</h3>
+                  <h3 className="text-xl font-light mb-2 text-center">
+                    {post.title}
+                  </h3>
                   <p className="text-gray-600">{post.excerpt}</p>
                   {post.isDisabled ? ( // <-- Lógica condicional para el botón
                     <span
@@ -483,7 +490,7 @@ const App = () => {
                 <input
                   type="text"
                   id="name"
-                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-white focus:ring-pastel-green focus:border-pastel-green"
+                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
                 />
               </div>
 
@@ -497,7 +504,7 @@ const App = () => {
                 <input
                   type="email"
                   id="email"
-                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-white focus:ring-pastel-green focus:border-pastel-green"
+                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
                 />
               </div>
 
@@ -511,7 +518,7 @@ const App = () => {
                 <textarea
                   id="message"
                   rows={4}
-                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-white focus:ring-pastel-green focus:border-pastel-green"
+                  className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
                 ></textarea>
               </div>
 
@@ -582,10 +589,30 @@ const App = () => {
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
-            <p>
+            <p className="mb-2">
+              {" "}
+              {/* Agregamos un margen inferior para separar de los enlaces */}
               &copy; {new Date().getFullYear()} Encuentro de Sanación. Todos los
               derechos reservados.
             </p>
+            {/* --- AQUÍ ES DONDE SE INTEGRA EL ENLACE --- */}
+            <div className="flex justify-center space-x-4">
+              {" "}
+              {/* Contenedor para los enlaces de políticas */}
+              <a
+                href="/politicas-de-privacidad"
+                className="text-gray-400 hover:text-pastel-green transition-colors"
+              >
+                Políticas de Privacidad
+              </a>
+              {/* Si tienes Términos y Condiciones, también iría aquí */}
+              <a
+                href="/terminos-y-condiciones"
+                className="text-gray-400 hover:text-pastel-green transition-colors"
+              >
+                Términos y Condiciones
+              </a>
+            </div>
           </div>
         </div>
       </footer>

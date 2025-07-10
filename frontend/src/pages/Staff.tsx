@@ -7,17 +7,16 @@ const TerapeutasPage = () => {
   return (
     <div>
       <section id="terapeutas" className="py-10 px-6 max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold mb-4">Nuestros Terapeutas</h2>
+        <h2 className="text-3xl font-bold mb-4"></h2>
         <p className="mb-6"></p>
         <CarruselStaff />
+        <button
+          onClick={() => navigate("/#contacto")}
+          className="mt-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto"
+        >
+          Volver al Inicio
+        </button>
       </section>
-
-      <button
-        onClick={() => navigate("/#contacto")}
-        className="mt-10 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 block mx-auto"
-      >
-        Volver al Inicio
-      </button>
     </div>
   );
 };

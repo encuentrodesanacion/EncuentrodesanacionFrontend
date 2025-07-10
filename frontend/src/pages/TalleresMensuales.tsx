@@ -58,7 +58,7 @@ export default function TalleresMensuales() {
       id: "Taller-de-Yoga",
       title: "Yoga Integral para Adultos",
       description:
-        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación las cuales nos ayudan a mejorar nuestra salud en general. Esta maravillosa práctica dentro de sus innumerables beneficios podemos encontrar los siguientes : Reducir el estres Aumenta las hormonas de la felicidad Alivia la migraña Nos ayuda a calmar nuestra mente. Reduce los niveles de ansiedad. Entre otros.",
+        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica, donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación, nos ayuda a mejorar nuestra salud en general. Esta maravillosa práctica, dentro de sus innumerables beneficios, nos ofrece los siguientes: reducir el estrés, aumentar las hormonas de la felicidad, aliviar la migraña, calmar nuestra mente y reducir los niveles de ansiedad, entre otros.",
       price: 25000,
       date: "2025-05-07",
       time: "11:00",

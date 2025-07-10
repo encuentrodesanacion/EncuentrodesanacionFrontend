@@ -21,7 +21,10 @@ import QuienesSomosPage from "./pages/QuienesSomos";
 import TerapeutasPage from "./pages/Staff";
 import ComunidadYLeadsPage from "./pages/ComunidadyLeads";
 import SpaPrincipal from "./pages/SpaPrincipal";
+import SpaLittle from "./pages/SpaLittle";
 import FinDeTalleres from "./pages/Findetalleres";
+import PoliticasdePrivacidad from "./pages/PoliticasdePrivacidad";
+import TerminosyCondiciones from "./pages/TerminosyCondiciones";
 
 // --- Importaciones de las nuevas páginas de pago ---
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
@@ -48,10 +51,19 @@ export default function App() {
             element={<TratamientoHolistico />}
           />
           {/* <Route path="/Findetalleres" element={<Findetalleres />} /> */}
+          <Route path="/spalittle" element={<SpaLittle />} />
           <Route path="/tallermensual" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
           <Route path="/pago-confirmacion-exito" element={<SuccessPage />} />
+          <Route
+            path="/politicas-de-privacidad"
+            element={<PoliticasdePrivacidad />}
+          />
+          <Route
+            path="/terminos-y-condiciones"
+            element={<TerminosyCondiciones />}
+          />
           <Route path="/spaprincipal" element={<SpaPrincipal />} />
           <Route path="/findetalleres" element={<FinDeTalleres />} />
           <Route path="/nuestra-comunidad" element={<ComunidadYLeadsPage />} />

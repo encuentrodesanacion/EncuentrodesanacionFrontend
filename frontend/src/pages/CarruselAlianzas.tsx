@@ -2,33 +2,38 @@ import Encuentrodesanacion from "../assets/Encuentrodesanacion.jpeg";
 import "../styles/flipCards.css"; // Asegúrate de tener los estilos aquí o adaptarlos a Tailwind
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import tuemprendimiento from "../assets/tuemprendimiento.jpeg";
-import hazlo from "../assets/hazlo.jpg";
-import confiaenelproceso from "../assets/confiaenelproceso.jpg";
-import nuncaolvides from "../assets/nuncaolvides.jpg";
+import TuLuz from "../assets/TuLuz.jpeg";
+import Cocrea from "../assets/Cocrea.jpeg";
+import Caldero from "../assets/Caldero.jpeg";
+import yuniverse from "../assets/Yunivers.jpeg";
 
 const alianzas = [
   {
-    nombre: "@Creador_virtual",
-    url: "https://www.instagram.com/creador_virtual/",
-    imagen: creadorvirtual,
+    nombre: "Sahumos y Sales",
+    url: "https://www.instagram.com/el.caldero.de.la.maca?igsh=MXZwcTRyMW4ydmF0Ng==",
+    imagen: Caldero,
+    descripcion:
+      "Sumérgete en la pureza ancestral. Artículos para Sahumar y Sales. Diseñados para limpiar, purificar y armonizar tus espacios y tu energía. Eleva tu vibración y crea un santuario de paz en tu hogar.",
   },
+
   {
     nombre: "Encuentro de sanación",
     url: "https://www.instagram.com/encuentrodesanacion/",
-    imagen: hazlo,
-    descripcion: "Obtén visibilidad real y comparte sanación.",
-  },
-  {
-    nombre: "¡Atrevete y sé parte de nuestras alianzas!",
-    url: "h",
-    imagen: confiaenelproceso,
+    imagen: TuLuz,
     descripcion: "Obtén visibilidad real y comparte sanación.",
   },
   {
     nombre: "¡Atrevete y sé parte de nuestras alianzas!",
     url: "https://www.instagram.com/encuentrodesanacion/",
-    imagen: nuncaolvides,
+    imagen: Cocrea,
     descripcion: "Obtén visibilidad real y comparte sanación.",
+  },
+  {
+    nombre: "Yuniverse - Diseño y Creacion de Espacios Digitales",
+    url: "https://www.instagram.com/yuniverse_digital/",
+    imagen: yuniverse,
+    descripcion:
+      "Sabemos que tu visión es ilimitada. Ayudamos a empresas y profesionales en su lanzamiento a Internet , ofrecemos servicios de creación de páginas web que amplificarán tu mensaje y te conectarán con tu audiencia global. Expande tu alcance y materializa tu potencial en el vasto cosmos digital.",
   },
 ];
 
