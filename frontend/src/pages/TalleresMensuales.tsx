@@ -76,17 +76,17 @@ export default function TalleresMensuales() {
       instructor: "Macarena del Río",
       instructorId: 6,
     },
-    // {
-    //   id: "Taller-de-Escribir-sobre-Raices",
-    //   title: "Escribir desde las raíces: Tarot y memoria ancestral",
-    //   description:
-    //     "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
-    //   price: 25000,
-    //   date: "2025-06-07",
-    //   time: "12:00",
-    //   instructor: "Katalina Rencoret",
-    //   instructorId: 6,
-    // },
+    {
+      id: "Taller-de-Escribir-sobre-Raices",
+      title: "Escribir desde las raíces: Tarot y memoria ancestral",
+      description:
+        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
+      price: 25000,
+      date: "2025-06-07",
+      time: "12:00",
+      instructor: "Katalina Rencoret",
+      instructorId: 6,
+    },
     // {
     //   id: "taller-meditacion-jul",
     //   title: "Taller de Regresión",
@@ -210,13 +210,13 @@ export default function TalleresMensuales() {
                   className="w-full h-48 object-cover"
                 />
               )} */}
-              {/* {taller.id === "Taller-de-Mindfullness" && (
+              {taller.id === "Taller-de-Mindfullness" && (
                 <img
                   src={Mindfullness} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
-              )} */}
+              )}
               {taller.id === "Taller-de-Yoga" && (
                 <img
                   src={Yoga} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -224,13 +224,13 @@ export default function TalleresMensuales() {
                   className="w-full h-48 object-cover"
                 />
               )}
-              {/* {taller.id === "Taller-de-Escribir-sobre-Raices" && (
+              {taller.id === "Taller-de-Escribir-sobre-Raices" && (
                 <img
                   src={EscribirDesdeRaices} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-48 object-cover"
                 />
-              )} */}
+              )}
               {taller.id === "Taller-de-Alquimia" && (
                 <img
                   src={Alquimia} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -239,13 +239,13 @@ export default function TalleresMensuales() {
                 />
               )}
               {!(
-                // taller.id === "Taller-de-Mindfullness" ||
                 // taller.id === "Taller-de-Tribu-en-Calma" ||
                 (
+                  taller.id === "Taller-de-Mindfullness" ||
                   taller.id === "Taller-de-Yoga" ||
-                  taller.id === "Taller-de-Alquimia"
+                  taller.id === "Taller-de-Alquimia" ||
+                  taller.id === "Taller-de-Escribir-sobre-Raices"
                 )
-                // taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller
