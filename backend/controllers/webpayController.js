@@ -33,14 +33,37 @@ console.log("INICIALIZANDO WEBPAY CONTROLLER");
 console.log(`[CONFIG] Código de Comercio: ${process.env.TBK_COMMERCE_CODE}`);
 console.log(`[CONFIG] Entorno de Transbank: ${process.env.TBK_ENV}`);
 console.log("------------------------------------------");
+const TBK_COMMERCE_CODE_FINAL = process.env.TBK_API_KEY_ID; // Usar TBK_API_KEY_ID como Código de Comercio
+const TBK_API_KEY_SECRET_FINAL = process.env.TBK_API_KEY_SECRET; // Usar TBK_API_KEY_SECRET como API Key
+const TBK_ENVIRONMENT_CONFIG =
+  process.env.TBK_ENV === "PRODUCCION"
+    ? Environment.Production
+    : Environment.Integration;
+
+console.log(`[CONFIG] Código de Comercio (usado): ${TBK_COMMERCE_CODE_FINAL}`);
+console.log(
+  `[CONFIG] API Key (usado, sólo mostrar los primeros caracteres): ${
+    TBK_API_KEY_SECRET_FINAL
+      ? TBK_API_KEY_SECRET_FINAL.substring(0, 5) + "..."
+      : "N/A"
+  }`
+);
+console.log(`[CONFIG] Entorno de Transbank (usado): ${process.env.TBK_ENV}`);
+console.log(`[CONFIG] Ambiente de SDK: ${TBK_ENVIRONMENT_CONFIG.name}`); // Para ver si es 'Production' o 'Integration'
+
+if (!TBK_COMMERCE_CODE_FINAL || !TBK_API_KEY_SECRET_FINAL) {
+  console.error(
+    "ERROR: Las credenciales de Transbank (TBK_API_KEY_ID o TBK_API_KEY_SECRET) no están definidas."
+  );
+  // Considera lanzar un error o detener la aplicación aquí si no pueden operar sin credenciales
+  process.exit(1); // Esto es drástico, úsalo con precaución, pero evita problemas mayores.
+}
 
 const transaction = new WebpayPlus.Transaction(
   new Options(
-    process.env.TBK_COMMERCE_CODE,
-    process.env.TBK_API_KEY,
-    process.env.TBK_ENV === "PRODUCCION"
-      ? Environment.Production
-      : Environment.Integration
+    TBK_COMMERCE_CODE_FINAL,
+    TBK_API_KEY_SECRET_FINAL,
+    TBK_ENVIRONMENT_CONFIG
   )
 );
 
