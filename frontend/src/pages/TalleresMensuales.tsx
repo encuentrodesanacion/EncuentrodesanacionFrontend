@@ -19,6 +19,7 @@ interface TallerItem {
   time: string; // Hora del taller (ej. "10:00")
   instructor: string; // Terapeuta/Instructor
   instructorId: number; //Necesario!
+  isDisabled?: boolean;
 }
 
 export default function TalleresMensuales() {
@@ -42,6 +43,7 @@ export default function TalleresMensuales() {
       time: "19:00",
       instructor: "Mónica Gatica",
       instructorId: 5,
+      isDisabled: false,
     },
     // {
     //   id: "Taller-de-Tribu-en-Calma",
@@ -64,6 +66,7 @@ export default function TalleresMensuales() {
       time: "19:30",
       instructor: "Marlene Ramirez",
       instructorId: 17,
+      isDisabled: true,
     },
     {
       id: "Taller-de-Alquimia",
@@ -75,6 +78,7 @@ export default function TalleresMensuales() {
       time: "20:30",
       instructor: "Macarena del Río",
       instructorId: 6,
+      isDisabled: false,
     },
     {
       id: "Taller-de-Escribir-sobre-Raices",
@@ -86,6 +90,7 @@ export default function TalleresMensuales() {
       time: "12:00",
       instructor: "Katalina Rencoret",
       instructorId: 18,
+      isDisabled: false,
     },
     // {
     //   id: "taller-meditacion-jul",
@@ -271,12 +276,22 @@ export default function TalleresMensuales() {
                     ${taller.price.toLocaleString()} CLP
                   </span>
                 </div>
-                <button
-                  onClick={() => handleOpenContactModal(taller)}
-                  className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
-                >
-                  Inscribirse al Taller
-                </button>
+                {taller.isDisabled ? (
+                  <button
+                    disabled // Atributo disabled
+                    className="w-full bg-gray-400 text-white py-2 px-4 rounded-md cursor-not-allowed" // Estilos para deshabilitado
+                    title="Inscripciones cerradas para este taller" // Tooltip
+                  >
+                    Inscripciones Cerradas
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleOpenContactModal(taller)}
+                    className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
+                  >
+                    Inscribirse al Taller
+                  </button>
+                )}
               </div>
             </div>
           )
