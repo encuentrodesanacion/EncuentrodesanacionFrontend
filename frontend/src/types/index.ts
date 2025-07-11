@@ -5,16 +5,6 @@ export interface OpcionSesion {
   precio: number;
 }
 
-export interface TerapiaItem {
-  img: string;
-  title: string;
-  terapeuta: string;
-  terapeuta_id: number;
-  description: string;
-  precio: number;
-  opciones?: OpcionSesion[];
-}
-
 // ESTA ES LA INTERFAZ DE CÓMO VIENEN LOS DATOS CRUDOS DE TU BACKEND POR CADA FILA DE DISPONIBILIDAD
 // (Basado en la salida de tu consola rawData: nombreTerapeuta, diasDisponibles, horasDisponibles directos)
 export interface RawDisponibilidadDBItem {
@@ -69,4 +59,5 @@ export interface TerapiaItem {
   description: string;
   precio: number;
   opciones?: OpcionSesion[];
+  isDisabled?: boolean;
 }

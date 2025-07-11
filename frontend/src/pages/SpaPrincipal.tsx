@@ -11,7 +11,6 @@ import Terapeuta3 from "../assets/Terapeuta3.jpg";
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 import Terapeuta8 from "../assets/Terapeuta8.jpg";
-import creadorVirtual from "../assets/creadorvirtual.jpg";
 import Terapeuta13 from "../assets/Terapeuta13.jpeg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
@@ -186,6 +185,7 @@ export default function SpaPrincipal() {
       description:
         "Es una Terapia para conectar con nuestro Centro Creativo, el útero sagrado y liberar patrones energéticos, emocionales y ancestrales que se almacenan en esta zona. Ayuda a sanar traumas pasados, mejorar la relación con la feminidad y potenciar la creatividad y el bienestar.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -196,6 +196,7 @@ export default function SpaPrincipal() {
       description:
         "Es una herramienta terapéutica para tratar conflictos personales, familiares y laborales mediante la visualización de representantes que nos permiten tomar decisiones y reconciliarnos con nuestro linaje",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -206,6 +207,7 @@ export default function SpaPrincipal() {
       description:
         "Es una terapia de armonización energética que permite detectar y eliminar energías negativas, restaurando el equilibrio del cuerpo. También diagnostica el estado de los chakras y sistemas del cuerpo, regenera y equilibra su energía. Además, potencia el crecimiento personal, limpia y armoniza el aura y, a través de la cromoterapia, otorga mayores beneficios al consultante.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -216,6 +218,7 @@ export default function SpaPrincipal() {
       description:
         "¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -227,6 +230,7 @@ export default function SpaPrincipal() {
       description:
         "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -237,6 +241,7 @@ export default function SpaPrincipal() {
       description:
         "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -247,6 +252,7 @@ export default function SpaPrincipal() {
       description:
         "El Tarot puede proporcionarte una mirada profunda y libre de juicios de una situación, periodo de tiempo o sistema familiar. Te dará herramientas y consejos prácticos para que llegues a la mejor resolución de un dilema o problema. Los mensajes se canalizan con ayuda de tus guías espirituales, quienes buscan sanarte y esclarecerte.",
       precio: 16000,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -380,24 +386,46 @@ export default function SpaPrincipal() {
                     onSubmit={(e) => e.preventDefault()}
                   >
                     {t.opciones && t.opciones.length > 0 ? (
-                      t.opciones.map((op: OpcionSesion, j: number) => (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() =>
-                            reservar(
-                              t.title,
-                              op.precio,
-                              t.terapeuta,
-                              t.terapeuta_id
-                            )
-                          }
-                          className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700"
-                        >
-                          {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
-                          CLP)
-                        </button>
-                      ))
+                      t.opciones.map((op: OpcionSesion, j: number) =>
+                        t.isDisabled ? (
+                          <button
+                            key={j}
+                            type="button"
+                            disabled
+                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                            title="No disponible para reserva"
+                          >
+                            No Disponible
+                          </button>
+                        ) : (
+                          <button
+                            key={j}
+                            type="button"
+                            onClick={() =>
+                              reservar(
+                                t.title,
+                                op.precio,
+                                t.terapeuta,
+                                t.terapeuta_id
+                              )
+                            }
+                            className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                          >
+                            {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
+                            CLP)
+                          </button>
+                        )
+                      )
+                    ) : // Lógica condicional para el botón si no hay opciones específicas
+                    t.isDisabled ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                        title="No disponible para reserva"
+                      >
+                        No Disponible
+                      </button>
                     ) : (
                       <button
                         type="button"
@@ -409,7 +437,7 @@ export default function SpaPrincipal() {
                             t.terapeuta_id
                           )
                         }
-                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700"
+                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
                       >
                         Toma de hora (${t.precio.toLocaleString()} CLP)
                       </button>
@@ -421,7 +449,6 @@ export default function SpaPrincipal() {
           </div>
         ))}
       </div>
-
       {reservaPendiente && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
