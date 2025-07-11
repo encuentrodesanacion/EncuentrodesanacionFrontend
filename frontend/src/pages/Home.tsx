@@ -452,7 +452,7 @@ const App = () => {
                 </p>
                 <div className="flex space-x-4 mt-6">
                   <a
-                    href="#"
+                    href="https://www.instagram.com/encuentrodesanacion/"
                     className="text-gray-400 hover:text-pastel-green transition-colors"
                   >
                     <Instagram size={24} />
@@ -464,7 +464,7 @@ const App = () => {
                     <Facebook size={24} />
                   </a>
                   <a
-                    href="#"
+                    href="https://www.youtube.com/@SpaEncuentroDeSanaci%C3%B3n"
                     className="text-gray-400 hover:text-pastel-green transition-colors"
                   >
                     <Youtube size={24} />
