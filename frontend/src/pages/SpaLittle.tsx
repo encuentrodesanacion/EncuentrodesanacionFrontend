@@ -203,16 +203,16 @@ export default function SpaLittle() {
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: creadordigital,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeuta_id: 10,
-      description:
-        " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
-      precio: 100,
-      opciones: [{ sesiones: 1, precio: 50 }],
-    },
+    // {
+    //   img: creadordigital,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10,
+    //   description:
+    //     " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
+    //   precio: 100,
+    //   opciones: [{ sesiones: 1, precio: 50 }],
+    // },
     // {
     //   img: Terapeuta5,
     //   title: "Purificación y limpieza de energías negativas",

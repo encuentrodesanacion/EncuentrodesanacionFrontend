@@ -250,15 +250,15 @@ export default function SpaPrincipal() {
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
-    {
-      img: creadorVirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
-      description: "Correo de Prueba.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+    // {
+    //   img: creadorVirtual,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
+    //   description: "Correo de Prueba.",
+    //   precio: 16000,
+    //   opciones: [{ sesiones: 1, precio: 16000 }],
+    // },
   ];
 
   // Mostrar formulario para seleccionar fecha y hora

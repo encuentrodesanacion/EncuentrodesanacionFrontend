@@ -47,16 +47,16 @@ const imagenesData: ImagenData[] = [
     precio: 40000,
   },
 
-  {
-    id: "Alice-Basay",
-    src: creadorvirtual,
-    alt: "Regresión",
-    descripcion: "Prueba Correo",
-    link: "#",
-    terapeuta: "Alice Basay",
-    terapeutaId: 10,
-    precio: 40000,
-  },
+  // {
+  //   id: "Alice-Basay",
+  //   src: creadorvirtual,
+  //   alt: "Regresión",
+  //   descripcion: "Prueba Correo",
+  //   link: "#",
+  //   terapeuta: "Alice Basay",
+  //   terapeutaId: 10,
+  //   precio: 40000,
+  // },
 ];
 
 export default function Terapias() {
