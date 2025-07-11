@@ -32,17 +32,17 @@ export default function TalleresMensuales() {
   const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
   const talleres: TallerItem[] = [
-    // {
-    //   id: "Taller-de-Mindfullness",
-    //   title: "Mindfullness para la Vida Diaria",
-    //   description:
-    //     "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
-    //   price: 25000,
-    //   date: "2025-03-07",
-    //   time: "20:00",
-    //   instructor: "Mónica Gatica",
-    //   instructorId: 5,
-    // },
+    {
+      id: "Taller-de-Mindfullness",
+      title: "Mindfullness para la Vida Diaria",
+      description:
+        "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
+      price: 25000,
+      date: "2025-07-11",
+      time: "19:00",
+      instructor: "Mónica Gatica",
+      instructorId: 5,
+    },
     // {
     //   id: "Taller-de-Tribu-en-Calma",
     //   title: "Tribu en Calma",
@@ -60,8 +60,8 @@ export default function TalleresMensuales() {
       description:
         "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica, donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación, nos ayuda a mejorar nuestra salud en general. Esta maravillosa práctica, dentro de sus innumerables beneficios, nos ofrece los siguientes: reducir el estrés, aumentar las hormonas de la felicidad, aliviar la migraña, calmar nuestra mente y reducir los niveles de ansiedad, entre otros.",
       price: 25000,
-      date: "2025-05-07",
-      time: "11:00",
+      date: "2025-07-09",
+      time: "19:30",
       instructor: "Marlene Ramirez",
       instructorId: 17,
     },
@@ -71,8 +71,8 @@ export default function TalleresMensuales() {
       description:
         "Un taller poderoso donde ritual y transformación se unen para ayudarte a reconocer los bloqueos que te han mantenido lejos del merecimiento, el dinero y la plenitud.  A través de herramientas de PNL, prácticas mágicas y rituales conscientes, vas a: • Identificar tus patrones de carencia • Reprogramar creencias limitantes • Activar tu poder creador  •Conectar con tu propósito abundante Es hora de transformar la escasez en magnetismo, y abrirte a todo lo que el universo ya quiere entregarte.  Tu abundancia no es un destino… es un estado de conexión interior.",
       price: 25000,
-      date: "2025-04-07",
-      time: "21:00",
+      date: "2025-07-11",
+      time: "20:30",
       instructor: "Macarena del Río",
       instructorId: 6,
     },
@@ -82,10 +82,10 @@ export default function TalleresMensuales() {
       description:
         "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-06-07",
+      date: "2025-07-13",
       time: "12:00",
       instructor: "Katalina Rencoret",
-      instructorId: 6,
+      instructorId: 18,
     },
     // {
     //   id: "taller-meditacion-jul",
@@ -239,13 +239,11 @@ export default function TalleresMensuales() {
                 />
               )}
               {!(
+                taller.id === "Taller-de-Mindfullness" ||
                 // taller.id === "Taller-de-Tribu-en-Calma" ||
-                (
-                  taller.id === "Taller-de-Mindfullness" ||
-                  taller.id === "Taller-de-Yoga" ||
-                  taller.id === "Taller-de-Alquimia" ||
-                  taller.id === "Taller-de-Escribir-sobre-Raices"
-                )
+                taller.id === "Taller-de-Yoga" ||
+                taller.id === "Taller-de-Alquimia" ||
+                taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller

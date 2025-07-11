@@ -21,6 +21,7 @@ interface ImagenData {
   terapeuta: string; // El nombre del terapeuta que conduce la "formación"
   terapeutaId: number;
   precio: number;
+  isDisabled?: boolean;
 }
 
 const imagenesData: ImagenData[] = [
@@ -34,6 +35,7 @@ const imagenesData: ImagenData[] = [
     terapeuta: "Mónica Gatica",
     terapeutaId: 5,
     precio: 40000,
+    isDisabled: true,
   },
   {
     id: "limpieza-ankh-fabiola",
@@ -45,6 +47,7 @@ const imagenesData: ImagenData[] = [
     terapeuta: "Fabiola Valenzuela",
     terapeutaId: 3,
     precio: 40000,
+    isDisabled: true,
   },
 
   // {
@@ -187,12 +190,23 @@ export default function Terapias() {
                     <p className="text-xs text-gray-600 mb-3">
                       Duración: 1 mes (60 minutos por semana, cada semana)
                     </p>
-                    <button
-                      onClick={() => handleOpenContactModal(img)}
-                      className="w-full px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition-colors duration-300"
-                    >
-                      Inscribirse en Formación
-                    </button>
+                    {/* --- LÓGICA CONDICIONAL PARA EL BOTÓN --- */}
+                    {img.isDisabled ? (
+                      <button
+                        disabled // Agrega el atributo disabled al botón
+                        className="w-full px-4 py-2 bg-gray-400 text-white rounded cursor-not-allowed"
+                        title="Inscripciones cerradas"
+                      >
+                        Inscripciones Cerradas
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleOpenContactModal(img)}
+                        className="w-full px-4 py-2 bg-pink-500 text-white rounded hover:bg-pink-600 transition-colors duration-300"
+                      >
+                        Inscribirse en Formación
+                      </button>
+                    )}
                   </div>
                 </div>
               </div>
