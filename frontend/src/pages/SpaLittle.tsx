@@ -196,7 +196,7 @@ export default function SpaLittle() {
     {
       img: Terapeuta18,
       title: "Constelaciones Familiares",
-      terapeuta: "Viviana Espinoza ",
+      terapeuta: "Viviana Espinoza",
       terapeuta_id: 20,
       description:
         "¿Sientes que ciertos patrones en tu vida se repiten una y otra vez? Las Constelaciones Familiares te permiten comprender y sanar dinámicas ocultas que pueden estar afectando tu vida personal, laboral y emocional. Podrás: -Identificar y liberar bloqueos emocionales que limitan tu bienestar. -Sanar relaciones familiares y mejorar la conexión con tus seres queridos. -Romper patrones repetitivos en tu vida y cambiar tu historia. -Equilibrar tu energía y sentir mayor paz interior. -Encontrar claridad en conflictos personales, laborales y de pareja",
