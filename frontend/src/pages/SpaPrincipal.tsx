@@ -350,7 +350,9 @@ export default function SpaPrincipal() {
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Spa Principal
       </h2>
-      <a>(1 a 5 de julio 2025)</a>
+      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
+        (Del 1 al 5 de Julio 2025)
+      </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">
         {terapias.map((t, i) => (
