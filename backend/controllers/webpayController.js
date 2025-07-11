@@ -35,10 +35,10 @@ console.log(`[CONFIG] Entorno de Transbank: ${process.env.TBK_ENV}`);
 console.log("------------------------------------------");
 const TBK_COMMERCE_CODE_FINAL = process.env.TBK_API_KEY_ID; // Usar TBK_API_KEY_ID como Código de Comercio
 const TBK_API_KEY_SECRET_FINAL = process.env.TBK_API_KEY_SECRET; // Usar TBK_API_KEY_SECRET como API Key
-const TBK_ENVIRONMENT_CONFIG =
+const transbankEnvironment =
   process.env.TBK_ENV === "PRODUCCION"
-    ? Environment.Production
-    : Environment.Integration;
+    ? Environment.Production // Directamente el objeto de entorno
+    : Environment.Integration; // Directamente el objeto de entorno
 
 console.log(`[CONFIG] Código de Comercio (usado): ${TBK_COMMERCE_CODE_FINAL}`);
 console.log(
@@ -49,7 +49,11 @@ console.log(
   }`
 );
 console.log(`[CONFIG] Entorno de Transbank (usado): ${process.env.TBK_ENV}`);
-console.log(`[CONFIG] Ambiente de SDK: ${TBK_ENVIRONMENT_CONFIG.name}`); // Para ver si es 'Production' o 'Integration'
+console.log(
+  `[CONFIG] Ambiente de SDK: ${
+    transbankEnvironment ? transbankEnvironment.name : "undefined (Error)"
+  }`
+); // Logea el nombre del ambiente'Production' o 'Integration'
 
 if (!TBK_COMMERCE_CODE_FINAL || !TBK_API_KEY_SECRET_FINAL) {
   console.error(
@@ -63,7 +67,7 @@ const transaction = new WebpayPlus.Transaction(
   new Options(
     TBK_COMMERCE_CODE_FINAL,
     TBK_API_KEY_SECRET_FINAL,
-    TBK_ENVIRONMENT_CONFIG
+    transbankEnvironment
   )
 );
 
