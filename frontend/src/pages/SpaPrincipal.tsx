@@ -241,11 +241,11 @@ export default function SpaPrincipal() {
     },
     {
       img: Terapeuta8,
-      title: "Tarot Predictivo y/o Terapia con Oráculos",
+      title: "Tarot Predictivo y/o Terapéutico",
       terapeuta: "Paola Quintero",
       terapeuta_id: 11,
       description:
-        "Cuenta la leyenda que Odín, buscando la sabiduría, se sacrifica y de su sangre brotan las runas. Estas, además de ser un alfabeto, son un oráculo con mensajes poderosos que te guiarán en tu camino. La lectura de runas es una herramienta de autoconocimiento y orientación que te permite comprender tu presente, explorar el pasado y vislumbrar el futuro, obteniendo claridad para tomar decisiones importantes. ¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
+        "El Tarot puede proporcionarte una mirada profunda y libre de juicios de una situación, periodo de tiempo o sistema familiar. Te dará herramientas y consejos prácticos para que llegues a la mejor resolución de un dilema o problema. Los mensajes se canalizan con ayuda de tus guías espirituales, quienes buscan sanarte y esclarecerte.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
