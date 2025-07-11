@@ -42,7 +42,7 @@ const alianzas = [
     url: "https://www.instagram.com/susurro_ancestralcl/",
     imagen: terapeuta14,
     descripcion:
-      "Ana Luisa: fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
+      "Ana Luisa: Fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
   },
   {
     nombre: "Brenda Rivas",
@@ -114,7 +114,7 @@ const alianzas = [
     url: "https://www.instagram.com/biomagnetismo558/",
     imagen: terapeuta16,
     descripcion:
-      "Experto en Bioenergía desde hace 30 años, dictando formación de Terapeutas en Argentina, México, Chile, astrólogo, y profesor de meditación desde hace 35 años",
+      "Gabriel Moreno: Experto en Bioenergía desde hace 30 años, dictando formación de Terapeutas en Argentina, México, Chile, astrólogo, y profesor de meditación desde hace 35 años",
   },
   {
     nombre: "Rosa Santimone",
