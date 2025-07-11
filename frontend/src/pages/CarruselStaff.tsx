@@ -14,6 +14,7 @@ import terapeuta20 from "../assets/Terapeuta20.jpeg";
 import terapeuta12 from "../assets/Terapeuta12.jpeg";
 import terapeuta17 from "../assets/Terapeuta17.jpeg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
+import terapeuta16 from "../assets/Terapeuta16.jpeg";
 const alianzas = [
   {
     nombre: "Monica Gatica",
@@ -30,27 +31,32 @@ const alianzas = [
       "Macarena del Río: Maestría en Reiki Usui, Registros Akáshicos, Maestría Reiki Seichim Sekhem y Horus, Canalización de la Rosa, Terapia con Cruz de Ankh, Orquídeas del Amazonas, Constelaciones Familiares, Lógica Biológica del Síntoma, Regresiones, Programación Neurolingüística, Alquimia Egipcia, Extracción de Almas Perdidas y Recuperación del Alma, Tarot Egipcio, Tarot Osho Zen, Diplomado en Metafísica, El Cerebro como Aliado (Neurociencia), Neurociencia Maternal.",
   },
   {
-    nombre: "Rosa Santimone",
-    url: "https://www.instagram.com/rosasantimone/",
-    imagen: terapeuta13,
-    descripcion:
-      "Rosa Santimone: Terapeuta holística. A través de un enfoque integral, te ofrezco diversas herramientas para sanar, equilibrar y potenciar tu vida: REIKI USUI, TAROT TERAPÉUTICO, PÉNDULO HEBREO, RUEDA DE LA VIDA. ¡Permíteme acompañarte para iniciar este viaje de transformación!",
-  },
-
-  {
     nombre: "Paulina Villablanca Perez",
     url: "https://www.instagram.com/gotitasdeamor38/",
     imagen: terapeuta11,
     descripcion:
       "Paulina Villablanca: Educadora de párvulos, Terapeuta Holística integral, Terapeuta floral (especializada en niños, niñas, adolescentes y neurodiversidad), Consteladora familiar (individual y grupal), Sanadora de heridas de infancia, Tarotista (predictiva y terapéutica).",
   },
-
+  {
+    nombre: "Ana Luisa Solervicens",
+    url: "https://www.instagram.com/susurro_ancestralcl/",
+    imagen: terapeuta14,
+    descripcion:
+      "Ana Luisa: fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
+  },
   {
     nombre: "Brenda Rivas",
     url: "https://www.instagram.com/trazos_del_alma2024/",
     imagen: terapeuta1,
     descripcion:
       "Brenda Rivas: En mi trayectoria en el campo de la salud, evidencié cómo las patologías o padecimientos físicos constituían el pilar en los cuidados de enfermería, restando importancia al cuerpo energético. Por lo que me interesé en el estudio de la biodecodificación emocional, llevándome a profundizar en la filosofía holística, tratando así al paciente en su totalidad: espíritu, alma y cuerpo. Las Terapias holísticas que realizo son : Canalización energética - Apertura de Registros Akáshicos - Lectura del Tarot Rider Waite - Lectura del Oráculo Angelical - Lectura del Oráculo de Vidas Pasadas - Consulta de Runas Vikingas - Reiki Unitario - Reiki Angelical",
+  },
+  {
+    nombre: "Sandra Da Silva",
+    url: "https://www.instagram.com/serendipiall/",
+    imagen: terapeuta5,
+    descripcion:
+      "Sandra Da Silva: Terapeuta Holistica Integral. Mi conexión con el mundo Holistico inició para superar un proceso emocional personal, profundizando en distintas herramientas en las que me apoye para sanar y ahora pongo al servicio del bienestar de quien lo requiera: Terapia de Respuesta Espiritual - Purificación y Limpieza de Energías Negativas - Sanacion con Péndulo Hebreo - Liberación de Implantes - Sanacion Energética con Cruz de Anhk - Conexión Angelical. Mi propósito es brindarles un canal de expansión que les permita sanar desde la consciencia de lo vivido y conectar con su Plan de Alma original.",
   },
   {
     nombre: "Paola Quintero",
@@ -73,13 +79,7 @@ const alianzas = [
     descripcion:
       "Marlene Ramírez: Terapeuta Integral en niños y adultos. Llevo 8 años de experiencia en distintas terapias complementarias. Mis terapias son las siguientes: Reiki (distintos estilos), Liberación de Emociones Atrapadas, Lectura de Tarot Osho, Constelaciones Familiares y Ancestrología, Terapia Kármica y Corte de Lazos, Mesas Radiónicas, Alineación de Chacras con Péndulo y Gemoterapia, Tameana, Limpiezas Energéticas (casa y persona), Angoterapia, Registros Akáshicos (normales y angelicales).",
   },
-  {
-    nombre: "Ana Luisa Solervicens",
-    url: "https://www.instagram.com/susurro_ancestralcl/",
-    imagen: terapeuta14,
-    descripcion:
-      "Ana Luisa: fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
-  },
+
   {
     nombre: "Viviana Espinoza",
     url: "https://www.instagram.com/sanacion_munay/",
@@ -108,12 +108,20 @@ const alianzas = [
     descripcion:
       "Johana Miranda Muñoz: Mi don es ver más allá de lo superficial, a través del alma. Mi misión es ayudarte a sanar en todos los niveles: mente, cuerpo y espíritu, Para Lo Cual Te Ofrezco Diversas Terapias: *Clarividencia *Terapéutica: *Velomancia *Radiónica Y Radiestesia *Radiónica Bajada De Peso",
   },
+
   {
-    nombre: "Sandra Da Silva",
-    url: "https://www.instagram.com/serendipiall/",
-    imagen: terapeuta5,
+    nombre: "Gabriel Moreno",
+    url: "https://www.instagram.com/biomagnetismo558/",
+    imagen: terapeuta16,
     descripcion:
-      "Sandra Da Silva: Terapeuta Holistica Integral. Mi conexión con el mundo Holistico inició para superar un proceso emocional personal, profundizando en distintas herramientas en las que me apoye para sanar y ahora pongo al servicio del bienestar de quien lo requiera: Terapia de Respuesta Espiritual - Purificación y Limpieza de Energías Negativas - Sanacion con Péndulo Hebreo - Liberación de Implantes - Sanacion Energética con Cruz de Anhk - Conexión Angelical. Mi propósito es brindarles un canal de expansión que les permita sanar desde la consciencia de lo vivido y conectar con su Plan de Alma original.",
+      "Experto en Bioenergía desde hace 30 años, dictando formación de Terapeutas en Argentina, México, Chile, astrólogo, y profesor de meditación desde hace 35 años",
+  },
+  {
+    nombre: "Rosa Santimone",
+    url: "https://www.instagram.com/rosasantimone/",
+    imagen: terapeuta13,
+    descripcion:
+      "Rosa Santimone: Terapeuta holística. A través de un enfoque integral, te ofrezco diversas herramientas para sanar, equilibrar y potenciar tu vida: REIKI USUI, TAROT TERAPÉUTICO, PÉNDULO HEBREO, RUEDA DE LA VIDA. ¡Permíteme acompañarte para iniciar este viaje de transformación!",
   },
 ];
 

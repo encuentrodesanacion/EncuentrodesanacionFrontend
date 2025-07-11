@@ -6,7 +6,7 @@ import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta16 from "../assets/Terapeuta16.jpg";
+import Terapeuta16 from "../assets/Terapeuta16.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
