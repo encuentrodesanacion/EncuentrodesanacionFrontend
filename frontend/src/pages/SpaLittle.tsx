@@ -182,7 +182,7 @@ export default function SpaLittle() {
         "Esta clarividencia terapéutica está enfocada en una sanación para amarse, conocerse uno mismo, sanar y crecer emocionalmente, mejorando situaciones que han estado almacenadas en ti por mucho tiempo, conectando con guías y sanadores por medio de la maravillosa vibración del amor, logrando tu armonización y equilibrio emocional.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true,
+      isDisabled: true, // Agregado para deshabilitar
     },
     {
       img: Terapeuta1,
@@ -193,7 +193,7 @@ export default function SpaLittle() {
         " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true,
+      isDisabled: true, // Agregado para deshabilitar
     },
     {
       img: Terapeuta18,
@@ -204,7 +204,7 @@ export default function SpaLittle() {
         "¿Sientes que ciertos patrones en tu vida se repiten una y otra vez? Las Constelaciones Familiares te permiten comprender y sanar dinámicas ocultas que pueden estar afectando tu vida personal, laboral y emocional. Podrás: -Identificar y liberar bloqueos emocionales que limitan tu bienestar. -Sanar relaciones familiares y mejorar la conexión con tus seres queridos. -Romper patrones repetitivos en tu vida y cambiar tu historia. -Equilibrar tu energía y sentir mayor paz interior. -Encontrar claridad en conflictos personales, laborales y de pareja",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true,
+      isDisabled: true, // Agregado para deshabilitar
     },
     // {
     //   img: creadordigital,
@@ -243,7 +243,7 @@ export default function SpaLittle() {
     //   terapeuta: "Laura Vicens",
     //   terapeuta_id: 14,
     //   description:
-    //     "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
+    //     "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
     //   precio: 16000,
     //   opciones: [{ sesiones: 1, precio: 16000 }],
     // },
@@ -388,24 +388,46 @@ export default function SpaLittle() {
                     onSubmit={(e) => e.preventDefault()}
                   >
                     {t.opciones && t.opciones.length > 0 ? (
-                      t.opciones.map((op: OpcionSesion, j: number) => (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() =>
-                            reservar(
-                              t.title,
-                              op.precio,
-                              t.terapeuta,
-                              t.terapeuta_id
-                            )
-                          }
-                          className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700"
-                        >
-                          {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
-                          CLP)
-                        </button>
-                      ))
+                      t.opciones.map((op: OpcionSesion, j: number) =>
+                        t.isDisabled ? ( // Check isDisabled here
+                          <button
+                            key={j}
+                            type="button"
+                            disabled
+                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                            title="No disponible para reserva"
+                          >
+                            No Disponible
+                          </button>
+                        ) : (
+                          <button
+                            key={j}
+                            type="button"
+                            onClick={() =>
+                              reservar(
+                                t.title,
+                                op.precio,
+                                t.terapeuta,
+                                t.terapeuta_id
+                              )
+                            }
+                            className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                          >
+                            {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
+                            CLP)
+                          </button>
+                        )
+                      )
+                    ) : // Lógica condicional para el botón si no hay opciones específicas
+                    t.isDisabled ? ( // Check isDisabled here
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                        title="No disponible para reserva"
+                      >
+                        No Disponible
+                      </button>
                     ) : (
                       <button
                         type="button"
@@ -417,7 +439,7 @@ export default function SpaLittle() {
                             t.terapeuta_id
                           )
                         }
-                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700"
+                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
                       >
                         Toma de hora (${t.precio.toLocaleString()} CLP)
                       </button>

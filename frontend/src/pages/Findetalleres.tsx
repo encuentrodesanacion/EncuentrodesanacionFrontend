@@ -1,326 +1,330 @@
-import React, { useState } from "react";
+// frontend/src/pages/findetalleres.tsx
+
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
-import { useCart, Reserva } from "../pages/CartContext";
-
+import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
-import Tallersanando from "../assets/Tallersanando.jpeg";
-import Terapeuta2 from "../assets/creadorvirtual.jpg";
+// Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
+import Terapeuta20 from "../assets/Terapeuta20.jpeg";
+import Sentido from "../assets/Sentido.jpg";
+import Velas from "../assets/Velas.jpg";
+import Terapeuta8 from "../assets/Terapeuta8.jpg";
+import Abrazando from "../assets/Abrazando.jpg";
+import Volveranacer from "../assets/Volveranacer.jpg";
+import creadordigital from "../assets/creadorvirtual.jpg";
+import herbolaria from "../assets/Herbolaria.jpg";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import ReservaConFecha from "../components/ReservaConFecha";
+import {
+  OpcionSesion,
+  TerapiaItem,
+  RawDisponibilidadDBItem, // Para los datos crudos del backend
+  DisponibilidadTerapeuta, // Para los datos procesados y agregados
+  ReservaPendiente,
+  Reserva,
+} from "../types/index";
 
-// Interface para un ítem de taller de fin de semana
-interface TallerFinDeSemanaItem {
-  id: string;
-  title: string;
-  description: string;
-  price: number;
-  date: string; // Fecha específica del taller de fin de semana (YYYY-MM-DD)
-  time: string; // Hora específica del taller de fin de semana (HH:MM)
-  instructor: string; // Terapeuta/Instructor
-  instructorId: number;
-}
-
-// Interfaz para la disponibilidad (no se usará para el filtro de fecha, pero se mantiene para horas)
-interface DisponibilidadTerapeuta {
-  nombreTerapeuta: string;
-  diasDisponibles: number[]; // 0=Domingo, 1=Lunes, etc.
-  horasDisponibles: string[]; // Ej. ["10:00", "11:00", "12:00"]
-}
-
-// Datos de disponibilidad (puedes ajustarlos si hay horas específicas por taller)
-const disponibilidades: DisponibilidadTerapeuta[] = [
-  {
-    nombreTerapeuta: "Paulina Villablanca",
-    diasDisponibles: [5, 6], // Viernes (5), Sábado (6)
-    horasDisponibles: [
-      "19:00", // Añadido para el Sábado 21
-      "20:30", // Añadido para el Viernes 20
-    ],
-  },
-  // Añade disponibilidades para otros instructores si es necesario
-];
-
-const getDisponibilidadForTerapeuta = (
-  terapeutaNombre: string
-): DisponibilidadTerapeuta | undefined => {
-  return disponibilidades.find((d) => d.nombreTerapeuta === terapeutaNombre);
-};
-
-// --- Componente para seleccionar fecha y hora (ReservaConFecha) ---
-// LO INCLUYO AQUÍ PARA CLARIDAD, PERO DEBERÍA ESTAR EN components/ReservaConFecha.tsx
-interface ReservaConFechaProps {
-  terapia: string;
-  precio: number;
-  onConfirm: (
-    fechaHora: Date,
-    nombreCliente: string,
-    telefonoCliente: string
-  ) => void;
-  onClose: () => void;
-  disponibilidadTerapeuta?: DisponibilidadTerapeuta; // Opcional, para filtrar fechas/horas
-  // --- NUEVA PROPIEDAD: Fechas permitidas ---
-  allowedDates?: string[]; // Array de strings "YYYY-MM-DD"
-}
-
-function ReservaConFecha({
-  terapia,
-  precio,
-  onConfirm,
-  onClose,
-  disponibilidadTerapeuta,
-  allowedDates, // Recibimos las fechas permitidas
-}: ReservaConFechaProps) {
-  const [fechaHora, setFechaHora] = useState<Date | null>(null);
-  const [nombre, setNombre] = useState<string>("");
-  const [telefono, setTelefono] = useState<string>("");
-
-  const handleConfirm = () => {
-    if (!fechaHora) {
-      alert("Por favor, selecciona fecha y hora.");
-      return;
-    }
-    if (!nombre.trim()) {
-      alert("Por favor, ingresa tu nombre.");
-      return;
-    }
-    const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
-    if (!phoneRegex.test(telefono.trim())) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
-      );
-      return;
-    }
-    onConfirm(fechaHora, nombre, telefono);
-  };
-
-  // --- MODIFICAR filterDay para usar allowedDates ---
-  const filterDay = (date: Date) => {
-    // Si hay fechas permitidas específicas, solo permite esas.
-    if (allowedDates && allowedDates.length > 0) {
-      const dateString = date.toISOString().split("T")[0]; // Convierte la fecha a "YYYY-MM-DD"
-      return allowedDates.includes(dateString);
-    }
-    // Si no hay allowedDates específicos, o si se usa disponibilidadTerapeuta (para días de la semana), se aplica esto:
-    if (disponibilidadTerapeuta && disponibilidadTerapeuta.diasDisponibles) {
-      return disponibilidadTerapeuta.diasDisponibles.includes(date.getDay());
-    }
-    return true; // Si no hay filtros, todos los días son válidos
-  };
-
-  const filterTimes = (time: Date) => {
-    if (!disponibilidadTerapeuta || !disponibilidadTerapeuta.horasDisponibles) {
-      return true;
-    }
-    const selectedHour = time.getHours();
-    const selectedMinute = time.getMinutes();
-    const timeString = `${String(selectedHour).padStart(2, "0")}:${String(
-      selectedMinute
-    ).padStart(2, "0")}`;
-    return disponibilidadTerapeuta.horasDisponibles.includes(timeString);
-  };
-
-  return (
-    <div className="reserva-con-fecha-modal p-6 rounded-lg shadow-2xl bg-white text-gray-800">
-      <h3 className="text-2xl font-bold mb-4 text-center">Confirmar Reserva</h3>
-      <p className="text-lg mb-2 text-center">
-        Servicio: <strong>{terapia}</strong>
-      </p>
-      <p className="text-lg mb-4 text-center">
-        Precio: ${precio.toLocaleString()} CLP
-      </p>
-
-      <DatePicker
-        selected={fechaHora}
-        onChange={(date: Date | null) => setFechaHora(date)}
-        showTimeSelect
-        timeFormat="HH:mm"
-        timeIntervals={30}
-        dateFormat="dd/MM/yyyy HH:mm"
-        minDate={new Date()}
-        placeholderText="Selecciona fecha y hora"
-        className="border p-2 w-full mt-2 mb-4"
-        filterDate={filterDay} // Usar el filtro de día
-        filterTime={filterTimes} // Usar el filtro de hora
-      />
-      {/* ... (campos de nombre y teléfono) ... */}
-      <div className="mb-4">
-        <label htmlFor="nombreCliente" className="block text-sm font-bold mb-2">
-          Tu Nombre Completo:
-        </label>
-        <input
-          type="text"
-          id="nombreCliente"
-          value={nombre}
-          onChange={(e) => setNombre(e.target.value)}
-          required
-          className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          placeholder="Ej: Juan Pérez"
-        />
-      </div>
-      <div className="mb-6">
-        <label
-          htmlFor="telefonoCliente"
-          className="block text-sm font-bold mb-2"
-        >
-          Tu Número de Teléfono:
-        </label>
-        <input
-          type="tel"
-          id="telefonoCliente"
-          value={telefono}
-          onChange={(e) => setTelefono(e.target.value)}
-          required
-          className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm"
-          placeholder="Ej: +56912345678"
-        />
-      </div>
-
-      <button
-        onClick={handleConfirm}
-        className="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 w-full"
-      >
-        Agregar al Carrito
-      </button>
-      <button
-        onClick={onClose}
-        className="px-4 py-2 bg-gray-400 text-white rounded hover:bg-gray-500 w-full mt-2"
-      >
-        Cancelar
-      </button>
-    </div>
-  );
-}
-// --- FIN Componente ReservaConFecha ---
-
-export default function FinDeTalleres() {
+export default function findetalleres() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  const [reservaPendiente, setReservaPendiente] =
+    useState<ReservaPendiente | null>(null);
+  const [disponibilidadesProcesadas, setDisponibilidadesProcesadas] = useState<
+    Map<string, DisponibilidadTerapeuta> // Usamos un Map para almacenar por nombreTerapeuta
+  >(new Map());
 
-  const [showReservaConFechaModal, setShowReservaConFechaModal] =
-    useState(false);
-  const [tallerParaReserva, setTallerParaReserva] =
-    useState<TallerFinDeSemanaItem | null>(null);
+  // --- EFECTO PARA CARGAR Y PROCESAR LAS DISPONIBILIDADES AL MONTAR EL COMPONENTE ---
+  useEffect(() => {
+    const fetchAndProcessDisponibilidades = async () => {
+      try {
+        const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
+        const response = await fetch(
+          `${apiBaseUrl}/disponibilidades` // URL corregida
+        );
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const rawData: RawDisponibilidadDBItem[] = await response.json();
+        console.log(
+          "DEBUG findetalleres: Datos crudos de disponibilidades desde el backend (RawData):",
+          rawData
+        );
 
-  // Datos de ejemplo para los talleres de fin de semana (ajústalos según tus datos reales)
-  const talleresFinDeSemana: TallerFinDeSemanaItem[] = [
+        const aggregatedDisponibilidades = new Map<
+          string,
+          DisponibilidadTerapeuta
+        >();
+
+        rawData.forEach((row: RawDisponibilidadDBItem) => {
+          const nombreDelTerapeuta = row.nombreTerapeuta;
+          const terapeutaIdDelRow = row.terapeutaId;
+
+          if (
+            !nombreDelTerapeuta ||
+            terapeutaIdDelRow === undefined ||
+            terapeutaIdDelRow === null
+          ) {
+            // Valida también el ID
+            console.warn(
+              `DEBUG Findetalleres: Fila de disponibilidad sin nombre de terapeuta o ID de terapeuta (${terapeutaIdDelRow}). Será ignorada.`,
+              row
+            );
+            return;
+          }
+
+          if (!aggregatedDisponibilidades.has(nombreDelTerapeuta)) {
+            aggregatedDisponibilidades.set(nombreDelTerapeuta, {
+              nombreTerapeuta: nombreDelTerapeuta,
+              terapeutaId: terapeutaIdDelRow, // Asigna el ID correcto aquí
+              disponibilidadPorFecha: {},
+            });
+          } else {
+            // Si el terapeuta ya existe en el mapa, asegúrate que el ID se asignó
+            // (esto es por si la primera fila para un terapeuta tenía terapeutaId: undefined)
+            const existingTerapeuta =
+              aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+            if (
+              existingTerapeuta.terapeutaId === undefined ||
+              existingTerapeuta.terapeutaId === null
+            ) {
+              existingTerapeuta.terapeutaId = terapeutaIdDelRow;
+            }
+          }
+
+          const currentTerapeutaDisp =
+            aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+
+          const dias = Array.isArray(row.diasDisponibles)
+            ? row.diasDisponibles
+            : [];
+          const horas = Array.isArray(row.horasDisponibles)
+            ? row.horasDisponibles
+            : [];
+
+          // if (dias.length === 0 || horas.length === 0) {
+          //   console.warn(
+          //     `DEBUG findetalleres: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
+          //       dias[0] || "N/A"
+          //     } tiene días u horas vacías (después de getters).`,
+          //     row
+          //   );
+          //   return;
+          // }
+
+          dias.forEach((dia: string) => {
+            if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
+              currentTerapeutaDisp.disponibilidadPorFecha[dia] = [];
+            }
+            horas.forEach((hora: string) => {
+              if (
+                !currentTerapeutaDisp.disponibilidadPorFecha[dia].includes(hora)
+              ) {
+                currentTerapeutaDisp.disponibilidadPorFecha[dia].push(hora);
+              }
+            });
+            currentTerapeutaDisp.disponibilidadPorFecha[dia].sort();
+          });
+
+          console.log(
+            `DEBUG findetalleres: Procesando fila para ${nombreDelTerapeuta} (ID: ${terapeutaIdDelRow}):`,
+            row
+          );
+          console.log(
+            `DEBUG findetalleres: Disponibilidad procesada para ${nombreDelTerapeuta} (currentTerapeutaDisp):`,
+            currentTerapeutaDisp
+          );
+          console.log(
+            `DEBUG findetalleres: Disponibilidad por fecha para ${nombreDelTerapeuta} en ${dias[0]}:`,
+            currentTerapeutaDisp.disponibilidadPorFecha[dias[0]]
+          );
+        });
+        setDisponibilidadesProcesadas(aggregatedDisponibilidades);
+        console.log(
+          "DEBUG findetalleres: Disponibilidades procesadas y agregadas (Map final):",
+          aggregatedDisponibilidades
+        );
+      } catch (error) {
+        console.error(
+          "ERROR findetalleres: Error al cargar y procesar las disponibilidades:",
+          error
+        );
+      }
+    };
+
+    fetchAndProcessDisponibilidades();
+  }, []); // El array vacío asegura que se ejecute solo una vez al montar
+
+  // Función para obtener la disponibilidad de un terapeuta específico
+  const getDisponibilidadForTerapeuta = (
+    terapeutaNombre: string
+  ): DisponibilidadTerapeuta | undefined => {
+    // Ahora usa el Map 'disponibilidadesProcesadas' para obtener el objeto ya agregado
+    console.log(
+      `DEBUG findetalleres: Buscando disponibilidad para terapeuta: ${terapeutaNombre}`
+    );
+    const foundDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    console.log(
+      `DEBUG findetalleres: Disponibilidad encontrada para ${terapeutaNombre}:`,
+      foundDisp
+    );
+    return foundDisp;
+  };
+  // --- FIN OBTENER DISPONIBILIDAD ---
+
+  // Tu lista de terapias - **IMPORTANTE: ASEGÚRATE DE QUE LOS NOMBRES DE TERAPEUTAS AQUÍ COINCIDAN EXACTAMENTE CON LOS NOMBRES EN TU BASE DE DATOS**
+  // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
+  const terapias: TerapiaItem[] = [
     {
-      id: "Sanando-con-papá-y-mamá",
-      title: "Sanando con Papá y Mamá. Reconexion con la Prosperidad",
+      img: Sentido,
+      title: "Dime cómo naciste y te diré quien eres",
+      terapeuta: "Paulina Villablanca",
+      terapeuta_id: 2,
       description:
-        "¿Sientes que la relación con papá y mamá es difícil, que el vínculo es complejo? ¿Crees tener heridas de infancia que no te han permitido avanzar tanto en tu plano laboral como en tus relaciones amorosas? Este taller es para ti. Liberaremos emociones reprimidas, tomaremos energía y fuerza para concretar nuestras metas, y nos conectaremos con la vida, los sueños y el éxito.",
-      price: 10000,
-      date: "Opcional", // Sábado, junio 21, 2025
-      time: "Opcional",
-      instructor: "Paulina Villablanca",
-      instructorId: 2,
+        "Descubramos tu proyecto Sentido. A través de la indagación de tu Proyecto Sentido, puedes saber cómo las formas en que naciste te entregaron características de tu forma de ser (tipo de parto, emociones vividas por tus padres durante tu gestación, tipo de hijo/a, entre otros aspectos).",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+
+    {
+      img: Velas,
+      title: "El poder de las velas",
+      terapeuta: "Ana Luisa Solvervicens",
+      terapeuta_id: 13,
+      description:
+        "Descubre el poder simbolico y energético del fuego a través de la magia con velas. En este taller aprenderás cómo utilizar las velas para enfocar intenciones atraer energías positivas y crear rituales sencillos pero poderosos.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+
+    {
+      img: Volveranacer,
+      title: "Volver a Nacer",
+      terapeuta: "Ema Iriarte",
+      terapeuta_id: 21,
+      description:
+        "En este taller te invitamos a soltar memorias de dolor que se han integrado en el útero, específicamente en el momento de la concepción. Reconocemos que, al ser concebidos, ya heredamos programaciones ancestrales que pueden influir en nuestra vida. En este espacio comprenderás cómo el hecho de haber sido, por ejemplo, un bebé no esperado o no concebido por amor puede haber dejado una huella. A través de ejercicios específicos trabajaremos para resignificar el momento de tu concepción, y realizaremos un viaje consciente, mes a mes, por el período previo a tu nacimiento, permitiendo la sanación y liberación profunda.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      id: "retiro-meditacion-jun-20", // Nuevo ID para el taller del viernes 20
-      title: "Retiro de Meditación y Sanación (Viernes)",
+      img: Abrazando,
+      title:
+        "Tomando a nuestra niña interior desde lo más profundo de nuestro ser",
+      terapeuta: "Ema Iriarte",
+      terapeuta_id: 21,
       description:
-        "Una sesión intensiva de meditación para empezar el fin de semana.",
-      price: 10000,
-      date: "2025-06-20", // Viernes, junio 20, 2025
-      time: "20:30", // Hora específica para el viernes
-      instructor: "Paulina Villablanca",
-      instructorId: 2,
+        "En este taller abrazaremos a ese niñ@ interior que, en su infancia, vivió momentos de soledad, tristeza, abusos, entre otras experiencias. A través de ejercicios específicos, viajaremos a esos momentos clave para poder sanar profundamente esas vivencias.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      id: "retiro-meditacion-jun-22", // Nuevo ID para el taller del viernes 20
-      title: "Regresión",
+      img: herbolaria,
+      title: "Astrología y Herbolaria",
+      terapeuta: "Carolina Provoste",
+      terapeuta_id: 22,
       description:
-        "Una sesión intensiva de meditación para empezar el fin de semana.",
-      price: 10000,
-      date: "2025-06-20", // Viernes, junio 20, 2025
-      time: "20:30", // Hora específica para el viernes
-      instructor: "Alice Basay",
-      instructorId: 5,
+        "Aprenderás las propiedades medicinales de algunas plantas y la relación que hay entre ellas. Tambien podrás aprender a preparar tinturas madres de aceites macerados, ungüentos medicinales. Además, aprenderás a personalizar tus tratamientos",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
     },
+
+    // {
+    //   img: creadorVirtual,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
+    //   description: "Correo de Prueba.",
+    //   precio: 10000,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
   ];
 
-  // --- Función para ABRIR EL MODAL DE RESERVA CON FECHA ---
-  const handleOpenReservaConFechaModal = (taller: TallerFinDeSemanaItem) => {
-    setTallerParaReserva(taller);
-    setShowReservaConFechaModal(true);
-    console.log(
-      "--- DEBUG: Modal de Reserva con Fecha abierto para Fin de Talleres ---"
-    );
+  // Mostrar formulario para seleccionar fecha y hora
+  const reservar = (
+    terapiaTitle: string,
+    terapiaPrecio: number,
+    terapeutaNombre: string,
+    terapeutaId: number
+  ) => {
+    if (
+      typeof terapiaPrecio !== "number" ||
+      isNaN(terapiaPrecio) ||
+      terapiaPrecio === null ||
+      terapiaPrecio < 0
+    ) {
+      console.error("Error: Precio de la terapia inválido al reservar.");
+      alert("No se puede reservar: el precio es inválido.");
+      return;
+    }
+    setReservaPendiente({
+      terapia: terapiaTitle,
+      precio: terapiaPrecio,
+      terapeutaNombre: terapeutaNombre,
+      terapeutaId: terapeutaId,
+    });
   };
 
-  // --- Función para CONFIRMAR y AÑADIR AL CARRITO desde el modal de ReservaConFecha ---
-  const handleConfirmReservaConFechaAndAddToCart = (
+  const confirmarReserva = (
     fechaHora: Date,
     nombreCliente: string,
     telefonoCliente: string
   ) => {
-    if (!tallerParaReserva) {
-      console.error("Error: tallerParaReserva es nulo al confirmar.");
-      alert("Hubo un error al procesar tu inscripción. Intenta de nuevo.");
-      return;
-    }
+    if (!reservaPendiente) return;
 
-    const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
-    if (!phoneRegex.test(telefonoCliente.trim())) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
-      );
-      return;
-    }
-
-    const nuevaReserva: Reserva = {
-      id: Date.now(),
-      servicio: "Finde de Talleres y Terapias Grupales",
-      especialidad: tallerParaReserva.title,
+    const reserva: Reserva = {
+      id: Date.now(), // Genera un ID único
+      servicio: "Finde de talleres",
+      especialidad: reservaPendiente.terapia, // Mantén esto si la especialidad es la misma que la terapia
       fecha: fechaHora.toISOString().split("T")[0],
-      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5),
-      precio: tallerParaReserva.price,
+      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5), // Formato HH:MM
+      precio: reservaPendiente.precio,
+      nombreCliente: nombreCliente,
+      telefonoCliente: telefonoCliente,
+      terapeuta: reservaPendiente.terapeutaNombre,
+      terapeutaId: reservaPendiente.terapeutaId,
       sesiones: 1,
       cantidad: 1,
-      nombreCliente: nombreCliente.trim(),
-      telefonoCliente: telefonoCliente.trim(),
-      terapeuta: tallerParaReserva.instructor,
-      terapeutaId: tallerParaReserva.instructorId,
     };
-
     console.log(
-      "Objeto Reserva a añadir al carrito desde FinDeTalleres (después de modal ReservaConFecha):",
-      nuevaReserva
+      "DEBUG FRONTEND: Valor de reserva.terapeuta antes de addToCart:",
+      reserva.terapeuta
     );
 
-    try {
-      addToCart(nuevaReserva);
-      console.log("addToCart fue llamado exitosamente.");
-      alert(`"${tallerParaReserva.title}" ha sido agregado al carrito.`);
-    } catch (error) {
-      console.error("Error al llamar a addToCart:", error);
-      alert("Hubo un problema al agregar el taller al carrito.");
-    }
+    console.log(
+      "Objeto Reserva FINAL a añadir al carrito desde findetalleres:",
+      reserva
+    );
+    addToCart(reserva);
+    console.log(
+      "Objeto Reserva FINAL a añadir al carrito desde findetalleres:",
+      reserva
+    );
 
-    setShowReservaConFechaModal(false);
-    setTallerParaReserva(null);
+    alert(
+      `Reserva agregada: ${reserva.servicio} el ${reserva.fecha} a las ${reserva.hora}. Te contactaremos al ${reserva.telefonoCliente}.`
+    );
+
+    setReservaPendiente(null); // Cierra el modal de fecha/hora
   };
-
   // --- OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO ---
-  const terapeutaSeleccionadoDisponibilidad = tallerParaReserva
-    ? getDisponibilidadForTerapeuta(tallerParaReserva.instructor)
+  const terapeutaSeleccionadoDisponibilidad = reservaPendiente
+    ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
     : undefined;
   // --- FIN OBTENER DISPONIBILIDAD ---
-
-  // --- OBTENER LAS FECHAS PERMITIDAS DE LOS TALLERES ---
-  // Recopila todas las fechas únicas de los talleres disponibles
-  const allowedDates = talleresFinDeSemana.map((taller) => taller.date);
-  // Asegúrate de que las fechas sean únicas
-  const uniqueAllowedDates = [...new Set(allowedDates)];
-  // --- FIN FECHAS PERMITIDAS ---
-
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-800">
-          Finde de Talleres y Terapias Grupales
+          Finde de talleres
         </h1>
         <CartIcon />
       </header>
@@ -332,94 +336,117 @@ export default function FinDeTalleres() {
         Volver al Inicio
       </button>
 
-      <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">
-        Nuestros Talleres de Fin de Semana
+      <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
+        Bienvenido al Finde de Talleres
       </h2>
-      <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-        Experiencias intensivas para tu bienestar y desarrollo personal.
-      </p>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-        {talleresFinDeSemana.map((taller: TallerFinDeSemanaItem) => (
-          <div
-            key={taller.id}
-            className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
-          >
-            {/* Gestión de imágenes: ajusta a tus necesidades */}
-            {taller.id === "Sanando-con-papá-y-mamá" && (
-              <img
-                src={Tallersanando}
-                alt={taller.title}
-                className="w-full h-48 object-cover"
-              />
-            )}
-            {taller.id === "workshop-yoga-jul" && ( // Este ID es de julio, no de junio
-              <img
-                src={Terapeuta2}
-                alt={taller.title}
-                className="w-full h-48 object-cover"
-              />
-            )}
-            {taller.id === "retiro-meditacion-jun-20" && ( // Nueva imagen para el taller del 20 de junio
-              <img
-                src={Terapeuta2} // Usa una imagen apropiada
-                alt={taller.title}
-                className="w-full h-48 object-cover"
-              />
-            )}
-            {!(
-              taller.id === "Sanando-con-papá-y-mamá" ||
-              taller.id === "workshop-yoga-jul" ||
-              taller.id === "retiro-meditacion-jun-20"
-            ) && (
-              <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
-                Imagen de Taller
+      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
+        (Del 18 al 20 de Julio)
+      </h1>
+      <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
+      <div className="flip-wrapper-container mt-10">
+        {terapias.map((t, i) => (
+          <div key={i} className="flip-wrapper">
+            <div className="flip-card">
+              <div className="flip-inner">
+                <div className="flip-front">
+                  <img src={t.img} alt={t.title} />
+                  <div className="nombre-overlay">
+                    <p>{t.terapeuta}</p>
+                  </div>
+                </div>
+                <div className="flip-back">
+                  <h3 className="mb-2 font-bold">
+                    {t.terapeuta !== "Disponible" && (
+                      <span className="text-sm text-gray-600 block">
+                        {t.terapeuta}
+                      </span>
+                    )}
+                    {t.title}
+                  </h3>
+                  <p className="mb-2">{t.description}</p>
+                  <form
+                    className="w-full px-2"
+                    onSubmit={(e) => e.preventDefault()}
+                  >
+                    {t.opciones && t.opciones.length > 0 ? (
+                      t.opciones.map((op: OpcionSesion, j: number) =>
+                        t.isDisabled ? (
+                          <button
+                            key={j}
+                            type="button"
+                            disabled
+                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                            title="No disponible para reserva"
+                          >
+                            No Disponible
+                          </button>
+                        ) : (
+                          <button
+                            key={j}
+                            type="button"
+                            onClick={() =>
+                              reservar(
+                                t.title,
+                                op.precio,
+                                t.terapeuta,
+                                t.terapeuta_id
+                              )
+                            }
+                            className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                          >
+                            {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
+                            CLP)
+                          </button>
+                        )
+                      )
+                    ) : // Lógica condicional para el botón si no hay opciones específicas
+                    t.isDisabled ? (
+                      <button
+                        type="button"
+                        disabled
+                        className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                        title="No disponible para reserva"
+                      >
+                        No Disponible
+                      </button>
+                    ) : (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          reservar(
+                            t.title,
+                            t.precio,
+                            t.terapeuta,
+                            t.terapeuta_id
+                          )
+                        }
+                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                      >
+                        Toma de hora (${t.precio.toLocaleString()} CLP)
+                      </button>
+                    )}
+                  </form>
+                </div>
               </div>
-            )}
-
-            <div className="p-6">
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">
-                {taller.title}
-              </h3>
-              <p className="text-gray-600 text-sm mb-2">
-                Instructor: <strong>{taller.instructor}</strong>
-              </p>
-              <p className="text-gray-700 text-base mb-4">
-                {taller.description}
-              </p>
-              <p className="text-md text-gray-500 mb-2">
-                Fecha: <strong>{taller.date}</strong>
-              </p>
-              <p className="text-md text-gray-500 mb-4">
-                Hora: <strong>{taller.time}</strong>
-              </p>
-              <div className="flex justify-between items-center mb-4">
-                <span className="text-2xl font-bold text-green-700">
-                  ${taller.price.toLocaleString()} CLP
-                </span>
-              </div>
-              <button
-                onClick={() => handleOpenReservaConFechaModal(taller)}
-                className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
-              >
-                Inscribirse al Taller
-              </button>
             </div>
           </div>
         ))}
       </div>
-
-      {/* --- MODAL DE RESERVA CON FECHA Y HORA (Usando ReservaConFecha) --- */}
-      {showReservaConFechaModal && tallerParaReserva && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
-          <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+      {reservaPendiente && (
+        <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
+            <button
+              onClick={() => setReservaPendiente(null)}
+              className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold"
+            >
+              X
+            </button>
             <ReservaConFecha
-              terapia={tallerParaReserva.title}
-              precio={tallerParaReserva.price}
-              onConfirm={handleConfirmReservaConFechaAndAddToCart}
-              onClose={() => setShowReservaConFechaModal(false)}
+              terapia={reservaPendiente.terapia}
+              precio={reservaPendiente.precio}
+              onConfirm={confirmarReserva}
+              onClose={() => setReservaPendiente(null)}
               disponibilidadTerapeuta={terapeutaSeleccionadoDisponibilidad}
-              allowedDates={uniqueAllowedDates}
             />
           </div>
         </div>

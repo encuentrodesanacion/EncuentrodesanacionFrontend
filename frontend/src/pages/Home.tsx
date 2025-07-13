@@ -360,7 +360,7 @@ const App = () => {
                   "Talleres y terapias grupales a valor amoroso durante 3 días",
                 buttonText: "Reserva tu cupo",
                 link: "/findetalleres",
-                isDisabled: true,
+                isDisabled: false,
               },
               {
                 title: "SPA PRINCIPAL",
