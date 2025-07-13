@@ -182,6 +182,7 @@ export default function SpaLittle() {
         "Esta clarividencia terapéutica está enfocada en una sanación para amarse, conocerse uno mismo, sanar y crecer emocionalmente, mejorando situaciones que han estado almacenadas en ti por mucho tiempo, conectando con guías y sanadores por medio de la maravillosa vibración del amor, logrando tu armonización y equilibrio emocional.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
+      isDisabled: true,
     },
     {
       img: Terapeuta1,
@@ -192,6 +193,7 @@ export default function SpaLittle() {
         " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
+      isDisabled: true,
     },
     {
       img: Terapeuta18,
@@ -202,6 +204,7 @@ export default function SpaLittle() {
         "¿Sientes que ciertos patrones en tu vida se repiten una y otra vez? Las Constelaciones Familiares te permiten comprender y sanar dinámicas ocultas que pueden estar afectando tu vida personal, laboral y emocional. Podrás: -Identificar y liberar bloqueos emocionales que limitan tu bienestar. -Sanar relaciones familiares y mejorar la conexión con tus seres queridos. -Romper patrones repetitivos en tu vida y cambiar tu historia. -Equilibrar tu energía y sentir mayor paz interior. -Encontrar claridad en conflictos personales, laborales y de pareja",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
+      isDisabled: true,
     },
     // {
     //   img: creadordigital,
