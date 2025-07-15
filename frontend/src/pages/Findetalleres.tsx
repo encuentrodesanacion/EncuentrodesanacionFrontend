@@ -215,8 +215,7 @@ export default function findetalleres() {
     },
     {
       img: Abrazando,
-      title:
-        "Tomando a nuestra niña interior desde lo más profundo de nuestro ser",
+      title: "Abrazando a nuestra niña interior.",
       terapeuta: "Ema Iriarte",
       terapeuta_id: 21,
       description:
