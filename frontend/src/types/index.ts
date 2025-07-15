@@ -49,6 +49,7 @@ export interface ReservaPendiente {
   precio: number;
   terapeutaNombre: string;
   terapeutaId: number;
+  especialidad: string;
 }
 
 export interface TerapiaItem {
@@ -60,4 +61,5 @@ export interface TerapiaItem {
   precio: number;
   opciones?: OpcionSesion[];
   isDisabled?: boolean;
+  especialidad: string;
 }

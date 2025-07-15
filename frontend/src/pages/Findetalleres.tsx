@@ -7,14 +7,12 @@ import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
-import Terapeuta20 from "../assets/Terapeuta20.jpeg";
 import Sentido from "../assets/Sentido.jpg";
 import Velas from "../assets/Velas.jpg";
-import Terapeuta8 from "../assets/Terapeuta8.jpg";
 import Abrazando from "../assets/Abrazando.jpg";
 import Volveranacer from "../assets/Volveranacer.jpg";
-import creadordigital from "../assets/creadorvirtual.jpg";
 import herbolaria from "../assets/Herbolaria.jpg";
+import creadorvirtual from "../assets/creadorvirtual.jpg";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -188,6 +186,7 @@ export default function findetalleres() {
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Dime cómo naciste y te diré quien eres",
     },
 
     {
@@ -200,6 +199,7 @@ export default function findetalleres() {
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "El poder de las velas",
     },
 
     {
@@ -212,11 +212,11 @@ export default function findetalleres() {
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Volver a Nacer",
     },
     {
       img: Abrazando,
-      title:
-        "Tomando a nuestra niña interior desde lo más profundo de nuestro ser",
+      title: "Abrazando a nuestra niña interior",
       terapeuta: "Ema Iriarte",
       terapeuta_id: 21,
       description:
@@ -224,6 +224,7 @@ export default function findetalleres() {
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Abrazando a nuestra niña interior",
     },
     {
       img: herbolaria,
@@ -235,17 +236,29 @@ export default function findetalleres() {
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Astrología y Herbolaria",
     },
 
-    // {
-    //   img: creadorVirtual,
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
-    //   description: "Correo de Prueba.",
-    //   precio: 10000,
-    //   opciones: [{ sesiones: 1, precio: 10000 }],
-    // },
+    {
+      img: creadorvirtual,
+      title: "Cruz",
+      terapeuta: "Alice Basay",
+      terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
+      description: "Correo de Prueba.",
+      precio: 10000,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Cruz",
+    },
+    {
+      img: creadorvirtual,
+      title: "Cruzada",
+      terapeuta: "Alice Basay",
+      terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
+      description: "Correo de Prueba.",
+      precio: 10000,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+      especialidad: "Cruzada",
+    },
   ];
 
   // Mostrar formulario para seleccionar fecha y hora
@@ -253,7 +266,8 @@ export default function findetalleres() {
     terapiaTitle: string,
     terapiaPrecio: number,
     terapeutaNombre: string,
-    terapeutaId: number
+    terapeutaId: number,
+    especialidad: string
   ) => {
     if (
       typeof terapiaPrecio !== "number" ||
@@ -270,6 +284,7 @@ export default function findetalleres() {
       precio: terapiaPrecio,
       terapeutaNombre: terapeutaNombre,
       terapeutaId: terapeutaId,
+      especialidad: especialidad,
     });
   };
 
@@ -389,7 +404,8 @@ export default function findetalleres() {
                                 t.title,
                                 op.precio,
                                 t.terapeuta,
-                                t.terapeuta_id
+                                t.terapeuta_id,
+                                t.especialidad
                               )
                             }
                             className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
@@ -417,7 +433,8 @@ export default function findetalleres() {
                             t.title,
                             t.precio,
                             t.terapeuta,
-                            t.terapeuta_id
+                            t.terapeuta_id,
+                            t.especialidad
                           )
                         }
                         className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
@@ -446,7 +463,8 @@ export default function findetalleres() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              disponibilidadTerapeuta={terapeutaSeleccionadoDisponibilidad}
+              terapeutaId={reservaPendiente.terapeutaId}
+              especialidad={reservaPendiente.especialidad}
             />
           </div>
         </div>

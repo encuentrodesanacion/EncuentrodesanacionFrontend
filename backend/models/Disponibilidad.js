@@ -19,6 +19,11 @@ module.exports = (sequelize) => {
         onDelete: "CASCADE",
         field: "terapeuta_id",
       },
+      especialidad: {
+        type: DataTypes.STRING,
+        allowNull: false, // Cada bloque de disponibilidad debe estar asociado a un servicio
+        field: "especialidad_servicio", // Nombre de la columna en la DB
+      },
       // --- CORRECCIÓN CLAVE EN LOS GETTERS ---
       diasDisponibles: {
         type: DataTypes.TEXT,
@@ -132,8 +137,13 @@ module.exports = (sequelize) => {
       indexes: [
         {
           unique: true,
-          fields: ["terapeuta_id", "dias_disponibles", "horas_disponibles"],
-          name: "unique_terapeuta_disponibilidad_slot",
+          fields: [
+            "terapeuta_id",
+            "especialidad_servicio",
+            "dias_disponibles",
+            "horas_disponibles",
+          ],
+          name: "unique_terapeuta_disponibilidad_slot_especialidad",
         },
       ],
     }
