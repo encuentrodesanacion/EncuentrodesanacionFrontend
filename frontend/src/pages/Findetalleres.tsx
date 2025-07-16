@@ -193,7 +193,7 @@ export default function findetalleres() {
     {
       img: Velas,
       title: "El poder de las velas",
-      terapeuta: "Ana Luisa Solvervicens",
+      terapeuta: "Ana Luisa Solervicens",
       terapeuta_id: 13,
       description:
         "Descubre el poder simbolico y energético del fuego a través de la magia con velas. En este taller aprenderás cómo utilizar las velas para enfocar intenciones atraer energías positivas y crear rituales sencillos pero poderosos.",
