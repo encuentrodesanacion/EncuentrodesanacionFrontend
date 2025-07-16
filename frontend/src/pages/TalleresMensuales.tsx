@@ -43,7 +43,7 @@ export default function TalleresMensuales() {
       time: "19:00",
       instructor: "Mónica Gatica",
       instructorId: 5,
-      isDisabled: false,
+      isDisabled: true,
     },
     // {
     //   id: "Taller-de-Tribu-en-Calma",
@@ -78,7 +78,7 @@ export default function TalleresMensuales() {
       time: "20:30",
       instructor: "Macarena del Río",
       instructorId: 6,
-      isDisabled: false,
+      isDisabled: true,
     },
     {
       id: "Taller-de-Escribir-sobre-Raices",
@@ -90,7 +90,7 @@ export default function TalleresMensuales() {
       time: "12:00",
       instructor: "Katalina Rencoret",
       instructorId: 18,
-      isDisabled: false,
+      isDisabled: true,
     },
     // {
     //   id: "taller-meditacion-jul",
