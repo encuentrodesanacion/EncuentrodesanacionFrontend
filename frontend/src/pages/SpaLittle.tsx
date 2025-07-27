@@ -210,7 +210,7 @@ export default function SpaLittle() {
       isDisabled: true, // Agregado para deshabilitar
     },
     // {
-    //   img: creadordigital,
+    //   img: creadordigital,ass
     //   title: "Regresión",
     //   terapeuta: "Alice Basay",
     //   terapeuta_id: 10,
