@@ -25,7 +25,7 @@ module.exports = (sequelize, DataTypes) => {
       },
     },
     {
-      tableName: "Comentarios", // Nombre de la tabla en la base de datos
+      tableName: "Comentarios", // Nombre de la tabla en la base de datos as
       timestamps: true, // Habilita `createdAt` y `updatedAt` automáticos
       underscored: false, // Tus tablas parecen usar camelCase para las timestamps, pero snake_case para las columnas.
       // Si tus columnas DB son 'nombre', 'email', 'mensaje' (camelCase), deja false.
