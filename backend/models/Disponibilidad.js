@@ -19,110 +19,19 @@ module.exports = (sequelize) => {
         onDelete: "CASCADE",
         field: "terapeuta_id",
       },
-      especialidad: {
-        type: DataTypes.STRING,
-        allowNull: false, // Cada bloque de disponibilidad debe estar asociado a un servicio
-        field: "especialidad_servicio", // Nombre de la columna en la DB
-      },
-      // --- CORRECCIÓN CLAVE EN LOS GETTERS ---
       diasDisponibles: {
-        type: DataTypes.TEXT,
+        type: DataTypes.ARRAY(DataTypes.STRING), // <--- CAMBIO CLAVE
         allowNull: false,
-        defaultValue: "[]",
-        field: "dias_disponibles", // Mapeo a la columna DB
-        get() {
-          const rawValue = this.getDataValue("diasDisponibles"); // Accede a la propiedad del modelo
-          console.log(
-            `DEBUG MODELO GETTER: diasDisponibles - rawValue: ${rawValue}, typeof: ${typeof rawValue}`
-          );
-          try {
-            // Asegura que rawValue sea una cadena antes de intentar JSON.parse
-            if (
-              typeof rawValue === "string" &&
-              rawValue.trim().startsWith("[") &&
-              rawValue.trim().endsWith("]")
-            ) {
-              const parsed = JSON.parse(rawValue);
-              if (Array.isArray(parsed)) {
-                return parsed;
-              }
-            } else if (rawValue) {
-              // Si es un string pero no JSON array (ej. "2025-07-04"), lo devuelve como array de un elemento
-              return [rawValue];
-            }
-            return []; // Por defecto, array vacío
-          } catch (e) {
-            console.error(
-              "[ERROR MODELO] Fallo en getter diasDisponibles al parsear JSON:",
-              rawValue,
-              e
-            );
-            return [];
-          }
-        },
-        set(value) {
-          if (Array.isArray(value)) {
-            this.setDataValue("diasDisponibles", JSON.stringify(value));
-          } else if (typeof value === "string") {
-            this.setDataValue("diasDisponibles", value);
-          } // Guarda string simple
-          else {
-            console.warn(
-              "[WARN MODELO] Intentando setear diasDisponibles con valor no array/string, guardando '[]':",
-              value
-            );
-            this.setDataValue("diasDisponibles", "[]");
-          }
-        },
+        defaultValue: [],
+        field: "dias_disponibles",
+        // ELIMINAR LOS GETTERS Y SETTERS PERSONALIZADOS DE AQUÍ
       },
       horasDisponibles: {
-        type: DataTypes.TEXT,
+        type: DataTypes.ARRAY(DataTypes.STRING), // <--- CAMBIO CLAVE
         allowNull: false,
-        defaultValue: "[]",
-        field: "horas_disponibles", // Mapeo a la columna DB
-        get() {
-          const rawValue = this.getDataValue("horasDisponibles");
-          console.log(
-            `DEBUG MODELO GETTER: horasDisponibles - rawValue: ${rawValue}, typeof: ${typeof rawValue}`
-          );
-          try {
-            if (
-              typeof rawValue === "string" &&
-              rawValue.trim().startsWith("[") &&
-              rawValue.trim().endsWith("]")
-            ) {
-              const parsed = JSON.parse(rawValue);
-              if (Array.isArray(parsed)) {
-                return parsed;
-              }
-            } else if (rawValue) {
-              // Si es un string pero no JSON array (ej. "19:00"), lo devuelve como array de un elemento
-              return [rawValue];
-            }
-            return []; // Por defecto, array vacío
-          } catch (e) {
-            console.error(
-              "[ERROR MODELO] Fallo en getter horasDisponibles al parsear JSON:",
-              rawValue,
-              e
-            );
-            return [];
-          }
-        },
-        set(value) {
-          if (Array.isArray(value)) {
-            this.setDataValue("horasDisponibles", JSON.stringify(value));
-          } else if (typeof value === "string") {
-            this.setDataValue("horasDisponibles", value);
-          } // Guarda string simple
-          else {
-            console.warn(
-              "[WARN MODELO] Intentando setear horasDisponibles con valor no array/string, guardando '[]':",
-              value
-            );
-            this.setDataValue("horasDisponibles", "[]");
-          }
-        },
+        defaultValue: [],
+        field: "horas_disponibles",
+        // ELIMINAR LOS GETTERS Y SETTERS PERSONALIZADOS DE AQUÍ
       },
       estado: {
         type: DataTypes.ENUM("disponible", "reservado", "cancelado"),
@@ -137,22 +46,19 @@ module.exports = (sequelize) => {
       indexes: [
         {
           unique: true,
-          fields: [
-            "terapeuta_id",
-            "especialidad_servicio",
-            "dias_disponibles",
-            "horas_disponibles",
-          ],
-          name: "unique_terapeuta_disponibilidad_slot_especialidad",
+          fields: ["terapeuta_id", "dias_disponibles"], // Ajustado
+          name: "unique_terapeuta_disponibilidad_dia",
         },
       ],
     }
   );
+
   Disponibilidad.associate = function (models) {
     Disponibilidad.belongsTo(models.Terapeuta, {
       foreignKey: "terapeuta_id",
       as: "infoTerapeuta",
     });
   };
+
   return Disponibilidad;
 };

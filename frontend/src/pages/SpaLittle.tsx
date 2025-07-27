@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
-import { useCart } from "./CartContext";
+import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
@@ -12,6 +12,7 @@ import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta18 from "../assets/Terapeuta18.jpeg";
 import creadordigital from "../assets/creadorvirtual.jpg";
 import DatePicker from "react-datepicker";
+import creadorVirtual from "../assets/creadorvirtual.jpg";
 import "react-datepicker/dist/react-datepicker.css";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
@@ -20,8 +21,10 @@ import {
   RawDisponibilidadDBItem, // Para los datos crudos del backend
   DisponibilidadTerapeuta, // Para los datos procesados y agregados
   ReservaPendiente,
-  Reserva,
 } from "../types/index";
+import parsePhoneNumberFromString from "libphonenumber-js";
+
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function SpaLittle() {
   const navigate = useNavigate();
@@ -100,15 +103,15 @@ export default function SpaLittle() {
             ? row.horasDisponibles
             : [];
 
-          // if (dias.length === 0 || horas.length === 0) {
-          //   console.warn(
-          //     `DEBUG SpaLittle: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
-          //       dias[0] || "N/A"
-          //     } tiene días u horas vacías (después de getters).`,
-          //     row
-          //   );
-          //   return;
-          // }
+          if (dias.length === 0 || horas.length === 0) {
+            console.warn(
+              `DEBUG SpaLittle: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
+                dias[0] || "N/A"
+              } tiene días u horas vacías (después de getters).`,
+              row
+            );
+            return;
+          }
 
           dias.forEach((dia: string) => {
             if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
@@ -266,6 +269,7 @@ export default function SpaLittle() {
     //   description: "Correo de Prueba.",
     //   precio: 16000,
     //   opciones: [{ sesiones: 1, precio: 16000 }],
+    //   isDisabled: false,
     // },
   ];
 
@@ -294,49 +298,102 @@ export default function SpaLittle() {
     });
   };
 
-  const confirmarReserva = (
+  const confirmarReserva = async (
     fechaHora: Date,
     nombreCliente: string,
     telefonoCliente: string
   ) => {
-    if (!reservaPendiente) return;
+    const year = fechaHora.getFullYear();
+    const month = String(fechaHora.getMonth() + 1).padStart(2, "0"); // Meses son 0-indexados
+    const day = String(fechaHora.getDate()).padStart(2, "0");
 
-    const reserva: Reserva = {
-      id: Date.now(), // Genera un ID único
-      servicio: "Spa Little",
-      especialidad: reservaPendiente.terapia, // Mantén esto si la especialidad es la misma que la terapia
-      fecha: fechaHora.toISOString().split("T")[0],
-      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5), // Formato HH:MM
+    const fechaFormateada = `${year}-${month}-${day}`; // Formato YYYY-MM-DD local
+    const horaFormateada = fechaHora
+      .toTimeString()
+      .split(" ")[0]
+      .substring(0, 5);
+    if (!reservaPendiente) {
+      alert("No hay reserva pendiente para confirmar.");
+      return;
+    }
+    // Validaciones de cliente y teléfono
+    if (nombreCliente.trim() === "" || telefonoCliente.trim() === "") {
+      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
+      return;
+    }
+
+    const phoneNumber = parsePhoneNumberFromString(telefonoCliente.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      alert(
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
+      );
+      return;
+    }
+
+    console.log(
+      "País detectado por número telefónico:",
+      phoneNumber.country || "Desconocido"
+    );
+
+    const reservaDataToSend = {
+      // El backend `crearReservaDirecta` generará el `id` y `clientBookingId` (UUID).
+      servicio: "Spa Little", // Nombre general del servicio de Spa Little
+      especialidad: reservaPendiente.terapia, // La especialidad del servicio
+      fecha: fechaFormateada,
+      hora: horaFormateada,
       precio: reservaPendiente.precio,
       nombreCliente: nombreCliente,
       telefonoCliente: telefonoCliente,
       terapeuta: reservaPendiente.terapeutaNombre,
       terapeutaId: reservaPendiente.terapeutaId,
-      sesiones: 1,
-      cantidad: 1,
+      sesiones: 1, // Asumiendo 1 sesión para estos servicios
+      cantidadCupos: 1, // Generalmente 1 cupo por reserva
     };
-    console.log(
-      "DEBUG FRONTEND: Valor de reserva.terapeuta antes de addToCart:",
-      reserva.terapeuta
-    );
 
     console.log(
-      "Objeto Reserva FINAL a añadir al carrito desde SpaLittle:",
-      reserva
-    );
-    addToCart(reserva);
-    console.log(
-      "Objeto Reserva FINAL a añadir al carrito desde SpaLittle:",
-      reserva
+      "DEBUG FRONTEND: Intentando crear reserva de Spa Little en backend:",
+      reservaDataToSend
     );
 
-    alert(
-      `Reserva agregada: ${reserva.servicio} el ${reserva.fecha} a las ${reserva.hora}. Te contactaremos al ${reserva.telefonoCliente}.`
-    );
+    try {
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservaDataToSend),
+      });
 
-    setReservaPendiente(null); // Cierra el modal de fecha/hora
+      if (!response.ok) {
+        const errorBody = await response.json();
+        const errorMessage =
+          errorBody.mensaje ||
+          `Error al confirmar la reserva de Spa Little: ${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const { reserva: confirmedReservation } = await response.json(); // El backend devuelve { reserva: {...} }
+
+      console.log(
+        "DEBUG FRONTEND: Reserva de Spa Little confirmada por backend:",
+        confirmedReservation
+      );
+
+      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
+
+      alert(
+        `¡Reserva de Spa Little confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
+      );
+
+      // Volver a cargar la disponibilidad para reflejar la hora reservada y actualizar el DatePicker
+      // Crucial para que el DatePicker se actualice
+
+      setReservaPendiente(null); // Cierra el modal de fecha/hora
+    } catch (error: any) {
+      console.error("ERROR creating Spa Little reservation:", error);
+      alert(`No se pudo completar la reserva de Spa Little: ${error.message}`);
+    }
   };
-  // --- OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO ---
   const terapeutaSeleccionadoDisponibilidad = reservaPendiente
     ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
     : undefined;
@@ -359,7 +416,7 @@ export default function SpaLittle() {
         Bienvenido al Spa Little
       </h2>
       <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 9 al 11 de Julio 2025)
+        {/* AQUI VA LA FECHA */}
       </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">

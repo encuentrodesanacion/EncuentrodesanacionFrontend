@@ -5,12 +5,15 @@ import "../styles/terapiaDeLuz.css";
 // import ReservaForm from "../components/ReservaForm";
 import CartIcon from "../components/CartIcon";
 import { useCart, Reserva } from "./CartContext";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-import terapeuta3 from "../assets/Terapeuta3.jpg";
-import Terapeuta7 from "../assets/Terapeuta7.jpg";
-import terapeuta9 from "../assets/Terapeuta9.jpg";
+import Terapeuta20 from "../assets/Terapeuta20.jpeg";
+import RunasVikingas1 from "../assets/Terapeuta14.jpeg";
+import terapeuta19 from "../assets/Terapeuta119.jpeg";
 import terapeuta6 from "../assets/Terapeuta6.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+import { v4 as uuidv4 } from "uuid";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 interface ImagenData {
   id: string;
@@ -21,35 +24,53 @@ interface ImagenData {
   terapeuta: string; // El nombre del terapeuta que conduce la "formación"
   terapeutaId: number;
   precio: number;
+  duracion: string;
   isDisabled?: boolean;
 }
 
 const imagenesData: ImagenData[] = [
   {
-    id: "canalizacion-monica",
-    src: terapeuta3,
-    alt: "Canalización",
+    id: "runas-vikingas",
+    src: RunasVikingas1,
+    alt: "Runas Vikingas",
     descripcion:
-      "La Canalización es la capacidad de recibir información energética a través de la intuición y los sentidos sutiles. Se caracteriza por la conexión con guías espirituales, la percepción extrasensorial y la apertura a energías elevadas. En este curso exploraremos la glándula pineal, el aura, los elementales y la comunicación animal, integrando técnicas prácticas para fortalecer la recepción de mensajes energéticos. Los beneficios son desarrollar herramientas esenciales para lograr claridad intuitiva, expansión sensorial y fortalecimiento de la conexión energética",
+      "Las Runas Vikingas es una práctica esotérica que usa las runas, antiguos símbolos nórdicos, como herramientas para la adivinación, la sanación y el autoconocimiento. Se suelen extraer e interpretar las runas para obtener perspectivas sobre el pasado, presente y futuro, o usarlas para meditación y trabajo energético. Cada runa tiene un significado simbólico único, y su interpretación es muy intuitiva. Es una herramienta de apoyo y autodescubrimiento.",
     link: "#",
-    terapeuta: "Mónica Gatica",
-    terapeutaId: 5,
+    terapeuta: "Ana Luisa Solervicens",
+    terapeutaId: 13,
     precio: 40000,
-    isDisabled: true,
+    duracion:
+      "Inicia el 07 de Agosto a las 19:30hrs   ( SE REALIZA TODOS LOS JUEVES DEL MES A LA MISMA HORA)",
+    isDisabled: false,
   },
   {
-    id: "limpieza-ankh-fabiola",
-    src: Terapeuta7,
-    alt: "Limpieza con Cruz de Anhk",
+    id: "reiki-usui-2",
+    src: Terapeuta20,
+    alt: "Reiki Usui II",
     descripcion:
-      "El ankh, cruz ankh o llave de la vida, es un símbolo muy antiguo, muy asociada al antiguo Egipto, donde grandes Dioses y faraones. Sus bendiciones son múltiples, por ello, en esta formación viajáremos hacia el pasado, para conocer la historia y significado del Ankh y como poder poner sus virtudes al servicio de todos los involucrados. También aprenderás los tipos de contamines que podremos diagnosticar con ayuda del péndulo, en personas, espacio u objeto, y obviamente como limpiarnos con nuestra amada Cruz Ankh",
+      "Reiki Usui Nivel Dos: Sanación con Símbolos y a Distancia El Reiki Usui Nivel Dos profundiza tu conexión con la energía Reiki, introduciendo tres símbolos sagrados que amplifican tu capacidad de sanación. El Cho Ku Rei potencia el flujo de energía para tratamientos más intensos y protección. El Sei He Ki trabaja en la sanación emocional y mental, ayudando a liberar patrones negativos. Finalmente, el Hon Sha Ze Sho Nen te permite enviar Reiki a cualquier persona, lugar o situación a distancia, trascendiendo el tiempo y el espacio. Este nivel te empodera para realizar sanaciones más potentes, específicas y sin la necesidad de contacto físico.",
+    terapeuta: "Ema Iriarte",
     link: "#",
-    terapeuta: "Fabiola Valenzuela",
-    terapeutaId: 3,
+    terapeutaId: 21,
     precio: 40000,
-    isDisabled: true,
+    duracion:
+      "Inicia el 09 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
+    isDisabled: false,
   },
-
+  {
+    id: "Tarot-Evolutivo",
+    src: terapeuta19,
+    alt: "Tarot Evolutivo",
+    descripcion:
+      "En este curso, descubrirás el Tarot, su origen y sus significados más profundos, utilizándolo como una herramienta de autoconocimiento. Incorporarás a tus lecturas los arcanos menores, que te ofrecerán una nueva dimensión para profundizar en el autoconocimiento, nuestras emociones y creencias. A continuación, te presentamos lo que aprenderás en este curso de Tarot: Qué es realmente el tarot Cómo diferenciar entre los diferentes tipos de tarot Consultar las cartas a ti mismo Usar el tarot como herramienta de autoayuda Aplicar las cartas de manera práctica en la vida cotidiana Significados de los arcanos menores desde un enfoque holístico Cómo cuidar tu energía, consejos de limpieza y protección del tarotista",
+    link: "#",
+    terapeuta: "Johanna Morales",
+    duracion:
+      "Inicia el 05 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
+    terapeutaId: 27,
+    precio: 40000,
+    isDisabled: false,
+  },
   // {
   //   id: "Alice-Basay",
   //   src: creadorvirtual,
@@ -57,6 +78,7 @@ const imagenesData: ImagenData[] = [
   //   descripcion: "Prueba Correo",
   //   link: "#",
   //   terapeuta: "Alice Basay",
+  //   duracion: "tres",
   //   terapeutaId: 10,
   //   precio: 40000,
   // },
@@ -81,49 +103,90 @@ export default function Terapias() {
   };
 
   // --- Nueva función para confirmar y añadir al carrito desde el modal ---
-  const handleConfirmAndAddToCart = () => {
-    if (!currentTerapia) return; // No debería pasar, pero como seguridad
+  const handleConfirmAndAddToCart = async () => {
+    if (!currentTerapia) {
+      console.error("Error: currentTerapiaData es nulo al confirmar.");
+      alert("Hubo un error al procesar tu reserva. Intenta de nuevo.");
+      return;
+    }
 
     if (clientName.trim() === "" || clientPhone.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
     }
-    // --- NUEVA VALIDACIÓN PARA EL NÚMERO DE TELÉFONO ---
-    const phoneRegex = /^\+569\d{8}$/; // Formato para números de teléfono chilenos (+569XXXXXXXX)
-    if (!phoneRegex.test(clientPhone.trim())) {
+
+    const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
+
+    if (!phoneNumber || !phoneNumber.isValid()) {
       alert(
-        "Por favor, ingresa un número de teléfono chileno válido (ej. +56912345678)."
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
       );
       return;
     }
+
+    const detectedCountry = phoneNumber.country || "Desconocido";
+    console.log("País detectado por número telefónico:", detectedCountry);
     const now = new Date();
     const fechaActual = now.toISOString().split("T")[0]; // YYYY-MM-DD
     const horaGenerica = "17:00"; // Hora genérica, ajusta según necesidad
 
-    const nuevaReserva: Reserva = {
-      id: Date.now(), // ID único para el frontend
-      servicio: "Formación de Terapeutas de la Luz", // Nombre genérico del servicio/formación
+    const reservaDataToSend = {
+      // No incluyas `id` ni `clientBookingId` aquí; el backend los manejará.
+      // El backend `crearReservaDirecta` generará el `clientBookingId` (UUID).
+      servicio: "Formación de Terapeutas de la Luz", // El nombre del servicio
       especialidad: currentTerapia.alt, // Usar 'alt' como especialidad
       fecha: fechaActual,
       hora: horaGenerica,
       precio: currentTerapia.precio,
       terapeuta: currentTerapia.terapeuta,
       terapeutaId: currentTerapia.terapeutaId,
-      nombreCliente: clientName.trim(), // Nombre ingresado por el usuario
-      telefonoCliente: clientPhone.trim(), // Teléfono ingresado por el usuario
-      sesiones: 1, // Por defecto 1 sesión para formación
-      cantidad: 1, // Por defecto 1 para formación
+      nombreCliente: clientName.trim(),
+      telefonoCliente: clientPhone.trim(),
+      sesiones: 1,
+      cantidad: 1,
     };
 
-    console.log("Reserva de Formación agregada al carrito:", nuevaReserva);
-    addToCart(nuevaReserva);
-    alert(`"${currentTerapia.alt}" ha sido agregado al carrito.`);
+    console.log("Reserva de Formación agregada al carrito:", reservaDataToSend);
+    try {
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservaDataToSend),
+      });
 
-    // Cierra el modal y resetea estados
-    setShowContactModal(false);
-    setCurrentTerapia(null);
-    setClientName("");
-    setClientPhone("");
+      if (!response.ok) {
+        const errorBody = await response.json();
+        const errorMessage =
+          errorBody.mensaje ||
+          `Error al confirmar la inscripción: ${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const { reserva: confirmedReservation } = await response.json(); // El backend devuelve { reserva: {...} }
+
+      console.log(
+        "Reserva de Formación confirmada por backend:",
+        confirmedReservation
+      );
+
+      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
+      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
+
+      alert(
+        `"${confirmedReservation.especialidad}" ha sido agregada al carrito.`
+      );
+
+      // Cierra el modal y resetea estados
+      setShowContactModal(false);
+      setCurrentTerapia(null);
+      setClientName("");
+      setClientPhone("");
+    } catch (error: any) {
+      console.error("ERROR al crear la reserva de Formación:", error);
+      alert(`No se pudo completar la inscripción: ${error.message}`);
+    }
   };
 
   return (
@@ -187,9 +250,7 @@ export default function Terapias() {
                     <p className="text-sm text-gray-700 font-semibold mb-2">
                       Precio: ${img.precio.toLocaleString()} CLP
                     </p>
-                    <p className="text-xs text-gray-600 mb-3">
-                      Duración: 1 mes (60 minutos por semana, cada semana)
-                    </p>
+                    <p className="text-xs text-gray-600 mb-3">{img.duracion}</p>
                     {/* --- LÓGICA CONDICIONAL PARA EL BOTÓN --- */}
                     {img.isDisabled ? (
                       <button

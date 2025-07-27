@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
 export interface Reserva {
-  id: number; // Hacemos 'id' obligatorio, ya que siempre se genera
+  id?: number;
+  clientBookingId?: string; // Hacemos 'id' obligatorio, ya que siempre se genera
   terapeuta: string;
   servicio: string;
-  especialidad?: string; // Hacemos 'especialidad' obligatoria
+  especialidad: string; // Hacemos 'especialidad' obligatoria
   fecha: string; // Hacemos 'fecha' obligatoria tras la selección
   hora: string; // Hacemos 'hora' obligatoria tras la selección
   precio: number;

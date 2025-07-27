@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from "react"; // <--- Añadir useEffect
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-// No necesitamos importar DisponibilidadTerapeuta aquí si este componente lo va a cargar
-// import { DisponibilidadTerapeuta } from "../types/index"; // <--- Quitar esta importación
+// Importa la interfaz centralizada desde tu archivo de tipos
+// Asegúrate de que la ruta sea correcta según tu estructura de carpetas
+import { DisponibilidadTerapeuta } from "../types/index";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 interface ReservaConFechaProps {
   terapia: string;
@@ -14,11 +16,9 @@ interface ReservaConFechaProps {
     telefonoCliente: string
   ) => void;
   onClose: () => void;
-  // --- CAMBIO CLAVE AQUÍ: Recibir terapeutaId y especialidad ---
-  terapeutaId: number; // Añadir terapeutaId a las props
-  especialidad: string; // Ya lo habías añadido, ¡bien!
-  // No necesitamos 'disponibilidadTerapeuta' como prop ya que la cargaremos aquí.
-  // allowedDates?: string[]; // Si esto sigue siendo necesario, déjalo. Por ahora lo comentaré.
+  // La prop 'disponibilidadTerapeuta' ahora espera la nueva estructura
+  disponibilidadTerapeuta?: DisponibilidadTerapeuta;
+  allowedDates?: string[]; // Array de strings "YYYY-MM-DD"
 }
 
 export default function ReservaConFecha({
@@ -26,99 +26,47 @@ export default function ReservaConFecha({
   precio,
   onConfirm,
   onClose,
-  terapeutaId, // <--- Desestructurar terapeutaId
-  especialidad, // <--- Desestructurar especialidad
-}: // allowedDates, // Comentado por ahora, puedes descomentar si lo usas
-ReservaConFechaProps) {
+  disponibilidadTerapeuta, // La prop recibida ya tendrá la nueva estructura
+  allowedDates,
+}: ReservaConFechaProps) {
+  console.log(
+    "DEBUG ReservaConFecha: Prop disponibilidadTerapeuta recibida:",
+    disponibilidadTerapeuta
+  );
   const [fechaHora, setFechaHora] = useState<Date | null>(null);
   const [nombre, setNombre] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
-  // --- NUEVO ESTADO: Horas disponibles cargadas por este componente ---
-  const [horasDisponiblesParaFecha, setHorasDisponiblesParaFecha] = useState<
-    string[]
-  >([]);
-  // --- NUEVO ESTADO: Para el día actualmente seleccionado en el DatePicker ---
-  const [selectedDayString, setSelectedDayString] = useState<string | null>(
-    null
-  );
-
-  // --- EFECTO PARA CARGAR HORAS CUANDO CAMBIA LA FECHA SELECCIONADA ---
+  const [keyForDatePicker, setKeyForDatePicker] = useState(0);
   useEffect(() => {
-    const fetchHorasDisponibles = async () => {
-      if (fechaHora && terapeutaId && especialidad) {
-        const formattedDate = fechaHora.toISOString().split("T")[0]; // YYYY-MM-DD
-
-        // Guardar el día seleccionado para usarlo en filterTimes
-        setSelectedDayString(formattedDate);
-
-        const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
-        const params = new URLSearchParams({
-          terapeutaId: String(terapeutaId), // Convertir a string para URLSearchParams
-          fecha: formattedDate,
-          especialidad: especialidad,
-        }).toString();
-
-        console.log(
-          `DEBUG ReservaConFecha: Llamando a la API de disponibilidad: ${apiBaseUrl}/api/webpay/disponibilidad-horas?${params}`
-        );
-
-        try {
-          const response = await fetch(
-            `${apiBaseUrl}/api/webpay/disponibilidad-horas?${params}`
-          );
-          if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-          }
-          const data = await response.json();
-          console.log(
-            "DEBUG ReservaConFecha: Horas recibidas de la API:",
-            data.horas
-          );
-          // Asegurarse de que data.horas es un array antes de setearlo
-          if (Array.isArray(data.horas)) {
-            setHorasDisponiblesParaFecha(data.horas);
-          } else {
-            setHorasDisponiblesParaFecha([]);
-            console.warn(
-              "DEBUG ReservaConFecha: La respuesta de horas no es un array:",
-              data.horas
-            );
-          }
-        } catch (error) {
-          console.error(
-            "ERROR ReservaConFecha: Fallo al obtener horas disponibles:",
-            error
-          );
-          setHorasDisponiblesParaFecha([]); // Limpiar en caso de error
-        }
-      } else {
-        setHorasDisponiblesParaFecha([]); // Limpiar si no hay fecha/terapeuta/especialidad
-        setSelectedDayString(null);
-      }
-    };
-
-    fetchHorasDisponibles();
-    // Dependencias del useEffect: fechaHora, terapeutaId, especialidad
-  }, [fechaHora, terapeutaId, especialidad]);
+    setKeyForDatePicker((prevKey) => prevKey + 1);
+    setFechaHora(null); // Reinicia la fecha/hora seleccionada para evitar inconsistencias
+  }, [disponibilidadTerapeuta]);
 
   const handleConfirm = () => {
     if (!fechaHora) {
-      alert("Por favor, selecciona fecha y hora.");
+      alert("No hay reserva pendiente para confirmar.");
       return;
     }
-    if (!nombre.trim()) {
-      alert("Por favor, ingresa tu nombre.");
+    // Validaciones de cliente y teléfono (corregidas)
+    if (nombre.trim() === "" || telefono.trim() === "") {
+      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
     }
-    const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
-    if (!phoneRegex.test(telefono.trim())) {
+
+    const phoneNumber = parsePhoneNumberFromString(telefono.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) {
       alert(
-        "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
       );
       return;
     }
 
-    // --- VALIDACIÓN DE HORA (ADAPTADA A LAS HORAS CARGADAS LOCALMENTE) ---
+    console.log(
+      "País detectado por número telefónico:",
+      phoneNumber.country || "Desconocido"
+    );
+
+    // --- VALIDACIÓN DE HORA (ADAPTADA A LA NUEVA ESTRUCTURA) ---
     const selectedHour = fechaHora.getHours();
     const selectedMinute = fechaHora.getMinutes();
     const selectedTimeString = `${String(selectedHour).padStart(
@@ -126,9 +74,17 @@ ReservaConFechaProps) {
       "0"
     )}:${String(selectedMinute).padStart(2, "0")}`;
 
-    // Ahora validamos contra `horasDisponiblesParaFecha` que es el estado local
-    if (!horasDisponiblesParaFecha.includes(selectedTimeString)) {
-      alert("La hora seleccionada no está disponible.");
+    // Necesitamos verificar las horas disponibles para el día específico seleccionado
+    const selectedDateString = fechaHora.toISOString().split("T")[0];
+    const hoursForSelectedDay =
+      disponibilidadTerapeuta?.disponibilidadPorFecha[selectedDateString] || [];
+
+    if (
+      selectedTimeString === "00:00" &&
+      disponibilidadTerapeuta && // Si hay data
+      !hoursForSelectedDay.includes("00:00") // Y 00:00 no está explícitamente en las horas de ESE día
+    ) {
+      alert("Por favor, selecciona una hora válida para tu reserva.");
       return;
     }
     // --- FIN VALIDACIÓN ---
@@ -141,63 +97,104 @@ ReservaConFechaProps) {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // No permitir fechas pasadas
     if (date < today) {
-      return false;
+      return false; // No permitir fechas pasadas
     }
 
-    // Ya no usamos `allowedDates` prop aquí si las horas vienen de la API.
-    // Si todavía tienes una lista general de `allowedDates` que no viene de disponibilidad
-    // y quieres usarla, deberías cargarla en un useEffect diferente.
-    // if (allowedDates && allowedDates.length > 0) {
-    //   const dateString = date.toISOString().split("T")[0];
-    //   return allowedDates.includes(dateString);
-    // }
+    if (allowedDates && allowedDates.length > 0) {
+      const dateString = date.toISOString().split("T")[0];
+      return allowedDates.includes(dateString);
+    }
 
-    // Por ahora, filterDay solo habilitará los días si hay horas disponibles para ellos
-    // Para hacer esto correctamente, necesitaríamos cargar *todos* los días disponibles
-    // para este terapeuta y especialidad en un estado separado, similar a `disponibilidadesProcesadas`
-    // en `findetalleres.tsx`. Por simplicidad y para avanzar, haremos un filtrado optimista
-    // o basado en una lista predefinida si no se carga toda la disponibilidad.
+    // --- FILTRADO DE DÍAS (ADAPTADO A LA NUEVA ESTRUCTURA) ---
+    // 'disponibilidadTerapeuta' ahora tiene 'disponibilidadPorFecha'
+    if (
+      disponibilidadTerapeuta &&
+      disponibilidadTerapeuta.disponibilidadPorFecha
+    ) {
+      const dateString = date.toISOString().split("T")[0]; // Ej. "2025-07-01"
 
-    // === SOLUCIÓN RÁPIDA PARA filterDay ===
-    // La forma más simple para `filterDay` ahora que las horas se cargan dinámicamente
-    // por fecha, es simplemente permitir todos los días futuros y luego `filterTime`
-    // se encargará de limitar las horas. O, si necesitas filtrar días específicos
-    // (ej. sólo los viernes), esa lista debería venir de otra fuente.
+      // Un día es disponible si existe una entrada para esa fecha en 'disponibilidadPorFecha'
+      // Y si tiene al menos una hora disponible para ese día.
+      const hasHoursForThisDay =
+        disponibilidadTerapeuta.disponibilidadPorFecha[dateString] &&
+        disponibilidadTerapeuta.disponibilidadPorFecha[dateString].length > 0;
 
-    // Si tu backend tiene un endpoint para "días disponibles" para un terapeuta/especialidad,
-    // sería el lugar ideal para obtener una lista de `allowedDates`.
-    // Por ahora, si no tienes esa lista, DatePicker mostrará todos los días del calendario
-    // y solo se podrán seleccionar las horas correctas cuando se elija un día.
+      console.log(
+        "DEBUG filterDay: Fecha DatePicker (YYYY-MM-DD):",
+        dateString
+      );
+      console.log(
+        "DEBUG filterDay: DisponibilidadPorFecha del terapeuta:",
+        disponibilidadTerapeuta.disponibilidadPorFecha
+      );
+      console.log(
+        "DEBUG filterDay: ¿Tiene horas para esta fecha?",
+        hasHoursForThisDay
+      );
+      if (hasHoursForThisDay === undefined) {
+        // <-- Añade esta condición
+        console.log(
+          "DEBUG filterDay: Horas para esta fecha que causan undefined:",
+          disponibilidadTerapeuta.disponibilidadPorFecha[dateString]
+        );
+      }
 
-    // Dejaremos filterDay sin un filtrado estricto por ahora, y nos apoyaremos en filterTime
-    // para garantizar que solo se puedan seleccionar horas válidas.
-    return true; // Permitir todos los días futuros para la selección inicial
+      return hasHoursForThisDay; // Retorna true si hay horas para este día
+    }
+
+    return false; // Por defecto, si no hay disponibilidad cargada/definida, deshabilita el día.
   };
 
   const filterTimes = (time: Date) => {
-    // Obtener la hora del DatePicker en formato HH:MM
-    const timeString = `${String(time.getHours()).padStart(2, "0")}:${String(
-      time.getMinutes()
+    // La fecha seleccionada por el usuario está en el estado 'fechaHora'.
+    // Si 'fechaHora' no está seleccionada, o si no hay data de disponibilidad, no habilitamos nada.
+    if (
+      !fechaHora ||
+      !disponibilidadTerapeuta ||
+      !disponibilidadTerapeuta.disponibilidadPorFecha
+    ) {
+      console.log(
+        "DEBUG filterTimes: Fecha seleccionada o data de disponibilidad por fecha no definida."
+      );
+      return false; // Si no hay fecha seleccionada o data, deshabilitar horas
+    }
+
+    // Obtener la fecha seleccionada del estado 'fechaHora' para buscar las horas específicas
+
+    const selectedDateString = fechaHora.toISOString().split("T")[0]; // "YYYY-MM-DD" de la fecha SELECCIONADA
+    // Obtener las horas disponibles específicamente para esta fecha seleccionada
+    const hoursForThisDay =
+      disponibilidadTerapeuta.disponibilidadPorFecha[selectedDateString];
+
+    if (!hoursForThisDay || hoursForThisDay.length === 0) {
+      console.log(
+        "DEBUG filterTimes: No hay horas disponibles para el día:",
+        selectedDateString
+      );
+      return false; // No hay horas para este día específico, deshabilitar
+    }
+
+    // --- Lógica para la hora actual del DatePicker (timeString) ---
+    const selectedHour = time.getHours();
+    const selectedMinute = time.getMinutes();
+    const timeString = `${String(selectedHour).padStart(2, "0")}:${String(
+      selectedMinute
     ).padStart(2, "0")}`;
 
-    // Solo habilitar la hora si está en la lista de `horasDisponiblesParaFecha`
-    // y si el día actual del DatePicker coincide con el día para el que cargamos las horas
-    const isToday =
-      fechaHora &&
-      fechaHora.toISOString().split("T")[0] ===
-        time.toISOString().split("T")[0];
+    console.log("DEBUG filterTimes: Hora DatePicker (HH:MM):", timeString);
+    console.log(
+      "DEBUG filterTimes: Horas disponibles para ESTE día (" +
+        selectedDateString +
+        "):",
+      hoursForThisDay
+    );
+    console.log(
+      "DEBUG filterTimes: ¿La hora está en horas disponibles para este día?",
+      hoursForThisDay.includes(timeString)
+    );
 
-    // console.log("DEBUG filterTimes:", {
-    //   timeString,
-    //   horasDisponiblesParaFecha,
-    //   isIncluded: horasDisponiblesParaFecha.includes(timeString),
-    //   isToday // Solo relevante si se está filtrando una hora para el día actualmente seleccionado
-    // });
-
-    // La lógica clave es si la hora está en la lista de horas disponibles
-    return horasDisponiblesParaFecha.includes(timeString);
+    return hoursForThisDay.includes(timeString);
   };
 
   return (
@@ -211,25 +208,19 @@ ReservaConFechaProps) {
       </p>
 
       <DatePicker
+        key={keyForDatePicker}
         selected={fechaHora}
         onChange={(date: Date | null) => setFechaHora(date)}
         showTimeSelect
         timeFormat="HH:mm"
-        timeIntervals={60} // <--- Configura tus intervalos de tiempo (e.g., 60 para horas completas)
+        // timeIntervals={30} // Puedes quitar esto; filterTimes ya filtra por horas exactas
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
         placeholderText="Selecciona fecha y hora"
         className="border p-2 w-full mt-2 mb-4"
-        // No se usará `filterDate` para días específicos por ahora,
-        // ya que la disponibilidad de días completos vendría del backend.
-        // Si no se habilita ningún día, el DatePicker no mostrará nada.
-        // Por ahora, simplemente permitimos todos los días futuros y confiamos en `filterTime`.
-        // Si necesitas días específicos, necesitaríamos un endpoint `/disponibilidad-dias` en el backend.
-        filterDate={filterDay} // Permitimos todos los días futuros por simplicidad, y filterTime se encarga
+        filterDate={filterDay}
         filterTime={filterTimes}
-        // includeDates={Array.from(Object.keys(disponibilidadTerapeuta?.disponibilidadPorFecha || {}), (dateString) => new Date(dateString))}
-        // Si quieres habilitar solo los días con disponibilidad real, necesitas una lista de ESOS DÍAS del backend
-        // o construirla aquí si la "raw data" ya la trae.
+        // includeTimes={...} // No es necesario si filterTimes está haciendo el trabajo dinámico correctamente
       />
       <div className="mb-4">
         <label htmlFor="nombreCliente" className="block text-sm font-bold mb-2">

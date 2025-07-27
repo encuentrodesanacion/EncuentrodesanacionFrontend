@@ -2,14 +2,17 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; // Revisa si necesitas este CSS, o si tienes uno específico para talleres
 import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta
-
 import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
-import Mindfullness from "../assets/Mindfullness.jpeg"; // Asegúrate de las rutas correctas
-import TribuEnCalma from "../assets/TribuEnCalma.jpeg";
+import YogaArt from "../assets/YogaArt.png";
+import SanArte from "../assets/SanArte.png";
 import Yoga from "../assets/Yoga.jpg";
 import Alquimia from "../assets/Alquimia.jpeg";
 import EscribirDesdeRaices from "../assets/EscribirDesdeRaices.jpeg";
+import parsePhoneNumberFromString from "libphonenumber-js";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
+
 // Define la interfaz para un ítem de taller
+
 interface TallerItem {
   id: string; // O number, un ID único para el taller
   title: string;
@@ -34,50 +37,27 @@ export default function TalleresMensuales() {
 
   const talleres: TallerItem[] = [
     {
-      id: "Taller-de-Mindfullness",
-      title: "Mindfullness para la Vida Diaria",
+      id: "Taller-para-San-Arte",
+      title: "San-Arte",
       description:
-        "Mindfulness para la vida diaria En este taller, exploraremos la práctica del mindfulness como una herramienta para cultivar una mayor conciencia, equilibrio emocional y bienestar mental. A través de técnicas de atención plena, los participantes aprenderán a gestionar el estrés, mejorar la concentración y fortalecer su conexión con el momento presente. Este enfoque transformador permitirá armonizar la energía, potenciar el bienestar y vivir con mayor presencia y plenitud. Beneficios: •	Reducción del estrés y ansiedad •	Mejora de la concentración y claridad •	Regulación emocional •	Mayor conexión con el cuerpo y la respiración •	Fortalecimiento de la intuición y presencia",
+        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-07-11",
+      date: "2025-08-05",
       time: "19:00",
-      instructor: "Mónica Gatica",
-      instructorId: 5,
+      instructor: "María Gabriela Pástor",
+      instructorId: 26,
       isDisabled: false,
     },
-    // {
-    //   id: "Taller-de-Tribu-en-Calma",
-    //   title: "Tribu en Calma",
-    //   description:
-    //     "Un espacio seguro para quienes desean aprender a manejar la ansiedad de forma práctica y acompañada. A través de técnicas sencillas, ejercicios interactivos y un ambiente de apoyo, te ayudamos a tomar las riendas de tu bienestar. Beneficios: •Comprender mejor tu ansiedad •Reducir el estrés diario •Mejorar tu bienestar emocional •Fortalecer tu autocuidado ¡No esperes más para transformar tu vida! Únete hoy a la tribu para comenzar este camino paso a paso.",
-    //   price: 25000,
-    //   date: "2025-02-07",
-    //   time: "19:00",
-    //   instructor: "Vanessa Hernández",
-    //   instructorId: 1,
-    // },
     {
-      id: "Taller-de-Yoga",
-      title: "Yoga Integral para Adultos",
+      id: "Taller-Yoga-Para-las-Articulaciones",
+      title: "Yoga para las Articulaciones",
       description:
-        "El Yoga es una práctica que conecta el cuerpo, la respiración y la mente. A través de esta práctica, donde utilizamos distintas posturas físicas, ejercicios de respiración y meditación, nos ayuda a mejorar nuestra salud en general. Esta maravillosa práctica, dentro de sus innumerables beneficios, nos ofrece los siguientes: reducir el estrés, aumentar las hormonas de la felicidad, aliviar la migraña, calmar nuestra mente y reducir los niveles de ansiedad, entre otros.",
+        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-07-09",
-      time: "19:30",
-      instructor: "Marlene Ramirez",
-      instructorId: 17,
-      isDisabled: true,
-    },
-    {
-      id: "Taller-de-Alquimia",
-      title: "Alquimia de Abundancia",
-      description:
-        "Un taller poderoso donde ritual y transformación se unen para ayudarte a reconocer los bloqueos que te han mantenido lejos del merecimiento, el dinero y la plenitud.  A través de herramientas de PNL, prácticas mágicas y rituales conscientes, vas a: • Identificar tus patrones de carencia • Reprogramar creencias limitantes • Activar tu poder creador  •Conectar con tu propósito abundante Es hora de transformar la escasez en magnetismo, y abrirte a todo lo que el universo ya quiere entregarte.  Tu abundancia no es un destino… es un estado de conexión interior.",
-      price: 25000,
-      date: "2025-07-11",
-      time: "20:30",
-      instructor: "Macarena del Río",
-      instructorId: 6,
+      date: "2025-08-06",
+      time: "19:00",
+      instructor: "Veronica Chaparro",
+      instructorId: 23,
       isDisabled: false,
     },
     {
@@ -86,8 +66,8 @@ export default function TalleresMensuales() {
       description:
         "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-07-13",
-      time: "12:00",
+      date: "2025-08-08",
+      time: "20:00",
       instructor: "Katalina Rencoret",
       instructorId: 18,
       isDisabled: false,
@@ -118,7 +98,7 @@ export default function TalleresMensuales() {
   };
 
   // --- Nueva función para confirmar y añadir al carrito desde el modal ---
-  const handleConfirmAndAddToCart = () => {
+  const handleConfirmAndAddToCart = async () => {
     if (!currentTaller) {
       console.error("Error: currentTaller es nulo al confirmar.");
       alert("Hubo un error al procesar tu inscripción. Intenta de nuevo.");
@@ -128,51 +108,78 @@ export default function TalleresMensuales() {
     if (clientName.trim() === "" || clientPhone.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
-    }
-    // --- NUEVA VALIDACIÓN PARA EL NÚMERO DE TELÉFONO ---
-    const phoneRegex = /^\+569\d{8}$/; // Formato para números de teléfono chilenos (+569XXXXXXXX)
-    if (!phoneRegex.test(clientPhone.trim())) {
+    } // --- NUEVA VALIDACIÓN PARA EL NÚMERO DE TELÉFONO ---
+    const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) {
       alert(
-        "Por favor, ingresa un número de teléfono chileno válido (ej. +56912345678)."
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
       );
       return;
-    }
-    // --- FIN NUEVA VALIDACIÓN ---
-    // Aquí usamos los datos del taller (currentTaller) y los datos del cliente
-    const nuevaReserva: Reserva = {
-      id: Date.now(), // ID único para el ítem del carrito
+    } // --- FIN NUEVA VALIDACIÓN ---
+    const detectedCountry = phoneNumber.country || "Desconocido";
+    console.log("País detectado por número telefónico:", detectedCountry); // Aquí usamos los datos del taller (currentTaller) y los datos del cliente
+
+    // Construir el objeto de datos para enviar al backend
+    const reservaDataToSend = {
+      // El backend `crearReservaDirecta` generará el `id` y `clientBookingId` (UUID).
       servicio: "Talleres Mensuales", // Nombre general del servicio
       especialidad: currentTaller.title, // Usa el título del taller como especialidad
       fecha: currentTaller.date,
       hora: currentTaller.time,
       precio: currentTaller.price,
-      sesiones: 4, // Asumimos que un taller es 1 sesión, ajusta si es diferente
-      cantidad: 1,
-      nombreCliente: clientName.trim(), // Nombre ingresado por el usuario
-      telefonoCliente: clientPhone.trim(), // Teléfono ingresado por el usuario
+      sesiones: 1, // Asumimos 1 sesión por taller mensual, ajusta si es diferente
+      cantidadCupos: 1, // Cantidad de cupos (generalmente 1 por reserva de persona)
+      nombreCliente: clientName.trim(),
+      telefonoCliente: clientPhone.trim(),
       terapeuta: currentTaller.instructor,
       terapeutaId: currentTaller.instructorId,
     };
 
     console.log(
-      "Objeto Reserva a añadir al carrito desde TalleresMensuales (después de modal):",
-      nuevaReserva
+      "Intentando crear reserva de Taller Mensual en backend:",
+      reservaDataToSend
     );
 
     try {
-      addToCart(nuevaReserva);
-      console.log("addToCart fue llamado exitosamente.");
-      alert(`"${currentTaller.title}" ha sido agregado al carrito.`);
-    } catch (error) {
-      console.error("Error al llamar a addToCart:", error);
-      alert("Hubo un problema al agregar el taller al carrito.");
-    }
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservaDataToSend),
+      });
 
-    // Cierra el modal y resetea estados
-    setShowContactModal(false);
-    setCurrentTaller(null);
-    setClientName("");
-    setClientPhone("");
+      if (!response.ok) {
+        const errorBody = await response.json();
+        const errorMessage =
+          errorBody.mensaje ||
+          `Error al inscribirse en el taller: ${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const { reserva: confirmedReservation } = await response.json(); // El backend devuelve { reserva: {...} }
+
+      console.log(
+        "Reserva de Taller Mensual confirmada por backend:",
+        confirmedReservation
+      );
+
+      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
+      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
+
+      alert(
+        `"${confirmedReservation.especialidad}" ha sido agregado al carrito.`
+      );
+
+      // Cierra el modal y resetea estados
+      setShowContactModal(false);
+      setCurrentTaller(null);
+      setClientName("");
+      setClientPhone("");
+    } catch (error: any) {
+      console.error("ERROR al crear la reserva de Taller Mensual:", error);
+      alert(`No se pudo completar la inscripción al taller: ${error.message}`);
+    }
   };
 
   return (
@@ -208,47 +215,34 @@ export default function TalleresMensuales() {
               key={taller.id}
               className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
             >
-              {/* {taller.id === "Taller-de-Tribu-en-Calma" && (
-                <img
-                  src={TribuEnCalma} // Revisa si esto es Taller1 o Taller2 para cada caso
-                  alt={taller.title}
-                  className="w-full h-48 object-cover"
-                />
-              )} */}
-              {taller.id === "Taller-de-Mindfullness" && (
-                <img
-                  src={Mindfullness} // Revisa si esto es Taller1 o Taller2 para cada caso
-                  alt={taller.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
-              {taller.id === "Taller-de-Yoga" && (
-                <img
-                  src={Yoga} // Revisa si esto es Taller1 o Taller2 para cada caso
-                  alt={taller.title}
-                  className="w-full h-48 object-cover"
-                />
-              )}
               {taller.id === "Taller-de-Escribir-sobre-Raices" && (
                 <img
                   src={EscribirDesdeRaices} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-80 object-cover" //Define altura de cuadro "h-xx" , "w-full h-auto object-contain"
                 />
               )}
-              {taller.id === "Taller-de-Alquimia" && (
+              {taller.id === "Taller-Yoga-Para-las-Articulaciones" && (
                 <img
-                  src={Alquimia} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  src={YogaArt} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
-                  className="w-full h-48 object-cover"
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Taller-para-San-Arte" && (
+                <img
+                  src={SanArte} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
                 />
               )}
               {!(
-                taller.id === "Taller-de-Mindfullness" ||
                 // taller.id === "Taller-de-Tribu-en-Calma" ||
-                taller.id === "Taller-de-Yoga" ||
-                taller.id === "Taller-de-Alquimia" ||
-                taller.id === "Taller-de-Escribir-sobre-Raices"
+                (
+                  taller.id === "Taller-para-San-Arte" ||
+                  taller.id === "Taller-Yoga-Para-las-Articulaciones" ||
+                  taller.id === "Taller-de-Escribir-sobre-Raices"
+                )
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller

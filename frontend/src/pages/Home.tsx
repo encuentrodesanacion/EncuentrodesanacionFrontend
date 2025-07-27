@@ -14,6 +14,7 @@ import {
   Orbit,
 } from "lucide-react";
 // import ReservaHora from "../ReservaHora";
+import Whatsapp from "../assets/Whatsapp.png";
 import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
 import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
@@ -27,12 +28,15 @@ import SpaLittle from "../assets/Spa Little.jpeg";
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
 // y está en la carpeta 'assets', la ruta sería:
 import Cristal from "../assets/Cristal.jpg"; // ¡Cambia esto por la ruta real de tu imagen!
-
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobile
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
-
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+  const [mensaje, setMensaje] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -43,6 +47,51 @@ const App = () => {
       }
     }
   }, [location]);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault(); // Evitar la recarga de la página
+    setIsSubmitting(true); // Deshabilitar el botón
+
+    // Validaciones básicas en el frontend
+    if (!nombre.trim() || !email.trim() || !mensaje.trim()) {
+      alert("Por favor, completa todos los campos.");
+      setIsSubmitting(false);
+      return;
+    }
+    if (!email.includes("@") || !email.includes(".")) {
+      alert("Por favor, ingresa un email válido.");
+      setIsSubmitting(false);
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_BASE_URL}/comentarios`, {
+        // Llama a tu nueva API
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ nombre, email, mensaje }),
+      });
+
+      if (response.ok) {
+        alert("¡Mensaje enviado con éxito! Gracias por tu sugerencia.");
+        setNombre(""); // Limpiar el formulario
+        setEmail("");
+        setMensaje("");
+      } else {
+        const errorData = await response.json();
+        alert(
+          `Error al enviar mensaje: ${errorData.mensaje || "Error desconocido"}`
+        );
+        console.error("Error al enviar comentario:", errorData);
+      }
+    } catch (error) {
+      console.error("Error de red o del servidor:", error);
+      alert("Hubo un problema de conexión. Intenta de nuevo más tarde.");
+    } finally {
+      setIsSubmitting(false); // Habilitar el botón nuevamente
+    }
+  };
 
   return (
     // Aplica las clases de Tailwind y el estilo de la imagen de fondo al div principal
@@ -473,7 +522,9 @@ const App = () => {
               </div>
             </div>
 
-            <form className="space-y-6">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {" "}
+              {/* Agrega onSubmit */}
               <div>
                 <h1 className="text-center text-lg font-semibold text-white mb-4">
                   Si tienes alguna sugerencia o problema de navegación en la
@@ -491,9 +542,11 @@ const App = () => {
                   type="text"
                   id="name"
                   className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
+                  value={nombre} // Conectar con el estado `nombre`
+                  onChange={(e) => setNombre(e.target.value)} // Actualizar el estado
+                  required
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="email"
@@ -505,9 +558,11 @@ const App = () => {
                   type="email"
                   id="email"
                   className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
+                  value={email} // Conectar con el estado `email`
+                  onChange={(e) => setEmail(e.target.value)} // Actualizar el estado
+                  required
                 />
               </div>
-
               <div>
                 <label
                   htmlFor="message"
@@ -519,14 +574,18 @@ const App = () => {
                   id="message"
                   rows={4}
                   className="mt-1 block w-full rounded-lg bg-white-900 border border-gray-800 text-black focus:ring-pastel-green focus:border-pastel-green"
+                  value={mensaje} // Conectar con el estado `mensaje`
+                  onChange={(e) => setMensaje(e.target.value)} // Actualizar el estado
+                  required
                 ></textarea>
               </div>
-
               <button
                 type="submit"
-                className="w-full bg-pastel-green text-black px-6 py-3 rounded-full hover:bg-pastel-green/90 transition-colors"
+                disabled={isSubmitting} // Deshabilitar durante el envío
+                className="w-full bg-gradient-to-r from-fuchsia-500/80 to-pink-500/90 mb-6 text-black px-6 py-3 rounded-full hover:bg-pastel-green/90 transition-colors"
               >
-                Enviar Mensaje
+                {isSubmitting ? "Enviando..." : "Enviar Mensaje"}{" "}
+                {/* Texto dinámico */}
               </button>
             </form>
           </div>
@@ -616,8 +675,18 @@ const App = () => {
           </div>
         </div>
       </footer>
+      {/* WhatsApp Floating Button */}
+      <a
+        href="https://wa.me/56976557902?text=Deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20los%20servicios."
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label="Contactar por WhatsApp"
+        // Mantener las clases para el fondo, forma, sombra y hover
+        className="whatsapp-float bg-green-500 text-white rounded-full flex items-center justify-center p-4 shadow-lg hover:bg-green-600 transition-colors duration-200"
+      >
+        {/* Aquí solo dejamos el texto "WhatsApp" */}
+      </a>
     </div>
   );
 };
-
 export default App;

@@ -14,7 +14,7 @@ module.exports = (sequelize) => {
       },
       transaccionId: {
         // <--- AGREGAR ESTO: Clave Foránea a Transacciones
-        type: DataTypes.INTEGER,
+        type: DataTypes.STRING,
         allowNull: true, // Debe coincidir con allowNull de tu migración para transaccion_id
       },
       terapeutaId: {
@@ -27,9 +27,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       clientBookingId: {
-        type: DataTypes.BIGINT, // Asumo que el frontend envía un número grande
-        unique: true,
+        type: DataTypes.UUID, // Asumo que el frontend envía un número grande
+        defaultValue: DataTypes.UUIDV4, // Para que Sequelize genere un UUID al crear si no se provee
         allowNull: false,
+        unique: true, // Es un ID único por reserva del cliente
+        field: "client_booking_id", // Asegúrate que esto mapee a tu columna snake_case en la DB
       },
       servicio: {
         type: DataTypes.STRING,

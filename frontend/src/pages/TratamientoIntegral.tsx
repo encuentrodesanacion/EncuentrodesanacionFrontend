@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
 import { useCart, Reserva } from "../pages/CartContext";
 import CartIcon from "../components/CartIcon";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
@@ -10,6 +11,7 @@ import Terapeuta16 from "../assets/Terapeuta16.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 interface TerapiaItem {
   img: string;
@@ -116,7 +118,7 @@ export default function TratamientoHolistico() {
     console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
   };
 
-  const handleConfirmAndAddToCart = () => {
+  const handleConfirmAndAddToCart = async () => {
     if (!currentTerapiaData) {
       console.error("Error: currentTerapiaData es nulo al confirmar.");
       alert("Hubo un error al procesar tu reserva. Intenta de nuevo.");
@@ -127,19 +129,24 @@ export default function TratamientoHolistico() {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
     }
-    const phoneRegex = /^\+569\d{8}$/;
-    if (!phoneRegex.test(clientPhone.trim())) {
+
+    const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
+
+    if (!phoneNumber || !phoneNumber.isValid()) {
       alert(
-        "Por favor, ingresa un número de teléfono chileno válido (ej. +56912345678)."
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
       );
       return;
     }
+
+    const detectedCountry = phoneNumber.country || "Desconocido";
+    console.log("País detectado por número telefónico:", detectedCountry);
+
     const now = new Date();
     const fechaActual = now.toISOString().split("T")[0];
     const horaGenerica = "17:00";
 
-    const reserva: Reserva = {
-      id: Date.now(),
+    const reservaDataToSend = {
       servicio: "Tratamiento Integral",
       especialidad: currentTerapiaData.terapiaTitle,
       fecha: fechaActual,
@@ -154,25 +161,54 @@ export default function TratamientoHolistico() {
     };
 
     console.log(
-      "Objeto Reserva a añadir al carrito desde TratamientoHolistico (después de modal):",
-      reserva
+      "Objeto Reserva a añadir al carrito desde TratamientoIntegral (después de modal):",
+      reservaDataToSend
     );
 
     try {
-      addToCart(reserva);
-      console.log("addToCart fue llamado exitosamente.");
-      alert(
-        `Reserva agregada: ${currentTerapiaData.sesiones} sesiones de ${currentTerapiaData.terapiaTitle} con ${currentTerapiaData.terapeutaNombre}`
-      );
-    } catch (error) {
-      console.error("Error al llamar a addToCart:", error);
-      alert("Hubo un problema al agregar la reserva al carrito.");
-    }
+      // Inicio del bloque `try` para la llamada al backend
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservaDataToSend),
+      });
 
-    setShowContactModal(false);
-    setCurrentTerapiaData(null);
-    setClientName("");
-    setClientPhone("");
+      if (!response.ok) {
+        const errorBody = await response.json();
+        const errorMessage =
+          errorBody.mensaje ||
+          `Error al confirmar la inscripción: ${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const { reserva: confirmedReservation } = await response.json();
+
+      console.log(
+        "Reserva de Tratamiento Integral confirmada por backend:",
+        confirmedReservation
+      );
+
+      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
+
+      alert(
+        `Reserva agregada: ${confirmedReservation.sesiones} sesiones de ${confirmedReservation.especialidad} con ${confirmedReservation.terapeuta}`
+      );
+
+      // Cierra el modal y resetea estados
+      setShowContactModal(false);
+      setCurrentTerapiaData(null);
+      setClientName("");
+      setClientPhone("");
+    } catch (error: any) {
+      // Cierre del `try` y comienzo del `catch`
+      console.error(
+        "ERROR al crear la reserva de Tratamiento Integral:",
+        error
+      );
+      alert(`No se pudo completar la inscripción: ${error.message}`);
+    }
   };
 
   return (

@@ -1,27 +1,48 @@
 // frontend/src/pages/SuccessPage.tsx
 import { Heart, Copy, Mail } from "lucide-react";
-import React, { useEffect, useState } from "react"; // Mantén React si usas JSX/TSX directamente
+import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
+// Define una interfaz para los detalles de la compra para mayor tipado y claridad
+interface PurchaseDetails {
+  servicio: string;
+  especialidad: string;
+  nombreTerapeuta: string;
+  fecha: string;
+  hora: string;
+  sesiones: number;
+  precio: string; // O number, dependiendo de cómo lo manejes
+  clienteNombre: string; // Agregado según tu ejemplo
+  clienteTelefono: string; // Agregado según tu ejemplo
+}
 
 function SuccessPage() {
   const location = useLocation();
   const navigate = useNavigate();
-  const [token, setToken] = useState<string>(""); // Añade tipo string
-  const [transactionId, setTransactionId] = useState<string>(""); // Añade tipo string
+  const [token, setToken] = useState<string>("");
+  const [transactionId, setTransactionId] = useState<string>("");
   const [copySuccess, setCopySuccess] = useState<string>("");
   const [emailMarketingInput, setEmailMarketingInput] = useState<string>("");
   const [marketingSubscribeStatus, setMarketingSubscribeStatus] =
     useState<string>("");
 
+  // Nuevo estado para los detalles de la compra
+  const [purchaseDetails, setPurchaseDetails] =
+    useState<PurchaseDetails | null>(null);
+
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     setToken(params.get("token") || "N/A");
     setTransactionId(params.get("transactionId") || "N/A");
+
+    // Recuperar el estado de la navegación
+    if (location.state && typeof location.state === "object") {
+      setPurchaseDetails(location.state as PurchaseDetails);
+    }
   }, [location]);
 
-  // Función para copiar el texto con tipos definidos
+  // Función para copiar el texto
   const copyToClipboard = async (textToCopy: string, fieldName: string) => {
-    // <-- CORRECCIÓN AQUÍ: Añadir tipos
     try {
       await navigator.clipboard.writeText(textToCopy);
       setCopySuccess(`¡${fieldName} copiado!`);
@@ -123,10 +144,75 @@ function SuccessPage() {
         Tu camino de sanación ha comenzado.
       </p>
 
-      <p style={{ fontSize: "1.1em", margin: "15px 0" }}>
-        ¡Hemos procesado tu solicitud!
-      </p>
+      {/* Nuevo div para el resumen de la compra */}
+      {purchaseDetails && (
+        <div
+          style={{
+            background: "#f0f8f8",
+            padding: "20px",
+            borderRadius: "8px",
+            border: "1px solid #e0f2f2",
+            maxWidth: "400px",
+            width: "100%",
+            marginBottom: "20px",
+            marginTop: "20px", // Añade un poco de espacio
+            boxSizing: "border-box",
+            textAlign: "left", // Alinea el texto a la izquierda para el resumen
+          }}
+        >
+          <h2
+            style={{
+              color: "#02807d",
+              fontSize: "1.5em",
+              marginBottom: "15px",
+              textAlign: "center", // Centra el título del resumen
+            }}
+          >
+            Resumen de tu Compra
+          </h2>
+          <p>
+            <strong>Servicio:</strong> {purchaseDetails.servicio}
+          </p>
+          <p>
+            <strong>Especialidad:</strong> {purchaseDetails.especialidad}
+          </p>
+          <p>
+            <strong>Terapeuta:</strong> {purchaseDetails.nombreTerapeuta}
+          </p>
+          <p>
+            <strong>Fecha:</strong> {purchaseDetails.fecha}
+          </p>
+          <p>
+            <strong>Hora:</strong> {purchaseDetails.hora}
+          </p>
+          <p>
+            <strong>Sesiones:</strong> {purchaseDetails.sesiones}
+          </p>
+          <p>
+            <strong>Precio:</strong> {purchaseDetails.precio}
+          </p>
+          {/* Datos del cliente si están disponibles */}
+          {purchaseDetails.clienteNombre && (
+            <p>
+              <strong>Cliente:</strong> {purchaseDetails.clienteNombre}
+            </p>
+          )}
+          {purchaseDetails.clienteTelefono && (
+            <p>
+              <strong>Teléfono Cliente:</strong>{" "}
+              {purchaseDetails.clienteTelefono}
+            </p>
+          )}
+          <p>
+            <strong>Código de Confirmación:</strong> {token}
+          </p>
+          <p>
+            <strong>ID de Transacción:</strong> {transactionId}
+          </p>
+        </div>
+      )}
 
+      {/* Bloque existente para Código de Confirmación y ID de Transacción (puedes decidir si mantenerlo duplicado o solo en el resumen) */}
       <div
         style={{
           background: "#f0f8f8",

@@ -17,15 +17,32 @@ module.exports = (sequelize, DataTypes) => {
         validate: { isEmail: true },
       },
       serviciosOfrecidos: {
-        type: DataTypes.TEXT,
+        // Nombre del atributo en el modelo
+        type: DataTypes.TEXT, // El tipo de columna en la base de datos
         allowNull: true,
+        defaultValue: "[]", // Valor por defecto como string JSON
+        field: "servicios_ofrecidos", // Nombre de la columna en la DB (snake_case)
+
+        // *** ESTOS GETTERS Y SETTERS SON VITALES SI LA COLUMNA ES DataTypes.TEXT PERO ALMACENA JSON ARRAYS ***
         get() {
-          const rawValue = this.getDataValue("servicios_ofrecidos");
+          const rawValue = this.getDataValue("serviciosOfrecidos");
+          // console.log(`[DEBUG Terapeuta Model Getter] rawValue for serviciosOfrecidos: ${rawValue}, typeof: ${typeof rawValue}`);
           try {
-            return rawValue ? JSON.parse(rawValue) : [];
+            if (
+              typeof rawValue === "string" &&
+              rawValue.trim().startsWith("[") &&
+              rawValue.trim().endsWith("]")
+            ) {
+              const parsed = JSON.parse(rawValue);
+              return Array.isArray(parsed) ? parsed : [];
+            } else if (rawValue) {
+              // Si es un string simple que no es un array JSON, lo trata como un elemento
+              return [rawValue];
+            }
+            return []; // Retorna un array vacío si el valor es nulo o no válido
           } catch (e) {
             console.error(
-              "[ERROR MODELO] Error parsing serviciosOfrecidos from DB:",
+              "[ERROR Terapeuta Model Getter] Fallo al parsear serviciosOfrecidos:",
               rawValue,
               e
             );
@@ -33,15 +50,13 @@ module.exports = (sequelize, DataTypes) => {
           }
         },
         set(value) {
-          // Asegúrate de que 'value' es un array antes de stringify
+          // Asegura que siempre se guarde como un string JSON si es un array, o como string simple
           if (Array.isArray(value)) {
-            this.setDataValue("servicios_ofrecidos", JSON.stringify(value));
+            this.setDataValue("serviciosOfrecidos", JSON.stringify(value));
+          } else if (typeof value === "string") {
+            this.setDataValue("serviciosOfrecidos", value);
           } else {
-            console.warn(
-              "[WARN MODELO] Intentando setear serviciosOfrecidos con un valor no array:",
-              value
-            );
-            this.setDataValue("servicios_ofrecidos", JSON.stringify([])); // Guardar array vacío si no es array
+            this.setDataValue("serviciosOfrecidos", "[]"); // Fallback seguro
           }
         },
       },

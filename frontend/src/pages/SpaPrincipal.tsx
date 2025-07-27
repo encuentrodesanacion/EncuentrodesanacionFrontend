@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
-import { useCart } from "./CartContext";
+import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
@@ -14,8 +14,12 @@ import Terapeuta8 from "../assets/Terapeuta8.jpg";
 import Terapeuta13 from "../assets/Terapeuta13.jpeg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
-
+import creadorVirtual from "../assets/creadorvirtual.jpg";
+import Terapeuta25 from "../assets/Terapeuta25.jpeg";
+import Terapeuta24 from "../assets/Terapeuta24.jpeg";
+import Terapeuta28 from "../assets/Terapeuta28.jpeg";
 import DatePicker from "react-datepicker";
+import Terapeuta23 from "../assets/Terapeuta23.jpeg";
 import "react-datepicker/dist/react-datepicker.css";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
@@ -24,8 +28,9 @@ import {
   RawDisponibilidadDBItem, // Para los datos crudos del backend
   DisponibilidadTerapeuta, // Para los datos procesados y agregados
   ReservaPendiente,
-  Reserva,
 } from "../types/index";
+import parsePhoneNumberFromString from "libphonenumber-js";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function SpaPrincipal() {
   const navigate = useNavigate();
@@ -104,15 +109,15 @@ export default function SpaPrincipal() {
             ? row.horasDisponibles
             : [];
 
-          // if (dias.length === 0 || horas.length === 0) {
-          //   console.warn(
-          //     `DEBUG SpaPrincipal: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
-          //       dias[0] || "N/A"
-          //     } tiene días u horas vacías (después de getters).`,
-          //     row
-          //   );
-          //   return;
-          // }
+          if (dias.length === 0 || horas.length === 0) {
+            console.warn(
+              `DEBUG SpaPrincipal: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
+                dias[0] || "N/A"
+              } tiene días u horas vacías (después de getters).`,
+              row
+            );
+            return;
+          }
 
           dias.forEach((dia: string) => {
             if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
@@ -178,38 +183,17 @@ export default function SpaPrincipal() {
   // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta3,
-      title: "Liberación Memorias Uterinas",
-      terapeuta: "Mónica Gatica",
-      terapeuta_id: 5,
-      description:
-        "Es una Terapia para conectar con nuestro Centro Creativo, el útero sagrado y liberar patrones energéticos, emocionales y ancestrales que se almacenan en esta zona. Ayuda a sanar traumas pasados, mejorar la relación con la feminidad y potenciar la creatividad y el bienestar.",
-      precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
       img: Terapeuta11,
-      title: "Constelaciones Familiares",
+      title: "Constelación Familiar Individual",
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
         "Es una herramienta terapéutica para tratar conflictos personales, familiares y laborales mediante la visualización de representantes que nos permiten tomar decisiones y reconciliarnos con nuestro linaje",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta13,
-      title: "Péndulo Hebreo",
-      terapeuta: "Rosa Santimone",
-      terapeuta_id: 12,
-      description:
-        "Es una terapia de armonización energética que permite detectar y eliminar energías negativas, restaurando el equilibrio del cuerpo. También diagnostica el estado de los chakras y sistemas del cuerpo, regenera y equilibra su energía. Además, potencia el crecimiento personal, limpia y armoniza el aura y, a través de la cromoterapia, otorga mayores beneficios al consultante.",
-      precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+
     {
       img: Terapeuta5,
       title: "Purificación y limpieza de energías negativas",
@@ -218,7 +202,7 @@ export default function SpaPrincipal() {
       description:
         "¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -230,20 +214,10 @@ export default function SpaPrincipal() {
       description:
         "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta15,
-      title: "Registros Akáshicos ",
-      terapeuta: "Laura Vicens",
-      terapeuta_id: 14,
-      description:
-        "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
-      precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+
     {
       img: Terapeuta8,
       title: "Tarot Predictivo y/o Terapéutico",
@@ -252,7 +226,51 @@ export default function SpaPrincipal() {
       description:
         "El Tarot puede proporcionarte una mirada profunda y libre de juicios de una situación, periodo de tiempo o sistema familiar. Te dará herramientas y consejos prácticos para que llegues a la mejor resolución de un dilema o problema. Los mensajes se canalizan con ayuda de tus guías espirituales, quienes buscan sanarte y esclarecerte.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta25,
+      title: "Códigos Emocionales",
+      terapeuta: "Mara Pol",
+      terapeuta_id: 25,
+      description:
+        "Los Códigos Emocionales son una técnica de sanación energética que permite identificar y liberar emociones atrapadas que afectan el cuerpo, la mente y el alma. Utilizando test muscular y un imán,o un péndulo  a diatancia se accede al subconsciente para soltar bloqueos emocionales de forma suave, segura y no invasiva.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta24,
+      title: "Códigos del Alma",
+      terapeuta: "Montserrat Méndez",
+      terapeuta_id: 24,
+      description:
+        "Es una lectura profunda de tus números personales a través de la filosofía del Tantra que es una herramienta ancestral que revela la información oculta en tu fecha de nacimiento. A través de esta guía podrás descubrir tus dones espirituales, tus talentos naturales y comprender con mayor claridad aquellos aspectos que vienes a transformar y potenciar en esta vida",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta23,
+      title: "Psicoterapia de un Curso de Milagros",
+      terapeuta: "Veronica Chaparro",
+      terapeuta_id: 23,
+      description:
+        "Es una sesión guiada por el Espíritu Santo. Vamos a la causa del efecto que adolece en el presente al valiente. El camino es encontrar la raíz emocional. Pasamos por constelar (entregar el problema a quién corresponda y ordenar el clan) y finaliza con  el auto perdón por el error de percepción.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta28,
+      title: "Decodificación de Útero",
+      terapeuta: "Andrea Madariaga",
+      terapeuta_id: 28,
+      description:
+        "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
+      precio: 16000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -292,47 +310,103 @@ export default function SpaPrincipal() {
     });
   };
 
-  const confirmarReserva = (
+  const confirmarReserva = async (
     fechaHora: Date,
     nombreCliente: string,
     telefonoCliente: string
   ) => {
-    if (!reservaPendiente) return;
+    const year = fechaHora.getFullYear();
+    const month = String(fechaHora.getMonth() + 1).padStart(2, "0"); // Meses son 0-indexados
+    const day = String(fechaHora.getDate()).padStart(2, "0");
 
-    const reserva: Reserva = {
-      id: Date.now(), // Genera un ID único
-      servicio: "Spa Principal",
-      especialidad: reservaPendiente.terapia, // Mantén esto si la especialidad es la misma que la terapia
-      fecha: fechaHora.toISOString().split("T")[0],
-      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5), // Formato HH:MM
+    const fechaFormateada = `${year}-${month}-${day}`; // Formato YYYY-MM-DD local
+    const horaFormateada = fechaHora
+      .toTimeString()
+      .split(" ")[0]
+      .substring(0, 5); // Formato HH:MM local
+    if (!reservaPendiente) {
+      alert("No hay reserva pendiente para confirmar.");
+      return;
+    }
+    // Validaciones de cliente y teléfono (corregidas)
+    if (nombreCliente.trim() === "" || telefonoCliente.trim() === "") {
+      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
+      return;
+    }
+
+    const phoneNumber = parsePhoneNumberFromString(telefonoCliente.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      alert(
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
+      );
+      return;
+    }
+
+    console.log(
+      "País detectado por número telefónico:",
+      phoneNumber.country || "Desconocido"
+    );
+
+    const reservaDataToSend = {
+      // No incluyas `id` ni `clientBookingId` aquí; el backend los generará.
+      servicio: "Spa Principal", // Nombre general del servicio de spa
+      especialidad: reservaPendiente.terapia, // La especialidad del servicio
+      fecha: fechaFormateada,
+      hora: horaFormateada,
       precio: reservaPendiente.precio,
       nombreCliente: nombreCliente,
       telefonoCliente: telefonoCliente,
       terapeuta: reservaPendiente.terapeutaNombre,
       terapeutaId: reservaPendiente.terapeutaId,
-      sesiones: 1,
-      cantidad: 1,
+      sesiones: 1, // Asumiendo 1 sesión para estos servicios de spa, ajusta si es diferente
+      cantidadCupos: 1, // Generalmente 1 cupo por reserva de spa
     };
-    console.log(
-      "DEBUG FRONTEND: Valor de reserva.terapeuta antes de addToCart:",
-      reserva.terapeuta
-    );
 
     console.log(
-      "Objeto Reserva FINAL a añadir al carrito desde SpaPrincipal:",
-      reserva
-    );
-    addToCart(reserva);
-    console.log(
-      "Objeto Reserva FINAL a añadir al carrito desde SpaPrincipal:",
-      reserva
+      "DEBUG FRONTEND: Intentando crear reserva de Spa Principal en backend:",
+      reservaDataToSend
     );
 
-    alert(
-      `Reserva agregada: ${reserva.servicio} el ${reserva.fecha} a las ${reserva.hora}. Te contactaremos al ${reserva.telefonoCliente}.`
-    );
+    try {
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(reservaDataToSend),
+      });
 
-    setReservaPendiente(null); // Cierra el modal de fecha/hora
+      if (!response.ok) {
+        const errorBody = await response.json();
+        const errorMessage =
+          errorBody.mensaje ||
+          `Error al confirmar la reserva de Spa: ${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      // El backend devuelve { reserva: {...} } con el id real de la DB y el clientBookingId (UUID)
+      const { reserva: confirmedReservation } = await response.json();
+
+      console.log(
+        "DEBUG FRONTEND: Reserva de Spa Principal confirmada por backend:",
+        confirmedReservation
+      );
+
+      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
+      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
+
+      alert(
+        `¡Reserva de Spa confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
+      );
+
+      // Volver a cargar la disponibilidad para reflejar la hora reservada y actualizar el DatePicker
+      // Esto es crucial para que el DatePicker se actualice
+
+      setReservaPendiente(null); // Cierra el modal de fecha/hora
+    } catch (error: any) {
+      console.error("ERROR al crear la reserva de Spa Principal:", error);
+      alert(`No se pudo completar la reserva de Spa: ${error.message}`);
+    }
   };
   // --- OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO ---
   const terapeutaSeleccionadoDisponibilidad = reservaPendiente
@@ -357,7 +431,7 @@ export default function SpaPrincipal() {
         Bienvenido al Spa Principal
       </h2>
       <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 1 al 5 de Julio 2025)
+        (Del 31 de Julio al 02 de Agosto 2025)
       </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">

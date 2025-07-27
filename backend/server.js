@@ -24,12 +24,14 @@ const disponibilidadRoutes = require("./routes/disponibilidadRoutes");
 const webpayRoutes = require("./routes/webpay.routes");
 const marketingRoutes = require("./routes/marketing.routes");
 const googleAuthRoutes = require("./routes/googleAuth"); // Asegúrate de que esta ruta sea correcta
-
+const webpayController = require("./controllers/webpayController");
+const comentarioController = require("./controllers/comentarioController");
 // --- Middlewares Globales ---
 app.use(
   cors({
     origin: [
-      "http://localhost:5173", // Para tu desarrollo local
+      "http://localhost:5173",
+      "http://localhost:5174", // Para tu desarrollo local
       "https://www.encuentrodesanacion.com", // Tu dominio principal en Netlify (con HTTPS)
       "https://encuentrodesanacion.com", // Opcional: si tu sitio también resuelve sin 'www'
     ],
@@ -48,36 +50,8 @@ app.use("/api/marketing", marketingRoutes);
 app.use("/api/disponibilidades", disponibilidadRoutes);
 
 // Crear reserva autenticada (ejemplo de ruta directa) - Asegúrate de que esto siga siendo relevante
-app.post("/api/reservar", async (req, res) => {
-  try {
-    const { fechaInicio, fechaFin, usuarioId, servicio } = req.body;
-
-    const reservaExistente = await db.Reserva.findOne({
-      where: { fechaInicio, fechaFin, estado: "reservado" },
-    });
-
-    if (reservaExistente) {
-      return res
-        .status(400)
-        .json({ mensaje: "Ese horario ya está reservado." });
-    }
-
-    await db.Reserva.create({
-      usuarioId,
-      servicio,
-      fechaInicio,
-      fechaFin,
-      estado: "reservado",
-    });
-
-    res.status(200).json({ mensaje: "Reserva creada y hora bloqueada" });
-  } catch (error) {
-    console.error("Error creando reserva:", error);
-    res
-      .status(500)
-      .json({ mensaje: "Error al crear la reserva", error: error.message });
-  }
-});
+app.post("/api/reservar-directa", webpayController.crearReservaDirecta);
+app.post("/api/comentarios", comentarioController.crearComentario);
 
 // Obtener terapeutas
 app.get("/api/terapeutas", async (req, res) => {
@@ -119,6 +93,31 @@ db.sequelize
   .sync() // <--- Considera remover o cambiar esto para producción a db:migrate manual
   .then(async () => {
     console.log("Base de datos actualizada correctamente.");
+    try {
+      const allDisponibilidades = await db.Disponibilidad.findAll({
+        attributes: [
+          "id",
+          "terapeutaId",
+          "diasDisponibles",
+          "horasDisponibles",
+          "estado",
+        ],
+        raw: true, // Obtener datos puros sin instancias de Sequelize para depurar
+      });
+      console.log(
+        "\nDEBUG BACKEND: Datos 'raw' de la tabla Disponibilidades al inicio:"
+      );
+      allDisponibilidades.forEach((disp) => {
+        console.log(
+          `  - ID: ${disp.id}, terapeutaId: ${disp.terapeutaId}, dias_disponibles: ${disp.diasDisponibles}, horas_disponibles: ${disp.horasDisponibles}`
+        );
+      });
+    } catch (debugErr) {
+      console.error(
+        "ERROR DEBUG: Fallo al leer todas las disponibilidades al inicio:",
+        debugErr
+      );
+    }
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () =>

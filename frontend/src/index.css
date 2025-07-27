@@ -1,3 +1,44 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 40px;
+  right: 40px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%; /* Cambiado a 50% para asegurar un círculo perfecto */
+  box-shadow: 2px 2px 3px #999;
+  z-index: 1000;
+
+  /* Propiedades para el ícono de fondo */
+  background-image: url("/whatsapp.png"); /* <-- Usa la ruta a tu imagen en la carpeta public */
+  background-size: 35px 35px; /* Tamaño del ícono */
+  background-repeat: no-repeat;
+  background-position: center; /* Centra el ícono */
+
+  text-decoration: none; /* Elimina el subrayado del enlace */
+}
+
+.whatsapp-float:hover {
+  background-color: #1da851; /* Color un poco más oscuro al pasar el mouse */
+}
+
+/* El estilo .whatsapp-icon ya no es necesario si usas background-image, puedes eliminarlo */
+/* .whatsapp-icon {
+  width: 35px;
+  height: 35px;
+} */
+
+/* Media query para pantallas más pequeñas */
+@media (max-width: 768px) {
+  .whatsapp-float {
+    width: 50px;
+    height: 50px;
+    bottom: 20px;
+    right: 20px;
+    background-size: 30px 30px; /* Ajusta el tamaño del ícono en móviles */
+  }
+}
