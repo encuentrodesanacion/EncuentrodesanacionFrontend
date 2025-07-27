@@ -8,7 +8,6 @@ export default defineConfig({
   plugins: [
     react(),
     viteStaticCopy({
-      // <-- Añade este bloque
       targets: [
         {
           src: "_redirects", // Ruta relativa a la raíz de tu carpeta frontend/ (C:\Users\Lenovo\Desktop\PLANTILLAS\encuentrodesanacion\frontend\)
@@ -21,7 +20,10 @@ export default defineConfig({
     exclude: ["lucide-react"],
   },
   build: {
-    // <-- Asegúrate de que esta sección esté presente y coincida con Netlify
     outDir: "dist", // Esto ya lo tienes implícito, pero es bueno ser explícito
+    // AGREGAR ESTA SECCIÓN PARA ELIMINAR EL ERROR DE "libphonenumber-js"
+    rollupOptions: {
+      external: ["libphonenumber-js"], // Indica a Rollup que no intente empaquetar esta librería
+    },
   },
 });
