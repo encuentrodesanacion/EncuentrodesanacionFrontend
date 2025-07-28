@@ -213,7 +213,7 @@ export default function ReservaConFecha({
         onChange={(date: Date | null) => setFechaHora(date)}
         showTimeSelect
         timeFormat="HH:mm"
-        // timeIntervals={30} // Puedes quitar esto; filterTimes ya filtra por horas exactas
+        timeIntervals={15} // Puedes quitar esto; filterTimes ya filtra por horas exactas
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
         placeholderText="Selecciona fecha y hora"

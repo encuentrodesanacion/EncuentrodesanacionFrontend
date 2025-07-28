@@ -684,6 +684,7 @@ const App = () => {
         // Mantener las clases para el fondo, forma, sombra y hover
         className="whatsapp-float bg-green-500 text-white rounded-full flex items-center justify-center p-4 shadow-lg hover:bg-green-600 transition-colors duration-200"
       >
+        WhatsApp
         {/* Aquí solo dejamos el texto "WhatsApp" */}
       </a>
     </div>
