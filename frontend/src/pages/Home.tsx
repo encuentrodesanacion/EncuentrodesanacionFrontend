@@ -14,7 +14,7 @@ import {
   Orbit,
 } from "lucide-react";
 // import ReservaHora from "../ReservaHora";
-import Whatsapp from "../assets/Whatsapp.png";
+import Whatsapp from "../assets/ASTRONAUTA3.png";
 import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
 import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
@@ -685,7 +685,7 @@ const App = () => {
         className="whatsapp-float bg-green-500 text-white rounded-full flex items-center justify-center p-4 shadow-lg hover:bg-green-600 transition-colors duration-200"
       >
         <img
-          src="/Whatsapp.png" // La ruta de la imagen de WhatsApp
+          src={Whatsapp} // La ruta de la imagen de WhatsApp
           alt="WhatsApp Logo"
           className="w-8 h-8" // Ajusta el tamaño según necesites
           onError={(e) => {
