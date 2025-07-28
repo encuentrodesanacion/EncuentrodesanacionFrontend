@@ -684,8 +684,18 @@ const App = () => {
         // Mantener las clases para el fondo, forma, sombra y hover
         className="whatsapp-float bg-green-500 text-white rounded-full flex items-center justify-center p-4 shadow-lg hover:bg-green-600 transition-colors duration-200"
       >
-        WhatsApp
-        {/* Aquí solo dejamos el texto "WhatsApp" */}
+        <img
+          src="/Whatsapp.png" // La ruta de la imagen de WhatsApp
+          alt="WhatsApp Logo"
+          className="w-8 h-8" // Ajusta el tamaño según necesites
+          onError={(e) => {
+            e.currentTarget.src =
+              "https://placehold.co/32x32/cccccc/ffffff?text=WA"; // Fallback si la imagen no carga
+            console.error(
+              "Error al cargar la imagen de WhatsApp. Verifica la ruta."
+            );
+          }}
+        />
       </a>
     </div>
   );
