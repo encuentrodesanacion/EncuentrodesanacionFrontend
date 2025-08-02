@@ -195,18 +195,6 @@ export default function SpaPrincipal() {
     },
 
     {
-      img: Terapeuta5,
-      title: "Purificación y limpieza de energías negativas",
-      terapeuta: "Sandra Da Silva",
-      terapeuta_id: 9,
-      description:
-        "¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-
-    {
       img: Terapeuta14,
       title: "Armonía Magnética para la Abundancia",
       terapeuta: "Ana Luisa Solervicens",
