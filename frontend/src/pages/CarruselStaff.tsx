@@ -1,28 +1,13 @@
 import "../styles/flipCards.css"; // Asegúrate de tener los estilos aquí o adaptarlos a Tailwind
 
-import terapeuta3 from "../assets/Terapeuta3.jpg";
-import terapeuta8 from "../assets/Terapeuta8.jpg";
 import terapeuta1 from "../assets/Terapeuta1.jpg";
 import terapeuta11 from "../assets/Terapeuta11.jpeg";
-import terapeuta7 from "../assets/Terapeuta7.jpg";
 import terapeuta6 from "../assets/Terapeuta6.jpg";
-import terapeuta13 from "../assets/Terapeuta13.jpeg";
-import terapeuta19 from "../assets/Terapeuta19.jpeg";
 import terapeuta14 from "../assets/Terapeuta14.jpeg";
-import terapeuta18 from "../assets/Terapeuta18.jpeg";
-import terapeuta20 from "../assets/Terapeuta20.jpeg";
-import terapeuta12 from "../assets/Terapeuta12.jpeg";
-import terapeuta17 from "../assets/Terapeuta17.jpeg";
+import terapeuta24 from "../assets/Terapeuta24.jpeg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
-import terapeuta16 from "../assets/Terapeuta16.jpeg";
+
 const alianzas = [
-  {
-    nombre: "Monica Gatica",
-    url: "https://www.instagram.com/monicaingeborg.th/",
-    imagen: terapeuta3,
-    descripcion:
-      "Mónica Gatica: Terapeuta Holística Integrativa, especializada en el acompañamiento de procesos de sanación energética y empoderamiento personal. A través de herramientas como la Cruz de Ankh, el Péndulo Hebreo, la Radiestesia, la Canalización, Tameana, el Tarot y la armonización con frecuencias, facilita espacios de transformación profunda. Además, comparte su conocimiento a través de cursos y talleres, brindando a otros la oportunidad de explorar el mundo energético y aplicar estas técnicas en su vida.",
-  },
   {
     nombre: "Macarena Del Río",
     url: "https://www.instagram.com/templo.sirio/",
@@ -58,68 +43,11 @@ const alianzas = [
     descripcion:
       "Sandra Da Silva: Terapeuta Holistica Integral. Mi conexión con el mundo Holistico inició para superar un proceso emocional personal, profundizando en distintas herramientas en las que me apoye para sanar y ahora pongo al servicio del bienestar de quien lo requiera: Terapia de Respuesta Espiritual - Purificación y Limpieza de Energías Negativas - Sanacion con Péndulo Hebreo - Liberación de Implantes - Sanacion Energética con Cruz de Anhk - Conexión Angelical. Mi propósito es brindarles un canal de expansión que les permita sanar desde la consciencia de lo vivido y conectar con su Plan de Alma original.",
   },
-  {
-    nombre: "Paola Quintero",
-    url: "https://www.instagram.com/olas.de.sanacion/",
-    imagen: terapeuta8,
-    descripcion:
-      "Paola Quintero : Terapeuta del alma. Acompaño procesos de sanación a través del tarot, la cafeomancia, la astrología evolutiva y las constelaciones familiares. Trabajo con los ancestros, honro la tribu y creo espacios donde lo sagrado femenino puede florecer.",
-  },
-  {
-    nombre: "Fabiola Valenzuela",
-    url: "https://www.instagram.com/espacio_hija_de_la.luz/",
-    imagen: terapeuta7,
-    descripcion:
-      "Fabiola Valenzuela: Hola, hermosa alma.  Me encuentro en este plano viviendo mi propósito de ayudarte a recordar tu verdadera esencia a través de diferentes terapias holísticas que te ayudarán y guiarán en las diferentes áreas de tu vida; y también con talleres y cursos online para empoderarte y que puedas también servir al amor. Mis terapias son: Cirugía Astral con Anubis Limpieza con Cruz Ankh Multisistemas de Reiki (Lunar, Usui, Kundalini, Money, Ancestral y otros) Sanación Angelical Mesa Ganesha Prosperidad Lecturas de Tarot Terapéutico Registros Akáshicos",
-  },
-  {
-    nombre: "Marlene Ramírez",
-    url: "https://www.instagram.com/union.espiritual/",
-    imagen: terapeuta19,
-    descripcion:
-      "Marlene Ramírez: Terapeuta Integral en niños y adultos. Llevo 8 años de experiencia en distintas terapias complementarias. Mis terapias son las siguientes: Reiki (distintos estilos), Liberación de Emociones Atrapadas, Lectura de Tarot Osho, Constelaciones Familiares y Ancestrología, Terapia Kármica y Corte de Lazos, Mesas Radiónicas, Alineación de Chacras con Péndulo y Gemoterapia, Tameana, Limpiezas Energéticas (casa y persona), Angoterapia, Registros Akáshicos (normales y angelicales).",
-  },
 
-  {
-    nombre: "Viviana Espinoza",
-    url: "https://www.instagram.com/sanacion_munay/",
-    imagen: terapeuta18,
-    descripcion:
-      "Viviana Espinoza: Consteladora Familiar Individual Con dos años de experiencia acompañando en el proceso de Sanación a consultantes presencial y online desde la comuna de Colina-Santiago, Chile. Estudios de Cirugía Astral y Reiki Usui nivel 1.",
-  },
-  {
-    nombre: "Ema Iriarte",
-    url: "https://www.instagram.com/amatistadelalmamujermedicina/",
-    imagen: terapeuta20,
-    descripcion:
-      "Ema Iriarte: Tengo 15 años en este bello mundo holístico y soy Maestra de Reiki de varios sistemas; consteladora; terapeuta floral; canalizadora. Practico círculo de mujeres, medicina de cacao, soy mujer medicina.",
-  },
-  {
-    nombre: "Katalina Rencoret",
-    url: "https://www.instagram.com/matices_de_gris/",
-    imagen: terapeuta12,
-    descripcion:
-      "Katalina Rencoret: ¡Hola! Mi nombre es Katalina (si, con K) Rencoret. Puedes decirme Kata, Matiz o Matices como mi Instagram, Soy muy joven; sin embargo, cuento con mucha experiencia como terapeuta, ya que me inicié en este mundo aproximadamente a los 14 años, cuando encontré el tarot de mi abuela trascendida. En ese momento, el tarot se convirtió en una extensión de mí, un reflejo de quién fui y quién soy. Actualmente soy maestra en Reiki Usui, radiónica, en armonización de aura y alineación de chakras. Además de ello, soy profesora de Castellano y en el taller -Escribir desde las raíces: Tarot y memoria ancestral- puedo mezclar mis dos grandes amores: la escritura y la sanación. Deseo expandir este amor por la espiritualidad y acompañarte en tu proceso personal de aprendizaje, sanación y camino de luz ¡Espero nos veamos pronto!",
-  },
-  {
-    nombre: "Johana Miranda",
-    url: "https://www.instagram.com/johana.e.munoz/",
-    imagen: terapeuta17,
-    descripcion:
-      "Johana Miranda Muñoz: Mi don es ver más allá de lo superficial, a través del alma. Mi misión es ayudarte a sanar en todos los niveles: mente, cuerpo y espíritu, Para Lo Cual Te Ofrezco Diversas Terapias: *Clarividencia *Terapéutica: *Velomancia *Radiónica Y Radiestesia *Radiónica Bajada De Peso",
-  },
-
-  {
-    nombre: "Gabriel Moreno",
-    url: "https://www.instagram.com/biomagnetismo558/",
-    imagen: terapeuta16,
-    descripcion:
-      "Gabriel Moreno: Experto en Bioenergía desde hace 30 años, dictando formación de Terapeutas en Argentina, México, Chile, astrólogo, y profesor de meditación desde hace 35 años",
-  },
   {
     nombre: "Rosa Santimone",
     url: "https://www.instagram.com/rosasantimone/",
-    imagen: terapeuta13,
+    imagen: terapeuta24,
     descripcion:
       "Rosa Santimone: Terapeuta holística. A través de un enfoque integral, te ofrezco diversas herramientas para sanar, equilibrar y potenciar tu vida: REIKI USUI, TAROT TERAPÉUTICO, PÉNDULO HEBREO, RUEDA DE LA VIDA. ¡Permíteme acompañarte para iniciar este viaje de transformación!",
   },

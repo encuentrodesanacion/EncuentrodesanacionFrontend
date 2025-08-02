@@ -9,7 +9,7 @@ import CartIcon from "../components/CartIcon";
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
 import Terapeuta17 from "../assets/Terapeuta17.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta18 from "../assets/Terapeuta18.jpeg";
+import Terapeuta29 from "../assets/Terapeuta29.jpeg";
 import creadordigital from "../assets/creadorvirtual.jpg";
 import DatePicker from "react-datepicker";
 import creadorVirtual from "../assets/creadorvirtual.jpg";
@@ -199,12 +199,12 @@ export default function SpaLittle() {
       isDisabled: true, // Agregado para deshabilitar
     },
     {
-      img: Terapeuta18,
-      title: "Constelaciones Familiares",
-      terapeuta: "Viviana Espinoza",
-      terapeuta_id: 20,
+      img: Terapeuta29,
+      title: "Liberación Emociones Atrapadas",
+      terapeuta: "Ana Aros",
+      terapeuta_id: 29,
       description:
-        "¿Sientes que ciertos patrones en tu vida se repiten una y otra vez? Las Constelaciones Familiares te permiten comprender y sanar dinámicas ocultas que pueden estar afectando tu vida personal, laboral y emocional. Podrás: -Identificar y liberar bloqueos emocionales que limitan tu bienestar. -Sanar relaciones familiares y mejorar la conexión con tus seres queridos. -Romper patrones repetitivos en tu vida y cambiar tu historia. -Equilibrar tu energía y sentir mayor paz interior. -Encontrar claridad en conflictos personales, laborales y de pareja",
+        "En nuestra vida hay situaciones que nos generan sufrimiento y diversas emociones, al no trabajar en aquello es que estás emociones quedan atrapadas en nuestro cuerpo generando malestar a nivel físico o emocional. Esta terapia se trabaja a través de un gráfico para identificar la emoción atrapada y posteriormente con un imán liberar la emocion de raíz",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: true, // Agregado para deshabilitar

@@ -7,8 +7,9 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta16 from "../assets/Terapeuta16.jpeg";
+import Terapeuta31 from "../assets/Terapeuta31.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
+import Terapeuta24 from "../assets/Terapeuta24.jpeg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
@@ -45,7 +46,7 @@ export default function TratamientoHolistico() {
       terapeutaId: 7,
       description:
         "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
-      opciones: [{ sesiones: 3, precio: 55000 }],
+      opciones: [{ sesiones: 3, precio: 60000 }],
     },
 
     {
@@ -56,10 +57,32 @@ export default function TratamientoHolistico() {
       description:
         "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
+        { sesiones: 3, precio: 60000 },
+        { sesiones: 4, precio: 75000 },
       ],
     },
+    {
+      img: Terapeuta31,
+      title: "Desbloqueo Energético",
+      terapeuta: "Claudia Gio",
+      terapeutaId: 31,
+      description:
+        "Es una terapia profunda que utiliza el Péndulo Hebreo para detectar y liberar bloqueos y desequilibrios en tu cuerpo, mente y emociones. A través de esta sanación a distancia, tu energía fluye de nuevo, permitiendo una inmediata sensación de bienestar y vitalidad, y ayudando a reducir el estrés y la ansiedad",
+      opciones: [{ sesiones: 3, precio: 60000 }],
+    },
+    {
+      img: Terapeuta24,
+      title: "Florecer esencial: Crea tu vida",
+      terapeuta: "Montserrat Méndez",
+      terapeutaId: 24,
+      description:
+        "Crea tu Vida Es una terapia holística que te acompaña en un proceso profundo de autoconocimiento, autocuidado y expansión personal. A través del trabajo consciente con tu energía vital, te invitamos a reconectar con tu esencia, a limpiar los bloqueos que limitan tu bienestar y a potenciar tu capacidad creativa para impulsar tus proyectos y tu vida cotidiana. Este espacio es ideal para quienes buscan armonización, reconexión con su propósito y mayor claridad para materializar sus sueños, creando así las condiciones internas necesarias para florecer en todas las áreas de su vida",
+      opciones: [
+        { sesiones: 3, precio: 60000 },
+        { sesiones: 4, precio: 75000 },
+      ],
+    },
+
     // {
     //   img: creadorvirtual,
     //   title: "Regresión",
@@ -72,15 +95,6 @@ export default function TratamientoHolistico() {
     //     { sesiones: 4, precio: 70000 },
     //   ],
     // },
-    {
-      img: Terapeuta16,
-      title: "Bioenergía",
-      terapeuta: "Gabriel Moreno",
-      terapeutaId: 15,
-      description:
-        "La Bioenergía se forma en el cuerpo con nuestras emociones, Pensamientos, Sentimientos, y si todo ello está en desequilibrio nos empezamos a Enfermar, tenemos Inflamaciones, Dolores, Traumas, Miedos, entre otros malestares. La terapia de Bioenergía con imanes hace que podamos sanar nuestro cuerpo Físico,Mental,Emocional, y espiritual.",
-      opciones: [{ sesiones: 3, precio: 55000 }],
-    },
   ];
 
   const reservarSesion = (
