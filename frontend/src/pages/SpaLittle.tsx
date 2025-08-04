@@ -7,7 +7,9 @@ import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
+
 import Terapeuta17 from "../assets/Terapeuta17.jpeg";
+import Terapeuta30 from "../assets/Terapeuta30.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta29 from "../assets/Terapeuta29.jpeg";
 import creadordigital from "../assets/creadorvirtual.jpg";
@@ -197,6 +199,17 @@ export default function SpaLittle() {
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: false, // Agregado para deshabilitar
+    },
+    {
+      img: Terapeuta30,
+      title: "Tarot Terapéutico",
+      terapeuta: "Marcela Solis",
+      terapeuta_id: 30,
+      description:
+        "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
+      precio: 16000,
+      isDisabled: true,
+      opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
       img: Terapeuta29,

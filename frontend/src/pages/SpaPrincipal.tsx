@@ -239,17 +239,7 @@ export default function SpaPrincipal() {
       isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta30,
-      title: "Tarot Terapéutico",
-      terapeuta: "Marcela Solis",
-      terapeuta_id: 30,
-      description:
-        "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
-      precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+
     {
       img: Terapeuta23,
       title: "Psicoterapia de un Curso de Milagros",
