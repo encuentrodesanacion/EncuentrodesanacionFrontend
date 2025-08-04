@@ -7,7 +7,7 @@ import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
-import Terapeuta3 from "../assets/Terapeuta3.jpg";
+import Terapeuta30 from "../assets/Terapeuta30.jpeg";
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
 import Terapeuta8 from "../assets/Terapeuta8.jpg";
@@ -235,6 +235,17 @@ export default function SpaPrincipal() {
       terapeuta_id: 24,
       description:
         "Es una lectura profunda de tus números personales a través de la filosofía del Tantra que es una herramienta ancestral que revela la información oculta en tu fecha de nacimiento. A través de esta guía podrás descubrir tus dones espirituales, tus talentos naturales y comprender con mayor claridad aquellos aspectos que vienes a transformar y potenciar en esta vida",
+      precio: 16000,
+      isDisabled: true,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: Terapeuta30,
+      title: "Tarot Terapéutico",
+      terapeuta: "Marcela Solis",
+      terapeuta_id: 30,
+      description:
+        "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
       precio: 16000,
       isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
