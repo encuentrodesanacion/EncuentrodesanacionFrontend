@@ -208,7 +208,7 @@ export default function SpaLittle() {
       description:
         "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
