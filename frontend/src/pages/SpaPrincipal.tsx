@@ -190,7 +190,7 @@ export default function SpaPrincipal() {
       description:
         "Es una herramienta terapéutica para tratar conflictos personales, familiares y laborales mediante la visualización de representantes que nos permiten tomar decisiones y reconciliarnos con nuestro linaje",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -202,7 +202,7 @@ export default function SpaPrincipal() {
       description:
         "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -214,7 +214,7 @@ export default function SpaPrincipal() {
       description:
         "El Tarot puede proporcionarte una mirada profunda y libre de juicios de una situación, periodo de tiempo o sistema familiar. Te dará herramientas y consejos prácticos para que llegues a la mejor resolución de un dilema o problema. Los mensajes se canalizan con ayuda de tus guías espirituales, quienes buscan sanarte y esclarecerte.",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -225,7 +225,7 @@ export default function SpaPrincipal() {
       description:
         "Los Códigos Emocionales son una técnica de sanación energética que permite identificar y liberar emociones atrapadas que afectan el cuerpo, la mente y el alma. Utilizando test muscular y un imán,o un péndulo  a diatancia se accede al subconsciente para soltar bloqueos emocionales de forma suave, segura y no invasiva.",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -236,7 +236,7 @@ export default function SpaPrincipal() {
       description:
         "Es una lectura profunda de tus números personales a través de la filosofía del Tantra que es una herramienta ancestral que revela la información oculta en tu fecha de nacimiento. A través de esta guía podrás descubrir tus dones espirituales, tus talentos naturales y comprender con mayor claridad aquellos aspectos que vienes a transformar y potenciar en esta vida",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -247,7 +247,7 @@ export default function SpaPrincipal() {
       description:
         "Es una sesión guiada por el Espíritu Santo. Vamos a la causa del efecto que adolece en el presente al valiente. El camino es encontrar la raíz emocional. Pasamos por constelar (entregar el problema a quién corresponda y ordenar el clan) y finaliza con  el auto perdón por el error de percepción.",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -258,7 +258,7 @@ export default function SpaPrincipal() {
       description:
         "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
