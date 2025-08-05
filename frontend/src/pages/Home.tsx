@@ -194,7 +194,7 @@ const App = () => {
                 href="#otros"
                 className="block px-3 py-2 text-white/70 hover:text-pastel-green"
               >
-                Otros
+                Dias de Ofrenda
               </a>
               <a
                 href="#contacto"
