@@ -184,7 +184,7 @@ const crearReservaDirecta = async (req, res) => {
         cantidad: cantidadCupos || 1, // Por defecto 1 cupo
         terapeuta: terapeuta,
         terapeutaId: terapeutaId,
-        estado: "pendiente_pago_directo", // Nuevo estado para reservas directas (aún no pagadas por Webpay)
+        estado: "pendiente", // Nuevo estado para reservas directas (aún no pagadas por Webpay)
         // Puedes añadir aquí un campo 'pagoConfirmado: false' si lo tienes en tu modelo
       },
       { transaction: t }
