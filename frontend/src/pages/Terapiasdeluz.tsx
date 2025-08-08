@@ -40,7 +40,7 @@ const imagenesData: ImagenData[] = [
     terapeutaId: 13,
     precio: 40000,
     duracion:
-      "Inicia el 07 de Agosto a las 19:30hrs   ( SE REALIZA TODOS LOS JUEVES DEL MES A LA MISMA HORA)",
+      "Inicia el 14 de Agosto a las 19:30hrs   ( SE REALIZA TODOS LOS JUEVES DEL MES A LA MISMA HORA)",
     isDisabled: false,
   },
   {
@@ -54,7 +54,7 @@ const imagenesData: ImagenData[] = [
     terapeutaId: 21,
     precio: 40000,
     duracion:
-      "Inicia el 09 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
+      "Inicia el 16 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
     isDisabled: false,
   },
   {
@@ -66,7 +66,7 @@ const imagenesData: ImagenData[] = [
     link: "#",
     terapeuta: "Johanna Morales",
     duracion:
-      "Inicia el 05 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
+      "Inicia el 12 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
     terapeutaId: 27,
     precio: 40000,
     isDisabled: false,

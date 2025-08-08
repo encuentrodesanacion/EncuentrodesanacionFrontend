@@ -187,7 +187,7 @@ export default function SpaLittle() {
         "Esta clarividencia terapéutica está enfocada en una sanación para amarse, conocerse uno mismo, sanar y crecer emocionalmente, mejorando situaciones que han estado almacenadas en ti por mucho tiempo, conectando con guías y sanadores por medio de la maravillosa vibración del amor, logrando tu armonización y equilibrio emocional.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: false, // Agregado para deshabilitar
+      isDisabled: true, // Agregado para deshabilitar
     },
     {
       img: Terapeuta1,
@@ -198,7 +198,7 @@ export default function SpaLittle() {
         "Los Registros Akáshicos son la memoria universal y biblioteca cósmica que guarda la historia de cada alma a lo largo de todas sus reencarnaciones. A través de una lectura, te permiten adquirir profundo autoconocimiento, sanar heridas del pasado, comprender patrones kármicos y tomar decisiones más conscientes en tu presente, impulsando así tu sanación y evolución personal.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: false, // Agregado para deshabilitar
+      isDisabled: true, // Agregado para deshabilitar
     },
     {
       img: Terapeuta30,
@@ -208,7 +208,7 @@ export default function SpaLittle() {
       description:
         "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
       precio: 16000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -220,7 +220,7 @@ export default function SpaLittle() {
         "En nuestra vida hay situaciones que nos generan sufrimiento y diversas emociones, al no trabajar en aquello es que estás emociones quedan atrapadas en nuestro cuerpo generando malestar a nivel físico o emocional. Esta terapia se trabaja a través de un gráfico para identificar la emoción atrapada y posteriormente con un imán liberar la emocion de raíz",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: false, // Agregado para deshabilitar
+      isDisabled: true, // Agregado para deshabilitar
     },
     // {
     //   img: creadordigital,ass
@@ -282,7 +282,7 @@ export default function SpaLittle() {
     //   description: "Correo de Prueba.",
     //   precio: 16000,
     //   opciones: [{ sesiones: 1, precio: 16000 }],
-    //   isDisabled: false,
+    //   isDisabled: true,
     // },
   ];
 

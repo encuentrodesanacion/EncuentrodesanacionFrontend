@@ -42,7 +42,7 @@ export default function TalleresMensuales() {
       description:
         "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-08-05",
+      date: "2025-08-12",
       time: "19:00",
       instructor: "María Gabriela Pástor",
       instructorId: 26,
@@ -54,7 +54,7 @@ export default function TalleresMensuales() {
       description:
         "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-08-06",
+      date: "2025-08-13",
       time: "19:00",
       instructor: "Veronica Chaparro",
       instructorId: 23,
@@ -66,7 +66,7 @@ export default function TalleresMensuales() {
       description:
         "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
       price: 25000,
-      date: "2025-08-08",
+      date: "2025-08-14",
       time: "20:00",
       instructor: "Katalina Rencoret",
       instructorId: 18,
