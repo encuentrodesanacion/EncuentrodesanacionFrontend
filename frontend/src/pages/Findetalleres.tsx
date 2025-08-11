@@ -5,14 +5,11 @@ import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes (mantienen igual)
-import Terapeuta20 from "../assets/Terapeuta20.jpeg";
+
 import Sentido from "../assets/Sentido.jpg";
-import Velas from "../assets/Velas.jpg";
-import Terapeuta8 from "../assets/Terapeuta8.jpg";
-import Abrazando from "../assets/Abrazando.jpg";
-import Volveranacer from "../assets/Volveranacer.jpg";
+import Sanando from "../assets/Sanando.jpg";
+
 import creadordigital from "../assets/creadorvirtual.jpg";
-import herbolaria from "../assets/Herbolaria.jpg";
 
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -171,50 +168,17 @@ export default function findetalleres() {
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      img: Velas,
-      title: "El poder de las velas",
-      terapeuta: "Ana Luisa Solvervicens",
-      terapeuta_id: 13,
+      img: Sanando,
+      title: "Sanando mis heridas de infancia",
+      terapeuta: "Paulina Villablanca",
+      terapeuta_id: 2,
       description:
-        "Descubre el poder simbolico y energético del fuego a través de la magia con velas. En este taller aprenderás cómo utilizar las velas para enfocar intenciones atraer energías positivas y crear rituales sencillos pero poderosos.",
+        "Sientes que tuviste una infancia dificil;  que tuviste que crecer rápido; aveces tratas de recordar tu infancia y no llegan recuerdos. Si es así, este taller es para ti, conoceremos las heridas de infancia, nos conectaremos con tu niño/niña herida, y les daremos el amor que quizás faltó.",
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
-    {
-      img: Volveranacer,
-      title: "Volver a Nacer",
-      terapeuta: "Ema Iriarte",
-      terapeuta_id: 21,
-      description:
-        "En este taller te invitamos a soltar memorias de dolor que se han integrado en el útero, específicamente en el momento de la concepción. Reconocemos que, al ser concebidos, ya heredamos programaciones ancestrales que pueden influir en nuestra vida. En este espacio comprenderás cómo el hecho de haber sido, por ejemplo, un bebé no esperado o no concebido por amor puede haber dejado una huella. A través de ejercicios específicos trabajaremos para resignificar el momento de tu concepción, y realizaremos un viaje consciente, mes a mes, por el período previo a tu nacimiento, permitiendo la sanación y liberación profunda.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: Abrazando,
-      title:
-        "Tomando a nuestra niña interior desde lo más profundo de nuestro ser",
-      terapeuta: "Ema Iriarte",
-      terapeuta_id: 21,
-      description:
-        "En este taller abrazaremos a ese niñ@ interior que, en su infancia, vivió momentos de soledad, tristeza, abusos, entre otras experiencias. A través de ejercicios específicos, viajaremos a esos momentos clave para poder sanar profundamente esas vivencias.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: herbolaria,
-      title: "Astrología y Herbolaria",
-      terapeuta: "Carolina Provoste",
-      terapeuta_id: 22,
-      description:
-        "Aprenderás las propiedades medicinales de algunas plantas y la relación que hay entre ellas. Tambien podrás aprender a preparar tinturas madres de aceites macerados, ungüentos medicinales. Además, aprenderás a personalizar tus tratamientos",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
+
     // {
     //   img: creadordigital,
     //   title: "Regresión",
