@@ -14,7 +14,7 @@
   z-index: 1000;
 
   /* Propiedades para el ícono de fondo */
-  background-image: url("/whatsapp.png"); /* <-- Usa la ruta a tu imagen en la carpeta public */
+  background-image: url("./types/Whatsapp.png"); /* <-- Usa la ruta a tu imagen en la carpeta public */
   background-size: 35px 35px; /* Tamaño del ícono */
   background-repeat: no-repeat;
   background-position: center; /* Centra el ícono */
