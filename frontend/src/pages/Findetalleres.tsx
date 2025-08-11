@@ -151,7 +151,7 @@ export default function findetalleres() {
   const terapias: TerapiaItem[] = [
     {
       img: Sentido,
-      title: "Dime cómo naciste y te diré quien eres",
+      title: "Dime cómo naciste, y te diré quién eres",
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
