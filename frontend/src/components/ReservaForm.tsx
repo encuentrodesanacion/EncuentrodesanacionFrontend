@@ -162,7 +162,7 @@ export const ReservaForm = ({
         }
         showTimeSelect
         timeFormat="HH:mm"
-        timeIntervals={30}
+        timeIntervals={15}
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
         placeholderText="Selecciona fecha y hora"

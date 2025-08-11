@@ -1,11 +1,9 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
-// Importa la interfaz centralizada desde tu archivo de tipos
-// Asegúrate de que la ruta sea correcta según tu estructura de carpetas
-import { DisponibilidadTerapeuta } from "../types/index";
-import parsePhoneNumberFromString from "libphonenumber-js";
+// Use the correct import for the timezone functions
+import { toZonedTime, fromZonedTime, format } from "date-fns-tz";
+import { format as formatFns } from "date-fns";
 
 interface ReservaConFechaProps {
   terapia: string;
@@ -16,183 +14,90 @@ interface ReservaConFechaProps {
     telefonoCliente: string
   ) => void;
   onClose: () => void;
-  // La prop 'disponibilidadTerapeuta' ahora espera la nueva estructura
-  disponibilidadTerapeuta?: DisponibilidadTerapeuta;
-  allowedDates?: string[]; // Array de strings "YYYY-MM-DD"
+  disponibilidadPorFechaDelServicio?: { [fecha: string]: string[] };
 }
+
+// Define a fixed time zone for Chile
+const CHILE_TIME_ZONE = "America/Santiago";
 
 export default function ReservaConFecha({
   terapia,
   precio,
   onConfirm,
   onClose,
-  disponibilidadTerapeuta, // La prop recibida ya tendrá la nueva estructura
-  allowedDates,
+  disponibilidadPorFechaDelServicio,
 }: ReservaConFechaProps) {
-  console.log(
-    "DEBUG ReservaConFecha: Prop disponibilidadTerapeuta recibida:",
-    disponibilidadTerapeuta
-  );
   const [fechaHora, setFechaHora] = useState<Date | null>(null);
   const [nombre, setNombre] = useState<string>("");
   const [telefono, setTelefono] = useState<string>("");
-  const [keyForDatePicker, setKeyForDatePicker] = useState(0);
-  useEffect(() => {
-    setKeyForDatePicker((prevKey) => prevKey + 1);
-    setFechaHora(null); // Reinicia la fecha/hora seleccionada para evitar inconsistencias
-  }, [disponibilidadTerapeuta]);
 
   const handleConfirm = () => {
     if (!fechaHora) {
-      alert("No hay reserva pendiente para confirmar.");
+      alert("Por favor, selecciona fecha y hora.");
       return;
     }
-    // Validaciones de cliente y teléfono (corregidas)
-    if (nombre.trim() === "" || telefono.trim() === "") {
-      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
+    if (!nombre.trim()) {
+      alert("Por favor, ingresa tu nombre.");
       return;
     }
-
-    const phoneNumber = parsePhoneNumberFromString(telefono.trim());
-    if (!phoneNumber || !phoneNumber.isValid()) {
+    const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
+    if (!phoneRegex.test(telefono.trim())) {
       alert(
-        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
+        "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
       );
       return;
     }
 
-    console.log(
-      "País detectado por número telefónico:",
-      phoneNumber.country || "Desconocido"
-    );
+    // Convert the selected time to Chile's time zone for validation
+    const zonedDate = toZonedTime(fechaHora, CHILE_TIME_ZONE);
+    const selectedTimeString = format(zonedDate, "HH:mm");
+    const selectedDateString = format(zonedDate, "yyyy-MM-dd");
 
-    // --- VALIDACIÓN DE HORA (ADAPTADA A LA NUEVA ESTRUCTURA) ---
-    const selectedHour = fechaHora.getHours();
-    const selectedMinute = fechaHora.getMinutes();
-    const selectedTimeString = `${String(selectedHour).padStart(
-      2,
-      "0"
-    )}:${String(selectedMinute).padStart(2, "0")}`;
-
-    // Necesitamos verificar las horas disponibles para el día específico seleccionado
-    const selectedDateString = fechaHora.toISOString().split("T")[0];
     const hoursForSelectedDay =
-      disponibilidadTerapeuta?.disponibilidadPorFecha[selectedDateString] || [];
+      disponibilidadPorFechaDelServicio?.[selectedDateString] || [];
 
-    if (
-      selectedTimeString === "00:00" &&
-      disponibilidadTerapeuta && // Si hay data
-      !hoursForSelectedDay.includes("00:00") // Y 00:00 no está explícitamente en las horas de ESE día
-    ) {
-      alert("Por favor, selecciona una hora válida para tu reserva.");
+    if (!hoursForSelectedDay.includes(selectedTimeString)) {
+      alert("La hora seleccionada no está disponible.");
       return;
     }
-    // --- FIN VALIDACIÓN ---
 
+    // Pass the date in the selected time zone to the `onConfirm` function
     onConfirm(fechaHora, nombre, telefono);
   };
 
-  // Funciones para filtrar días y horas en el DatePicker
   const filterDay = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
     if (date < today) {
-      return false; // No permitir fechas pasadas
+      return false;
     }
 
-    if (allowedDates && allowedDates.length > 0) {
-      const dateString = date.toISOString().split("T")[0];
-      return allowedDates.includes(dateString);
-    }
-
-    // --- FILTRADO DE DÍAS (ADAPTADO A LA NUEVA ESTRUCTURA) ---
-    // 'disponibilidadTerapeuta' ahora tiene 'disponibilidadPorFecha'
-    if (
-      disponibilidadTerapeuta &&
-      disponibilidadTerapeuta.disponibilidadPorFecha
-    ) {
-      const dateString = date.toISOString().split("T")[0]; // Ej. "2025-07-01"
-
-      // Un día es disponible si existe una entrada para esa fecha en 'disponibilidadPorFecha'
-      // Y si tiene al menos una hora disponible para ese día.
+    if (disponibilidadPorFechaDelServicio) {
+      const dateString = format(date, "yyyy-MM-dd");
       const hasHoursForThisDay =
-        disponibilidadTerapeuta.disponibilidadPorFecha[dateString] &&
-        disponibilidadTerapeuta.disponibilidadPorFecha[dateString].length > 0;
-
-      console.log(
-        "DEBUG filterDay: Fecha DatePicker (YYYY-MM-DD):",
-        dateString
-      );
-      console.log(
-        "DEBUG filterDay: DisponibilidadPorFecha del terapeuta:",
-        disponibilidadTerapeuta.disponibilidadPorFecha
-      );
-      console.log(
-        "DEBUG filterDay: ¿Tiene horas para esta fecha?",
-        hasHoursForThisDay
-      );
-      if (hasHoursForThisDay === undefined) {
-        // <-- Añade esta condición
-        console.log(
-          "DEBUG filterDay: Horas para esta fecha que causan undefined:",
-          disponibilidadTerapeuta.disponibilidadPorFecha[dateString]
-        );
-      }
-
-      return hasHoursForThisDay; // Retorna true si hay horas para este día
+        disponibilidadPorFechaDelServicio[dateString] &&
+        disponibilidadPorFechaDelServicio[dateString].length > 0;
+      return hasHoursForThisDay;
     }
-
-    return false; // Por defecto, si no hay disponibilidad cargada/definida, deshabilita el día.
+    return false;
   };
 
   const filterTimes = (time: Date) => {
-    // La fecha seleccionada por el usuario está en el estado 'fechaHora'.
-    // Si 'fechaHora' no está seleccionada, o si no hay data de disponibilidad, no habilitamos nada.
-    if (
-      !fechaHora ||
-      !disponibilidadTerapeuta ||
-      !disponibilidadTerapeuta.disponibilidadPorFecha
-    ) {
-      console.log(
-        "DEBUG filterTimes: Fecha seleccionada o data de disponibilidad por fecha no definida."
-      );
-      return false; // Si no hay fecha seleccionada o data, deshabilitar horas
+    if (!fechaHora || !disponibilidadPorFechaDelServicio) {
+      return false;
     }
 
-    // Obtener la fecha seleccionada del estado 'fechaHora' para buscar las horas específicas
-
-    const selectedDateString = fechaHora.toISOString().split("T")[0]; // "YYYY-MM-DD" de la fecha SELECCIONADA
-    // Obtener las horas disponibles específicamente para esta fecha seleccionada
+    const selectedDateString = format(fechaHora, "yyyy-MM-dd");
     const hoursForThisDay =
-      disponibilidadTerapeuta.disponibilidadPorFecha[selectedDateString];
+      disponibilidadPorFechaDelServicio[selectedDateString];
 
     if (!hoursForThisDay || hoursForThisDay.length === 0) {
-      console.log(
-        "DEBUG filterTimes: No hay horas disponibles para el día:",
-        selectedDateString
-      );
-      return false; // No hay horas para este día específico, deshabilitar
+      return false;
     }
 
-    // --- Lógica para la hora actual del DatePicker (timeString) ---
-    const selectedHour = time.getHours();
-    const selectedMinute = time.getMinutes();
-    const timeString = `${String(selectedHour).padStart(2, "0")}:${String(
-      selectedMinute
-    ).padStart(2, "0")}`;
-
-    console.log("DEBUG filterTimes: Hora DatePicker (HH:MM):", timeString);
-    console.log(
-      "DEBUG filterTimes: Horas disponibles para ESTE día (" +
-        selectedDateString +
-        "):",
-      hoursForThisDay
-    );
-    console.log(
-      "DEBUG filterTimes: ¿La hora está en horas disponibles para este día?",
-      hoursForThisDay.includes(timeString)
-    );
+    // Convert the time to a string for comparison
+    const timeString = format(time, "HH:mm");
 
     return hoursForThisDay.includes(timeString);
   };
@@ -208,19 +113,16 @@ export default function ReservaConFecha({
       </p>
 
       <DatePicker
-        key={keyForDatePicker}
         selected={fechaHora}
         onChange={(date: Date | null) => setFechaHora(date)}
         showTimeSelect
         timeFormat="HH:mm"
-        timeIntervals={15} // Puedes quitar esto; filterTimes ya filtra por horas exactas
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
         placeholderText="Selecciona fecha y hora"
         className="border p-2 w-full mt-2 mb-4"
         filterDate={filterDay}
         filterTime={filterTimes}
-        // includeTimes={...} // No es necesario si filterTimes está haciendo el trabajo dinámico correctamente
       />
       <div className="mb-4">
         <label htmlFor="nombreCliente" className="block text-sm font-bold mb-2">

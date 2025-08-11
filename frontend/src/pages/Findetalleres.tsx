@@ -57,16 +57,14 @@ export default function findetalleres() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
+          const servicioDelRow = row.especialidad_servicio;
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
-            terapeutaIdDelRow === null
+            terapeutaIdDelRow === null ||
+            !servicioDelRow
           ) {
-            console.warn(
-              `DEBUG Findetalleres: Fila de disponibilidad sin nombre de terapeuta o ID de terapeuta (${terapeutaIdDelRow}). Será ignorada.`,
-              row
-            );
             return;
           }
 
@@ -74,7 +72,7 @@ export default function findetalleres() {
             aggregatedDisponibilidades.set(nombreDelTerapeuta, {
               nombreTerapeuta: nombreDelTerapeuta,
               terapeutaId: terapeutaIdDelRow,
-              disponibilidadPorFecha: {},
+              disponibilidadPorServicio: {},
             });
           } else {
             const existingTerapeuta =
@@ -90,6 +88,9 @@ export default function findetalleres() {
           const currentTerapeutaDisp =
             aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
 
+          if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
+          }
           const dias = Array.isArray(row.diasDisponibles)
             ? row.diasDisponibles
             : [];
@@ -98,37 +99,32 @@ export default function findetalleres() {
             : [];
 
           dias.forEach((dia: string) => {
-            if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
-              currentTerapeutaDisp.disponibilidadPorFecha[dia] = [];
+            if (
+              !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ]
+            ) {
+              currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ] = [];
             }
             horas.forEach((hora: string) => {
               if (
-                !currentTerapeutaDisp.disponibilidadPorFecha[dia].includes(hora)
+                !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].includes(hora)
               ) {
-                currentTerapeutaDisp.disponibilidadPorFecha[dia].push(hora);
+                currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].push(hora);
               }
             });
-            currentTerapeutaDisp.disponibilidadPorFecha[dia].sort();
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+              dia
+            ].sort();
           });
-
-          console.log(
-            `DEBUG findetalleres: Procesando fila para ${nombreDelTerapeuta} (ID: ${terapeutaIdDelRow}):`,
-            row
-          );
-          console.log(
-            `DEBUG findetalleres: Disponibilidad procesada para ${nombreDelTerapeuta} (currentTerapeutaDisp):`,
-            currentTerapeutaDisp
-          );
-          console.log(
-            `DEBUG findetalleres: Disponibilidad por fecha para ${nombreDelTerapeuta} en ${dias[0]}:`,
-            currentTerapeutaDisp.disponibilidadPorFecha[dias[0]]
-          );
         });
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
-        console.log(
-          "DEBUG findetalleres: Disponibilidades procesadas y agregadas (Map final):",
-          aggregatedDisponibilidades
-        );
       } catch (error) {
         console.error(
           "ERROR findetalleres: Error al cargar y procesar las disponibilidades:",
@@ -140,18 +136,15 @@ export default function findetalleres() {
     fetchAndProcessDisponibilidades();
   }, []);
 
-  const getDisponibilidadForTerapeuta = (
-    terapeutaNombre: string
-  ): DisponibilidadTerapeuta | undefined => {
-    console.log(
-      `DEBUG findetalleres: Buscando disponibilidad para terapeuta: ${terapeutaNombre}`
-    );
-    const foundDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-    console.log(
-      `DEBUG findetalleres: Disponibilidad encontrada para ${terapeutaNombre}:`,
-      foundDisp
-    );
-    return foundDisp;
+  const getDisponibilidadForTerapeutaAndService = (
+    terapeutaNombre: string,
+    servicioNombre: string
+  ): { [fecha: string]: string[] } | undefined => {
+    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    if (!terapeutaDisp) {
+      return undefined;
+    }
+    return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
   };
 
   // Tu lista de terapias - **Mantienen igual por ahora, pero considera obtenerlas del backend**
@@ -182,6 +175,17 @@ export default function findetalleres() {
     // {
     //   img: creadordigital,
     //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10,
+    //   description:
+    //     "Descubre el poder simbolico y energético del fuego a través de la magia con velas. En este taller aprenderás cómo utilizar las velas para enfocar intenciones atraer energías positivas y crear rituales sencillos pero poderosos.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: creadordigital,
+    //   title: "Taller de Regresión",
     //   terapeuta: "Alice Basay",
     //   terapeuta_id: 10,
     //   description:
@@ -291,8 +295,11 @@ export default function findetalleres() {
       alert(`No se pudo completar la reserva: ${error.message}`);
     }
   };
-  const terapeutaSeleccionadoDisponibilidad = reservaPendiente
-    ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
+  const disponibilidadParaTallerEspecifico = reservaPendiente
+    ? getDisponibilidadForTerapeutaAndService(
+        reservaPendiente.terapeutaNombre,
+        reservaPendiente.terapia
+      )
     : undefined;
 
   return (
@@ -420,7 +427,10 @@ export default function findetalleres() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              disponibilidadTerapeuta={terapeutaSeleccionadoDisponibilidad}
+              // AHORA USAMOS LA PROPIEDAD CORRECTA Y LA DISPONIBILIDAD FILTRADA
+              disponibilidadPorFechaDelServicio={
+                disponibilidadParaTallerEspecifico
+              }
             />
           </div>
         </div>

@@ -72,17 +72,17 @@ export default function TalleresMensuales() {
       instructorId: 18,
       isDisabled: false,
     },
-    // {
-    //   id: "taller-meditacion-jul",
-    //   title: "Taller de Regresión",
-    //   description:
-    //     "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",
-    //   price: 25000,
-    //   date: "2025-07-05",
-    //   time: "10:30",
-    //   instructor: "Alice Basay",
-    //   instructorId: 10,
-    // },
+    {
+      id: "taller-meditacion-jul",
+      title: "Taller de Regresión",
+      description:
+        "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",
+      price: 25000,
+      date: "2025-07-05",
+      time: "10:30",
+      instructor: "Alice Basay",
+      instructorId: 10,
+    },
     // Añade más talleres aquí
   ];
 

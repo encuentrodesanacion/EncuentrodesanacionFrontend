@@ -62,11 +62,13 @@ export default function SpaLittle() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
+          const servicioDelRow = row.especialidad_servicio;
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
-            terapeutaIdDelRow === null
+            terapeutaIdDelRow === null ||
+            !servicioDelRow
           ) {
             // Valida también el ID
             console.warn(
@@ -80,7 +82,7 @@ export default function SpaLittle() {
             aggregatedDisponibilidades.set(nombreDelTerapeuta, {
               nombreTerapeuta: nombreDelTerapeuta,
               terapeutaId: terapeutaIdDelRow, // Asigna el ID correcto aquí
-              disponibilidadPorFecha: {},
+              disponibilidadPorServicio: {},
             });
           } else {
             // Si el terapeuta ya existe en el mapa, asegúrate que el ID se asignó
@@ -97,6 +99,9 @@ export default function SpaLittle() {
 
           const currentTerapeutaDisp =
             aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+          if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
+          }
 
           const dias = Array.isArray(row.diasDisponibles)
             ? row.diasDisponibles
@@ -116,17 +121,29 @@ export default function SpaLittle() {
           }
 
           dias.forEach((dia: string) => {
-            if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
-              currentTerapeutaDisp.disponibilidadPorFecha[dia] = [];
+            if (
+              !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ]
+            ) {
+              currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ] = [];
             }
             horas.forEach((hora: string) => {
               if (
-                !currentTerapeutaDisp.disponibilidadPorFecha[dia].includes(hora)
+                !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].includes(hora)
               ) {
-                currentTerapeutaDisp.disponibilidadPorFecha[dia].push(hora);
+                currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].push(hora);
               }
             });
-            currentTerapeutaDisp.disponibilidadPorFecha[dia].sort();
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+              dia
+            ].sort();
           });
 
           console.log(
@@ -139,7 +156,7 @@ export default function SpaLittle() {
           );
           console.log(
             `DEBUG SpaLittle: Disponibilidad por fecha para ${nombreDelTerapeuta} en ${dias[0]}:`,
-            currentTerapeutaDisp.disponibilidadPorFecha[dias[0]]
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]
           );
         });
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
@@ -159,20 +176,17 @@ export default function SpaLittle() {
   }, []); // El array vacío asegura que se ejecute solo una vez al montar
 
   // Función para obtener la disponibilidad de un terapeuta específico
-  const getDisponibilidadForTerapeuta = (
-    terapeutaNombre: string
-  ): DisponibilidadTerapeuta | undefined => {
-    // Ahora usa el Map 'disponibilidadesProcesadas' para obtener el objeto ya agregado
-    console.log(
-      `DEBUG SpaLittle: Buscando disponibilidad para terapeuta: ${terapeutaNombre}`
-    );
-    const foundDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-    console.log(
-      `DEBUG SpaLittle: Disponibilidad encontrada para ${terapeutaNombre}:`,
-      foundDisp
-    );
-    return foundDisp;
+  const getDisponibilidadForTerapeutaAndService = (
+    terapeutaNombre: string,
+    servicioNombre: string
+  ): { [fecha: string]: string[] } | undefined => {
+    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    if (!terapeutaDisp) {
+      return undefined;
+    }
+    return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
   };
+
   // --- FIN OBTENER DISPONIBILIDAD ---
 
   // Tu lista de terapias - **IMPORTANTE: ASEGÚRATE DE QUE LOS NOMBRES DE TERAPEUTAS AQUÍ COINCIDAN EXACTAMENTE CON LOS NOMBRES EN TU BASE DE DATOS**
@@ -407,10 +421,12 @@ export default function SpaLittle() {
       alert(`No se pudo completar la reserva de Spa Little: ${error.message}`);
     }
   };
-  const terapeutaSeleccionadoDisponibilidad = reservaPendiente
-    ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
+  const disponibilidadParaServicioEspecifico = reservaPendiente
+    ? getDisponibilidadForTerapeutaAndService(
+        reservaPendiente.terapeutaNombre,
+        reservaPendiente.terapia
+      )
     : undefined;
-  // --- FIN OBTENER DISPONIBILIDAD ---
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
@@ -536,7 +552,11 @@ export default function SpaLittle() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              disponibilidadTerapeuta={terapeutaSeleccionadoDisponibilidad}
+              // --- CAMBIO CLAVE AQUÍ ---
+              // Pasamos la disponibilidad filtrada por servicio.
+              disponibilidadPorFechaDelServicio={
+                disponibilidadParaServicioEspecifico
+              }
             />
           </div>
         </div>

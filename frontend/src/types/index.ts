@@ -10,6 +10,7 @@ export interface OpcionSesion {
 export interface RawDisponibilidadDBItem {
   nombreTerapeuta: string;
   terapeutaId: number | null;
+  especialidad_servicio: string;
   diasDisponibles: string[]; // <-- Viene como Array(1) con el string "YYYY-MM-DD"
   horasDisponibles: string[]; // <-- Viene como Array(1) con el string JSON "[\"HH:MM\"]"
   estado: string; // Puede que venga o no, lo hacemos opcional
@@ -22,9 +23,12 @@ export interface RawDisponibilidadDBItem {
 // (La que tu componente ReservaConFecha espera ahora)
 export interface DisponibilidadTerapeuta {
   nombreTerapeuta: string;
-  terapeutaId: number | null;
-  disponibilidadPorFecha: {
-    [dateString: string]: string[]; // Ejemplo: { "2025-07-01": ["16:00", "18:00"], ... }
+  terapeutaId: number | null; // La clave de este mapa es el nombre del servicio/especialidad
+  disponibilidadPorServicio: {
+    [servicio: string]: {
+      // La clave de este mapa es la fecha (ej. "2025-08-18")
+      [fecha: string]: string[]; // Array de horas (ej. ["10:00", "11:00"])
+    };
   };
 }
 

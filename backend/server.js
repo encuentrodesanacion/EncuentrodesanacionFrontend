@@ -99,6 +99,7 @@ db.sequelize
           "id",
           "terapeutaId",
           "diasDisponibles",
+          "especialidad_servicio",
           "horasDisponibles",
           "estado",
         ],
