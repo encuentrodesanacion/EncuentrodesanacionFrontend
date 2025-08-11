@@ -167,7 +167,7 @@ export default function findetalleres() {
       description:
         "Descubramos tu proyecto Sentido. A través de la indagación de tu Proyecto Sentido, puedes saber cómo las formas en que naciste te entregaron características de tu forma de ser (tipo de parto, emociones vividas por tus padres durante tu gestación, tipo de hijo/a, entre otros aspectos).",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -178,7 +178,7 @@ export default function findetalleres() {
       description:
         "Descubre el poder simbolico y energético del fuego a través de la magia con velas. En este taller aprenderás cómo utilizar las velas para enfocar intenciones atraer energías positivas y crear rituales sencillos pero poderosos.",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -189,7 +189,7 @@ export default function findetalleres() {
       description:
         "En este taller te invitamos a soltar memorias de dolor que se han integrado en el útero, específicamente en el momento de la concepción. Reconocemos que, al ser concebidos, ya heredamos programaciones ancestrales que pueden influir en nuestra vida. En este espacio comprenderás cómo el hecho de haber sido, por ejemplo, un bebé no esperado o no concebido por amor puede haber dejado una huella. A través de ejercicios específicos trabajaremos para resignificar el momento de tu concepción, y realizaremos un viaje consciente, mes a mes, por el período previo a tu nacimiento, permitiendo la sanación y liberación profunda.",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -201,7 +201,7 @@ export default function findetalleres() {
       description:
         "En este taller abrazaremos a ese niñ@ interior que, en su infancia, vivió momentos de soledad, tristeza, abusos, entre otras experiencias. A través de ejercicios específicos, viajaremos a esos momentos clave para poder sanar profundamente esas vivencias.",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -212,7 +212,7 @@ export default function findetalleres() {
       description:
         "Aprenderás las propiedades medicinales de algunas plantas y la relación que hay entre ellas. Tambien podrás aprender a preparar tinturas madres de aceites macerados, ungüentos medicinales. Además, aprenderás a personalizar tus tratamientos",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     // {
