@@ -1,29 +1,30 @@
+// frontend/src/pages/Findetalleres.tsx
+
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
 import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
-// Importaciones de imágenes (mantienen igual)
-
+// Importaciones de imágenes
 import Sentido from "../assets/Sentido.jpg";
 import Sanando from "../assets/Sanando.jpg";
-
 import creadordigital from "../assets/creadorvirtual.jpg";
 
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
   OpcionSesion,
   TerapiaItem,
   RawDisponibilidadDBItem,
-  DisponibilidadTerapeuta,
+  DisponibilidadTerapeuta, // Usamos la interfaz actualizada
   ReservaPendiente,
   Reserva,
 } from "../types/index";
+import parsePhoneNumberFromString from "libphonenumber-js";
+const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-export default function findetalleres() {
+export default function Findetalleres() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
   const [reservaPendiente, setReservaPendiente] =
@@ -37,17 +38,11 @@ export default function findetalleres() {
     const fetchAndProcessDisponibilidades = async () => {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
-        // ¡Importante! Asegúrate de que tu backend puede filtrar por tipo de servicio si lo necesitas,
-        // o devuelve la disponibilidad general del terapeuta para este contexto de "talleres".
         const response = await fetch(`${apiBaseUrl}/disponibilidades`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const rawData: RawDisponibilidadDBItem[] = await response.json();
-        console.log(
-          "DEBUG findetalleres: Datos crudos de disponibilidades desde el backend (RawData):",
-          rawData
-        );
 
         const aggregatedDisponibilidades = new Map<
           string,
@@ -57,14 +52,18 @@ export default function findetalleres() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
-          const servicioDelRow = row.especialidad_servicio;
+          const servicioDelRow = row.especialidad_servicio; // Obtener el nombre del servicio/taller
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
             terapeutaIdDelRow === null ||
-            !servicioDelRow
+            !servicioDelRow // Validación crucial para el servicio
           ) {
+            console.warn(
+              "Fila de disponibilidad incompleta para procesar. Ignorando.",
+              row
+            );
             return;
           }
 
@@ -72,9 +71,10 @@ export default function findetalleres() {
             aggregatedDisponibilidades.set(nombreDelTerapeuta, {
               nombreTerapeuta: nombreDelTerapeuta,
               terapeutaId: terapeutaIdDelRow,
-              disponibilidadPorServicio: {},
+              disponibilidadPorServicio: {}, // ¡Inicializa con la estructura correcta!
             });
           } else {
+            // Asegúrate de que el terapeuta ya tiene el ID asignado
             const existingTerapeuta =
               aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
             if (
@@ -84,10 +84,10 @@ export default function findetalleres() {
               existingTerapeuta.terapeutaId = terapeutaIdDelRow;
             }
           }
-
           const currentTerapeutaDisp =
             aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
 
+          // Asegúrate de que la disponibilidad para el servicio exista
           if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
             currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
           }
@@ -125,17 +125,17 @@ export default function findetalleres() {
           });
         });
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
+        // console.log("Disponibilidades procesadas:", aggregatedDisponibilidades);
       } catch (error) {
         console.error(
-          "ERROR findetalleres: Error al cargar y procesar las disponibilidades:",
+          "ERROR Findetalleres: Error al cargar y procesar las disponibilidades:",
           error
         );
       }
     };
-
     fetchAndProcessDisponibilidades();
   }, []);
-
+  // Función para obtener la disponibilidad por terapeuta Y por servicio
   const getDisponibilidadForTerapeutaAndService = (
     terapeutaNombre: string,
     servicioNombre: string
@@ -144,10 +144,10 @@ export default function findetalleres() {
     if (!terapeutaDisp) {
       return undefined;
     }
+    // Retorna la disponibilidad por fecha para el servicio específico
     return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
   };
 
-  // Tu lista de terapias - **Mantienen igual por ahora, pero considera obtenerlas del backend**
   const terapias: TerapiaItem[] = [
     {
       img: Sentido,
@@ -157,7 +157,7 @@ export default function findetalleres() {
       description:
         "Descubramos tu proyecto Sentido. A través de la indagación de tu Proyecto Sentido, puedes saber cómo las formas en que naciste te entregaron características de tu forma de ser (tipo de parto, emociones vividas por tus padres durante tu gestación, tipo de hijo/a, entre otros aspectos).",
       precio: 10000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -168,7 +168,7 @@ export default function findetalleres() {
       description:
         "Sientes que tuviste una infancia difícil; que tuviste que crecer rápido; a veces tratas de recordar tu infancia y no llegan recuerdos. Si es así, este taller es para ti: conoceremos las heridas de infancia, nos conectaremos con tu niño/niña herida, y les daremos el amor que quizás faltó.",
       precio: 10000,
-      isDisabled: false,
+      isDisabled: true,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
 
@@ -220,9 +220,7 @@ export default function findetalleres() {
     });
   };
 
-  // --- MODIFICACIÓN CLAVE AQUÍ: AÑADIENDO LA LLAMADA AL BACKEND ---
   const confirmarReserva = async (
-    // ¡Ahora es async!
     fechaHora: Date,
     nombreCliente: string,
     telefonoCliente: string
@@ -232,32 +230,22 @@ export default function findetalleres() {
       return;
     }
 
-    // Preparamos los datos a enviar al backend
-    // Asegúrate de que los nombres de las propiedades coincidan con lo que espera el backend
     const reservaDataToSend = {
-      // No incluimos 'id' aquí; el backend lo generará
-      servicio: "Finde de Talleres", // O el tipo de servicio específico para esta sección
+      servicio: "Finde de Talleres",
       especialidad: reservaPendiente.terapia,
-      fecha: fechaHora.toISOString().split("T")[0], // Formato "YYYY-MM-DD"
-      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5), // Formato "HH:MM"
+      fecha: fechaHora.toISOString().split("T")[0],
+      hora: fechaHora.toTimeString().split(" ")[0].substring(0, 5),
       precio: reservaPendiente.precio,
       nombreCliente: nombreCliente,
       telefonoCliente: telefonoCliente,
-      terapeuta: reservaPendiente.terapeutaNombre, // Nombre del terapeuta
-      terapeutaId: reservaPendiente.terapeutaId, // ID del terapeuta
-      sesiones: 1, // Para talleres es 1 sesión
-      cantidadCupos: 1, // Asumimos que se reserva 1 cupo por reserva de taller
+      terapeuta: reservaPendiente.terapeutaNombre,
+      terapeutaId: reservaPendiente.terapeutaId,
+      sesiones: 1,
+      cantidadCupos: 1,
     };
 
-    console.log(
-      "DEBUG FRONTEND: Intentando confirmar reserva con el backend (reservaDataToSend):",
-      reservaDataToSend
-    );
-
     try {
-      const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
-      // *** CAMBIO CLAVE: Cambiar la ruta de `/reservar` a `/reservar-directa` ***
-      const response = await fetch(`${apiBaseUrl}/reservar-directa`, {
+      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -267,38 +255,28 @@ export default function findetalleres() {
 
       if (!response.ok) {
         const errorBody = await response.json();
-        // Mejorar el mensaje de error para el usuario
         const errorMessage =
           errorBody.mensaje ||
           `Error desconocido al confirmar la reserva: ${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
       }
 
-      // El backend ahora debería devolver el objeto de reserva creado con su 'id'
-      const { reserva: confirmedReservation } = await response.json(); // Desestructurar para obtener el objeto 'reserva'
-
-      console.log(
-        "DEBUG FRONTEND: Reserva confirmada por el backend:",
-        confirmedReservation
-      );
-
-      // Añadir la reserva (confirmada por el backend con su ID) al carrito del frontend
+      const { reserva: confirmedReservation } = await response.json();
       addToCart(confirmedReservation);
-
       alert(
         `¡Taller ${confirmedReservation.especialidad} reservado para el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}! Lo hemos añadido a tu carrito para que puedas completar el pago.`
       );
-
-      setReservaPendiente(null); // Cierra el modal
+      setReservaPendiente(null);
     } catch (error: any) {
       console.error("ERROR al confirmar la reserva:", error);
       alert(`No se pudo completar la reserva: ${error.message}`);
     }
   };
+
   const disponibilidadParaTallerEspecifico = reservaPendiente
     ? getDisponibilidadForTerapeutaAndService(
         reservaPendiente.terapeutaNombre,
-        reservaPendiente.terapia
+        reservaPendiente.terapia // Pasa el nombre del servicio/taller aquí
       )
     : undefined;
 
@@ -306,7 +284,7 @@ export default function findetalleres() {
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
         <h1 className="text-xl font-semibold text-gray-800">
-          Finde de talleres
+          Fin de semana de Talleres
         </h1>
         <CartIcon />
       </header>
@@ -321,9 +299,7 @@ export default function findetalleres() {
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Finde de Talleres
       </h2>
-      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 18 al 20 de Julio)
-      </h1>
+      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6"></h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">
         {terapias.map((t, i) => (
@@ -333,7 +309,7 @@ export default function findetalleres() {
                 <div className="flip-front">
                   <img src={t.img} alt={t.title} />
                   <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
+                    <p>{t.title}</p>
                   </div>
                 </div>
                 <div className="flip-back">
@@ -427,7 +403,6 @@ export default function findetalleres() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              // AHORA USAMOS LA PROPIEDAD CORRECTA Y LA DISPONIBILIDAD FILTRADA
               disponibilidadPorFechaDelServicio={
                 disponibilidadParaTallerEspecifico
               }

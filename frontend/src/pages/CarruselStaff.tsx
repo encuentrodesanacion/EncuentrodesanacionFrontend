@@ -44,13 +44,7 @@ const alianzas = [
     descripcion:
       "Brenda Rivas: En mi trayectoria en el campo de la salud, evidencié cómo las patologías o padecimientos físicos constituían el pilar en los cuidados de enfermería, restando importancia al cuerpo energético. Por lo que me interesé en el estudio de la biodecodificación emocional, llevándome a profundizar en la filosofía holística, tratando así al paciente en su totalidad: espíritu, alma y cuerpo. Las Terapias holísticas que realizo son : Canalización energética - Apertura de Registros Akáshicos - Lectura del Tarot Rider Waite - Lectura del Oráculo Angelical - Lectura del Oráculo de Vidas Pasadas - Consulta de Runas Vikingas - Reiki Unitario - Reiki Angelical",
   },
-  {
-    nombre: "Montserrat Méndez López",
-    url: "https://www.instagram.com/amara_esencia/",
-    imagen: terapeuta24,
-    descripcion:
-      "Montserrat Méndez: Docente y terapeuta holística, Mujer Medicina, especializada en Biodecodificación, Numerología, Armonización Energética, Aromaterapia, Tantra y Sexualidad Integral. Como Mujer Medicina, sostengo y transmito saberes ancestrales de sanación, combinando herramientas espirituales y naturales para acompañar procesos de transformación personal. Actúo como puente entre lo visible y lo invisible, guiando a las personas hacia el equilibrio de su cuerpo, mente y espíritu. Acompaño procesos de autoconocimiento y desarrollo integral, abordando el bienestar desde lo emocional, espiritual y energético. Mi labor integra el conocimiento ancestral con técnicas contemporáneas, creando experiencias terapéuticas que promueven la armonización, la liberación de bloqueos y la reconexión con la esencia más auténtica de cada ser.",
-  },
+
   {
     nombre: "Sandra Da Silva",
     url: "https://www.instagram.com/serendipiall/",

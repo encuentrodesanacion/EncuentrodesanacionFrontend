@@ -5,34 +5,28 @@ export interface OpcionSesion {
   precio: number;
 }
 
-// ESTA ES LA INTERFAZ DE CÓMO VIENEN LOS DATOS CRUDOS DE TU BACKEND POR CADA FILA DE DISPONIBILIDAD
-// (Basado en la salida de tu consola rawData: nombreTerapeuta, diasDisponibles, horasDisponibles directos)
 export interface RawDisponibilidadDBItem {
   nombreTerapeuta: string;
   terapeutaId: number | null;
   especialidad_servicio: string;
-  diasDisponibles: string[]; // <-- Viene como Array(1) con el string "YYYY-MM-DD"
-  horasDisponibles: string[]; // <-- Viene como Array(1) con el string JSON "[\"HH:MM\"]"
-  estado: string; // Puede que venga o no, lo hacemos opcional
-  // Puede que venga o no, lo hacemos opcional
+  diasDisponibles: string[];
+  horasDisponibles: string[];
+  estado: string;
   created_at?: string;
   updated_at?: string;
 }
 
-// ESTA ES LA INTERFAFA PARA LA DISPONIBILIDAD PROCESADA Y AGREGADA EN EL FRONTEND
-// (La que tu componente ReservaConFecha espera ahora)
+// Interfaz corregida para manejar la disponibilidad por servicio/especialidad
 export interface DisponibilidadTerapeuta {
   nombreTerapeuta: string;
-  terapeutaId: number | null; // La clave de este mapa es el nombre del servicio/especialidad
+  terapeutaId: number | null;
   disponibilidadPorServicio: {
     [servicio: string]: {
-      // La clave de este mapa es la fecha (ej. "2025-08-18")
-      [fecha: string]: string[]; // Array de horas (ej. ["10:00", "11:00"])
+      [fecha: string]: string[];
     };
   };
 }
 
-// Asegúrate de que esta interfaz Reserva también esté aquí si la usas en CartContext o similar
 export interface Reserva {
   id: number;
   servicio: string;
@@ -59,7 +53,7 @@ export interface TerapiaItem {
   img: string;
   title: string;
   terapeuta: string;
-  terapeuta_id: number; // Coincide con la base de datos
+  terapeuta_id: number;
   description: string;
   precio: number;
   opciones?: OpcionSesion[];

@@ -70,18 +70,6 @@ export default function TratamientoHolistico() {
         "Es una terapia profunda que utiliza el Péndulo Hebreo para detectar y liberar bloqueos y desequilibrios en tu cuerpo, mente y emociones. A través de esta sanación a distancia, tu energía fluye de nuevo, permitiendo una inmediata sensación de bienestar y vitalidad, y ayudando a reducir el estrés y la ansiedad",
       opciones: [{ sesiones: 3, precio: 60000 }],
     },
-    {
-      img: Terapeuta24,
-      title: "Florecer esencial: Crea tu vida",
-      terapeuta: "Montserrat Méndez",
-      terapeutaId: 24,
-      description:
-        "Crea tu Vida Es una terapia holística que te acompaña en un proceso profundo de autoconocimiento, autocuidado y expansión personal. A través del trabajo consciente con tu energía vital, te invitamos a reconectar con tu esencia, a limpiar los bloqueos que limitan tu bienestar y a potenciar tu capacidad creativa para impulsar tus proyectos y tu vida cotidiana. Este espacio es ideal para quienes buscan armonización, reconexión con su propósito y mayor claridad para materializar sus sueños, creando así las condiciones internas necesarias para florecer en todas las áreas de su vida",
-      opciones: [
-        { sesiones: 3, precio: 60000 },
-        { sesiones: 4, precio: 75000 },
-      ],
-    },
 
     // {
     //   img: creadorvirtual,

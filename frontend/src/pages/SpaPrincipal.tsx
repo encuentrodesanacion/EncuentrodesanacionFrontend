@@ -3,30 +3,23 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css";
-import { useCart, Reserva } from "./CartContext";
+import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
-// Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
-import Terapeuta30 from "../assets/Terapeuta30.jpeg";
+// Importaciones de imágenes
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
-import Terapeuta5 from "../assets/Terapeuta5.jpg";
 import Terapeuta8 from "../assets/Terapeuta8.jpg";
-import Terapeuta13 from "../assets/Terapeuta13.jpeg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
-import Terapeuta15 from "../assets/Terapeuta15.jpeg";
-import creadorVirtual from "../assets/creadorvirtual.jpg";
 import Terapeuta25 from "../assets/Terapeuta25.jpeg";
 import Terapeuta24 from "../assets/Terapeuta24.jpeg";
-import Terapeuta28 from "../assets/Terapeuta28.jpeg";
-import DatePicker from "react-datepicker";
 import Terapeuta23 from "../assets/Terapeuta23.jpeg";
-import "react-datepicker/dist/react-datepicker.css";
+import Terapeuta28 from "../assets/Terapeuta28.jpeg";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
   OpcionSesion,
   TerapiaItem,
-  RawDisponibilidadDBItem, // Para los datos crudos del backend
-  DisponibilidadTerapeuta, // Para los datos procesados y agregados
+  RawDisponibilidadDBItem,
+  DisponibilidadTerapeuta,
   ReservaPendiente,
 } from "../types/index";
 import parsePhoneNumberFromString from "libphonenumber-js";
@@ -38,7 +31,7 @@ export default function SpaPrincipal() {
   const [reservaPendiente, setReservaPendiente] =
     useState<ReservaPendiente | null>(null);
   const [disponibilidadesProcesadas, setDisponibilidadesProcesadas] = useState<
-    Map<string, DisponibilidadTerapeuta> // Usamos un Map para almacenar por nombreTerapeuta
+    Map<string, DisponibilidadTerapeuta>
   >(new Map());
 
   // --- EFECTO PARA CARGAR Y PROCESAR LAS DISPONIBILIDADES AL MONTAR EL COMPONENTE ---
@@ -46,17 +39,12 @@ export default function SpaPrincipal() {
     const fetchAndProcessDisponibilidades = async () => {
       try {
         const apiBaseUrl = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
-        const response = await fetch(
-          `${apiBaseUrl}/disponibilidades` // URL corregida
-        );
+        const response = await fetch(`${apiBaseUrl}/disponibilidades`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
         const rawData: RawDisponibilidadDBItem[] = await response.json();
-        console.log(
-          "DEBUG SpaPrincipal: Datos crudos de disponibilidades desde el backend (RawData):",
-          rawData
-        );
+        console.log("DEBUG SpaPrincipal: Datos crudos desde backend:", rawData);
 
         const aggregatedDisponibilidades = new Map<
           string,
@@ -66,15 +54,16 @@ export default function SpaPrincipal() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
+          const servicioDelRow = row.especialidad_servicio; // Se obtiene el servicio
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
-            terapeutaIdDelRow === null
+            terapeutaIdDelRow === null ||
+            !servicioDelRow
           ) {
-            // Valida también el ID
             console.warn(
-              `DEBUG SpaPrincipal: Fila de disponibilidad sin nombre de terapeuta o ID de terapeuta (${terapeutaIdDelRow}). Será ignorada.`,
+              `DEBUG SpaPrincipal: Fila de disponibilidad sin nombre, ID o servicio.`,
               row
             );
             return;
@@ -83,24 +72,18 @@ export default function SpaPrincipal() {
           if (!aggregatedDisponibilidades.has(nombreDelTerapeuta)) {
             aggregatedDisponibilidades.set(nombreDelTerapeuta, {
               nombreTerapeuta: nombreDelTerapeuta,
-              terapeutaId: terapeutaIdDelRow, // Asigna el ID correcto aquí
-              disponibilidadPorFecha: {},
+              terapeutaId: terapeutaIdDelRow,
+              disponibilidadPorServicio: {}, // ¡Inicializa con la estructura correcta!
             });
-          } else {
-            // Si el terapeuta ya existe en el mapa, asegúrate que el ID se asignó
-            // (esto es por si la primera fila para un terapeuta tenía terapeutaId: undefined)
-            const existingTerapeuta =
-              aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
-            if (
-              existingTerapeuta.terapeutaId === undefined ||
-              existingTerapeuta.terapeutaId === null
-            ) {
-              existingTerapeuta.terapeutaId = terapeutaIdDelRow;
-            }
           }
 
           const currentTerapeutaDisp =
             aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+
+          // Se asegura de que la disponibilidad para el servicio exista
+          if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
+          }
 
           const dias = Array.isArray(row.diasDisponibles)
             ? row.diasDisponibles
@@ -111,44 +94,40 @@ export default function SpaPrincipal() {
 
           if (dias.length === 0 || horas.length === 0) {
             console.warn(
-              `DEBUG SpaPrincipal: Fila de disponibilidad para ${nombreDelTerapeuta} en ${
-                dias[0] || "N/A"
-              } tiene días u horas vacías (después de getters).`,
-              row
+              `DEBUG SpaPrincipal: Fila para ${nombreDelTerapeuta} sin días u horas.`
             );
             return;
           }
 
           dias.forEach((dia: string) => {
-            if (!currentTerapeutaDisp.disponibilidadPorFecha[dia]) {
-              currentTerapeutaDisp.disponibilidadPorFecha[dia] = [];
+            if (
+              !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ]
+            ) {
+              currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                dia
+              ] = [];
             }
             horas.forEach((hora: string) => {
               if (
-                !currentTerapeutaDisp.disponibilidadPorFecha[dia].includes(hora)
+                !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].includes(hora)
               ) {
-                currentTerapeutaDisp.disponibilidadPorFecha[dia].push(hora);
+                currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+                  dia
+                ].push(hora);
               }
             });
-            currentTerapeutaDisp.disponibilidadPorFecha[dia].sort();
+            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+              dia
+            ].sort();
           });
-
-          console.log(
-            `DEBUG SpaPrincipal: Procesando fila para ${nombreDelTerapeuta} (ID: ${terapeutaIdDelRow}):`,
-            row
-          );
-          console.log(
-            `DEBUG SpaPrincipal: Disponibilidad procesada para ${nombreDelTerapeuta} (currentTerapeutaDisp):`,
-            currentTerapeutaDisp
-          );
-          console.log(
-            `DEBUG SpaPrincipal: Disponibilidad por fecha para ${nombreDelTerapeuta} en ${dias[0]}:`,
-            currentTerapeutaDisp.disponibilidadPorFecha[dias[0]]
-          );
         });
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
         console.log(
-          "DEBUG SpaPrincipal: Disponibilidades procesadas y agregadas (Map final):",
+          "DEBUG SpaPrincipal: Disponibilidades procesadas:",
           aggregatedDisponibilidades
         );
       } catch (error) {
@@ -160,27 +139,21 @@ export default function SpaPrincipal() {
     };
 
     fetchAndProcessDisponibilidades();
-  }, []); // El array vacío asegura que se ejecute solo una vez al montar
+  }, []);
 
-  // Función para obtener la disponibilidad de un terapeuta específico
-  const getDisponibilidadForTerapeuta = (
-    terapeutaNombre: string
-  ): DisponibilidadTerapeuta | undefined => {
-    // Ahora usa el Map 'disponibilidadesProcesadas' para obtener el objeto ya agregado
-    console.log(
-      `DEBUG SpaPrincipal: Buscando disponibilidad para terapeuta: ${terapeutaNombre}`
-    );
-    const foundDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-    console.log(
-      `DEBUG SpaPrincipal: Disponibilidad encontrada para ${terapeutaNombre}:`,
-      foundDisp
-    );
-    return foundDisp;
+  // Función para obtener la disponibilidad por terapeuta Y por servicio
+  const getDisponibilidadForTerapeutaAndService = (
+    terapeutaNombre: string,
+    servicioNombre: string
+  ): { [fecha: string]: string[] } | undefined => {
+    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    if (!terapeutaDisp) {
+      return undefined;
+    }
+    // Retorna la disponibilidad por fecha para el servicio específico
+    return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
   };
-  // --- FIN OBTENER DISPONIBILIDAD ---
 
-  // Tu lista de terapias - **IMPORTANTE: ASEGÚRATE DE QUE LOS NOMBRES DE TERAPEUTAS AQUÍ COINCIDAN EXACTAMENTE CON LOS NOMBRES EN TU BASE DE DATOS**
-  // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
   const terapias: TerapiaItem[] = [
     {
       img: Terapeuta11,
@@ -228,17 +201,6 @@ export default function SpaPrincipal() {
       isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta24,
-      title: "Códigos del Alma",
-      terapeuta: "Montserrat Méndez",
-      terapeuta_id: 24,
-      description:
-        "Es una lectura profunda de tus números personales a través de la filosofía del Tantra que es una herramienta ancestral que revela la información oculta en tu fecha de nacimiento. A través de esta guía podrás descubrir tus dones espirituales, tus talentos naturales y comprender con mayor claridad aquellos aspectos que vienes a transformar y potenciar en esta vida",
-      precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
 
     {
       img: Terapeuta23,
@@ -262,19 +224,19 @@ export default function SpaPrincipal() {
       isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-
     // {
-    //   img: creadorVirtual,
+    //   img: Terapeuta28,
     //   title: "Regresión",
     //   terapeuta: "Alice Basay",
-    //   terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
-    //   description: "Correo de Prueba.",
+    //   terapeuta_id: 10,
+    //   description:
+    //     "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
     //   precio: 16000,
+    //   isDisabled: false,
     //   opciones: [{ sesiones: 1, precio: 16000 }],
     // },
   ];
 
-  // Mostrar formulario para seleccionar fecha y hora
   const reservar = (
     terapiaTitle: string,
     terapiaPrecio: number,
@@ -305,19 +267,19 @@ export default function SpaPrincipal() {
     telefonoCliente: string
   ) => {
     const year = fechaHora.getFullYear();
-    const month = String(fechaHora.getMonth() + 1).padStart(2, "0"); // Meses son 0-indexados
+    const month = String(fechaHora.getMonth() + 1).padStart(2, "0");
     const day = String(fechaHora.getDate()).padStart(2, "0");
 
-    const fechaFormateada = `${year}-${month}-${day}`; // Formato YYYY-MM-DD local
+    const fechaFormateada = `${year}-${month}-${day}`;
     const horaFormateada = fechaHora
       .toTimeString()
       .split(" ")[0]
-      .substring(0, 5); // Formato HH:MM local
+      .substring(0, 5);
     if (!reservaPendiente) {
       alert("No hay reserva pendiente para confirmar.");
       return;
     }
-    // Validaciones de cliente y teléfono (corregidas)
+
     if (nombreCliente.trim() === "" || telefonoCliente.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
@@ -331,15 +293,9 @@ export default function SpaPrincipal() {
       return;
     }
 
-    console.log(
-      "País detectado por número telefónico:",
-      phoneNumber.country || "Desconocido"
-    );
-
     const reservaDataToSend = {
-      // No incluyas `id` ni `clientBookingId` aquí; el backend los generará.
-      servicio: "Spa Principal", // Nombre general del servicio de spa
-      especialidad: reservaPendiente.terapia, // La especialidad del servicio
+      servicio: "Spa Principal",
+      especialidad: reservaPendiente.terapia,
       fecha: fechaFormateada,
       hora: horaFormateada,
       precio: reservaPendiente.precio,
@@ -347,14 +303,9 @@ export default function SpaPrincipal() {
       telefonoCliente: telefonoCliente,
       terapeuta: reservaPendiente.terapeutaNombre,
       terapeutaId: reservaPendiente.terapeutaId,
-      sesiones: 1, // Asumiendo 1 sesión para estos servicios de spa, ajusta si es diferente
-      cantidadCupos: 1, // Generalmente 1 cupo por reserva de spa
+      sesiones: 1,
+      cantidadCupos: 1,
     };
-
-    console.log(
-      "DEBUG FRONTEND: Intentando crear reserva de Spa Principal en backend:",
-      reservaDataToSend
-    );
 
     try {
       const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
@@ -373,35 +324,26 @@ export default function SpaPrincipal() {
         throw new Error(errorMessage);
       }
 
-      // El backend devuelve { reserva: {...} } con el id real de la DB y el clientBookingId (UUID)
       const { reserva: confirmedReservation } = await response.json();
-
-      console.log(
-        "DEBUG FRONTEND: Reserva de Spa Principal confirmada por backend:",
-        confirmedReservation
-      );
-
-      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
-      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
-
+      addToCart(confirmedReservation);
       alert(
         `¡Reserva de Spa confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
       );
-
-      // Volver a cargar la disponibilidad para reflejar la hora reservada y actualizar el DatePicker
-      // Esto es crucial para que el DatePicker se actualice
-
-      setReservaPendiente(null); // Cierra el modal de fecha/hora
+      setReservaPendiente(null);
     } catch (error: any) {
       console.error("ERROR al crear la reserva de Spa Principal:", error);
       alert(`No se pudo completar la reserva de Spa: ${error.message}`);
     }
   };
-  // --- OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO ---
+
+  // OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO
   const terapeutaSeleccionadoDisponibilidad = reservaPendiente
-    ? getDisponibilidadForTerapeuta(reservaPendiente.terapeutaNombre)
+    ? getDisponibilidadForTerapeutaAndService(
+        reservaPendiente.terapeutaNombre,
+        reservaPendiente.terapia
+      )
     : undefined;
-  // --- FIN OBTENER DISPONIBILIDAD ---
+
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
@@ -431,7 +373,7 @@ export default function SpaPrincipal() {
                 <div className="flip-front">
                   <img src={t.img} alt={t.title} />
                   <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
+                    <p>{t.title}</p>
                   </div>
                 </div>
                 <div className="flip-back">
@@ -479,8 +421,7 @@ export default function SpaPrincipal() {
                           </button>
                         )
                       )
-                    ) : // Lógica condicional para el botón si no hay opciones específicas
-                    t.isDisabled ? (
+                    ) : t.isDisabled ? (
                       <button
                         type="button"
                         disabled
@@ -526,7 +467,9 @@ export default function SpaPrincipal() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              disponibilidadTerapeuta={terapeutaSeleccionadoDisponibilidad}
+              disponibilidadPorFechaDelServicio={
+                terapeutaSeleccionadoDisponibilidad
+              }
             />
           </div>
         </div>
