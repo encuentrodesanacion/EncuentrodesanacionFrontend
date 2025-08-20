@@ -31,7 +31,7 @@ import "../index.css";
 import Cristal from "../assets/Cristal.jpg"; // ¡Cambia esto por la ruta real de tu imagen!
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobile
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobilea
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
   const [nombre, setNombre] = useState("");
