@@ -35,7 +35,7 @@ app.use(
       "https://www.encuentrodesanacion.com", // Tu dominio principal en Netlify (con HTTPS)
       "https://encuentrodesanacion.com", // Opcional: si tu sitio también resuelve sin 'www'
     ],
-    methods: ["GET", "POST", "PUT", "DELETE"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
@@ -50,6 +50,7 @@ app.use("/api/marketing", marketingRoutes);
 app.use("/api/disponibilidades", disponibilidadRoutes);
 
 // Crear reserva autenticada (ejemplo de ruta directa) - Asegúrate de que esto siga siendo relevante
+app.options("/api/reservar-directa", cors());
 app.post("/api/reservar-directa", webpayController.crearReservaDirecta);
 app.post("/api/comentarios", comentarioController.crearComentario);
 

@@ -7,14 +7,19 @@ import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
-
-import Terapeuta17 from "../assets/Terapeuta17.jpeg";
 import Terapeuta30 from "../assets/Terapeuta30.jpeg";
+import Terapeuta17 from "../assets/Terapeuta17.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta29 from "../assets/Terapeuta29.jpeg";
-import creadordigital from "../assets/creadorvirtual.jpg";
-import DatePicker from "react-datepicker";
+import Terapeuta13 from "../assets/Terapeuta13.jpeg";
+import Terapeuta14 from "../assets/Terapeuta14.jpeg";
+import Terapeuta15 from "../assets/Terapeuta15.jpeg";
 import creadorVirtual from "../assets/creadorvirtual.jpg";
+import Terapeuta25 from "../assets/Terapeuta25.jpeg";
+import Terapeuta24 from "../assets/Terapeuta24.jpeg";
+import Terapeuta28 from "../assets/Terapeuta28.jpeg";
+import DatePicker from "react-datepicker";
+import Terapeuta23 from "../assets/Terapeuta23.jpeg";
 import "react-datepicker/dist/react-datepicker.css";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
@@ -25,7 +30,6 @@ import {
   ReservaPendiente,
 } from "../types/index";
 import parsePhoneNumberFromString from "libphonenumber-js";
-
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function SpaLittle() {
@@ -62,17 +66,17 @@ export default function SpaLittle() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
-          const servicioDelRow = row.especialidad_servicio;
+          const especialidadDelRow = row.especialidad_servicio; // Nuevo: obtenemos el nombre del servicio/especialidad
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
             terapeutaIdDelRow === null ||
-            !servicioDelRow
+            !especialidadDelRow // Nuevo: validamos la especialidad
           ) {
             // Valida también el ID
             console.warn(
-              `DEBUG SpaLittle: Fila de disponibilidad sin nombre de terapeuta o ID de terapeuta (${terapeutaIdDelRow}). Será ignorada.`,
+              `DEBUG SpaLittle: Fila de disponibilidad sin nombre, ID de terapeuta, o especialidad (${terapeutaIdDelRow}). Será ignorada.`,
               row
             );
             return;
@@ -82,11 +86,10 @@ export default function SpaLittle() {
             aggregatedDisponibilidades.set(nombreDelTerapeuta, {
               nombreTerapeuta: nombreDelTerapeuta,
               terapeutaId: terapeutaIdDelRow, // Asigna el ID correcto aquí
-              disponibilidadPorServicio: {},
+              disponibilidadPorServicio: {}, // Corregido a la nueva propiedad
             });
           } else {
             // Si el terapeuta ya existe en el mapa, asegúrate que el ID se asignó
-            // (esto es por si la primera fila para un terapeuta tenía terapeutaId: undefined)
             const existingTerapeuta =
               aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
             if (
@@ -99,8 +102,13 @@ export default function SpaLittle() {
 
           const currentTerapeutaDisp =
             aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
-          if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
-            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
+
+          // Nuevo: Asegúrate de que la disponibilidad para el servicio exista
+          if (
+            !currentTerapeutaDisp.disponibilidadPorServicio[especialidadDelRow]
+          ) {
+            currentTerapeutaDisp.disponibilidadPorServicio[especialidadDelRow] =
+              {};
           }
 
           const dias = Array.isArray(row.diasDisponibles)
@@ -121,43 +129,32 @@ export default function SpaLittle() {
           }
 
           dias.forEach((dia: string) => {
+            // Nuevo: Accede a la disponibilidad a través de la especialidad
             if (
-              !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                dia
-              ]
+              !currentTerapeutaDisp.disponibilidadPorServicio[
+                especialidadDelRow
+              ][dia]
             ) {
-              currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                dia
-              ] = [];
+              currentTerapeutaDisp.disponibilidadPorServicio[
+                especialidadDelRow
+              ][dia] = [];
             }
             horas.forEach((hora: string) => {
+              // Nuevo: Accede a la disponibilidad a través de la especialidad
               if (
-                !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                  dia
-                ].includes(hora)
+                !currentTerapeutaDisp.disponibilidadPorServicio[
+                  especialidadDelRow
+                ][dia].includes(hora)
               ) {
-                currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                  dia
-                ].push(hora);
+                currentTerapeutaDisp.disponibilidadPorServicio[
+                  especialidadDelRow
+                ][dia].push(hora);
               }
             });
-            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
+            currentTerapeutaDisp.disponibilidadPorServicio[especialidadDelRow][
               dia
             ].sort();
           });
-
-          console.log(
-            `DEBUG SpaLittle: Procesando fila para ${nombreDelTerapeuta} (ID: ${terapeutaIdDelRow}):`,
-            row
-          );
-          console.log(
-            `DEBUG SpaLittle: Disponibilidad procesada para ${nombreDelTerapeuta} (currentTerapeutaDisp):`,
-            currentTerapeutaDisp
-          );
-          console.log(
-            `DEBUG SpaLittle: Disponibilidad por fecha para ${nombreDelTerapeuta} en ${dias[0]}:`,
-            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]
-          );
         });
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
         console.log(
@@ -176,17 +173,21 @@ export default function SpaLittle() {
   }, []); // El array vacío asegura que se ejecute solo una vez al montar
 
   // Función para obtener la disponibilidad de un terapeuta específico
-  const getDisponibilidadForTerapeutaAndService = (
+  const getDisponibilidadForTerapeuta = (
     terapeutaNombre: string,
-    servicioNombre: string
+    especialidad: string // Nuevo: agregamos el parámetro especialidad
   ): { [fecha: string]: string[] } | undefined => {
-    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-    if (!terapeutaDisp) {
+    // Ahora usa el Map 'disponibilidadesProcesadas' para obtener el objeto ya agregado
+    console.log(
+      `DEBUG SpaLittle: Buscando disponibilidad para terapeuta: ${terapeutaNombre} y especialidad: ${especialidad}`
+    );
+    const foundDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    if (!foundDisp) {
       return undefined;
     }
-    return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
+    // Retorna la disponibilidad por fecha para la especialidad específica
+    return foundDisp.disponibilidadPorServicio[especialidad];
   };
-
   // --- FIN OBTENER DISPONIBILIDAD ---
 
   // Tu lista de terapias - **IMPORTANTE: ASEGÚRATE DE QUE LOS NOMBRES DE TERAPEUTAS AQUÍ COINCIDAN EXACTAMENTE CON LOS NOMBRES EN TU BASE DE DATOS**
@@ -236,68 +237,6 @@ export default function SpaLittle() {
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: true, // Agregado para deshabilitar
     },
-    // {
-    //   img: creadordigital,ass
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeuta_id: 10,
-    //   description:
-    //     " Este oráculo regresivo nos regala la oportunidad de explorar nuestro pasado y lograr incorporar experiencias, recuerdos de otras encarnaciones a nuestra vida actual logrando identificar emociones como la ira , culpa, ansiedad ,pena y traumas no resueltos desencadenando problemas emocionales y psicológicos",
-    //   precio: 100,
-    //   opciones: [{ sesiones: 1, precio: 50 }],
-    // },
-    // {
-    //   img: Terapeuta5,
-    //   title: "Purificación y limpieza de energías negativas",
-    //   terapeuta: "Sandra Da Silva",
-    //   terapeuta_id: 9,
-    //   description:
-    //     "¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
-    //   precio: 16000,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    // },
-
-    // {
-    //   img: Terapeuta14,
-    //   title: "Armonía Magnética para la Abundancia",
-    //   terapeuta: "Ana Luisa Solvervicens",
-    //   terapeuta_id: 13,
-    //   description:
-    //     "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
-    //   precio: 16000,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    // },
-    // {
-    //   img: Terapeuta15,
-    //   title: "Registros Akáshicos ",
-    //   terapeuta: "Laura Vicens",
-    //   terapeuta_id: 14,
-    //   description:
-    //     "Los registros  Akashicos son una fuente de información espiritual  donde están guardadas las memorias de tu alma. A través de un viaje personal y canalización puedes recibir mensajes de tus guías, ancestros y seres de luz para comprender tu vida,sanar bloqueos y reconectar con tu propósito.",
-    //   precio: 16000,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    // },
-    // {
-    //   img: Terapeuta8,
-    //   title: "Tarot Predictivo y/o Terapia con Oráculos",
-    //   terapeuta: "Paola Quintero",
-    //   terapeuta_id: 11,
-    //   description:
-    //     "Cuenta la leyenda que Odín, buscando la sabiduría, se sacrifica y de su sangre brotan las runas. Estas, además de ser un alfabeto, son un oráculo con mensajes poderosos que te guiarán en tu camino. La lectura de runas es una herramienta de autoconocimiento y orientación que te permite comprender tu presente, explorar el pasado y vislumbrar el futuro, obteniendo claridad para tomar decisiones importantes. ¿Te sientes agotado/a sin mayor razón? ¿Cansado/a de atraer situaciones y personas tóxicas a tu vida? ¿Sientes que tus caminos están cerrados en el amor, el dinero y la salud? ¿No logras dormir bien por las noches o te despiertas con pesadillas? ¿Sientes presencias extrañas en tu hogar u oficina? ¿Estás irritable y tienes cambios bruscos de humor? ¡Está es la Terapia adecuada para ti! Es un proceso de sanación profunda que elimina bloqueos energéticos, entidades negativas y energías de baja vibración que afectan tu bienestar físico, emocional y espiritual, restaurando tu armonía y vitalidad.",
-    //   precio: 16000,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    // },
-
-    // {
-    //   img: creadorVirtual,
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeuta_id: 10, // Asumiendo que este es el ID de Alice Basay
-    //   description: "Correo de Prueba.",
-    //   precio: 16000,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    //   isDisabled: true,
-    // },
   ];
 
   // Mostrar formulario para seleccionar fecha y hora
@@ -338,12 +277,12 @@ export default function SpaLittle() {
     const horaFormateada = fechaHora
       .toTimeString()
       .split(" ")[0]
-      .substring(0, 5);
+      .substring(0, 5); // Formato HH:MM local
     if (!reservaPendiente) {
       alert("No hay reserva pendiente para confirmar.");
       return;
     }
-    // Validaciones de cliente y teléfono
+    // Validaciones de cliente y teléfono (corregidas)
     if (nombreCliente.trim() === "" || telefonoCliente.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
@@ -363,8 +302,8 @@ export default function SpaLittle() {
     );
 
     const reservaDataToSend = {
-      // El backend `crearReservaDirecta` generará el `id` y `clientBookingId` (UUID).
-      servicio: "Spa Little", // Nombre general del servicio de Spa Little
+      // No incluyas `id` ni `clientBookingId` aquí; el backend los generará.
+      servicio: "Spa Little", // Nombre general del servicio de spa
       especialidad: reservaPendiente.terapia, // La especialidad del servicio
       fecha: fechaFormateada,
       hora: horaFormateada,
@@ -373,8 +312,8 @@ export default function SpaLittle() {
       telefonoCliente: telefonoCliente,
       terapeuta: reservaPendiente.terapeutaNombre,
       terapeutaId: reservaPendiente.terapeutaId,
-      sesiones: 1, // Asumiendo 1 sesión para estos servicios
-      cantidadCupos: 1, // Generalmente 1 cupo por reserva
+      sesiones: 1, // Asumiendo 1 sesión para estos servicios de spa, ajusta si es diferente
+      cantidadCupos: 1, // Generalmente 1 cupo por reserva de spa
     };
 
     console.log(
@@ -395,38 +334,42 @@ export default function SpaLittle() {
         const errorBody = await response.json();
         const errorMessage =
           errorBody.mensaje ||
-          `Error al confirmar la reserva de Spa Little: ${response.status} ${response.statusText}`;
+          `Error al confirmar la reserva de Spa: ${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
       }
 
-      const { reserva: confirmedReservation } = await response.json(); // El backend devuelve { reserva: {...} }
+      // El backend devuelve { reserva: {...} } con el id real de la DB y el clientBookingId (UUID)
+      const { reserva: confirmedReservation } = await response.json();
 
       console.log(
         "DEBUG FRONTEND: Reserva de Spa Little confirmada por backend:",
         confirmedReservation
       );
 
-      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
+      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
+      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
 
       alert(
-        `¡Reserva de Spa Little confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
+        `¡Reserva de Spa confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
       );
 
       // Volver a cargar la disponibilidad para reflejar la hora reservada y actualizar el DatePicker
-      // Crucial para que el DatePicker se actualice
+      // Esto es crucial para que el DatePicker se actualice
 
       setReservaPendiente(null); // Cierra el modal de fecha/hora
     } catch (error: any) {
-      console.error("ERROR creating Spa Little reservation:", error);
-      alert(`No se pudo completar la reserva de Spa Little: ${error.message}`);
+      console.error("ERROR al crear la reserva de Spa Little:", error);
+      alert(`No se pudo completar la reserva de Spa: ${error.message}`);
     }
   };
-  const disponibilidadParaServicioEspecifico = reservaPendiente
-    ? getDisponibilidadForTerapeutaAndService(
+  // --- OBTENER LA DISPONIBILIDAD DEL TERAPEUTA SELECCIONADO ---
+  const terapeutaSeleccionadoDisponibilidad = reservaPendiente
+    ? getDisponibilidadForTerapeuta(
         reservaPendiente.terapeutaNombre,
-        reservaPendiente.terapia
+        reservaPendiente.terapia // Pasamos el nombre de la especialidad
       )
     : undefined;
+  // --- FIN OBTENER DISPONIBILIDAD ---
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
@@ -444,9 +387,7 @@ export default function SpaLittle() {
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Spa Little
       </h2>
-      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        {/* AQUI VA LA FECHA */}
-      </h1>
+      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6"></h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">
         {terapias.map((t, i) => (
@@ -456,7 +397,7 @@ export default function SpaLittle() {
                 <div className="flip-front">
                   <img src={t.img} alt={t.title} />
                   <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
+                    <p>{t.title}</p>
                   </div>
                 </div>
                 <div className="flip-back">
@@ -475,7 +416,7 @@ export default function SpaLittle() {
                   >
                     {t.opciones && t.opciones.length > 0 ? (
                       t.opciones.map((op: OpcionSesion, j: number) =>
-                        t.isDisabled ? ( // Check isDisabled here
+                        t.isDisabled ? (
                           <button
                             key={j}
                             type="button"
@@ -504,8 +445,7 @@ export default function SpaLittle() {
                           </button>
                         )
                       )
-                    ) : // Lógica condicional para el botón si no hay opciones específicas
-                    t.isDisabled ? ( // Check isDisabled here
+                    ) : t.isDisabled ? (
                       <button
                         type="button"
                         disabled
@@ -537,7 +477,6 @@ export default function SpaLittle() {
           </div>
         ))}
       </div>
-
       {reservaPendiente && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
@@ -552,10 +491,8 @@ export default function SpaLittle() {
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
               onClose={() => setReservaPendiente(null)}
-              // --- CAMBIO CLAVE AQUÍ ---
-              // Pasamos la disponibilidad filtrada por servicio.
               disponibilidadPorFechaDelServicio={
-                disponibilidadParaServicioEspecifico
+                terapeutaSeleccionadoDisponibilidad
               }
             />
           </div>

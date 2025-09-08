@@ -46,7 +46,7 @@ export default function TalleresMensuales() {
       time: "19:00",
       instructor: "María Gabriela Pástor",
       instructorId: 26,
-      isDisabled: false,
+      isDisabled: true,
     },
     {
       id: "Taller-Yoga-Para-las-Articulaciones",
@@ -58,7 +58,7 @@ export default function TalleresMensuales() {
       time: "19:00",
       instructor: "Veronica Chaparro",
       instructorId: 23,
-      isDisabled: false,
+      isDisabled: true,
     },
     {
       id: "Taller-de-Escribir-sobre-Raices",
@@ -70,7 +70,7 @@ export default function TalleresMensuales() {
       time: "20:00",
       instructor: "Katalina Rencoret",
       instructorId: 18,
-      isDisabled: false,
+      isDisabled: true,
     },
     // {
     //   id: "taller-meditacion-jul",

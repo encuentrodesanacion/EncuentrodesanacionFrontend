@@ -23,6 +23,7 @@ import FindeTalleres from "../assets/FindeTalleres.jpeg";
 import { Link } from "react-router-dom";
 import CartIcon from "../components/CartIcon";
 import SpaLittle from "../assets/Spa Little.jpeg";
+import "../index.css";
 
 // Importa tu imagen de fondo aquí.
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
@@ -289,10 +290,10 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/tratamientointegral"
+                      to="/" //tratamientointegral
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ver más detalles
+                      Cerrado por Fiestas Patrias
                     </Link>
                   </div>
                 ),
@@ -676,7 +677,7 @@ const App = () => {
         </div>
       </footer>
       {/* WhatsApp Floating Button */}
-      <a
+      {/* <a
         href="https://wa.me/56976557902?text=Deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20los%20servicios."
         target="_blank"
         rel="noopener noreferrer"
@@ -696,7 +697,7 @@ const App = () => {
             );
           }}
         />
-      </a>
+      </a> */}
     </div>
   );
 };
