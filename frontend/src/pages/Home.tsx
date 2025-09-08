@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import PermanentPopup from "../components/PermanentPopup";
 import {
   Menu,
   X,
@@ -676,6 +677,7 @@ const App = () => {
           </div>
         </div>
       </footer>
+      <PermanentPopup />
       {/* WhatsApp Floating Button */}
       {/* <a
         href="https://wa.me/56976557902?text=Deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20los%20servicios."
