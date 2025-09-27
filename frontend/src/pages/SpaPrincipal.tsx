@@ -12,7 +12,7 @@ import Ximena from "../assets/ximena.jpg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta12 from "../assets/Terapeuta12.jpeg";
-import Terapeuta23 from "../assets/Terapeuta23.jpeg";
+import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
 import anaaros from "../assets/anaaros.jpg";
 import ReservaConFecha from "../components/ReservaConFecha";
@@ -158,12 +158,12 @@ export default function SpaPrincipal() {
   const terapias: TerapiaItem[] = [
     {
       img: Terapeuta11,
-      title: "SANACIÓN NIÑ@ INTERIOR",
+      title: "Sanación niñ@ interior",
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
         "A través de diversos ejercicios prácticos, podremos conectarnos con tu niño o niña interior, identificado heridas de infancia y pequeños ejercicios para mejorar tu propio vinculo",
-      precio: 18000,
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -175,7 +175,7 @@ export default function SpaPrincipal() {
       terapeuta_id: 13,
       description:
         "Abre camino con Fuego Sagrado es un ritual que utiliza una vela para desbloquear obstáculos y atraer nuevas oportunidades. Durante la sesión, se interpreta la danza de la llama, el color y la forma de la cera, descubriendo las energías que necesitas equilibrar y potenciar. Este ritual te invita a sanar bloqueos, atraer abundancia y clarificar tucamino, transformando la luz del fuego en guía y protecciónpara tu viaje espiritual",
-      precio: 25000,
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -187,7 +187,7 @@ export default function SpaPrincipal() {
       terapeuta_id: 11,
       description:
         "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
-      precio: 35000,
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -204,13 +204,13 @@ export default function SpaPrincipal() {
     },
 
     {
-      img: Terapeuta23,
+      img: loreto,
       title: "Péndulo Hebreo",
       terapeuta: "Loreto De la Fuente",
       terapeuta_id: 23,
       description:
         "Es una terapia que ayuda a reconfigurar los centros energéticos del cuerpo físico y etéreo. Además utilizo la gemoterapia para acentuar el balance en cada centro. Puedo detectar distintas enfermedades que se impregnan en el huevo energético.",
-      precio: 25000,
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -220,8 +220,8 @@ export default function SpaPrincipal() {
       terapeuta: "Ximena Jara",
       terapeuta_id: 28,
       description:
-        "¿terapia que ayuda a sanar desde tu alma, a nivel físico, emocional, espiritual y sicólogo. Te reconectarás a tu Ser Divino.",
-      precio: 30000,
+        "Terapia que ayuda a sanar desde tu alma, a nivel físico, emocional, espiritual y sicólogo. Te reconectarás a tu Ser Divino.",
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
@@ -243,7 +243,7 @@ export default function SpaPrincipal() {
       terapeuta_id: 28,
       description:
         "está terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
-      precio: 25000,
+      precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 25000 }],
     },
@@ -385,7 +385,7 @@ export default function SpaPrincipal() {
         Bienvenido al Spa Principal
       </h2>
       <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 31 de Julio al 02 de Agosto 2025)
+        (Del 01 al 03 de Octubre 2025)
       </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">
