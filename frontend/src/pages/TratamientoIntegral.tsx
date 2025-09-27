@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
 import { useCart, Reserva } from "../pages/CartContext";
 import CartIcon from "../components/CartIcon";
@@ -220,22 +220,53 @@ export default function TratamientoHolistico() {
           Tratamiento Integral
         </h1>
         <CartIcon />
+        <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
+          <Link
+            to="/inicio"
+            className="text-blue-500 hover:text-gray-800 font-bold" // Ajuste de color para contraste en fondo blanco
+          >
+            Inicio
+          </Link>
+          <Link
+            to="/terapeutasdeluz"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Terapeutas de la Luz
+          </Link>
+          <Link
+            to="/tratamientointegral"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Tratamiento Int.
+          </Link>
+          <Link
+            to="/tallermensual"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Talleres Mensuales
+          </Link>
+        </div>
       </header>
 
-      <button
+      {/* <button
         onClick={() => navigate("/")}
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Volver al Inicio
-      </button>
+      </button> */}
 
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Tratamiento Integral
       </h2>
+      <br></br>
+      <br></br>
+
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
         Este tratamiento incluye sesiones personalizadas orientadas a tu
         bienestar físico, emocional y espiritual.
       </p>
+      <br></br>
+      <br></br>
 
       <div className="flip-wrapper-container mt-10">
         {terapias.map(
