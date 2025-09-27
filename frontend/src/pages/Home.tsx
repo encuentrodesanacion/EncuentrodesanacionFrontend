@@ -427,7 +427,7 @@ const App = () => {
                 excerpt: "Espacio donde nuevos terapeutas están creciendo...",
                 buttonText: "Reserva tu hora",
                 link: "/spalittle",
-                isDisabled: false,
+                isDisabled: true,
               },
             ].map((post, index) => (
               <div

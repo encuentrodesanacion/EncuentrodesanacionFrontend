@@ -231,7 +231,7 @@ export default function SpaPrincipal() {
       terapeuta: "Sandra Da Silva",
       terapeuta_id: 28,
       description:
-        "es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
+        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
@@ -242,10 +242,10 @@ export default function SpaPrincipal() {
       terapeuta: "Ana Aros",
       terapeuta_id: 28,
       description:
-        "está terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
+        "Esta terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
       precio: 16000,
       isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 25000 }],
+      opciones: [{ sesiones: 1, precio: 16000 }],
     },
     // {
     //   img: Terapeuta28,
