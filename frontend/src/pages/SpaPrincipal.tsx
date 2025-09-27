@@ -8,12 +8,13 @@ import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes
 import Terapeuta11 from "../assets/Terapeuta11.jpeg";
-import Terapeuta8 from "../assets/Terapeuta8.jpg";
+import Ximena from "../assets/ximena.jpg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
-import Terapeuta25 from "../assets/Terapeuta25.jpeg";
-import Terapeuta24 from "../assets/Terapeuta24.jpeg";
+import Terapeuta1 from "../assets/Terapeuta1.jpg";
+import Terapeuta12 from "../assets/Terapeuta12.jpeg";
 import Terapeuta23 from "../assets/Terapeuta23.jpeg";
-import Terapeuta28 from "../assets/Terapeuta28.jpeg";
+import terapeuta5 from "../assets/Terapeuta5.jpg";
+import anaaros from "../assets/anaaros.jpg";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
   OpcionSesion,
@@ -157,72 +158,94 @@ export default function SpaPrincipal() {
   const terapias: TerapiaItem[] = [
     {
       img: Terapeuta11,
-      title: "Constelación Familiar Individual",
+      title: "SANACIÓN NIÑ@ INTERIOR",
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
-        "Es una herramienta terapéutica para tratar conflictos personales, familiares y laborales mediante la visualización de representantes que nos permiten tomar decisiones y reconciliarnos con nuestro linaje",
-      precio: 16000,
-      isDisabled: true,
+        "A través de diversos ejercicios prácticos, podremos conectarnos con tu niño o niña interior, identificado heridas de infancia y pequeños ejercicios para mejorar tu propio vinculo",
+      precio: 18000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
     {
       img: Terapeuta14,
-      title: "Armonía Magnética para la Abundancia",
+      title: "Abrecaminos con Fuego Sagrado",
       terapeuta: "Ana Luisa Solervicens",
       terapeuta_id: 13,
       description:
-        "Esta terapia armoniza tu energía con la frecuencia dorada de la prosperidad, utilizando símbolos sagrados y vibraciones invisibles, despierta en ti el flujo natural de dar y recibir. Es un llamado silencioso a abrir el alma, liberar los miedos y permitir que la abundancia florezca desde adentro hacia afuera.",
-      precio: 16000,
-      isDisabled: true,
+        "Abre camino con Fuego Sagrado es un ritual que utiliza una vela para desbloquear obstáculos y atraer nuevas oportunidades. Durante la sesión, se interpreta la danza de la llama, el color y la forma de la cera, descubriendo las energías que necesitas equilibrar y potenciar. Este ritual te invita a sanar bloqueos, atraer abundancia y clarificar tucamino, transformando la luz del fuego en guía y protecciónpara tu viaje espiritual",
+      precio: 25000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
     {
-      img: Terapeuta8,
-      title: "Tarot Predictivo y/o Terapéutico",
-      terapeuta: "Paola Quintero",
+      img: Terapeuta1,
+      title: "Canalización Energética",
+      terapeuta: "Brenda Rivas",
       terapeuta_id: 11,
       description:
-        "El Tarot puede proporcionarte una mirada profunda y libre de juicios de una situación, periodo de tiempo o sistema familiar. Te dará herramientas y consejos prácticos para que llegues a la mejor resolución de un dilema o problema. Los mensajes se canalizan con ayuda de tus guías espirituales, quienes buscan sanarte y esclarecerte.",
-      precio: 16000,
-      isDisabled: true,
+        "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
+      precio: 35000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
-      img: Terapeuta25,
-      title: "Códigos Emocionales",
-      terapeuta: "Mara Pol",
-      terapeuta_id: 25,
+      img: Terapeuta12,
+      title: "Tarot Terapeútico",
+      terapeuta: "Katalina Rencoret",
+      terapeuta_id: 18,
       description:
-        "Los Códigos Emocionales son una técnica de sanación energética que permite identificar y liberar emociones atrapadas que afectan el cuerpo, la mente y el alma. Utilizando test muscular y un imán,o un péndulo  a diatancia se accede al subconsciente para soltar bloqueos emocionales de forma suave, segura y no invasiva.",
+        "Mi enfoque combina lo predictivo con lo evolutivo: el tarot como un espejo que revela tu pasado, ilumina tu presente y abre caminos hacia un futuro que puedes transformar. A través de cartas, oráculos, escritura y meditaciones, te acompaño en un proceso de sanación emocional y autoconocimiento, para que tomes decisiones con mayor claridad y confianza. Lo práctico, la honestidad y la coherencia son la base",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
     {
       img: Terapeuta23,
-      title: "Psicoterapia de un Curso de Milagros",
-      terapeuta: "Veronica Chaparro",
+      title: "Péndulo Hebreo",
+      terapeuta: "Loreto De la Fuente",
       terapeuta_id: 23,
       description:
-        "Es una sesión guiada por el Espíritu Santo. Vamos a la causa del efecto que adolece en el presente al valiente. El camino es encontrar la raíz emocional. Pasamos por constelar (entregar el problema a quién corresponda y ordenar el clan) y finaliza con  el auto perdón por el error de percepción.",
-      precio: 16000,
-      isDisabled: true,
+        "Es una terapia que ayuda a reconfigurar los centros energéticos del cuerpo físico y etéreo. Además utilizo la gemoterapia para acentuar el balance en cada centro. Puedo detectar distintas enfermedades que se impregnan en el huevo energético.",
+      precio: 25000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
-      img: Terapeuta28,
-      title: "Decodificación de Útero",
-      terapeuta: "Andrea Madariaga",
+      img: Ximena,
+      title: "Sanación Reconectiva",
+      terapeuta: "Ximena Jara",
       terapeuta_id: 28,
       description:
-        "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
-      precio: 16000,
-      isDisabled: true,
+        "¿terapia que ayuda a sanar desde tu alma, a nivel físico, emocional, espiritual y sicólogo. Te reconectarás a tu Ser Divino.",
+      precio: 30000,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: terapeuta5,
+      title: "Purificación y Limpieza de Energías Negativas",
+      terapeuta: "Sandra Da Silva",
+      terapeuta_id: 28,
+      description:
+        "es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: anaaros,
+      title: "Sanación de útero",
+      terapeuta: "Ana Aros",
+      terapeuta_id: 28,
+      description:
+        "está terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
+      precio: 25000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 25000 }],
     },
     // {
     //   img: Terapeuta28,
