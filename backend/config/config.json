@@ -1,16 +1,16 @@
 {
   "development": {
-    "username": "encuentro_sanacion_user",
-    "password": "test123",
-    "database": "encuentro_sanacion_db",
-    "host": "127.0.0.1",
+    "username": "u3t313sdspokfv",
+    "password": "pd34b1f413e56249d665e611db0415a4d03896defad8c7745863dff9870876664",
+    "database": "d12thfls31rokh",
+    "host": "cd7f19r8oktbkp.cluster-czrs8kj4isg7.us-east-1.rds.amazonaws.com",
     "port": 5432,
     "dialect": "postgres",
     "seederStorage": "sequelize",
     "seederStorageTableName": "sequelize_data",
     "dialectOptions": {
       "ssl": {
-        "require": false,
+        "require": true,
         "rejectUnauthorized": false
       }
     }

@@ -24,6 +24,8 @@ if (process.env.DATABASE_URL) {
   });
 } else {
   // Configuración para entorno LOCAL usando variables de backend/.env
+  const useSSL = !!process.env.DB_HOST?.includes("rds.amazonaws.com"); // true si estás apuntando a RDS
+
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -31,12 +33,12 @@ if (process.env.DATABASE_URL) {
     {
       host: process.env.DB_HOST,
       dialect: process.env.DB_DIALECT || "postgres",
-      logging: true, // Logs de SQL para depuración local
+      logging: true,
+      port: process.env.DB_PORT,
       dialectOptions: {
-        ssl: {
-          require: false, // Deshabilitar SSL para DB local
-          rejectUnauthorized: false,
-        },
+        ssl: useSSL
+          ? { require: true, rejectUnauthorized: false } // RDS/Heroku
+          : false, // DB local real
       },
       port: process.env.DB_PORT, // Asegúrate de tener DB_PORT en tu .env
     }
