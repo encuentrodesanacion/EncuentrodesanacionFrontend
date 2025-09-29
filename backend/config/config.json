@@ -11,7 +11,8 @@
     "dialectOptions": {
       "ssl": {
         "require": true,
-        "rejectUnauthorized": false
+        "rejectUnauthorized": true,
+        "ca": ["./certs/rds-ca-bundle.pem"]
       }
     }
   },

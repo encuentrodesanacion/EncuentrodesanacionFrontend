@@ -14,6 +14,7 @@ import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta12 from "../assets/Terapeuta12.jpeg";
 import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
+import terapeuta28 from "../assets/Terapeuta28.jpeg";
 import anaaros from "../assets/anaaros.jpg";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
@@ -247,17 +248,17 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    // {
-    //   img: Terapeuta28,
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeuta_id: 10,
-    //   description:
-    //     "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
-    //   precio: 16000,
-    //   isDisabled: false,
-    //   opciones: [{ sesiones: 1, precio: 16000 }],
-    // },
+    {
+      img: terapeuta28,
+      title: "Regresión",
+      terapeuta: "Alice Basay",
+      terapeuta_id: 10,
+      description:
+        "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
   ];
 
   const reservar = (

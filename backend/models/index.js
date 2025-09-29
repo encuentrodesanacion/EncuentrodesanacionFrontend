@@ -11,21 +11,7 @@ let sequelize;
 
 // Usar DATABASE_URL para Heroku (producción)
 if (process.env.DATABASE_URL) {
-  sequelize = new Sequelize(process.env.DATABASE_URL, {
-    dialect: "postgres",
-    protocol: "postgres",
-    dialectOptions: {
-      ssl: {
-        require: true,
-        rejectUnauthorized: false,
-      },
-    },
-    logging: false, // Desactivar logs de SQL en producción
-  });
-} else {
-  // Configuración para entorno LOCAL usando variables de backend/.env
-  const useSSL = !!process.env.DB_HOST?.includes("rds.amazonaws.com"); // true si estás apuntando a RDS
-
+  const useSSL = process.env.DB_HOST?.includes("rds.amazonaws.com");
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -33,17 +19,26 @@ if (process.env.DATABASE_URL) {
     {
       host: process.env.DB_HOST,
       dialect: process.env.DB_DIALECT || "postgres",
+      port: process.env.DB_PORT || 5432,
       logging: true,
-      port: process.env.DB_PORT,
-      dialectOptions: {
-        ssl: useSSL
-          ? { require: true, rejectUnauthorized: false } // RDS/Heroku
-          : false, // DB local real
-      },
-      port: process.env.DB_PORT, // Asegúrate de tener DB_PORT en tu .env
+      dialectOptions: useSSL
+        ? {
+            ssl: {
+              require: true,
+              rejectUnauthorized: true,
+              ca: fs
+                .readFileSync(
+                  path.join(__dirname, "../certs/rds-ca-bundle.pem")
+                )
+                .toString(),
+            },
+          }
+        : {},
     }
   );
 }
+
+module.exports = { sequelize, Sequelize, DataTypes };
 
 const db = {};
 
