@@ -8,7 +8,7 @@ function PaymentFailurePage() {
   const [errorCode, setErrorCode] = useState<string | null>(null);
 
   useEffect(() => {
-    // Obtener el token y el código de error de la URL
+    // Obtener el token y el código de error de la URL asd
     const params = new URLSearchParams(location.search);
     const receivedToken = params.get("token");
     const receivedErrorCode = params.get("code"); // Si tu backend envía un 'code'
