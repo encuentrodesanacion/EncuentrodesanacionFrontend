@@ -41,7 +41,7 @@ const imagenesData: ImagenData[] = [
     precio: 40000,
     duracion:
       "Inicia el 14 de Agosto a las 19:30hrs   ( SE REALIZA TODOS LOS JUEVES DEL MES A LA MISMA HORA)",
-    isDisabled: false,
+    isDisabled: true,
   },
   {
     id: "reiki-usui-2",
@@ -55,7 +55,7 @@ const imagenesData: ImagenData[] = [
     precio: 40000,
     duracion:
       "Inicia el 16 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
-    isDisabled: false,
+    isDisabled: true,
   },
   {
     id: "Tarot-Evolutivo",
@@ -69,19 +69,19 @@ const imagenesData: ImagenData[] = [
       "Inicia el 12 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
     terapeutaId: 27,
     precio: 40000,
-    isDisabled: false,
+    isDisabled: true,
   },
-  {
-    id: "Alice-Basay",
-    src: creadorvirtual,
-    alt: "Regresión",
-    descripcion: "Prueba Correo",
-    link: "#",
-    terapeuta: "Alice Basay",
-    duracion: "tres",
-    terapeutaId: 10,
-    precio: 40000,
-  },
+  // {
+  //   id: "Alice-Basay",
+  //   src: creadorvirtual,
+  //   alt: "Regresión",
+  //   descripcion: "Prueba Correo",
+  //   link: "#",
+  //   terapeuta: "Alice Basay",
+  //   duracion: "tres",
+  //   terapeutaId: 10,
+  //   precio: 40000,
+  // },
 ];
 
 export default function Terapias() {
