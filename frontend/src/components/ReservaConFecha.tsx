@@ -117,6 +117,7 @@ export default function ReservaConFecha({
         onChange={(date: Date | null) => setFechaHora(date)}
         showTimeSelect
         timeFormat="HH:mm"
+        timeIntervals={15}
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
         placeholderText="SELECCIONA fecha y hora"
