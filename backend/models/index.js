@@ -8,10 +8,12 @@ const basename = path.basename(__filename);
 const env = process.env.NODE_ENV || "development";
 
 let sequelize;
+// --- INICIO: Nuevo Bloque de Conexión Unificado ---
+// Usaremos DB_HOST como condición principal. Si existe, asumimos que estamos en producción/staging.
+if (process.env.DB_HOST) {
+  console.log("DEBUG: Usando conexión detallada (DB_HOST detectado).");
+  const useSSL = process.env.DB_HOST.includes("rds.amazonaws.com");
 
-// Usar DATABASE_URL para Heroku (producción)
-if (process.env.DATABASE_URL) {
-  const useSSL = process.env.DB_HOST?.includes("rds.amazonaws.com");
   sequelize = new Sequelize(
     process.env.DB_NAME,
     process.env.DB_USER,
@@ -21,10 +23,15 @@ if (process.env.DATABASE_URL) {
       dialect: process.env.DB_DIALECT || "postgres",
       port: process.env.DB_PORT || 5432,
       logging: true,
+      // Aquí puedes añadir la configuración de pool si no la tienes ya.
+
       dialectOptions: useSSL
         ? {
             ssl: {
+              // Forzamos SSL
               require: true,
+              // El rechazo de unauthorized puede ser problemático si el certificado no está perfecto.
+              // Lo dejamos como estaba en tu código, pero es la línea más sensible:
               rejectUnauthorized: true,
               ca: fs
                 .readFileSync(
@@ -33,10 +40,19 @@ if (process.env.DATABASE_URL) {
                 .toString(),
             },
           }
-        : {},
+        : {}, // Si no es SSL (ej. localhost), no se usa dialectOptions.
     }
   );
+} else {
+  // Aquí puedes añadir tu configuración de desarrollo local (ej. SQLite o una DB local simple)
+  // O simplemente dejarlo vacío si confías en que DB_HOST siempre estará en prod.
+  // IMPORTANTE: Para desarrollo local con Postgres/MySQL, se debe definir aquí.
+  console.warn(
+    "ADVERTENCIA: No se encontró DB_HOST. Usando modo de desarrollo (o fallará si no está configurado)."
+  );
+  // Si estás usando un archivo de configuración para desarrollo (config.json) puedes cargarlo aquí.
 }
+// --- FIN: Nuevo Bloque de Conexión Unificado ---
 
 module.exports = { sequelize, Sequelize, DataTypes };
 
