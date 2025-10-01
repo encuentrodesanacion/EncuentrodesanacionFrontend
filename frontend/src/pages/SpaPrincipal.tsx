@@ -256,9 +256,9 @@ export default function SpaPrincipal() {
       terapeuta_id: 10,
       description:
         "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
-      precio: 5000,
+      precio: 1000,
       isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 5000 }],
+      opciones: [{ sesiones: 1, precio: 1000 }],
     },
   ];
 
