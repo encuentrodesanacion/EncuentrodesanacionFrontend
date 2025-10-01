@@ -46,37 +46,6 @@ export default function ReservaConFecha({
         "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
       );
 
-      const selectedDateStringForTime = fechaHora
-        ? format(fechaHora, "yyyy-MM-dd")
-        : null;
-      const hoursForSelectedDay = selectedDateStringForTime
-        ? disponibilidadPorFechaDelServicio?.[selectedDateStringForTime] || []
-        : [];
-
-      let minTimeForPicker = undefined;
-      let maxTimeForPicker = undefined;
-
-      if (fechaHora && hoursForSelectedDay.length > 0) {
-        // Asegura que las horas estén ordenadas de la más pequeña a la más grande
-        hoursForSelectedDay.sort();
-
-        // Convertir la primera hora disponible (ej. "16:00") a un objeto Date para minTime
-        const firstHour = hoursForSelectedDay[0];
-        const [minHour, minMinute] = firstHour.split(":").map(Number);
-        minTimeForPicker = new Date(
-          fechaHora.setHours(minHour, minMinute, 0, 0)
-        );
-
-        // Convertir la última hora disponible (ej. "17:00") a un objeto Date para maxTime
-        const lastHour = hoursForSelectedDay[hoursForSelectedDay.length - 1];
-        const [maxHour, maxMinute] = lastHour.split(":").map(Number);
-        maxTimeForPicker = new Date(
-          fechaHora.setHours(maxHour, maxMinute, 0, 0)
-        );
-
-        // Si solo hay una hora, minTime y maxTime son iguales.
-      }
-
       return;
     }
 
@@ -115,39 +84,24 @@ export default function ReservaConFecha({
     return false;
   };
 
-  const selectedDateStringForTime = fechaHora
-    ? format(fechaHora, "yyyy-MM-dd")
-    : null;
-  const hoursForSelectedDay = selectedDateStringForTime
-    ? disponibilidadPorFechaDelServicio?.[selectedDateStringForTime] || []
-    : [];
+  const filterTimes = (time: Date) => {
+    if (!fechaHora || !disponibilidadPorFechaDelServicio) {
+      return false;
+    }
 
-  let minTimeForPicker = undefined;
-  let maxTimeForPicker = undefined;
+    const selectedDateString = format(fechaHora, "yyyy-MM-dd");
+    const hoursForThisDay =
+      disponibilidadPorFechaDelServicio[selectedDateString];
 
-  if (fechaHora && hoursForSelectedDay.length > 0) {
-    // 1. Clonar la fecha seleccionada para evitar efectos secundarios en el estado
-    const baseDate = new Date(fechaHora);
+    if (!hoursForThisDay || hoursForThisDay.length === 0) {
+      return false;
+    }
 
-    // 2. Asegurar que las horas estén ordenadas
-    hoursForSelectedDay.sort();
+    // Convert the time to a string for comparison
+    const timeString = format(time, "HH:mm");
 
-    // 3. CALCULAR MIN TIME
-    const firstHour = hoursForSelectedDay[0]; // Ej: "16:00"
-    const [minHour, minMinute] = firstHour.split(":").map(Number);
-    // Usamos toZonedTime para que la hora refleje la zona horaria correcta antes de pasarla al picker
-    minTimeForPicker = toZonedTime(baseDate, CHILE_TIME_ZONE);
-    minTimeForPicker.setHours(minHour, minMinute, 0, 0);
-
-    // 4. CALCULAR MAX TIME
-    const lastHour = hoursForSelectedDay[hoursForSelectedDay.length - 1]; // Ej: "17:00"
-    const [maxHour, maxMinute] = lastHour.split(":").map(Number);
-    maxTimeForPicker = toZonedTime(baseDate, CHILE_TIME_ZONE);
-    maxTimeForPicker.setHours(maxHour, maxMinute, 0, 0);
-
-    // Si tu servicio tiene duraciones exactas (ej. 60 minutos), el MAX TIME debe ser la HORA DE INICIO del último turno.
-    // Si la última reserva es a las 20:00, no queremos que el picker muestre 20:15, etc.
-  }
+    return hoursForThisDay.includes(timeString);
+  };
 
   return (
     <div className="reserva-con-fecha-modal p-6 rounded-lg shadow-2xl bg-white text-gray-800">
@@ -170,8 +124,7 @@ export default function ReservaConFecha({
         placeholderText="SELECCIONA fecha y hora"
         className="border p-2 w-full mt-2 mb-4"
         filterDate={filterDay}
-        minTime={minTimeForPicker}
-        maxTime={maxTimeForPicker}
+        filterTime={filterTimes}
       />
       <div className="mb-4">
         <label htmlFor="nombreCliente" className="block text-sm font-bold mb-2">
