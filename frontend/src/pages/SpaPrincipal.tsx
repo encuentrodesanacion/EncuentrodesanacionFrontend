@@ -244,7 +244,7 @@ export default function SpaPrincipal() {
       terapeuta: "Sandra Da Silva",
       terapeuta_id: 9,
       description:
-        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
+        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Libera energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],

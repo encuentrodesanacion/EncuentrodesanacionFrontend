@@ -30,13 +30,13 @@ const alianzas = [
     descripcion:
       "Ana Luisa: Fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
   },
-  {
-    nombre: "Veronica Chaparro",
-    url: "https://www.instagram.com/ver.me.ser/",
-    imagen: terapeuta23,
-    descripcion:
-      "Verónica Chaparro: una apasionada de la vida con 30 años de experiencia como Coach de Vida y Mentora Espiritual. Mi propósito es acompañar a las personas en su despertar espiritual a través de una práctica integral. Como Profesora de Yoga y Terapeuta Holística, mis sesiones y clases combinan diversas herramientas de sanación y crecimiento. Entre mis especialidades se encuentran la Biodanza, la Biodescodificación, las Constelaciones Familiares y las Barras de Access Consciousness. Además, soy Acompañante de Un Curso de Milagros y realizo Psicoterapia de Un Curso de Milagros, guiando a mis clientes a encontrar la paz interior y vivir con propósito. Mi mayor habilidad es escuchar y guiar con empatía, creando un espacio seguro para tu transformación.",
-  },
+  // {
+  //   nombre: "Veronica Chaparro",
+  //   url: "https://www.instagram.com/ver.me.ser/",
+  //   imagen: terapeuta23,
+  //   descripcion:
+  //     "Verónica Chaparro: una apasionada de la vida con 30 años de experiencia como Coach de Vida y Mentora Espiritual. Mi propósito es acompañar a las personas en su despertar espiritual a través de una práctica integral. Como Profesora de Yoga y Terapeuta Holística, mis sesiones y clases combinan diversas herramientas de sanación y crecimiento. Entre mis especialidades se encuentran la Biodanza, la Biodescodificación, las Constelaciones Familiares y las Barras de Access Consciousness. Además, soy Acompañante de Un Curso de Milagros y realizo Psicoterapia de Un Curso de Milagros, guiando a mis clientes a encontrar la paz interior y vivir con propósito. Mi mayor habilidad es escuchar y guiar con empatía, creando un espacio seguro para tu transformación.",
+  // },
   {
     nombre: "Brenda Rivas",
     url: "https://www.instagram.com/trazos_del_alma2024/",
