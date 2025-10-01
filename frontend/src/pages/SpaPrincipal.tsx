@@ -185,7 +185,7 @@ export default function SpaPrincipal() {
       img: Terapeuta1,
       title: "Canalización Energética",
       terapeuta: "Brenda Rivas",
-      terapeuta_id: 11,
+      terapeuta_id: 7,
       description:
         "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
       precio: 16000,
@@ -208,7 +208,7 @@ export default function SpaPrincipal() {
       img: loreto,
       title: "Péndulo Hebreo",
       terapeuta: "Loreto De la Fuente",
-      terapeuta_id: 23,
+      terapeuta_id: 21,
       description:
         "Es una terapia que ayuda a reconfigurar los centros energéticos del cuerpo físico y etéreo. Además utilizo la gemoterapia para acentuar el balance en cada centro. Puedo detectar distintas enfermedades que se impregnan en el huevo energético.",
       precio: 16000,
@@ -219,9 +219,21 @@ export default function SpaPrincipal() {
       img: Ximena,
       title: "Sanación Reconectiva",
       terapeuta: "Ximena Jara",
-      terapeuta_id: 28,
+      terapeuta_id: 22,
       description:
         "Terapia que ayuda a sanar desde tu alma, a nivel físico, emocional, espiritual y sicólogo. Te reconectarás a tu Ser Divino.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+
+    {
+      img: anaaros,
+      title: "Sanación de útero",
+      terapeuta: "Ana Aros",
+      terapeuta_id: 23,
+      description:
+        "Esta terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
@@ -230,35 +242,24 @@ export default function SpaPrincipal() {
       img: terapeuta5,
       title: "Purificación y Limpieza de Energías Negativas",
       terapeuta: "Sandra Da Silva",
-      terapeuta_id: 28,
+      terapeuta_id: 9,
       description:
         "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: anaaros,
-      title: "Sanación de útero",
-      terapeuta: "Ana Aros",
-      terapeuta_id: 28,
-      description:
-        "Esta terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: terapeuta28,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeuta_id: 10,
-      description:
-        "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+    // {
+    //   img: terapeuta28,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10,
+    //   description:
+    //     "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
+    //   precio: 16000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 16000 }],
+    // },
   ];
 
   const reservar = (

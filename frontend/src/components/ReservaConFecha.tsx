@@ -119,7 +119,7 @@ export default function ReservaConFecha({
         timeFormat="HH:mm"
         dateFormat="dd/MM/yyyy HH:mm"
         minDate={new Date()}
-        placeholderText="Selecciona fecha y hora"
+        placeholderText="SELECCIONA fecha y hora"
         className="border p-2 w-full mt-2 mb-4"
         filterDate={filterDay}
         filterTime={filterTimes}

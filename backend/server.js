@@ -90,9 +90,13 @@ app.post("/api/terapeutas", async (req, res) => {
 // ¡Importante! Para producción, se recomienda ejecutar 'npx sequelize db:migrate' manualmente.
 // Si usas 'alter: true' en producción, puede haber riesgos de datos.
 db.sequelize
-  .sync() // <--- Considera remover o cambiar esto para producción a db:migrate manual
+  .authenticate() // Solo prueba la conexión (no crea ni altera tablas)
   .then(async () => {
-    console.log("Base de datos actualizada correctamente.");
+    console.log(
+      "Conexión a la base de datos establecida correctamente (Servidor iniciado en modo 'Solo Conexión')."
+    );
+
+    // Lógica de DEBUG para mostrar disponibilidades (se mantiene aquí)
     try {
       const allDisponibilidades = await db.Disponibilidad.findAll({
         attributes: [
@@ -114,9 +118,9 @@ db.sequelize
         );
       });
     } catch (debugErr) {
-      console.error(
-        "ERROR DEBUG: Fallo al leer todas las disponibilidades al inicio:",
-        debugErr
+      console.warn(
+        "WARNING DEBUG: Fallo al leer disponibilidades (La tabla debe ser gestionada con migraciones):",
+        debugErr.message // Usar solo el mensaje para evitar logs excesivos
       );
     }
 
@@ -126,5 +130,6 @@ db.sequelize
     );
   })
   .catch((err) => {
-    console.error("Error al sincronizar la base de datos:", err);
+    console.error("Error al conectar a la base de datos: ", err);
+    process.exit(1); // Detener la aplicación si la conexión falla
   });
