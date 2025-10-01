@@ -46,7 +46,7 @@ export default function TratamientoHolistico() {
       terapeutaId: 7,
       description:
         "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
-      opciones: [{ sesiones: 3, precio: 60000 }],
+      opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
     {
@@ -57,18 +57,9 @@ export default function TratamientoHolistico() {
       description:
         "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
-        { sesiones: 3, precio: 60000 },
-        { sesiones: 4, precio: 75000 },
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
       ],
-    },
-    {
-      img: Terapeuta31,
-      title: "Desbloqueo Energético",
-      terapeuta: "Claudia Gio",
-      terapeutaId: 31,
-      description:
-        "Es una terapia profunda que utiliza el Péndulo Hebreo para detectar y liberar bloqueos y desequilibrios en tu cuerpo, mente y emociones. A través de esta sanación a distancia, tu energía fluye de nuevo, permitiendo una inmediata sensación de bienestar y vitalidad, y ayudando a reducir el estrés y la ansiedad",
-      opciones: [{ sesiones: 3, precio: 60000 }],
     },
 
     // {
