@@ -352,7 +352,7 @@ export default function SpaPrincipal() {
       const { reserva: confirmedReservation } = await response.json();
       addToCart(confirmedReservation);
       alert(
-        `¡Reserva de Spa confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}.`
+        `¡Reserva de Spa confirmada! ${confirmedReservation.especialidad} el ${confirmedReservation.fecha} a las ${confirmedReservation.hora}. Dirigete al carro de Compras para pagar tu reserva y así la(s) terapeuta(s)  pueda(n) comunicarse contigo. Agradecemos tu preferencia!`
       );
       setReservaPendiente(null);
     } catch (error: any) {
