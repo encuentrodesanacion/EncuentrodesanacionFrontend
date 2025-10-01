@@ -244,7 +244,7 @@ export default function SpaPrincipal() {
       terapeuta: "Sandra Da Silva",
       terapeuta_id: 9,
       description:
-        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Libera energías negativas dirigidas así como magia negra, brujerías, hechicerías, maldiciones, envidias.",
+        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
@@ -401,7 +401,7 @@ export default function SpaPrincipal() {
                     <p>{t.title}</p>
                   </div>
                 </div>
-                <div className="flip-back">
+                <div className="flip-back relative z-20">
                   <h3 className="mb-2 font-bold">
                     {t.terapeuta !== "Disponible" && (
                       <span className="text-sm text-gray-600 block">
@@ -412,7 +412,7 @@ export default function SpaPrincipal() {
                   </h3>
                   <p className="mb-2">{t.description}</p>
                   <form
-                    className="w-full px-2"
+                    className="w-full px-2 relative z-10"
                     onSubmit={(e) => e.preventDefault()}
                   >
                     {t.opciones && t.opciones.length > 0 ? (
@@ -422,7 +422,7 @@ export default function SpaPrincipal() {
                             key={j}
                             type="button"
                             disabled
-                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed relative z-20"
                             title="No disponible para reserva"
                           >
                             No Disponible
