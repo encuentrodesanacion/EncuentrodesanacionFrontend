@@ -321,9 +321,11 @@ export default function Findetalleres() {
                     )}
                     {t.title}
                   </h3>
-                  <p className="w-full px-2 mb-4 max-h-28 overflow-y-auto text-sm">
-                    {t.description}
-                  </p>
+                  <div className="w-full px-2 mb-4 max-h-28 overflow-y-auto text-sm relative z-0">
+                    {t.description.split("\n").map((line, index) => (
+                      <p key={index}>{line}</p>
+                    ))}
+                  </div>
                   <form
                     className="w-full px-2 relative z-30"
                     onSubmit={(e) => e.preventDefault()}
