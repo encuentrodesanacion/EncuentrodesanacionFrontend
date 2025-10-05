@@ -352,7 +352,7 @@ export default function Findetalleres() {
                                 t.terapeuta_id
                               )
                             }
-                            className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                            className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300 relative z-30"
                           >
                             {op.sesiones} Sesión (${op.precio.toLocaleString()}{" "}
                             CLP)
