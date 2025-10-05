@@ -321,9 +321,11 @@ export default function Findetalleres() {
                     )}
                     {t.title}
                   </h3>
-                  <p className="w-full px-2 relative z-10">{t.description}</p>
+                  <p className="w-full px-2 mb-4 max-h-28 overflow-y-auto text-sm">
+                    {t.description}
+                  </p>
                   <form
-                    className="w-full px-2"
+                    className="w-full px-2 relative z-30"
                     onSubmit={(e) => e.preventDefault()}
                   >
                     {t.opciones && t.opciones.length > 0 ? (
