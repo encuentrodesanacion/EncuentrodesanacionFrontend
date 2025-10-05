@@ -419,7 +419,7 @@ const App = () => {
                   "Espacio donde los terapeutas se reúnen para ofrendar sus terapias...",
                 buttonText: "Ir al Spa Principal",
                 link: "/spaprincipal",
-                isDisabled: false,
+                isDisabled: true,
               },
               {
                 title: "SPA LITTLE",

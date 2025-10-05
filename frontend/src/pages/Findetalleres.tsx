@@ -157,7 +157,7 @@ export default function Findetalleres() {
       description:
         "Descubramos tu proyecto Sentido. A través de la indagación de tu Proyecto Sentido, puedes saber cómo las formas en que naciste te entregaron características de tu forma de ser (tipo de parto, emociones vividas por tus padres durante tu gestación, tipo de hijo/a, entre otros aspectos).",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
@@ -168,7 +168,7 @@ export default function Findetalleres() {
       description:
         "Sientes que tuviste una infancia difícil; que tuviste que crecer rápido; a veces tratas de recordar tu infancia y no llegan recuerdos. Si es así, este taller es para ti: conoceremos las heridas de infancia, nos conectaremos con tu niño/niña herida, y les daremos el amor que quizás faltó.",
       precio: 10000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
 
