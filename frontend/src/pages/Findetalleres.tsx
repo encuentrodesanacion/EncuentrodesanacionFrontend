@@ -151,7 +151,7 @@ export default function Findetalleres() {
   const terapias: TerapiaItem[] = [
     {
       img: Sentido,
-      title: "Dime cómo naciste, y te diré quién eres",
+      title: "Proyecto Sentido",
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
@@ -312,24 +312,29 @@ export default function Findetalleres() {
                     <p>{t.title}</p>
                   </div>
                 </div>
-                <div className="flip-back">
-                  <h3 className="mb-2 font-bold">
-                    {t.terapeuta !== "Disponible" && (
-                      <span className="text-sm text-gray-600 block">
-                        {t.terapeuta}
-                      </span>
-                    )}
-                    {t.title}
-                  </h3>
-                  <div className="w-full px-2 mb-4 max-h-28 overflow-y-auto text-sm relative z-0">
-                    {t.description.split("\n").map((line, index) => (
-                      <p key={index}>{line}</p>
-                    ))}
+                <div className="flip-back flex flex-col justify-between p-2">
+                  <div className="overflow-y-auto max-h-[80%]">
+                    <h3 className="mb-2 font-bold text-lg leading-tight">
+                      {t.terapeuta !== "Disponible" && (
+                        <span className="text-sm text-gray-600 block">
+                          {t.terapeuta}
+                        </span>
+                      )}
+                      {t.title}
+                    </h3>
+
+                    <div className="text-sm">
+                      {t.description.split("\n").map((line, index) => (
+                        <p key={index}>{line}</p>
+                      ))}
+                    </div>
                   </div>
+
                   <form
-                    className="w-full px-2 relative z-30"
+                    className="w-full relative z-30 flex-shrink-0 mt-auto"
                     onSubmit={(e) => e.preventDefault()}
                   >
+                    {/* Aseguramos que los botones siempre estén en la capa superior (z-30) */}
                     {t.opciones && t.opciones.length > 0 ? (
                       t.opciones.map((op: OpcionSesion, j: number) =>
                         t.isDisabled ? (
@@ -337,7 +342,7 @@ export default function Findetalleres() {
                             key={j}
                             type="button"
                             disabled
-                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                            className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed relative z-30"
                             title="No disponible para reserva"
                           >
                             No Disponible
@@ -365,7 +370,7 @@ export default function Findetalleres() {
                       <button
                         type="button"
                         disabled
-                        className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed"
+                        className="w-full mt-4 px-2 py-2 border rounded bg-gray-400 text-white cursor-not-allowed relative z-30"
                         title="No disponible para reserva"
                       >
                         No Disponible
@@ -381,7 +386,7 @@ export default function Findetalleres() {
                             t.terapeuta_id
                           )
                         }
-                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+                        className="w-full mt-4 px-2 py-2 border rounded bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300 relative z-30"
                       >
                         Toma de hora (${t.precio.toLocaleString()} CLP)
                       </button>
