@@ -321,7 +321,7 @@ export default function Findetalleres() {
                     )}
                     {t.title}
                   </h3>
-                  <p className="mb-2">{t.description}</p>
+                  <p className="w-full px-2 relative z-10">{t.description}</p>
                   <form
                     className="w-full px-2"
                     onSubmit={(e) => e.preventDefault()}
