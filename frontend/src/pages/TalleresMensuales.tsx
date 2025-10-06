@@ -58,7 +58,7 @@ export default function TalleresMensuales() {
       time: "Todos los martes del mes a las 19:00 Hrs",
       instructor: "Susanne Saavedra",
       instructorId: 24,
-      isDisabled: true,
+      isDisabled: false,
     },
     // {
     //   id: "Taller-de-Escribir-sobre-Raices",
