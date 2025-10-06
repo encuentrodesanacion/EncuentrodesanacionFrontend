@@ -32,56 +32,56 @@ const imagenesData: ImagenData[] = [
   {
     id: "runas-vikingas",
     src: RunasVikingas1,
-    alt: "Runas Vikingas",
+    alt: "MENCIÓN RITUALES CON VELAS",
     descripcion:
-      "Las Runas Vikingas es una práctica esotérica que usa las runas, antiguos símbolos nórdicos, como herramientas para la adivinación, la sanación y el autoconocimiento. Se suelen extraer e interpretar las runas para obtener perspectivas sobre el pasado, presente y futuro, o usarlas para meditación y trabajo energético. Cada runa tiene un significado simbólico único, y su interpretación es muy intuitiva. Es una herramienta de apoyo y autodescubrimiento.",
+      "El Maestro Fuego, con mención en magia con velas, es una práctica espiritual que utiliza la energía del fuego como puente entre la intención personal y el universo. Cada color, forma o aroma de la vela se asocia a vibraciones específicas que ayudan a enfocar deseos, peticiones o procesos de sanación. Una sesión de magia con velas es un encuentro con lo sagrado, donde la llama se convierte en un mensajero entre el mundo terrenal y las fuerzas universales. Cada vela encendida despierta la energía ancestral del fuego, capaz de abrir caminos, transformar realidades y guiar el alma hacia la claridad.",
     link: "#",
     terapeuta: "Ana Luisa Solervicens",
     terapeutaId: 13,
     precio: 40000,
     duracion:
-      "Inicia el 14 de Agosto a las 19:30hrs   ( SE REALIZA TODOS LOS JUEVES DEL MES A LA MISMA HORA)",
-    isDisabled: true,
-  },
-  {
-    id: "reiki-usui-2",
-    src: Terapeuta20,
-    alt: "Reiki Usui II",
-    descripcion:
-      "Reiki Usui Nivel Dos: Sanación con Símbolos y a Distancia El Reiki Usui Nivel Dos profundiza tu conexión con la energía Reiki, introduciendo tres símbolos sagrados que amplifican tu capacidad de sanación. El Cho Ku Rei potencia el flujo de energía para tratamientos más intensos y protección. El Sei He Ki trabaja en la sanación emocional y mental, ayudando a liberar patrones negativos. Finalmente, el Hon Sha Ze Sho Nen te permite enviar Reiki a cualquier persona, lugar o situación a distancia, trascendiendo el tiempo y el espacio. Este nivel te empodera para realizar sanaciones más potentes, específicas y sin la necesidad de contacto físico.",
-    terapeuta: "Ema Iriarte",
-    link: "#",
-    terapeutaId: 21,
-    precio: 40000,
-    duracion:
-      "Inicia el 16 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
-    isDisabled: true,
-  },
-  {
-    id: "Tarot-Evolutivo",
-    src: terapeuta19,
-    alt: "Tarot Evolutivo",
-    descripcion:
-      "En este curso, descubrirás el Tarot, su origen y sus significados más profundos, utilizándolo como una herramienta de autoconocimiento. Incorporarás a tus lecturas los arcanos menores, que te ofrecerán una nueva dimensión para profundizar en el autoconocimiento, nuestras emociones y creencias. A continuación, te presentamos lo que aprenderás en este curso de Tarot: Qué es realmente el tarot Cómo diferenciar entre los diferentes tipos de tarot Consultar las cartas a ti mismo Usar el tarot como herramienta de autoayuda Aplicar las cartas de manera práctica en la vida cotidiana Significados de los arcanos menores desde un enfoque holístico Cómo cuidar tu energía, consejos de limpieza y protección del tarotista",
-    link: "#",
-    terapeuta: "Johanna Morales",
-    duracion:
-      "Inicia el 12 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
-    terapeutaId: 27,
-    precio: 40000,
-    isDisabled: true,
+      "Inicia el 4 DE NOVIEMBRE A LAS 19:30HRS ( SE REALIZA TODOS LOS MARTES DEL MES A LA MISMA HORA).",
+    isDisabled: false,
   },
   // {
-  //   id: "Alice-Basay",
-  //   src: creadorvirtual,
-  //   alt: "Regresión",
-  //   descripcion: "Prueba Correo",
+  //   id: "reiki-usui-2",
+  //   src: Terapeuta20,
+  //   alt: "Reiki Usui II",
+  //   descripcion:
+  //     "Reiki Usui Nivel Dos: Sanación con Símbolos y a Distancia El Reiki Usui Nivel Dos profundiza tu conexión con la energía Reiki, introduciendo tres símbolos sagrados que amplifican tu capacidad de sanación. El Cho Ku Rei potencia el flujo de energía para tratamientos más intensos y protección. El Sei He Ki trabaja en la sanación emocional y mental, ayudando a liberar patrones negativos. Finalmente, el Hon Sha Ze Sho Nen te permite enviar Reiki a cualquier persona, lugar o situación a distancia, trascendiendo el tiempo y el espacio. Este nivel te empodera para realizar sanaciones más potentes, específicas y sin la necesidad de contacto físico.",
+  //   terapeuta: "Ema Iriarte",
   //   link: "#",
-  //   terapeuta: "Alice Basay",
-  //   duracion: "tres",
-  //   terapeutaId: 10,
+  //   terapeutaId: 21,
   //   precio: 40000,
+  //   duracion:
+  //     "Inicia el 16 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
+  //   isDisabled: true,
   // },
+  // {
+  //   id: "Tarot-Evolutivo",
+  //   src: terapeuta19,
+  //   alt: "Tarot Evolutivo",
+  //   descripcion:
+  //     "En este curso, descubrirás el Tarot, su origen y sus significados más profundos, utilizándolo como una herramienta de autoconocimiento. Incorporarás a tus lecturas los arcanos menores, que te ofrecerán una nueva dimensión para profundizar en el autoconocimiento, nuestras emociones y creencias. A continuación, te presentamos lo que aprenderás en este curso de Tarot: Qué es realmente el tarot Cómo diferenciar entre los diferentes tipos de tarot Consultar las cartas a ti mismo Usar el tarot como herramienta de autoayuda Aplicar las cartas de manera práctica en la vida cotidiana Significados de los arcanos menores desde un enfoque holístico Cómo cuidar tu energía, consejos de limpieza y protección del tarotista",
+  //   link: "#",
+  //   terapeuta: "Johanna Morales",
+  //   duracion:
+  //     "Inicia el 12 de Agosto a las 20:30hrs (SE REALIZA TODOS LOS MARTES DEL MES)",
+  //   terapeutaId: 27,
+  //   precio: 40000,
+  //   isDisabled: true,
+  // },
+  {
+    id: "Alice-Basay",
+    src: creadorvirtual,
+    alt: "Regresión",
+    descripcion: "Prueba Correo",
+    link: "#",
+    terapeuta: "Alice Basay",
+    duracion: "tres",
+    terapeutaId: 10,
+    precio: 40000,
+  },
 ];
 
 export default function Terapias() {

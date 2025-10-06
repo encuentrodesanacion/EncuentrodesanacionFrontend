@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; // Revisa si necesitas este CSS, o si tienes uno específico para talleres
 import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta
 import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
-import YogaArt from "../assets/YogaArt.png";
-import SanArte from "../assets/SanArte.png";
+
+import YogaArt from "../assets/Yoga integral.jpeg";
 import Yoga from "../assets/Yoga.jpg";
 import Alquimia from "../assets/Alquimia.jpeg";
 import EscribirDesdeRaices from "../assets/EscribirDesdeRaices.jpeg";
@@ -36,42 +36,42 @@ export default function TalleresMensuales() {
   const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
   const talleres: TallerItem[] = [
+    // {
+    //   id: "Taller-para-San-Arte",
+    //   title: "San-Arte",
+    //   description:
+    //     "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
+    //   price: 25000,
+    //   date: "2025-08-12",
+    //   time: "19:00",
+    //   instructor: "María Gabriela Pástor",
+    //   instructorId: 26,
+    //   isDisabled: true,
+    // },
     {
-      id: "Taller-para-San-Arte",
-      title: "San-Arte",
+      id: "Taller-Yoga",
+      title: "Yoga Integral",
       description:
-        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
-      price: 25000,
-      date: "2025-08-12",
-      time: "19:00",
-      instructor: "María Gabriela Pástor",
-      instructorId: 26,
+        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar",
+      price: 35000,
+      date: " Inicia el  4 DE NOVIEMBRE",
+      time: "Todos los martes del mes a las 19:00 Hrs",
+      instructor: "Susanne Saavedra",
+      instructorId: 24,
       isDisabled: true,
     },
-    {
-      id: "Taller-Yoga-Para-las-Articulaciones",
-      title: "Yoga para las Articulaciones",
-      description:
-        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
-      price: 25000,
-      date: "2025-08-13",
-      time: "19:00",
-      instructor: "Veronica Chaparro",
-      instructorId: 23,
-      isDisabled: true,
-    },
-    {
-      id: "Taller-de-Escribir-sobre-Raices",
-      title: "Escribir desde las raíces: Tarot y memoria ancestral",
-      description:
-        "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
-      price: 25000,
-      date: "2025-08-14",
-      time: "20:00",
-      instructor: "Katalina Rencoret",
-      instructorId: 18,
-      isDisabled: true,
-    },
+    // {
+    //   id: "Taller-de-Escribir-sobre-Raices",
+    //   title: "Escribir desde las raíces: Tarot y memoria ancestral",
+    //   description:
+    //     "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
+    //   price: 25000,
+    //   date: "2025-08-14",
+    //   time: "20:00",
+    //   instructor: "Katalina Rencoret",
+    //   instructorId: 18,
+    //   isDisabled: true,
+    // },
     // {
     //   id: "taller-meditacion-jul",
     //   title: "Taller de Regresión",
@@ -241,34 +241,32 @@ export default function TalleresMensuales() {
               key={taller.id}
               className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
             >
-              {taller.id === "Taller-de-Escribir-sobre-Raices" && (
+              {/* {taller.id === "Taller-de-Escribir-sobre-Raices" && (
                 <img
                   src={EscribirDesdeRaices} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-80 object-cover" //Define altura de cuadro "h-xx" , "w-full h-auto object-contain"
-                />
-              )}
-              {taller.id === "Taller-Yoga-Para-las-Articulaciones" && (
+                /> */}
+              {/* )} */}
+              {taller.id === "Taller-Yoga" && (
                 <img
                   src={YogaArt} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-80 object-cover"
                 />
               )}
-              {taller.id === "Taller-para-San-Arte" && (
+              {/* {taller.id === "Taller-para-San-Arte" && (
                 <img
                   src={SanArte} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-80 object-cover"
                 />
-              )}
+              )} */}
               {!(
                 // taller.id === "Taller-de-Tribu-en-Calma" ||
-                (
-                  taller.id === "Taller-para-San-Arte" ||
-                  taller.id === "Taller-Yoga-Para-las-Articulaciones" ||
-                  taller.id === "Taller-de-Escribir-sobre-Raices"
-                )
+                // taller.id === "Taller-para-San-Arte" ||
+                (taller.id === "Taller-Yoga")
+                // taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
                   Imagen de Taller
