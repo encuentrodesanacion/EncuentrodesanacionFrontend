@@ -52,10 +52,11 @@ export default function TalleresMensuales() {
       id: "Taller-Yoga",
       title: "Yoga Integral",
       description:
-        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar",
+        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar. (SE REALIZA TODOS LOS MARTES DEL MES (4 SESIONES EN TOTAL). A LA MISMA HORA)",
       price: 35000,
-      date: " Inicia el  4 DE NOVIEMBRE",
-      time: "Todos los martes del mes a las 19:00 Hrs",
+      date: "2025-11-04",
+      time: "19:00",
+
       instructor: "Susanne Saavedra",
       instructorId: 24,
       isDisabled: false,
@@ -127,7 +128,7 @@ export default function TalleresMensuales() {
       fecha: currentTaller.date,
       hora: currentTaller.time,
       precio: currentTaller.price,
-      sesiones: 1, // Asumimos 1 sesión por taller mensual, ajusta si es diferente
+      sesiones: 4, // Asumimos 1 sesión por taller mensual, ajusta si es diferente
       cantidadCupos: 1, // Cantidad de cupos (generalmente 1 por reserva de persona)
       nombreCliente: clientName.trim(),
       telefonoCliente: clientPhone.trim(),
@@ -191,12 +192,6 @@ export default function TalleresMensuales() {
         <CartIcon />
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link
-            to="/inicio"
-            className="text-blue-500 hover:text-gray-800 font-bold" // Ajuste de color para contraste en fondo blanco
-          >
-            Inicio
-          </Link>
-          <Link
             to="/terapeutasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
@@ -217,12 +212,12 @@ export default function TalleresMensuales() {
         </div>
       </header>
 
-      {/* <button
+      <button
         onClick={() => navigate("/")}
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Volver al Inicio
-      </button> */}
+      </button>
 
       <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">
         Nuestros Talleres del Mes
@@ -289,6 +284,7 @@ export default function TalleresMensuales() {
                 <p className="text-md text-gray-500 mb-4">
                   Hora: <strong>{taller.time}</strong>
                 </p>
+
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-2xl font-bold text-green-700">
                     ${taller.price.toLocaleString()} CLP

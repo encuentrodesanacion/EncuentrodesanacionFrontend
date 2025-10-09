@@ -198,12 +198,6 @@ export default function Terapias() {
         <CartIcon />
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link
-            to="/inicio"
-            className="text-blue-500 hover:text-gray-800 font-bold" // Ajuste de color para contraste en fondo blanco
-          >
-            Inicio
-          </Link>
-          <Link
             to="/terapeutasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
@@ -232,12 +226,12 @@ export default function Terapias() {
           minHeight: "100vh",
         }}
       >
-        {/* <button
+        <button
           onClick={() => navigate("/servicios")}
           className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
           Volver a Servicios
-        </button> */}
+        </button>
 
         <h2 className="text-2xl font-bold text-center text-purple-700 mb-8">
           Formaciones Disponibles
