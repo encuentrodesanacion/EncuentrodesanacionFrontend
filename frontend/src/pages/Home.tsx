@@ -23,7 +23,7 @@ import Whatsapp from "../assets/ASTRONAUTA3.png";
 // import { Link } from "react-router-dom";
 // import CartIcon from "../components/CartIcon";
 // import SpaLittle from "../assets/Spa Little.jpeg";
-// import "../index.css";
+import "../index.css";
 
 // Importa tu imagen de fondo aquí.
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
