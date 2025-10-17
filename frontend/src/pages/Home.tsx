@@ -15,14 +15,14 @@ import {
 } from "lucide-react";
 // import ReservaHora from "../ReservaHora";
 import Whatsapp from "../assets/ASTRONAUTA3.png";
-// import CarruselAlianzas from "./CarruselAlianzas";
-// import Fondo3 from "../assets/Fondo3.jpg";
-// import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
-// import creadorvirtual from "../assets/creadorvirtual.jpg";
-// import FindeTalleres from "../assets/FindeTalleres.jpeg";
-// import { Link } from "react-router-dom";
-// import CartIcon from "../components/CartIcon";
-// import SpaLittle from "../assets/Spa Little.jpeg";
+import CarruselAlianzas from "./CarruselAlianzas";
+import Fondo3 from "../assets/Fondo3.jpg";
+import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
+import creadorvirtual from "../assets/creadorvirtual.jpg";
+import FindeTalleres from "../assets/FindeTalleres.jpeg";
+import { Link } from "react-router-dom";
+import CartIcon from "../components/CartIcon";
+import SpaLittle from "../assets/Spa Little.jpeg";
 import "../index.css";
 
 // Importa tu imagen de fondo aquí.
