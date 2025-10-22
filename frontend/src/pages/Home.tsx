@@ -177,46 +177,64 @@ const App = () => {
           </div>
         </div>
 
-        {/* Menú móvil desplegable */}
+        {/* Menú móvil desplegable (COINCIDE AHORA CON EL DE ESCRITORIO) */}
         {isMenuOpen && (
           <div className="md:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-pastel-green/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+              {/* Enlaces de ancla */}
               <a
                 href="#inicio"
-                className="block px-3 py-2 text-white/70 hover:text-pastel-green"
+                onClick={() => setIsMenuOpen(false)} // Cerrar al hacer clic (buena práctica)
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Inicio
               </a>
               <a
                 href="#servicios"
-                className="block px-3 py-2 text-white/70 hover:text-pastel-green"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Servicios
               </a>
               <a
                 href="#alianzas"
-                className="block px-3 py-2 text-white/70 hover:text-pastel-green"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Alianzas
               </a>
               <a
                 href="#otros"
-                className="block px-3 py-2 text-white/70 hover:text-pastel-green"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
-                Dias de Ofrenda
+                Días de ofrenda
               </a>
-              <a
-                href="#contacto"
-                className="block px-3 py-2 text-white/70 hover:text-pastel-green"
-              >
-                Contacto
-              </a>
+
+              {/* Enlaces de Link (react-router-dom) */}
               <Link
                 to="/Staff-Terapéutico"
-                className="text-blue-300 hover:text-white font-bold"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Staff Terapeutico
               </Link>
+              <Link
+                to="/nuestra-comunidad"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
+              >
+                Nuestra Comunidad
+              </Link>
+              <Link
+                to="/quienes-somos"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
+              >
+                Misión
+              </Link>
+
+              {/* Eliminado el ancla a #contacto que no estaba en el menú de escritorio */}
             </div>
           </div>
         )}
