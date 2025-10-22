@@ -209,6 +209,12 @@ export default function TalleresMensuales() {
           >
             Talleres Mensuales
           </Link>
+          <Link
+            to="/psicologos"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Mente y Ser
+          </Link>
         </div>
       </header>
 

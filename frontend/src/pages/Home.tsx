@@ -12,6 +12,7 @@ import {
   Brain,
   Star,
   Orbit,
+  Ear,
 } from "lucide-react";
 // import ReservaHora from "../ReservaHora";
 import Whatsapp from "../assets/ASTRONAUTA3.png";
@@ -21,6 +22,7 @@ import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import FindeTalleres from "../assets/FindeTalleres.jpeg";
 import { Link } from "react-router-dom";
+import Giftcard from "../pages/Gifcard";
 import CartIcon from "../components/CartIcon";
 import SpaLittle from "../assets/Spa Little.jpeg";
 import "../index.css";
@@ -148,12 +150,18 @@ const App = () => {
               >
                 Staff Terapeutico
               </Link>
-              <a
-                href="#contacto"
+              <Link
+                to="/nuestra-comunidad"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Sobre nosotros
-              </a>
+                Nuestra Comunidad
+              </Link>
+              <Link
+                to="/quienes-somos"
+                className="text-blue-300 hover:text-white font-bold"
+              >
+                Misión
+              </Link>
             </div>
 
             {/* Menú móvil + Cart Icon */}
@@ -262,7 +270,7 @@ const App = () => {
                   "Formación de Terapeutas de la Luz (Con mención en diferentes áreas seleccionadas)",
                 description:
                   "Espacio enfocado en tu Formación como Terapeuta. Queremos que alcances tu mejor potencial de la mano de los terapeutas más destacados.",
-                price: "Desde $30.000CLP / €38 / 40USD por sesión",
+                price: "Desde $40.000CLP / €37 / 43USD por sesión",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <a
@@ -276,7 +284,7 @@ const App = () => {
                       to="/terapeutasdeluz"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ver más detalles
+                      Ingresa Aquí
                     </Link>
                   </div>
                 ),
@@ -286,90 +294,141 @@ const App = () => {
                 title: "Tratamiento Integral",
                 description:
                   "Pack de sesiones para avanzar en tu proceso de sanación física, mental, emocional y/o espiritual.",
-                price: "Desde 55.000CLP / €62 / 65USD",
+                price: "Desde 88.000CLP / €80 / 93USD",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/tratamientointegral"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ver más detalles
+                      Ingresa Aquí
                     </Link>
                   </div>
                 ),
               },
               {
-                icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
+                icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: "Talleres Mensuales",
                 description:
                   "Encuentros grupales para reconectar con tu esencia, liberar bloqueos y activar tu energía interior. (Yoga, Yoga Infantil, Pilates, etc.)",
-                price: "Desde 25.000CLP / €32 / $35USD,",
+                price: "Desde 35.000CLP / €32 / $37USD,",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/tallermensual"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ver más detalles
+                      Ingresa Aquí
                     </Link>
                   </div>
                 ),
               },
+              // {
+              //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: "Alianzas",
+              //   description:
+              //     "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
+
+              //   button: (
+              //     <div className="flex flex-col gap-2 mt-4">
+              //       <a
+              //         href="https://forms.gle/n9cKSVDw9vjzB8QC8"
+              //         target="_blank"
+              //         rel="noopener noreferrer"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 text-center"
+              //       >
+              //         Realizar Formulario
+              //       </a>
+              //     </div>
+              //   ),
+              // },
+              // {
+              //   icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: "Spa Holístico al Mundo",
+              //   description:
+              //     "Aprende a manejar tu propio Spa Holístico para poder expandir la Sanación en tu país. (excluye Chile)",
+              //   price: "Desde los €150 / $163USD",
+              //   button: (
+              //     <a
+              //       href="https://wa.me/56976557902?text=%C2%A1Quiero%20expandir%20la%20sanaci%C3%B3n%20en%20mi%20pa%C3%ADs!%2C%20por%20favor%2C%20dame%20mas%20informaci%C3%B3n."
+              //       target="_blank"
+              //       rel="noopener noreferrer"
+              //       className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
+              //     >
+              //       Contáctanos
+              //     </a>
+              //   ),
+              // },
               {
                 icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "Spa Holístico al Mundo",
+                title: "EncuentroFacil",
                 description:
-                  "Aprende a manejar tu propio Spa Holístico para poder expandir la Sanación en tu país. (excluye Chile)",
-                price: "Desde los €150 / $163USD",
-                button: (
-                  <a
-                    href="https://wa.me/56976557902?text=%C2%A1Quiero%20expandir%20la%20sanaci%C3%B3n%20en%20mi%20pa%C3%ADs!%2C%20por%20favor%2C%20dame%20mas%20informaci%C3%B3n."
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
-                  >
-                    Contáctanos
-                  </a>
-                ),
-              },
-
-              {
-                icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "Alianzas",
-                description:
-                  "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
-
+                  " Sección de Agendamiento: Tu Bienestar a un Solo Clic. El sistema que te garantiza claridad, seguridad y la hora perfecta con tu profesional.",
+                price: "Desde 25.000CLP / €32 / $35USD,",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
-                    <a
-                      href="https://forms.gle/n9cKSVDw9vjzB8QC8"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 text-center"
+                    {/* <Link
+                      to="/encuentrofacil"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Realizar Formulario
-                    </a>
+                      Ingresa Aquí
+                    </Link> */}
                   </div>
                 ),
               },
               {
                 icon: <SmilePlus className="w-8 h-8 mb-4 text-yellow-500" />,
-                title:
-                  "Programa Terapeutico para empresas/Colectivo de personas (Desde 8 personas)",
+                title: "GiftCard",
                 description:
-                  "Programa enfocado en lograr un bienestar Físico, Mental y/o Emocional. Utilizando diversas técnicas Holísticas para generar índices más altos de productividad y rendimiento.",
-                price:
-                  "Este servicio es especial y puede variar según tus necesidades. Conoce nuestra propuesta spaholistico@encuentrodesanacion.com",
-                // button: (
-                //   <a
-                //     href="mailto:evaldesnew@gmail.com?subject=Consulta&body=Hola,%20me%20gustaría%20saber%20más%20sobre..."
-                //     target="_blank"
-                //     rel="noopener noreferrer"
-                //     className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
-                //   >
-                //     Contáctanos
-                //   </a>
-                // ),
+                  " El Regalo Perfecto está Aquí! Compra una GiftCard con Valor Amoroso y Transforma la vida de un ser querido con una inversión en su bienestar.",
+                price: "Desde 25.000CLP / €32 / $35USD,",
+                button: (
+                  <div className="flex flex-col gap-2 mt-4">
+                    {/* <Link
+                      to="/giftcard"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                    >
+                      Ingresa Aquí
+                    </Link> */}
+                  </div>
+                ),
+              },
+              // {
+              //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: "Alianzas",
+              //   description:
+              //     "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
+
+              //   button: (
+              //     <div className="flex flex-col gap-2 mt-4">
+              //       <a
+              //         href="https://forms.gle/n9cKSVDw9vjzB8QC8"
+              //         target="_blank"
+              //         rel="noopener noreferrer"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 text-center"
+              //       >
+              //         Realizar Formulario
+              //       </a>
+              //     </div>
+              //   ),
+              // },
+
+              {
+                icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
+                title: "Mente y ser",
+                description:
+                  "El Pilar Clínico para tu Crecimiento Profundo.  Espacio exclusivo de Psicólogos Clínicos con visión en la sanación del Ser.",
+                price: "Desde 120.000CLP / €109 / $127USD,",
+                button: (
+                  <div className="flex flex-col gap-2 mt-4">
+                    {/* <Link
+                      to="/psicologos"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                    >
+                      Ingresa Aquí
+                    </Link> */}
+                  </div>
+                ),
               },
             ].map((service, index) => (
               <div key={index} className="bg-gray-900 p-8 rounded-2xl">

@@ -40,25 +40,28 @@ export default function TratamientoHolistico() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta1,
+      img: creadorvirtual,
       title: "Canalización Energética",
       terapeuta: "Brenda Rivas",
       terapeutaId: 7,
       description:
         "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
-      opciones: [{ sesiones: 3, precio: 88000 }],
+      opciones: [
+        { sesiones: 4, precio: 120000 },
+        { sesiones: 10, precio: 270000 },
+      ],
     },
 
     {
-      img: Terapeuta5,
+      img: creadorvirtual,
       title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
       terapeuta: "Sandra Da Silva",
       terapeutaId: 9,
       description:
         "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
       opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
+        { sesiones: 4, precio: 120000 },
+        { sesiones: 10, precio: 270000 },
       ],
     },
 
@@ -140,7 +143,7 @@ export default function TratamientoHolistico() {
     const horaGenerica = "17:00";
 
     const reservaDataToSend = {
-      servicio: "Tratamiento Integral",
+      servicio: "Mente y Ser",
       especialidad: currentTerapiaData.terapiaTitle,
       fecha: fechaActual,
       hora: horaGenerica,
@@ -154,7 +157,7 @@ export default function TratamientoHolistico() {
     };
 
     console.log(
-      "Objeto Reserva a añadir al carrito desde TratamientoIntegral (después de modal):",
+      "Objeto Reserva a añadir al carrito desde Mente y Ser (después de modal):",
       reservaDataToSend
     );
 
@@ -179,7 +182,7 @@ export default function TratamientoHolistico() {
       const { reserva: confirmedReservation } = await response.json();
 
       console.log(
-        "Reserva de Tratamiento Integral confirmada por backend:",
+        "Reserva de Mente y Ser confirmada por backend:",
         confirmedReservation
       );
 
@@ -196,10 +199,7 @@ export default function TratamientoHolistico() {
       setClientPhone("");
     } catch (error: any) {
       // Cierre del `try` y comienzo del `catch`
-      console.error(
-        "ERROR al crear la reserva de Tratamiento Integral:",
-        error
-      );
+      console.error("ERROR al crear la reserva de Mente y Ser:", error);
       alert(`No se pudo completar la inscripción: ${error.message}`);
     }
   };
@@ -207,9 +207,7 @@ export default function TratamientoHolistico() {
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800">
-          Tratamiento Integral
-        </h1>
+        <h1 className="text-xl font-semibold text-gray-800">Mente y Ser</h1>
         <CartIcon />
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link
@@ -230,12 +228,6 @@ export default function TratamientoHolistico() {
           >
             Talleres Mensuales
           </Link>
-          <Link
-            to="/psicologos"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Mente y Ser
-          </Link>
         </div>
       </header>
 
@@ -247,14 +239,13 @@ export default function TratamientoHolistico() {
       </button>
 
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        Bienvenido al Tratamiento Integral
+        Bienvenido a Mente y Ser
       </h2>
       <br></br>
       <br></br>
 
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-        Este tratamiento incluye sesiones personalizadas orientadas a tu
-        bienestar físico, emocional y espiritual.
+        Descripción de Mente y Ser
       </p>
       <br></br>
       <br></br>

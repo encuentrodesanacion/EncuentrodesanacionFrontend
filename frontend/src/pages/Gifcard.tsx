@@ -140,7 +140,7 @@ export default function TratamientoHolistico() {
     const horaGenerica = "17:00";
 
     const reservaDataToSend = {
-      servicio: "Tratamiento Integral",
+      servicio: "GiftCard",
       especialidad: currentTerapiaData.terapiaTitle,
       fecha: fechaActual,
       hora: horaGenerica,
@@ -247,14 +247,13 @@ export default function TratamientoHolistico() {
       </button>
 
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        Bienvenido al Tratamiento Integral
+        Bienvenido a GiftCard
       </h2>
       <br></br>
       <br></br>
 
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-        Este tratamiento incluye sesiones personalizadas orientadas a tu
-        bienestar físico, emocional y espiritual.
+        Mensaje Giftcard
       </p>
       <br></br>
       <br></br>

@@ -11,7 +11,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import { CartProvider } from "./pages/CartContext";
 import WebpayReturnPage from "./pages/WebpayReturnPage"; // The intermediary page
 import SuccessPage from "./pages/SuccessPage";
-
+import Giftcard from "./pages/Gifcard";
 import CartIcon from "./components/CartIcon";
 import TratamientoHolistico from "./pages/TratamientoIntegral";
 // import Findetalleres from "./pages/Findetalleres";
@@ -25,6 +25,8 @@ import SpaLittle from "./pages/SpaLittle";
 import FinDeTalleres from "./pages/Findetalleres";
 import PoliticasdePrivacidad from "./pages/PoliticasdePrivacidad";
 import TerminosyCondiciones from "./pages/TerminosyCondiciones";
+import Psicologos from "./pages/Psicologos";
+import Encuentrofacil from "./pages/Encuentrofacil";
 
 // --- Importaciones de las nuevas páginas de pago ---
 import PaymentSuccessPage from "./pages/PaymentSuccessPage";
@@ -55,6 +57,9 @@ export default function App() {
           <Route path="/tallermensual" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
+          <Route path="/giftcard" element={<Giftcard />} />
+          <Route path="/psicologos" element={<Psicologos />} />
+          <Route path="/encuentrofacil" element={<Encuentrofacil />} />
           <Route path="/pago-confirmacion-exito" element={<SuccessPage />} />
           <Route
             path="/politicas-de-privacidad"

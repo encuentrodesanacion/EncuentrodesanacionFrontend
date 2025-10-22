@@ -59,3 +59,10 @@ export interface TerapiaItem {
   opciones?: OpcionSesion[];
   isDisabled?: boolean;
 }
+export interface Terapeuta {
+  id: number;
+  nombre: string;
+  email: string;
+  servicios: TerapiaItem[];
+  imagenPerfil: string;
+}

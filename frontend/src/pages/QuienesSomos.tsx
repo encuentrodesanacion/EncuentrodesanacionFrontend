@@ -32,7 +32,7 @@ const Directora = () => (
       {/* Descripción de la Directora */}
       <div className="md:w-2/3 text-center md:text-left">
         <p>
-          <strong>Alice Basay</strong>, con más de seis años de experiencia como
+          <strong>Alice Basay</strong>, con más de 15 años de experiencia como
           terapeuta, es educadora de párvulos de profesión y especialista en el
           método High Scope. Durante 13 años trabajó en contextos vulnerables en
           Santiago de Chile, entregando a sus alumnos una educación diferente y

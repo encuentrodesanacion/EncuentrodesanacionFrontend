@@ -10,13 +10,6 @@ import terapeuta1 from "../assets/Terapeuta1.jpg";
 
 const alianzas = [
   {
-    nombre: "Macarena Del Río",
-    url: "https://www.instagram.com/templo.sirio/",
-    imagen: terapeuta6,
-    descripcion:
-      "Macarena del Río: Maestría en Reiki Usui, Registros Akáshicos, Maestría Reiki Seichim Sekhem y Horus, Canalización de la Rosa, Terapia con Cruz de Ankh, Orquídeas del Amazonas, Constelaciones Familiares, Lógica Biológica del Síntoma, Regresiones, Programación Neurolingüística, Alquimia Egipcia, Extracción de Almas Perdidas y Recuperación del Alma, Tarot Egipcio, Tarot Osho Zen, Diplomado en Metafísica, El Cerebro como Aliado (Neurociencia), Neurociencia Maternal.",
-  },
-  {
     nombre: "Paulina Villablanca Perez",
     url: "https://www.instagram.com/gotitasdeamor38/",
     imagen: terapeuta11,
