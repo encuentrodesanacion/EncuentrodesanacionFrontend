@@ -46,21 +46,21 @@ export default function TalleresMensuales() {
       time: "11:00",
       instructor: "Maribel Muñoz",
       instructorId: 32,
-      isDisabled: true,
-    },
-    {
-      id: "Taller-Yoga",
-      title: "Yoga Integral",
-      description:
-        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar. (SE REALIZA TODOS LOS MARTES DEL MES (4 SESIONES EN TOTAL). A LA MISMA HORA)",
-      price: 35000,
-      date: "2025-11-04",
-      time: "19:00",
-
-      instructor: "Susanne Saavedra",
-      instructorId: 24,
       isDisabled: false,
     },
+    // {
+    //   id: "Taller-Yoga",
+    //   title: "Yoga Integral",
+    //   description:
+    //     "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar. (SE REALIZA TODOS LOS MARTES DEL MES (4 SESIONES EN TOTAL). A LA MISMA HORA)",
+    //   price: 35000,
+    //   date: "2025-11-04",
+    //   time: "19:00",
+
+    //   instructor: "Susanne Saavedra",
+    //   instructorId: 24,
+    //   isDisabled: false,
+    // },
     // {
     //   id: "Perfil-Numerologico-de-tu-alma",
     //   title: "Perfil Numerológico de tu alma",
