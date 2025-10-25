@@ -14,8 +14,15 @@ import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta12 from "../assets/Terapeuta12.jpeg";
 import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
-import terapeuta28 from "../assets/Terapeuta28.jpeg";
+import creadorvirtual from "../assets/creadorvirtual.jpg";
 import anaaros from "../assets/anaaros.jpg";
+import angel from "../assets/Angel.jpeg";
+import sarita from "../assets/sarita.jpeg";
+import marcela from "../assets/marcela.jpeg";
+import renata from "../assets/renata.jpeg";
+import crisol from "../assets/crisol.jpeg";
+import pamela from "../assets/pamela.jpeg";
+import patricia from "../assets/patricia.jpeg";
 import ReservaConFecha from "../components/ReservaConFecha";
 import {
   OpcionSesion,
@@ -168,6 +175,83 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
+    {
+      img: angel,
+      title: "Tarot terapeutico",
+      terapeuta: "Angel Martin",
+      terapeuta_id: 27,
+      description:
+        "El tarot como herramienta terapéutica y guía para encontrar el camino más indicado en el momento presente, complementado con la guía y respaldo de una sesión psicoterapéutica, trabajando lo presentado con las cartas en paralelo con el trabajo emocional, vivencial, y la historia de la persona.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: marcela,
+      title: "Liberación emociones atrapadas",
+      terapeuta: "Marcela Cabezas",
+      terapeuta_id: 25,
+      description:
+        "Liberar emociones es el proceso de reconocer, expresar y soltar emociones reprimidas o no resultas. En la terapia se usan piedras energéticas para liberar emociones atrapadas, equilibrar los chakras y restaurar la armonía emocional y espiritual.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: sarita,
+      title: "Raíz del SER",
+      terapeuta: "Sarita Infante",
+      terapeuta_id: 26,
+      description:
+        "Un espacio seguro y profundo para volver a ti. A través del coaching, PNL y canalizaciones, encuentras claridad, fuerza interior y dirección para tu vida. Juntos escuchamos tu alma, creamos metas, objetivos que te lleven a vivir en tu propósito",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: patricia,
+      title: "Expansión de tu Ser",
+      terapeuta: "Patricia Mondaca",
+      terapeuta_id: 28,
+      description:
+        "Transforma tu crecimiento, nuestros pensamientos y emociones definen cómo nos relacionamos. Aquí te entrego herramientas para llevar tus heridas y emociones al siguiente nivel de liberación.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: pamela,
+      title: "Sanación Álmica",
+      terapeuta: "Pamela Benavides",
+      terapeuta_id: 31,
+      description:
+        "Terapia energética que alinea tu cuerpo con tu Alma, limpiando toda interferencia (entidades, parásitos, hilos de conexión, magia ritual). Incluye masaje energético y campos de protección.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: renata,
+      title: "La Medicina de los Animales",
+      terapeuta: "Renata Santoro",
+      terapeuta_id: 29,
+      description:
+        "Las cartas de la Medicina de los Animales recopila el conocimiento de los pueblos originarios, quienes lograban tener una conexión directa con los animales, quienes te guiarán a través de la Rueda de la Medicina a encontrar tu senda personal a través de la medicina de los animales.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: crisol,
+      title: "Biomagnetismo Emocional",
+      terapeuta: "Crisolde Valenzuela",
+      terapeuta_id: 30,
+      description:
+        "Rastreo energético completo guiado con péndulo terapéutico,identificando los puntos del cuerpo donde existen bloqueos o emociones reprimidas,equilibrando el bloqueo a través  de colocación de imanes a distancia.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
 
     {
       img: Terapeuta14,
@@ -192,52 +276,7 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta12,
-      title: "Tarot Terapeútico",
-      terapeuta: "Katalina Rencoret",
-      terapeuta_id: 18,
-      description:
-        "Mi enfoque combina lo predictivo con lo evolutivo: el tarot como un espejo que revela tu pasado, ilumina tu presente y abre caminos hacia un futuro que puedes transformar. A través de cartas, oráculos, escritura y meditaciones, te acompaño en un proceso de sanación emocional y autoconocimiento, para que tomes decisiones con mayor claridad y confianza. Lo práctico, la honestidad y la coherencia son la base",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
 
-    {
-      img: loreto,
-      title: "Péndulo Hebreo",
-      terapeuta: "Loreto De la Fuente",
-      terapeuta_id: 21,
-      description:
-        "Es una terapia que ayuda a reconfigurar los centros energéticos del cuerpo físico y etéreo. Además utilizo la gemoterapia para acentuar el balance en cada centro. Puedo detectar distintas enfermedades que se impregnan en el huevo energético.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: Ximena,
-      title: "Sanación Reconectiva",
-      terapeuta: "Ximena Jara",
-      terapeuta_id: 22,
-      description:
-        "Terapia que ayuda a sanar desde tu alma, a nivel físico, emocional, espiritual y sicólogo. Te reconectarás a tu Ser Divino.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-
-    {
-      img: anaaros,
-      title: "Sanación de útero",
-      terapeuta: "Ana Aros",
-      terapeuta_id: 23,
-      description:
-        "Esta terapia te ayuda a liberar bloqueos, liberar emociones, conectar con tu propósito, conexión con tu creatividad y limpiar memorias",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
     {
       img: terapeuta5,
       title: "Purificación y Limpieza de Energías Negativas",

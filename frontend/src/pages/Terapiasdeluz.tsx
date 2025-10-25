@@ -9,7 +9,9 @@ const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 import Terapeuta20 from "../assets/Terapeuta20.jpeg";
 import RunasVikingas1 from "../assets/Terapeuta14.jpeg";
-import terapeuta19 from "../assets/Terapeuta119.jpeg";
+import coachdelser from "../assets/coachdelser.jpeg";
+import crisolterap from "../assets/crisolterap.jpeg";
+
 import terapeuta6 from "../assets/Terapeuta6.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import { v4 as uuidv4 } from "uuid";
@@ -30,17 +32,31 @@ interface ImagenData {
 
 const imagenesData: ImagenData[] = [
   {
-    id: "runas-vikingas",
-    src: RunasVikingas1,
-    alt: "MENCIÓN RITUALES CON VELAS",
+    id: "Coach-del-SER",
+    src: coachdelser,
+    alt: "Mención en formación Coach del SER",
     descripcion:
-      "El Maestro Fuego, con mención en magia con velas, es una práctica espiritual que utiliza la energía del fuego como puente entre la intención personal y el universo. Cada color, forma o aroma de la vela se asocia a vibraciones específicas que ayudan a enfocar deseos, peticiones o procesos de sanación. Una sesión de magia con velas es un encuentro con lo sagrado, donde la llama se convierte en un mensajero entre el mundo terrenal y las fuerzas universales. Cada vela encendida despierta la energía ancestral del fuego, capaz de abrir caminos, transformar realidades y guiar el alma hacia la claridad.",
+      "Es un programa diseñado para formar facilitadores conscientes, capaces de acompañar procesos de transformación profunda desde la integración de dos caminos complementarios:",
     link: "#",
-    terapeuta: "Ana Luisa Solervicens",
-    terapeutaId: 13,
+    terapeuta: "Sarita Infante",
+    terapeutaId: 26,
     precio: 40000,
     duracion:
-      "Inicia el 4 DE NOVIEMBRE A LAS 19:30HRS ( SE REALIZA TODOS LOS MARTES DEL MES A LA MISMA HORA).",
+      "PRIMERA CONVOCATORIA EL 1 DE DICIEMBRE A LAS 20:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
+    isDisabled: false,
+  },
+  {
+    id: "Liberacion-de-emociones-atrapadas",
+    src: crisolterap,
+    alt: "Mención en formación Liberación Emociones Atrapadas",
+    descripcion:
+      "Un viaje de transformación interior,aprendiendo a identificar emociones y liberar cargas energéticas para  reconectar con su luz individual y aprender a sanar en forma individual y grupal.",
+    link: "#",
+    terapeuta: "Crisolde Valenzuela",
+    terapeutaId: 30,
+    precio: 40000,
+    duracion:
+      "PRIMERA CONVOCATORIA EL 5 DE DICIEMBRE A LAS 19:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
     isDisabled: false,
   },
   // {

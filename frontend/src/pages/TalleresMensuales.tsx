@@ -5,8 +5,8 @@ import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la rut
 import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
 
 import YogaArt from "../assets/Yoga integral.jpeg";
-import Yoga from "../assets/Yoga.jpg";
-import Alquimia from "../assets/Alquimia.jpeg";
+import perfilnum from "../assets/perfilnum.jpeg";
+import Dalun from "../assets/DALUN.jpeg";
 import EscribirDesdeRaices from "../assets/EscribirDesdeRaices.jpeg";
 import parsePhoneNumberFromString from "libphonenumber-js";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
@@ -36,18 +36,18 @@ export default function TalleresMensuales() {
   const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
   const talleres: TallerItem[] = [
-    // {
-    //   id: "Taller-para-San-Arte",
-    //   title: "San-Arte",
-    //   description:
-    //     "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
-    //   price: 25000,
-    //   date: "2025-08-12",
-    //   time: "19:00",
-    //   instructor: "María Gabriela Pástor",
-    //   instructorId: 26,
-    //   isDisabled: true,
-    // },
+    {
+      id: "Falun-Dafa",
+      title: "Falun Dafa",
+      description:
+        "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo. (2 SESIONES EN TOTAL. SEGUNDA SESIÓN EL 13 DE DICIEMBRE A LAS 16HRS.)",
+      price: 25000,
+      date: "2025-06-12",
+      time: "11:00",
+      instructor: "Maribel Muñoz",
+      instructorId: 32,
+      isDisabled: true,
+    },
     {
       id: "Taller-Yoga",
       title: "Yoga Integral",
@@ -62,15 +62,15 @@ export default function TalleresMensuales() {
       isDisabled: false,
     },
     // {
-    //   id: "Taller-de-Escribir-sobre-Raices",
-    //   title: "Escribir desde las raíces: Tarot y memoria ancestral",
+    //   id: "Perfil-Numerologico-de-tu-alma",
+    //   title: "Perfil Numerológico de tu alma",
     //   description:
-    //     "Un taller para reconectar con el linaje femenino a través de la escritura creativa, el tarot y la memoria del cuerpo. Exploraremos lo que heredamos emocional y corporalmente, para reconocer nuestras heridas, activar los dones, liberar patrones y escribir una nueva narrativa personal. Cada clase integra movimiento consciente, escritura terapéutica y arquetipos del tarot como guías simbólicas. Crearemos textos, rituales y cartas simbólicas inspiradas en nuestras ancestras, cerrando con una obra escrita que celebre nuestra propia voz.",
+    //     "Descubrir los números sagrados que revelan la esencia de tú alma,tú propósito de vida y los dones que viniste a manifestar.",
     //   price: 25000,
-    //   date: "2025-08-14",
-    //   time: "20:00",
-    //   instructor: "Katalina Rencoret",
-    //   instructorId: 18,
+    //   date: "2025-12-03",
+    //   time: "18:00",
+    //   instructor: "Crisolde Valenzuela",
+    //   instructorId: 30,
     //   isDisabled: true,
     // },
     // {
@@ -256,17 +256,16 @@ export default function TalleresMensuales() {
                   className="w-full h-80 object-cover"
                 />
               )}
-              {/* {taller.id === "Taller-para-San-Arte" && (
+              {taller.id === "Falun-Dafa" && (
                 <img
-                  src={SanArte} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  src={Dalun} // Revisa si esto es Taller1 o Taller2 para caa caso
                   alt={taller.title}
                   className="w-full h-80 object-cover"
                 />
-              )} */}
+              )}
               {!(
                 // taller.id === "Taller-de-Tribu-en-Calma" ||
-                // taller.id === "Taller-para-San-Arte" ||
-                (taller.id === "Taller-Yoga")
+                (taller.id === "Falun-Dafa" || taller.id === "Taller-Yoga")
                 // taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">

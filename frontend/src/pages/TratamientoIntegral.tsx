@@ -61,6 +61,32 @@ export default function TratamientoHolistico() {
         { sesiones: 4, precio: 99000 },
       ],
     },
+    // {
+    //   img: creadorvirtual,
+    //   title: "Biomagnetismo",
+    //   terapeuta: "Marcela Cabezas",
+    //   terapeutaId: 25,
+    //   description:
+    //     "Es una terapia que se usa con imanes en el cuerpo, ayudándolo a mantener el equilibrio, estimula la circulación, ayuda a eliminar toxinas y desintoxicar el cuerpo.",
+    //   opciones: [
+    //     { sesiones: 3, precio: 88000 },
+    //     { sesiones: 4, precio: 99000 },
+    //     { sesiones: 5, precio: 120000 },
+    //   ],
+    // },
+    // {
+    //   img: creadorvirtual,
+    //   title: "Camino de Regreso al SER: Un viaje intimo hasta tu centro",
+    //   terapeuta: "Sarita Infante",
+    //   terapeutaId: 26,
+    //   description:
+    //     "Es una experiencia terapéutica profunda que invita a regresar a tu centro y reconectar con la sabiduría que ya habita en ti. A través de un proceso de 3, 4 o 5 sesiones personalizadas, te acompaño a liberar bloqueos emocionales, activar tu energía interior y recuperar la claridad para habitar tu vida desde un lugar más consciente, liviano y pleno. Cada sesión se convierte en un pequeño ritual de transformación: combinamos coaching del SER, escucha profunda, reconexión energética y prácticas de integración que armonizan mente, cuerpo y alma. Es un espacio seguro, amoroso y profundo para volver a sentirte en equilibrio contigo misma. Beneficios: Reconexión con tu energía y propósito interior ✨ Liberación emocional y claridad mental 🌿 Activación de tu poder personal y confianza 💫 Sensación de calma, ligereza y expansión 🌸 Dirigido a: Personas en procesos de cambio, búsqueda interior o que desean abrir un nuevo ciclo desde el bienestar y la conciencia. 🌺 “Porque cuando vuelves a ti, todo comienza a alinearse.",
+    //   opciones: [
+    //     { sesiones: 3, precio: 88000 },
+    //     { sesiones: 4, precio: 99000 },
+    //     { sesiones: 5, precio: 120000 },
+    //   ],
+    // },
 
     // {
     //   img: creadorvirtual,
