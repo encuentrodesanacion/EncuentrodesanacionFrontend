@@ -317,7 +317,7 @@ export default function Terapias() {
           ))}
         </div>
       </div>
-      <br></br> <br></br> <br></br> <br></br>
+      <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br>{" "}
       <PermanentPopup />
       {/* --- MODAL DE CONTACTO --- */}
       {showContactModal && currentTerapia && (
