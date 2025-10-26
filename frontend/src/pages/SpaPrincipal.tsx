@@ -165,19 +165,8 @@ export default function SpaPrincipal() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta11,
-      title: "Sanación niñ@ interior",
-      terapeuta: "Paulina Villablanca",
-      terapeuta_id: 2,
-      description:
-        "A través de diversos ejercicios prácticos, podremos conectarnos con tu niño o niña interior, identificado heridas de infancia y pequeños ejercicios para mejorar tu propio vinculo",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
       img: angel,
-      title: "Tarot terapeutico",
+      title: "Tarot Terapéutico",
       terapeuta: "Angel Martin",
       terapeuta_id: 27,
       description:
@@ -188,7 +177,7 @@ export default function SpaPrincipal() {
     },
     {
       img: marcela,
-      title: "Liberación emociones atrapadas",
+      title: "Liberación Emociones Atrapadas",
       terapeuta: "Marcela Cabezas",
       terapeuta_id: 25,
       description:
@@ -426,7 +415,7 @@ export default function SpaPrincipal() {
         Bienvenido al Spa Principal
       </h2>
       <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 01 al 03 de Octubre 2025)
+        (Del 3 al 5 de Noviembre 2025)
       </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">

@@ -6,13 +6,13 @@ import "../styles/terapiaDeLuz.css";
 import CartIcon from "../components/CartIcon";
 import { useCart, Reserva } from "./CartContext";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
-
+import PermanentPopup from "../components/PermanentPopup";
 import Terapeuta20 from "../assets/Terapeuta20.jpeg";
 import RunasVikingas1 from "../assets/Terapeuta14.jpeg";
 import coachdelser from "../assets/coachdelser.jpeg";
 import crisolterap from "../assets/crisolterap.jpeg";
 
-import terapeuta6 from "../assets/Terapeuta6.jpg";
+import velas from "../assets/Convelas.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import { v4 as uuidv4 } from "uuid";
 import parsePhoneNumberFromString from "libphonenumber-js";
@@ -32,15 +32,29 @@ interface ImagenData {
 
 const imagenesData: ImagenData[] = [
   {
+    id: "Ritual-con-velas",
+    src: velas,
+    alt: "RITUAL CON VELAS",
+    descripcion:
+      "El Maestro Fuego, con mención en magia con velas, es una práctica espiritual que utiliza la energía del fuego como puente entre la intención personal y el universo. Cada color, forma o aroma de la vela se asocia a vibraciones específicas que ayudan a enfocar deseos, peticiones o procesos de sanación. Una sesión de magia con velas es un encuentro con lo sagrado, donde la llama se convierte en un mensajero entre el mundo terrenal y las fuerzas universales. Cada vela encendida despierta la energía ancestral del fuego, capaz de abrir caminos, transformar realidades y guiar el alma hacia la claridad.",
+    terapeuta: "Ana Luisa Solervicens",
+    link: "#",
+    terapeutaId: 13,
+    precio: 40000,
+    duracion:
+      "Inicia el  4 DE NOVIEMBRE A LAS 19:30HRS TODOS LOS MARTES DEL MES",
+    isDisabled: false,
+  },
+  {
     id: "Coach-del-SER",
     src: coachdelser,
-    alt: "Mención en formación Coach del SER",
+    alt: "Coach del SER",
     descripcion:
       "Es un programa diseñado para formar facilitadores conscientes, capaces de acompañar procesos de transformación profunda desde la integración de dos caminos complementarios:",
     link: "#",
     terapeuta: "Sarita Infante",
     terapeutaId: 26,
-    precio: 40000,
+    precio: 50000,
     duracion:
       "PRIMERA CONVOCATORIA EL 1 DE DICIEMBRE A LAS 20:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
     isDisabled: false,
@@ -48,31 +62,18 @@ const imagenesData: ImagenData[] = [
   {
     id: "Liberacion-de-emociones-atrapadas",
     src: crisolterap,
-    alt: "Mención en formación Liberación Emociones Atrapadas",
+    alt: "Liberación Emociones Atrapadas",
     descripcion:
       "Un viaje de transformación interior,aprendiendo a identificar emociones y liberar cargas energéticas para  reconectar con su luz individual y aprender a sanar en forma individual y grupal.",
     link: "#",
     terapeuta: "Crisolde Valenzuela",
     terapeutaId: 30,
-    precio: 40000,
+    precio: 50000,
     duracion:
       "PRIMERA CONVOCATORIA EL 5 DE DICIEMBRE A LAS 19:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
     isDisabled: false,
   },
-  // {
-  //   id: "reiki-usui-2",
-  //   src: Terapeuta20,
-  //   alt: "Reiki Usui II",
-  //   descripcion:
-  //     "Reiki Usui Nivel Dos: Sanación con Símbolos y a Distancia El Reiki Usui Nivel Dos profundiza tu conexión con la energía Reiki, introduciendo tres símbolos sagrados que amplifican tu capacidad de sanación. El Cho Ku Rei potencia el flujo de energía para tratamientos más intensos y protección. El Sei He Ki trabaja en la sanación emocional y mental, ayudando a liberar patrones negativos. Finalmente, el Hon Sha Ze Sho Nen te permite enviar Reiki a cualquier persona, lugar o situación a distancia, trascendiendo el tiempo y el espacio. Este nivel te empodera para realizar sanaciones más potentes, específicas y sin la necesidad de contacto físico.",
-  //   terapeuta: "Ema Iriarte",
-  //   link: "#",
-  //   terapeutaId: 21,
-  //   precio: 40000,
-  //   duracion:
-  //     "Inicia el 16 de Agosto a las 18:00hrs (SE REALIZA TODOS LOS SABADOS DEL MES A LA MISMA HORA)",
-  //   isDisabled: true,
-  // },
+
   // {
   //   id: "Tarot-Evolutivo",
   //   src: terapeuta19,
@@ -231,15 +232,14 @@ export default function Terapias() {
           >
             Talleres Mensuales
           </Link>
-          <Link
+          {/* <Link
             to="/psicologos"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
             Mente y Ser
-          </Link>
+          </Link> */}
         </div>
       </header>
-
       <div
         style={{
           padding: "2rem",
@@ -256,7 +256,7 @@ export default function Terapias() {
         </button>
 
         <h2 className="text-2xl font-bold text-center text-purple-700 mb-8">
-          Formaciones Disponibles
+          Menciones Disponibles
         </h2>
 
         <div className="flip-wrapper-container">
@@ -317,7 +317,8 @@ export default function Terapias() {
           ))}
         </div>
       </div>
-
+      <br></br> <br></br> <br></br> <br></br>
+      <PermanentPopup />
       {/* --- MODAL DE CONTACTO --- */}
       {showContactModal && currentTerapia && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">

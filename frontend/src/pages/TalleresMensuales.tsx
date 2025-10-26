@@ -7,7 +7,11 @@ import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
 import YogaArt from "../assets/Yoga integral.jpeg";
 import perfilnum from "../assets/perfilnum.jpeg";
 import Dalun from "../assets/DALUN.jpeg";
-import EscribirDesdeRaices from "../assets/EscribirDesdeRaices.jpeg";
+import bordado from "../assets/bordado.jpeg";
+import movimiento from "../assets/Movimiento.jpeg";
+import flexi from "../assets/flexi.jpeg";
+import presion from "../assets/presion.jpeg";
+import hiit from "../assets/hiit.jpeg";
 import parsePhoneNumberFromString from "libphonenumber-js";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
@@ -37,42 +41,105 @@ export default function TalleresMensuales() {
 
   const talleres: TallerItem[] = [
     {
+      id: "Taller-Yoga",
+      title: "Yoga Integral",
+      description:
+        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar.",
+      price: 35000,
+      date: "2025-11-04",
+      time: "19:00",
+
+      instructor: "Susanne Saavedra",
+      instructorId: 24,
+      isDisabled: false,
+    },
+    {
+      id: "Movimiento-del-Alma",
+      title: "Movimiento del Alma",
+      description:
+        "Un ciclo de 4 encuentros grupales al mes que invita a reconectar con tu cuerpo, tu energía y tu esencia a través del movimiento, el goce y la presencia. Un espacio recreativo y sanador donde podrás soltar, respirar, expresarte y volver a sentir la vida fluir desde adentro hacia afuera.",
+      price: 35000,
+      date: "2025-12-02",
+      time: "20:00",
+      instructor: "Sarita Infante",
+      instructorId: 26,
+      isDisabled: false,
+    },
+    {
+      id: "Puntos-Presion",
+      title: "Puntos de presión para armonizarte",
+      description:
+        "Reconecta con tu energía vital. Con pequeños toques en puntos específicos de tu cuerpo, libera tensiones, equilibra tus emociones, recupera tu paz interior. Dale a tu cuerpo el masaje de calma que necesita cada día.",
+      price: 35000,
+      date: "2025-12-05",
+      time: "20:00",
+      instructor: "Marcela Cabezas",
+      instructorId: 32,
+      isDisabled: false,
+    },
+    {
       id: "Falun-Dafa",
       title: "Falun Dafa",
       description:
-        "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo. (2 SESIONES EN TOTAL. SEGUNDA SESIÓN EL 13 DE DICIEMBRE A LAS 16HRS.)",
-      price: 25000,
+        "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo.",
+      price: 35000,
       date: "2025-06-12",
       time: "11:00",
       instructor: "Maribel Muñoz",
       instructorId: 32,
       isDisabled: false,
     },
-    // {
-    //   id: "Taller-Yoga",
-    //   title: "Yoga Integral",
-    //   description:
-    //     "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar. (SE REALIZA TODOS LOS MARTES DEL MES (4 SESIONES EN TOTAL). A LA MISMA HORA)",
-    //   price: 35000,
-    //   date: "2025-11-04",
-    //   time: "19:00",
 
-    //   instructor: "Susanne Saavedra",
-    //   instructorId: 24,
-    //   isDisabled: false,
-    // },
-    // {
-    //   id: "Perfil-Numerologico-de-tu-alma",
-    //   title: "Perfil Numerológico de tu alma",
-    //   description:
-    //     "Descubrir los números sagrados que revelan la esencia de tú alma,tú propósito de vida y los dones que viniste a manifestar.",
-    //   price: 25000,
-    //   date: "2025-12-03",
-    //   time: "18:00",
-    //   instructor: "Crisolde Valenzuela",
-    //   instructorId: 30,
-    //   isDisabled: true,
-    // },
+    {
+      id: "Perfil-Numerologico-de-tu-alma",
+      title: "Perfil Numerológico de tu alma",
+      description:
+        "Descubrir los números sagrados que revelan la esencia de tú alma,tú propósito de vida y los dones que viniste a manifestar.",
+      price: 35000,
+      date: "2025-12-03",
+      time: "18:00",
+      instructor: "Crisolde Valenzuela",
+      instructorId: 30,
+      isDisabled: false,
+    },
+
+    {
+      id: "Bordado-Terapeutico",
+      title: "Taller de Bordado Arteterapeutico “Emocionario Textil",
+      description:
+        "El objetivo de este taller es incentivar la creatividad, proporcionar un espacio de calma y bienestar integral. Se enseñarán puntos básicos y fáciles del bordado, con la finalidad de crear una obra textil la cual va a describir a través del bordado y la acuarela un registro de nuestras emociones. El formato de la obra textil será un tipo cuaderno o pequeño libro el cual se irá construyendo sesión a sesión.",
+      price: 35000,
+      date: "2025-12-01",
+      time: "20:00",
+      instructor: "Catalina Sánchez",
+      instructorId: 33,
+      isDisabled: false,
+    },
+    {
+      id: "Flexibilidad-Consciente",
+      title: "Flexibilidad Consciente",
+      description:
+        "Este taller busca generar un espacio de conexión entre mente y cuerpo a través del desarrollo de la flexibilidad física, extrapolándola a su vez a una forma de abrirnos a la vida con mayor fluidez y equilibrio. Partiremos tomando consciencia de nuestro cuerpo, para luego desarrollar técnicas de movilidad articular y muscular, estiramiento, y respiración consciente, con el objetivo de ampliar el rango articular, mejorar la postura, liberar tensiones acumuladas y gestionar el estrés, para finalmente encontrar calma, armonía interior y reencontrarnos con nuestra energía vital.",
+      price: 35000,
+      date: "2025-12-04",
+      time: "18:00",
+      instructor: "Catalina Paredes",
+      instructorId: 35,
+      isDisabled: false,
+    },
+    {
+      id: "Entrenamiento-Hiit",
+      title: "HIIT  (Entrenamiento Interválico de Intensidad)",
+      description:
+        "Consiste en alternar ráfagas cortas de ejercicio intenso con períodos de descanso o menor intensidad. Es una forma eficiente de entrenar, ya que permite obtener grandes beneficios cardiovasculares y de quema de grasa en sesiones de unos 20-30 minutos, con la posibilidad de adaptar la intensidad al nivel físico de cada persona, adaptable a cualquier nivel. Ponle ritmo, ponle HIIT. Ponte en forma, pierde grasa y mejora tu salud.",
+      price: 35000,
+      date: "2025-12-03",
+      time: "19:30",
+      instructor: "Gabriela Pinto",
+      instructorId: 34,
+      isDisabled: false,
+    },
+
     // {
     //   id: "taller-meditacion-jul",
     //   title: "Taller de Regresión",
@@ -209,12 +276,12 @@ export default function TalleresMensuales() {
           >
             Talleres Mensuales
           </Link>
-          <Link
+          {/* <Link
             to="/psicologos"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
             Mente y Ser
-          </Link>
+          </Link> */}
         </div>
       </header>
 
@@ -242,16 +309,51 @@ export default function TalleresMensuales() {
               key={taller.id}
               className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
             >
-              {/* {taller.id === "Taller-de-Escribir-sobre-Raices" && (
-                <img
-                  src={EscribirDesdeRaices} // Revisa si esto es Taller1 o Taller2 para cada caso
-                  alt={taller.title}
-                  className="w-full h-80 object-cover" //Define altura de cuadro "h-xx" , "w-full h-auto object-contain"
-                /> */}
-              {/* )} */}
               {taller.id === "Taller-Yoga" && (
                 <img
                   src={YogaArt} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Puntos-Presion" && (
+                <img
+                  src={presion} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Flexibilidad-Consciente" && (
+                <img
+                  src={flexi} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Entrenamiento-Hiit" && (
+                <img
+                  src={hiit} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Bordado-Terapeutico" && (
+                <img
+                  src={bordado} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Movimiento-del-Alma" && (
+                <img
+                  src={movimiento} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Perfil-Numerologico-de-tu-alma" && (
+                <img
+                  src={perfilnum} // Revisa si esto es Taller1 o Taller2 para cada caso
                   alt={taller.title}
                   className="w-full h-80 object-cover"
                 />
@@ -263,9 +365,18 @@ export default function TalleresMensuales() {
                   className="w-full h-80 object-cover"
                 />
               )}
+
               {!(
-                // taller.id === "Taller-de-Tribu-en-Calma" ||
-                (taller.id === "Falun-Dafa" || taller.id === "Taller-Yoga")
+                (
+                  taller.id === "Falun-Dafa" ||
+                  taller.id === "Taller-Yoga" ||
+                  taller.id === "Bordado-Terapeutico" ||
+                  taller.id === "Movimiento-del-Alma" ||
+                  taller.id === "Entrenamiento-Hiit" ||
+                  taller.id === "Flexibilidad-Consciente" ||
+                  taller.id === "Puntos-Presion" ||
+                  taller.id === "Perfil-Numerologico-de-tu-alma"
+                )
                 // taller.id === "Taller-de-Escribir-sobre-Raices"
               ) && (
                 <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
