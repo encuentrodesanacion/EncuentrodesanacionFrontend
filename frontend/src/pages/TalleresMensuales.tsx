@@ -83,7 +83,7 @@ export default function TalleresMensuales() {
       description:
         "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo.",
       price: 35000,
-      date: "2025-06-12",
+      date: "2025-12-06",
       time: "11:00",
       instructor: "Maribel Muñoz",
       instructorId: 32,
