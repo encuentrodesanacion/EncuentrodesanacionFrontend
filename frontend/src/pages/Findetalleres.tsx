@@ -162,7 +162,7 @@ export default function Findetalleres() {
     },
     {
       img: Sanando,
-      title: "Sanando mis heridas de infancia",
+      title: "Sanando mis heridas de infancia", //asdsa
       terapeuta: "Paulina Villablanca",
       terapeuta_id: 2,
       description:
