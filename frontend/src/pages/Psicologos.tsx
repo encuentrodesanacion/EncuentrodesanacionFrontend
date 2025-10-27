@@ -248,10 +248,11 @@ export default function TratamientoHolistico() {
       </h2>
             <br></br>      <br></br>     {" "}
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-             Porque mereces vivir en armonía contigo y tu entorno, hemos creado
-        para ti, querido Valiente, Mente & Ser: Un espacio profesional creado
-        para brindarte el sostén psicológico que necesitas. Avanza con certeza y
-        de la mano de los mejores profesionales hacia tu bienestar y tu paz.    {" "}
+             Querido VALIENTE: Porque mereces vivir en armonía contigo y tu
+        entorno, hemos creado para ti, Mente & Ser: Un espacio profesional
+        creado para brindarte el sostén psicológico que necesitas. Avanza con
+        certeza y de la mano de los mejores profesionales hacia tu bienestar y
+        tu paz.   {" "}
       </p>
             <br></br>      <br></br>     {" "}
       {/* NUEVA ESTRUCTURA VISUAL - ESTILO TALLERES */}     {" "}
