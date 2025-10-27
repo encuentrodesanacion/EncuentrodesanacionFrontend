@@ -1,146 +1,214 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
-import { useCart, Reserva } from "../pages/CartContext";
-import CartIcon from "../components/CartIcon";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+import "../styles/tratamientoIntegral.css"; // Revisa si necesitas este CSS, o si tienes uno específico para talleres
+import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta
+import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
 
-// Importaciones de imágenes (se mantienen igual)
-import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta31 from "../assets/Terapeuta31.jpeg";
-import Terapeuta5 from "../assets/Terapeuta5.jpg";
-import renata from "../assets/renata.jpeg";
-
-import creadorvirtual from "../assets/creadorvirtual.jpg";
+import YogaArt from "../assets/Yoga integral.jpeg";
+import perfilnum from "../assets/perfilnum.jpeg";
+import Dalun from "../assets/DALUN.jpeg";
+import bordado from "../assets/bordado.jpeg";
+import movimiento from "../assets/Movimiento.jpeg";
+import flexi from "../assets/flexi.jpeg";
+import presion from "../assets/presion.jpeg";
+import hiit from "../assets/hiit.jpeg";
+import parsePhoneNumberFromString from "libphonenumber-js";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-interface TerapiaItem {
-  img: string;
+// Define la interfaz para un ítem de taller
+
+interface TallerItem {
+  id: string; // O number, un ID único para el taller
   title: string;
-  terapeuta: string;
-  terapeutaId: number;
   description: string;
-  opciones: { sesiones: number; precio: number }[];
+  price: number;
+  date: string; // Fecha del taller (ej. "2025-07-20")
+  time: string; // Hora del taller (ej. "10:00")
+  instructor: string; // Terapeuta/Instructor
+  instructorId: number; //Necesario!
+  isDisabled?: boolean;
 }
 
-export default function TratamientoHolistico() {
+export default function TalleresMensuales() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
 
+  // --- NUEVOS ESTADOS para controlar el modal de contacto ---
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
-  const [currentTerapiaData, setCurrentTerapiaData] = useState<{
-    terapiaTitle: string;
-    sesiones: number;
-    precio: number;
-    terapeutaNombre: string;
-    terapeutaId: number;
-  } | null>(null);
+  const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
-  const terapias: TerapiaItem[] = [
+  const talleres: TallerItem[] = [
     {
-      img: renata,
-      title:
-        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión)",
-      terapeuta: "Renata Santoro",
-      terapeutaId: 29,
+      id: "Taller-Yoga",
+      title: "Yoga Integral",
       description:
-        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión) y con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida", // DESCRIPCIÓN ACTUALIZADA
-      opciones: [
-        // Paquete Normal: 4 sesiones (Precio Base: 120K)
-        { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones (120K + 50K = 170K)
-        { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones (Precio Base: 270K)
-        { sesiones: 10, precio: 270000 }, // Paquete CRISIS: 10 sesiones (270K + 100K = 370K)
-        { sesiones: 10, precio: 370000 },
-      ],
+        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar.",
+      price: 35000,
+      date: "2025-11-04",
+      time: "19:00",
+
+      instructor: "Susanne Saavedra",
+      instructorId: 24,
+      isDisabled: false,
     },
+    {
+      id: "Movimiento-del-Alma",
+      title: "Movimiento del Alma",
+      description:
+        "Un ciclo de 4 encuentros grupales al mes que invita a reconectar con tu cuerpo, tu energía y tu esencia a través del movimiento, el goce y la presencia. Un espacio recreativo y sanador donde podrás soltar, respirar, expresarte y volver a sentir la vida fluir desde adentro hacia afuera.",
+      price: 35000,
+      date: "2025-12-02",
+      time: "20:00",
+      instructor: "Sarita Infante",
+      instructorId: 26,
+      isDisabled: false,
+    },
+    {
+      id: "Puntos-Presion",
+      title: "Puntos de presión para armonizarte",
+      description:
+        "Reconecta con tu energía vital. Con pequeños toques en puntos específicos de tu cuerpo, libera tensiones, equilibra tus emociones, recupera tu paz interior. Dale a tu cuerpo el masaje de calma que necesita cada día.",
+      price: 35000,
+      date: "2025-12-05",
+      time: "20:00",
+      instructor: "Marcela Cabezas",
+      instructorId: 32,
+      isDisabled: false,
+    },
+    {
+      id: "Falun-Dafa",
+      title: "Falun Dafa",
+      description:
+        "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo.",
+      price: 35000,
+      date: "2025-12-06",
+      time: "11:00",
+      instructor: "Maribel Muñoz",
+      instructorId: 32,
+      isDisabled: false,
+    },
+
+    {
+      id: "Perfil-Numerologico-de-tu-alma",
+      title: "Perfil Numerológico de tu alma",
+      description:
+        "Descubrir los números sagrados que revelan la esencia de tú alma,tú propósito de vida y los dones que viniste a manifestar.",
+      price: 35000,
+      date: "2025-12-03",
+      time: "18:00",
+      instructor: "Crisolde Valenzuela",
+      instructorId: 30,
+      isDisabled: false,
+    },
+
+    {
+      id: "Bordado-Terapeutico",
+      title: "Taller de Bordado Arteterapeutico “Emocionario Textil",
+      description:
+        "El objetivo de este taller es incentivar la creatividad, proporcionar un espacio de calma y bienestar integral. Se enseñarán puntos básicos y fáciles del bordado, con la finalidad de crear una obra textil la cual va a describir a través del bordado y la acuarela un registro de nuestras emociones. El formato de la obra textil será un tipo cuaderno o pequeño libro el cual se irá construyendo sesión a sesión.",
+      price: 35000,
+      date: "2025-12-01",
+      time: "20:00",
+      instructor: "Catalina Sánchez",
+      instructorId: 33,
+      isDisabled: false,
+    },
+    {
+      id: "Flexibilidad-Consciente",
+      title: "Flexibilidad Consciente",
+      description:
+        "Este taller busca generar un espacio de conexión entre mente y cuerpo a través del desarrollo de la flexibilidad física, extrapolándola a su vez a una forma de abrirnos a la vida con mayor fluidez y equilibrio. Partiremos tomando consciencia de nuestro cuerpo, para luego desarrollar técnicas de movilidad articular y muscular, estiramiento, y respiración consciente, con el objetivo de ampliar el rango articular, mejorar la postura, liberar tensiones acumuladas y gestionar el estrés, para finalmente encontrar calma, armonía interior y reencontrarnos con nuestra energía vital.",
+      price: 35000,
+      date: "2025-12-04",
+      time: "18:00",
+      instructor: "Catalina Paredes",
+      instructorId: 35,
+      isDisabled: false,
+    },
+    {
+      id: "Entrenamiento-Hiit",
+      title: "HIIT  (Entrenamiento Interválico de Intensidad)",
+      description:
+        "Consiste en alternar ráfagas cortas de ejercicio intenso con períodos de descanso o menor intensidad. Es una forma eficiente de entrenar, ya que permite obtener grandes beneficios cardiovasculares y de quema de grasa en sesiones de unos 20-30 minutos, con la posibilidad de adaptar la intensidad al nivel físico de cada persona, adaptable a cualquier nivel. Ponle ritmo, ponle HIIT. Ponte en forma, pierde grasa y mejora tu salud.",
+      price: 35000,
+      date: "2025-12-03",
+      time: "19:30",
+      instructor: "Gabriela Pinto",
+      instructorId: 34,
+      isDisabled: false,
+    },
+
+    // {
+    //   id: "taller-meditacion-jul",
+    //   title: "Taller de Regresión",
+    //   description:
+    //     "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",
+    //   price: 25000,
+    //   date: "2025-07-05",
+    //   time: "10:30",
+    //   instructor: "Alice Basay",
+    //   instructorId: 10,
+    // },
+    // Añade más talleres aquí
   ];
 
-  const reservarSesion = (
-    terapiaTitle: string,
-    sesiones: number,
-    precio: number,
-    terapeutaNombre: string,
-    terapeutaId: number
-  ) => {
-    if (
-      !terapiaTitle ||
-      typeof terapiaTitle !== "string" ||
-      terapiaTitle.trim() === ""
-    ) {
-      alert("Error: El nombre del servicio no es válido.");
-      console.error("Servicio inválido detectado:", terapiaTitle);
-      return;
-    }
-    if (typeof precio !== "number" || isNaN(precio) || precio <= 0) {
-      alert("Error: El precio no es válido o es cero.");
-      console.error("Precio inválido detectado:", precio);
-      return;
-    }
-
-    setCurrentTerapiaData({
-      terapiaTitle,
-      sesiones,
-      precio,
-      terapeutaNombre,
-      terapeutaId,
-    });
-    setShowContactModal(true);
-    setClientName("");
+  // --- Función original handleAddToCart modificada para ABRIR EL MODAL ---
+  const handleOpenContactModal = (taller: TallerItem) => {
+    setCurrentTaller(taller); // Guarda el taller seleccionado
+    setShowContactModal(true); // Abre el modal
+    setClientName(""); // Limpia los campos del formulario al abrir el modal
     setClientPhone("");
-    console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
+    console.log(
+      "--- DEBUG: Modal de contacto abierto para TalleresMensuales ---"
+    );
   };
 
+  // --- Nueva función para confirmar y añadir al carrito desde el modal ---
   const handleConfirmAndAddToCart = async () => {
-    if (!currentTerapiaData) {
-      console.error("Error: currentTerapiaData es nulo al confirmar.");
-      alert("Hubo un error al procesar tu reserva. Intenta de nuevo.");
+    if (!currentTaller) {
+      console.error("Error: currentTaller es nulo al confirmar.");
+      alert("Hubo un error al procesar tu inscripción. Intenta de nuevo.");
       return;
     }
 
     if (clientName.trim() === "" || clientPhone.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
-    }
-
+    } // --- NUEVA VALIDACIÓN PARA EL NÚMERO DE TELÉFONO ---
     const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
-
     if (!phoneNumber || !phoneNumber.isValid()) {
       alert(
         "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
       );
       return;
-    }
-
+    } // --- FIN NUEVA VALIDACIÓN ---
     const detectedCountry = phoneNumber.country || "Desconocido";
-    console.log("País detectado por número telefónico:", detectedCountry);
+    console.log("País detectado por número telefónico:", detectedCountry); // Aquí usamos los datos del taller (currentTaller) y los datos del cliente
 
-    const now = new Date();
-    const fechaActual = now.toISOString().split("T")[0];
-    const horaGenerica = "17:00";
-
+    // Construir el objeto de datos para enviar al backend
     const reservaDataToSend = {
-      servicio: "Mente y Ser",
-      especialidad: currentTerapiaData.terapiaTitle,
-      fecha: fechaActual,
-      hora: horaGenerica,
-      precio: currentTerapiaData.precio,
-      sesiones: currentTerapiaData.sesiones,
-      cantidad: 1,
+      // El backend `crearReservaDirecta` generará el `id` y `clientBookingId` (UUID).
+      servicio: "Talleres Mensuales", // Nombre general del servicio
+      especialidad: currentTaller.title, // Usa el título del taller como especialidad
+      fecha: currentTaller.date,
+      hora: currentTaller.time,
+      precio: currentTaller.price,
+      sesiones: 4, // Asumimos 1 sesión por taller mensual, ajusta si es diferente
+      cantidadCupos: 1, // Cantidad de cupos (generalmente 1 por reserva de persona)
       nombreCliente: clientName.trim(),
       telefonoCliente: clientPhone.trim(),
-      terapeuta: currentTerapiaData.terapeutaNombre,
-      terapeutaId: currentTerapiaData.terapeutaId,
+      terapeuta: currentTaller.instructor,
+      terapeutaId: currentTaller.instructorId,
     };
 
     console.log(
-      "Objeto Reserva a añadir al carrito desde Mente y Ser (después de modal):",
+      "Intentando crear reserva de Taller Mensual en backend:",
       reservaDataToSend
     );
 
     try {
-      // Inicio del bloque `try` para la llamada al backend
       const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
         method: "POST",
         headers: {
@@ -153,207 +221,230 @@ export default function TratamientoHolistico() {
         const errorBody = await response.json();
         const errorMessage =
           errorBody.mensaje ||
-          `Error al confirmar la inscripción: ${response.status} ${response.statusText}`;
+          `Error al inscribirse en el taller: ${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
       }
 
-      const { reserva: confirmedReservation } = await response.json();
+      const { reserva: confirmedReservation } = await response.json(); // El backend devuelve { reserva: {...} }
 
       console.log(
-        "Reserva de Mente y Ser confirmada por backend:",
+        "Reserva de Taller Mensual confirmada por backend:",
         confirmedReservation
       );
 
-      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
+      // Añadir la reserva (con el ID de la DB y clientBookingId del backend) al carrito
+      addToCart(confirmedReservation); // confirmedReservation ya tiene id y clientBookingId válidos
 
       alert(
-        `Reserva agregada: ${confirmedReservation.sesiones} sesiones de ${confirmedReservation.especialidad} con ${confirmedReservation.terapeuta}`
-      ); // Cierra el modal y resetea estados
+        `"${confirmedReservation.especialidad}" ha sido agregado al carrito.`
+      );
 
+      // Cierra el modal y resetea estados
       setShowContactModal(false);
-      setCurrentTerapiaData(null);
+      setCurrentTaller(null);
       setClientName("");
       setClientPhone("");
     } catch (error: any) {
-      // Cierre del `try` y comienzo del `catch`
-      console.error("ERROR al crear la reserva de Mente y Ser:", error);
-      alert(`No se pudo completar la inscripción: ${error.message}`);
+      console.error("ERROR al crear la reserva de Taller Mensual:", error);
+      alert(`No se pudo completar la inscripción al taller: ${error.message}`);
     }
   };
 
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
-                       {" "}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-                               {" "}
-        <h1 className="text-xl font-semibold text-gray-800">Mente y Ser</h1>
-                        <CartIcon />               {" "}
+        <h1 className="text-xl font-semibold text-gray-800">
+          Talleres Mensuales
+        </h1>
+        <CartIcon />
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-                                       {" "}
           <Link
             to="/terapeutasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-                                    Terapeutas de la Luz                   {" "}
+            Terapeutas de la Luz
           </Link>
-                                       {" "}
           <Link
             to="/tratamientointegral"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-                                    Tratamiento Int.                   {" "}
+            Tratamiento Int.
           </Link>
-                                       {" "}
           <Link
             to="/tallermensual"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-                                    Talleres Mensuales                   {" "}
+            Talleres Mensuales
           </Link>
-                                   {" "}
+          <Link
+            to="/psicologos"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Mente y Ser
+          </Link>
         </div>
-                           {" "}
       </header>
-                       {" "}
+
       <button
         onClick={() => navigate("/")}
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-                        Volver al Inicio           {" "}
+        Volver al Inicio
       </button>
-                       {" "}
-      <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-                        Bienvenido a Mente y Ser           {" "}
+
+      <h2 className="text-3xl font-bold text-center text-purple-700 mb-6">
+        Nuestros Talleres del Mes
       </h2>
-                  <br></br>      <br></br>           {" "}
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-                        Descripción de Mente y Ser           {" "}
+        Únete a nuestros talleres interactivos para profundizar en tu bienestar
+        y desarrollo personal.
       </p>
-                  <br></br>      <br></br>           {" "}
-      <div className="flip-wrapper-container mt-10">
-                               {" "}
-        {terapias.map(
+
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+        {talleres.map(
           (
-            t: TerapiaItem,
-            i: number // Añadidos tipos explícitos para 't' y 'i'
+            taller: TallerItem // Añadido tipo explícito para 'taller'
           ) => (
-            <div key={i} className="flip-wrapper">
-                                                       {" "}
-              <div className="flip-card">
-                                                               {" "}
-                {/* MODIFICACIÓN AQUÍ: Eliminar flip-inner y aplicar estilos directamente a flip-card */}
-                                                               {" "}
-                <div className="flip-front">
-                                                     {" "}
-                  <img src={t.img} alt={t.title} />                             
-                                         {" "}
-                  <div className="nombre-overlay">
-                                                            <p>{t.terapeuta}</p>
-                                                       {" "}
-                  </div>
-                                                                   {" "}
+            <div
+              key={taller.id}
+              className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
+            >
+              {taller.id === "Taller-Yoga" && (
+                <img
+                  src={YogaArt} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Puntos-Presion" && (
+                <img
+                  src={presion} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Flexibilidad-Consciente" && (
+                <img
+                  src={flexi} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Entrenamiento-Hiit" && (
+                <img
+                  src={hiit} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Bordado-Terapeutico" && (
+                <img
+                  src={bordado} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Movimiento-del-Alma" && (
+                <img
+                  src={movimiento} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Perfil-Numerologico-de-tu-alma" && (
+                <img
+                  src={perfilnum} // Revisa si esto es Taller1 o Taller2 para cada caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+              {taller.id === "Falun-Dafa" && (
+                <img
+                  src={Dalun} // Revisa si esto es Taller1 o Taller2 para caa caso
+                  alt={taller.title}
+                  className="w-full h-80 object-cover"
+                />
+              )}
+
+              {!(
+                (
+                  taller.id === "Falun-Dafa" ||
+                  taller.id === "Taller-Yoga" ||
+                  taller.id === "Bordado-Terapeutico" ||
+                  taller.id === "Movimiento-del-Alma" ||
+                  taller.id === "Entrenamiento-Hiit" ||
+                  taller.id === "Flexibilidad-Consciente" ||
+                  taller.id === "Puntos-Presion" ||
+                  taller.id === "Perfil-Numerologico-de-tu-alma"
+                )
+                // taller.id === "Taller-de-Escribir-sobre-Raices"
+              ) && (
+                <div className="w-full h-48 bg-gray-200 flex items-center justify-center text-gray-500">
+                  Imagen de Taller
                 </div>
-                                                               {" "}
-                <div className="flip-back h-full overflow-y-auto p-4">
-                                                                       {" "}
-                  <h3 className="mb-2 font-bold whitespace-normal">
-                    {t.title}
-                  </h3>
-                                   {" "}
-                  <p className="mb-4 text-sm">{t.description}</p>               
-                   {" "}
-                  <form
-                    className="w-full px-2"
-                    onSubmit={(e) => e.preventDefault()}
+              )}
+
+              <div className="p-6">
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">
+                  {taller.title}
+                </h3>
+                <p className="text-gray-600 text-sm mb-2">
+                  Instructor: <strong>{taller.instructor}</strong>
+                </p>
+                <p className="text-gray-700 text-base mb-4">
+                  {taller.description}
+                </p>
+                <p className="text-md text-gray-500 mb-2">
+                  Fecha: <strong>{taller.date}</strong>
+                </p>
+                <p className="text-md text-gray-500 mb-4">
+                  Hora: <strong>{taller.time}</strong>
+                </p>
+
+                <div className="flex justify-between items-center mb-4">
+                  <span className="text-2xl font-bold text-green-700">
+                    ${taller.price.toLocaleString()} CLP
+                  </span>
+                </div>
+                {taller.isDisabled ? (
+                  <button
+                    disabled // Atributo disabled
+                    className="w-full bg-gray-400 text-white py-2 px-4 rounded-md cursor-not-allowed" // Estilos para deshabilitado
+                    title="Inscripciones cerradas para este taller" // Tooltip
                   >
-                                                                               {" "}
-                    {t.opciones.map(
-                      (op: { sesiones: number; precio: number }, j: number) => {
-                        // --- Lógica de Detección de Intervención de Emergencia ---
-                        let isCrisisPack = false;
-                        // Chequea si es el precio de crisis para 4 o 10 sesiones
-                        if (op.sesiones === 4 && op.precio === 170000) {
-                          isCrisisPack = true;
-                        } else if (op.sesiones === 10 && op.precio === 370000) {
-                          isCrisisPack = true;
-                        }
-                        // --------------------------------------------------------
-
-                        const buttonText = isCrisisPack
-                          ? `${op.sesiones} sesiones + Pack Asistencia en Crisis` // Texto para packs de crisis
-                          : `${op.sesiones} sesiones individual clínica`; // Texto para sesiones normales
-
-                        const finalTitle = t.title;
-
-                        const buttonClass = isCrisisPack
-                          ? "w-full mt-2 px-2 py-1 border rounded bg-pink-800 text-white hover:bg-pink-900 font-bold" // Color más oscuro para diferenciar
-                          : "w-full mt-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700";
-
-                        return (
-                          <button
-                            key={j}
-                            type="button"
-                            onClick={() =>
-                              reservarSesion(
-                                finalTitle,
-                                op.sesiones,
-                                op.precio,
-                                t.terapeuta,
-                                t.terapeutaId
-                              )
-                            }
-                            className={buttonClass}
-                          >
-                                                        {buttonText} ($
-                            {op.precio.toLocaleString()} CLP)                  
-                                     {" "}
-                          </button>
-                        );
-                      }
-                    )}
-                                     {" "}
-                  </form>
-                                 {" "}
-                </div>
-                             {" "}
+                    Inscripciones Cerradas
+                  </button>
+                ) : (
+                  <button
+                    onClick={() => handleOpenContactModal(taller)}
+                    className="w-full bg-purple-600 text-white py-2 px-4 rounded-md hover:bg-purple-700 transition-colors duration-300"
+                  >
+                    Inscribirse al Taller
+                  </button>
+                )}
               </div>
-                         {" "}
             </div>
           )
         )}
-             {" "}
       </div>
-            {/* --- MODAL DE CONTACTO --- */}     {" "}
-      {showContactModal && currentTerapiaData && (
+
+      {/* --- MODAL DE CONTACTO --- */}
+      {showContactModal && currentTaller && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
-                   {" "}
           <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
-                       {" "}
             <h3 className="text-xl font-semibold mb-4 text-center">
-                            Reservar: "{currentTerapiaData.terapiaTitle}"      
-                   {" "}
+              Inscribirse en: "{currentTaller.title}"
             </h3>
-                       {" "}
             <p className="text-gray-700 mb-4 text-center">
-                            Ingresa tus datos para continuar con la reserva de  
-                         {" "}
-              <strong>
-                                {currentTerapiaData.sesiones} sesiones por $    
-                            {currentTerapiaData.precio.toLocaleString()} CLP    
-                         {" "}
-              </strong>
-                            .            {" "}
+              Completa tus datos para reservar tu cupo en este taller.
             </p>
-                       {" "}
             <div className="mb-4">
-                           {" "}
               <label
                 htmlFor="clientName"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                                Nombre Completo:              {" "}
+                Nombre Completo:
               </label>
-                           {" "}
               <input
                 type="text"
                 id="clientName"
@@ -362,18 +453,14 @@ export default function TratamientoHolistico() {
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
               />
-                         {" "}
             </div>
-                       {" "}
             <div className="mb-6">
-                           {" "}
               <label
                 htmlFor="clientPhone"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                                Número de Teléfono:              {" "}
+                Número de Teléfono:
               </label>
-                           {" "}
               <input
                 type="tel"
                 id="clientPhone"
@@ -382,32 +469,24 @@ export default function TratamientoHolistico() {
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
               />
-                         {" "}
             </div>
-                       {" "}
             <div className="flex justify-end space-x-3">
-                           {" "}
               <button
                 onClick={() => setShowContactModal(false)}
                 className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
               >
-                                Cancelar              {" "}
+                Cancelar
               </button>
-                           {" "}
               <button
                 onClick={handleConfirmAndAddToCart}
-                className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors duration-200"
+                className="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 transition-colors duration-200"
               >
-                                Confirmar y Añadir al Carrito              {" "}
+                Confirmar e Inscribirme
               </button>
-                         {" "}
             </div>
-                     {" "}
           </div>
-                 {" "}
         </div>
       )}
-         {" "}
     </div>
   );
 }

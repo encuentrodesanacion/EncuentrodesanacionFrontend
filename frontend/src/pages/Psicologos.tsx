@@ -42,7 +42,7 @@ export default function TratamientoHolistico() {
     {
       img: renata,
       title:
-        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión)",
+        "Psicoterapia Clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión)",
       terapeuta: "Renata Santoro",
       terapeutaId: 29,
       description:
@@ -225,6 +225,12 @@ export default function TratamientoHolistico() {
           >
                         Talleres Mensuales          {" "}
           </Link>
+          <Link
+            to="/psicologos"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Mente y Ser
+          </Link>
                  {" "}
         </div>
              {" "}
@@ -242,7 +248,10 @@ export default function TratamientoHolistico() {
       </h2>
             <br></br>      <br></br>     {" "}
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-                Descripción de Mente y Ser      {" "}
+             Porque mereces vivir en armonía contigo y tu entorno, hemos creado
+        para ti, querido Valiente, Mente & Ser: Un espacio profesional creado
+        para brindarte el sostén psicológico que necesitas. Avanza con certeza y
+        de la mano de los mejores profesionales hacia tu bienestar y tu paz.    {" "}
       </p>
             <br></br>      <br></br>     {" "}
       {/* NUEVA ESTRUCTURA VISUAL - ESTILO TALLERES */}     {" "}
