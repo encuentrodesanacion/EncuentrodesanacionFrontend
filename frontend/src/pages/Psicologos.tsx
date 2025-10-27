@@ -51,7 +51,7 @@ export default function TratamientoHolistico() {
         // Paquete Normal: 4 sesiones @ 120K
         { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones @ 170K (120K + 50K)
         { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones @ 270K
-        { sesiones: 10, precio: 270000 }, // Paquete CRISIS: 10 sesiones @ 370K (270K + 100K)
+        { sesiones: 10, precio: 270000 }, // assPaquete CRISIS: 10 sesiones @ 370K (270K + 100K)
         { sesiones: 10, precio: 370000 },
       ],
     },
