@@ -278,7 +278,7 @@ export default function SpaPrincipal() {
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     // {
-    //   img: terapeuta28,
+    //   img: creadorvirtual,
     //   title: "Regresión",
     //   terapeuta: "Alice Basay",
     //   terapeuta_id: 10,

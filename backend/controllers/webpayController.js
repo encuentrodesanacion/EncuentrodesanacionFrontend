@@ -373,7 +373,11 @@ const crearTransaccionInicial = async (req, res) => {
 
 // --- Controlador para confirmar una transacción después de Webpay ---
 const confirmarTransaccion = async (req, res) => {
-  let tokenWs = req.query.token_ws || req.query.TBK_TOKEN || req.body?.token_ws;
+  let tokenWs =
+    req.body?.token_ws ||
+    req.query.token_ws ||
+    req.query.TBK_TOKEN ||
+    req.body?.TBK_TOKEN;
 
   let t;
   let nuevaTransaccion;
