@@ -439,12 +439,12 @@ const App = () => {
                 price: "Desde 120.000CLP / €109 / $127USD,",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
-                    {/* <Link
+                    <Link
                       to="/psicologos"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       Ingresa Aquí
-                    </Link> */}
+                    </Link>
                   </div>
                 ),
               },

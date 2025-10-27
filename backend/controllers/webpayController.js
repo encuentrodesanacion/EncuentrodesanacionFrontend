@@ -497,6 +497,7 @@ const confirmarTransaccion = async (req, res) => {
         "Tratamiento Integral",
         "Talleres Mensuales",
         "Finde de Talleres",
+        "Mente y Ser",
       ];
       for (const reserva of reservasToProcess) {
         // *** ESTA DESESTRUCTURACIÓN ESTÁ CORRECTA EN `confirmarTransaccion` ***
@@ -701,7 +702,20 @@ const confirmarTransaccion = async (req, res) => {
               );
             }
           }
+          // <--- INICIO: LÓGICA AGREGADA PARA DISTINGUIR CRISIS DE NORMAL ---
+          let tipoServicio = "Servicio Normal"; // Definición de precios de crisis (Basado en la estructura de TratamientoHolistico.tsx)
 
+          const PRECIO_CRISIS_4_SESIONES = 170000;
+          const PRECIO_CRISIS_10_SESIONES = 370000;
+
+          if (servicio === "Mente y Ser") {
+            if (
+              (sesiones === 4 && precio === PRECIO_CRISIS_4_SESIONES) ||
+              (sesiones === 10 && precio === PRECIO_CRISIS_10_SESIONES)
+            ) {
+              tipoServicio = "¡PAQUETE ASISTENCIA EN CRISIS!";
+            }
+          }
           // Notificación al terapeuta
           if (terapeutaData && terapeutaData.email) {
             let serviciosOfrecidosArray = terapeutaData.serviciosOfrecidos;
@@ -725,15 +739,23 @@ const confirmarTransaccion = async (req, res) => {
             });
 
             if (ofreceServicio) {
-              const subject = `¡Nueva Reserva Confirmada para ${especialidad}!`;
+              // --- AJUSTE EN ASUNTO (Añadimos la etiqueta de crisis) ---
+              const subjectPrefix =
+                tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!"
+                  ? "[Intervención En Crisis] "
+                  : "";
+              const subject = `${subjectPrefix}¡Nueva Reserva Confirmada para ${especialidad}!`;
+              // ---------------------------------------------------------
+              // --- AJUSTE EN CONTENIDO HTML (Añadimos la línea del tipo de servicio) ---
               const htmlContent = `
-                <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
-                <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
-                <ul>
-                  <li><strong>Servicio:</strong> ${servicio}</li>
-                  <li><strong>Especialidad:</strong> ${
-                    especialidad || "N/A"
-                  }</li>
+                <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
+                <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
+                <ul>
+                    <li><strong>Tipo de Servicio:</strong> ${tipoServicio}</li> 
+                  <li><strong>Servicio:</strong> ${servicio}</li>
+                  <li><strong>Especialidad:</strong> ${
+                especialidad || "N/A"
+              }</li>
                   <li><strong>Cliente:</strong> ${nombreCliente || "N/A"}</li>
                   <li><strong>Teléfono Cliente:</strong> ${
                     telefonoCliente || "N/A"
@@ -741,13 +763,13 @@ const confirmarTransaccion = async (req, res) => {
                   <li><strong>Fecha:</strong> ${fecha || "N/A"}</li>
                   <li><strong>Hora:</strong> ${hora || "N/A"}</li>
                   <li><strong>Sesiones:</strong> ${sesiones || 1}</li>
-                  <li><strong>Precio:</strong> $${
-                    precio ? precio.toLocaleString("es-CL") : "N/A"
-                  } CLP</li>
-                </ul>
-                <p>Por favor, revisa tu calendario y prepárate para la sesión.</p>
-                <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
-              `;
+                  <li><strong>Precio:</strong> $${
+                precio ? precio.toLocaleString("es-CL") : "N/A"
+              } CLP</li>
+                </ul>
+                <p>Por favor, revisa tu calendario y prepárate para la sesión.</p>
+                <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
+              `;
               await sendEmail(terapeutaData.email, subject, htmlContent);
               console.log(
                 `[DEBUG NOTIFY] Notificación por correo enviada a ${terapeutaData.email}.`

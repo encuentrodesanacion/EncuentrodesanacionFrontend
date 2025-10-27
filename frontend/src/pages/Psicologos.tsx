@@ -1,15 +1,15 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
+import "../styles/tratamientoIntegral.css";
 import { useCart, Reserva } from "../pages/CartContext";
 import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-// Importaciones de imágenes (se mantienen igual)
+// Importaciones de imágenes
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta31 from "../assets/Terapeuta31.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
-import Terapeuta24 from "../assets/Terapeuta24.jpeg";
+import renata from "../assets/renata.jpeg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
@@ -40,41 +40,34 @@ export default function TratamientoHolistico() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: creadorvirtual,
-      title: "Canalización Energética",
-      terapeuta: "Brenda Rivas",
-      terapeutaId: 7,
+      img: renata,
+      title:
+        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión)",
+      terapeuta: "Renata Santoro",
+      terapeutaId: 29,
       description:
-        "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
+        "Con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [
-        { sesiones: 4, precio: 120000 },
-        { sesiones: 10, precio: 270000 },
+        // Paquete Normal: 4 sesiones @ 120K
+        { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones @ 170K (120K + 50K)
+        { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones @ 270K
+        { sesiones: 10, precio: 270000 }, // Paquete CRISIS: 10 sesiones @ 370K (270K + 100K)
+        { sesiones: 10, precio: 370000 },
       ],
     },
-
-    {
-      img: creadorvirtual,
-      title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
-      terapeuta: "Sandra Da Silva",
-      terapeutaId: 9,
-      description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
-      opciones: [
-        { sesiones: 4, precio: 120000 },
-        { sesiones: 10, precio: 270000 },
-      ],
-    },
-
     // {
-    //   img: creadorvirtual,
+    //   img: renata,
     //   title: "Regresión",
     //   terapeuta: "Alice Basay",
     //   terapeutaId: 10,
     //   description:
-    //     "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+    //     "Con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
     //   opciones: [
-    //     { sesiones: 3, precio: 55000 },
-    //     { sesiones: 4, precio: 70000 },
+    //     // Paquete Normal: 4 sesiones @ 120K
+    //     { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones @ 170K (120K + 50K)
+    //     { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones @ 270K
+    //     { sesiones: 10, precio: 270000 }, // Paquete CRISIS: 10 sesiones @ 370K (270K + 100K)
+    //     { sesiones: 10, precio: 370000 },
     //   ],
     // },
   ];
@@ -190,9 +183,8 @@ export default function TratamientoHolistico() {
 
       alert(
         `Reserva agregada: ${confirmedReservation.sesiones} sesiones de ${confirmedReservation.especialidad} con ${confirmedReservation.terapeuta}`
-      );
+      ); // Cierra el modal y resetea estados
 
-      // Cierra el modal y resetea estados
       setShowContactModal(false);
       setCurrentTerapiaData(null);
       setClientName("");
@@ -206,123 +198,177 @@ export default function TratamientoHolistico() {
 
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
+           {" "}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
+               {" "}
         <h1 className="text-xl font-semibold text-gray-800">Mente y Ser</h1>
-        <CartIcon />
+                <CartIcon />       {" "}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
+                   {" "}
           <Link
             to="/terapeutasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Terapeutas de la Luz
+                        Terapeutas de la Luz          {" "}
           </Link>
+                   {" "}
           <Link
             to="/tratamientointegral"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Tratamiento Int.
+                        Tratamiento Int.          {" "}
           </Link>
+                   {" "}
           <Link
             to="/tallermensual"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Talleres Mensuales
+                        Talleres Mensuales          {" "}
           </Link>
+                 {" "}
         </div>
+             {" "}
       </header>
-
+           {" "}
       <button
         onClick={() => navigate("/")}
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
-        Volver al Inicio
+                Volver al Inicio      {" "}
       </button>
-
+           {" "}
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        Bienvenido a Mente y Ser
+                Bienvenido a Mente y Ser      {" "}
       </h2>
-      <br></br>
-      <br></br>
-
+            <br></br>      <br></br>     {" "}
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-        Descripción de Mente y Ser
+                Descripción de Mente y Ser      {" "}
       </p>
-      <br></br>
-      <br></br>
+            <br></br>      <br></br>     {" "}
+      {/* NUEVA ESTRUCTURA VISUAL - ESTILO TALLERES */}     {" "}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
+               {" "}
+        {terapias.map((t: TerapiaItem, i: number) => (
+          <div
+            key={i}
+            className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.02] border border-pink-100"
+          >
+            {/* Imagen del Terapeuta */}             {" "}
+            <img
+              src={t.img}
+              alt={t.terapeuta}
+              className="w-full h-56 object-cover object-top"
+            />
+            {/* Contenido Principal de la Tarjeta */}             {" "}
+            <div className="p-4 flex flex-col">
+              {" "}
+              {/* Eliminado h-full para no forzar la altura */}               {" "}
+              <h3 className="text-lg font-semibold text-gray-800 mb-1 leading-tight">
+                                  {t.title}               {" "}
+              </h3>
+                             {" "}
+              <p className="text-sm text-pink-600 font-bold mb-3">
+                                  Terapeuta: {t.terapeuta}               {" "}
+              </p>
+                             
+              {/* Descripción (Usamos una altura máxima definida y scroll) */} 
+                           {" "}
+              <p className="text-gray-600 text-sm mb-4 overflow-y-auto max-h-32">
+                {" "}
+                {/* Aumentado max-h a 32 */}                  {t.description}   
+                           {" "}
+              </p>
+                             
+              {/* Formulario de Opciones de Sesión (Siempre visible) */}       
+                     {" "}
+              <form
+                className="w-full mt-2 pt-2 border-t border-gray-100" // Añadido border-t para separador visual
+                onSubmit={(e) => e.preventDefault()}
+              >
+                                 {" "}
+                {t.opciones.map(
+                  (op: { sesiones: number; precio: number }, j: number) => {
+                    // --- Lógica de Detección de Intervención de Emergencia ---
+                    let isCrisisPack = false;
+                    if (op.sesiones === 4 && op.precio === 170000) {
+                      isCrisisPack = true;
+                    } else if (op.sesiones === 10 && op.precio === 370000) {
+                      isCrisisPack = true;
+                    }
+                    // --------------------------------------------------------
 
-      <div className="flip-wrapper-container mt-10">
-        {terapias.map(
-          (
-            t: TerapiaItem,
-            i: number // Añadidos tipos explícitos para 't' y 'i'
-          ) => (
-            <div key={i} className="flip-wrapper">
-              <div className="flip-card">
-                {/* MODIFICACIÓN AQUÍ: Eliminar flip-inner y aplicar estilos directamente a flip-card */}
-                <div className="flip-front">
-                  <img src={t.img} alt={t.title} />
-                  <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
-                  </div>
-                </div>
-                <div className="flip-back">
-                  <h3 className="mb-2 font-bold">{t.title}</h3>
-                  <p className="mb-2">{t.description}</p>
-                  <form
-                    className="w-full px-2"
-                    onSubmit={(e) => e.preventDefault()}
-                  >
-                    {t.opciones.map(
-                      (op: { sesiones: number; precio: number }, j: number) => (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() =>
-                            reservarSesion(
-                              t.title,
-                              op.sesiones,
-                              op.precio,
-                              t.terapeuta,
-                              t.terapeutaId
-                            )
-                          }
-                          className="w-full mb-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700"
-                        >
-                          {op.sesiones} sesiones ($
-                          {op.precio.toLocaleString()} CLP)
-                        </button>
-                      )
-                    )}
-                  </form>
-                </div>
-              </div>
+                    const buttonText = isCrisisPack
+                      ? `${op.sesiones} sesiones + Pack Intervención en Crisis`
+                      : `${op.sesiones} sesiones individual clínica`;
+
+                    const finalTitle = t.title;
+
+                    const buttonClass = isCrisisPack
+                      ? "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-800 text-white hover:bg-pink-900 font-bold shadow-md"
+                      : "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-600 text-white hover:bg-pink-700 shadow-sm";
+
+                    return (
+                      <button
+                        key={j}
+                        type="button"
+                        onClick={() =>
+                          reservarSesion(
+                            finalTitle,
+                            op.sesiones,
+                            op.precio,
+                            t.terapeuta,
+                            t.terapeutaId
+                          )
+                        }
+                        className={buttonClass}
+                      >
+                                                    {buttonText} ($
+                        {op.precio.toLocaleString()} CLP)                      
+                             {" "}
+                      </button>
+                    );
+                  }
+                )}
+                               {" "}
+              </form>
+                           {" "}
             </div>
-          )
-        )}
+                       {" "}
+          </div>
+        ))}
+             {" "}
       </div>
-
-      {/* --- MODAL DE CONTACTO --- */}
+            {/* --- MODAL DE CONTACTO --- */}     {" "}
       {showContactModal && currentTerapiaData && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
+                   {" "}
           <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+                       {" "}
             <h3 className="text-xl font-semibold mb-4 text-center">
-              Reservar: "{currentTerapiaData.terapiaTitle}"
+                            Reservar: "{currentTerapiaData.terapiaTitle}"      
+                   {" "}
             </h3>
+                       {" "}
             <p className="text-gray-700 mb-4 text-center">
-              Ingresa tus datos para continuar con la reserva de{" "}
+                            Ingresa tus datos para continuar con la reserva de  
+                         {" "}
               <strong>
-                {currentTerapiaData.sesiones} sesiones por $
-                {currentTerapiaData.precio.toLocaleString()} CLP
+                                {currentTerapiaData.sesiones} sesiones por $    
+                            {currentTerapiaData.precio.toLocaleString()} CLP    
+                         {" "}
               </strong>
-              .
+                            .            {" "}
             </p>
+                       {" "}
             <div className="mb-4">
+                           {" "}
               <label
                 htmlFor="clientName"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Nombre Completo:
+                                Nombre Completo:              {" "}
               </label>
+                           {" "}
               <input
                 type="text"
                 id="clientName"
@@ -331,14 +377,18 @@ export default function TratamientoHolistico() {
                 value={clientName}
                 onChange={(e) => setClientName(e.target.value)}
               />
+                         {" "}
             </div>
+                       {" "}
             <div className="mb-6">
+                           {" "}
               <label
                 htmlFor="clientPhone"
                 className="block text-gray-700 text-sm font-bold mb-2"
               >
-                Número de Teléfono:
+                                Número de Teléfono:              {" "}
               </label>
+                           {" "}
               <input
                 type="tel"
                 id="clientPhone"
@@ -347,24 +397,32 @@ export default function TratamientoHolistico() {
                 value={clientPhone}
                 onChange={(e) => setClientPhone(e.target.value)}
               />
+                         {" "}
             </div>
+                       {" "}
             <div className="flex justify-end space-x-3">
+                           {" "}
               <button
                 onClick={() => setShowContactModal(false)}
                 className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
               >
-                Cancelar
+                                Cancelar              {" "}
               </button>
+                           {" "}
               <button
                 onClick={handleConfirmAndAddToCart}
                 className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors duration-200"
               >
-                Confirmar y Añadir al Carrito
+                                Confirmar y Añadir al Carrito              {" "}
               </button>
+                         {" "}
             </div>
+                     {" "}
           </div>
+                 {" "}
         </div>
       )}
+         {" "}
     </div>
   );
 }
