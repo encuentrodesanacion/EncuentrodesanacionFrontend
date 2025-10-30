@@ -141,7 +141,7 @@ export default function TalleresMensuales() {
     },
 
     // {
-    //   id: "taller-meditacion-jul",
+    //   id: "Regresión",
     //   title: "Taller de Regresión",
     //   description:
     //     "Aprende técnicas de meditación para reducir el estrés y aumentar la claridad mental.",

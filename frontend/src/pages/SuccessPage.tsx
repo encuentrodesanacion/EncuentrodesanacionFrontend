@@ -1,4 +1,3 @@
-// frontend/src/pages/SuccessPage.tsx
 import { Heart, Copy, Mail } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -12,8 +11,11 @@ interface PurchaseDetails {
   hora: string;
   sesiones: number;
   precio: string; // O number, dependiendo de cómo lo manejes
-  clienteNombre: string; // Agregado según tu ejemplo
-  clienteTelefono: string; // Agregado según tu ejemplo
+  clienteNombre: string;
+  clienteTelefono: string;
+  remitenteNombre?: string;
+  remitenteTelefono?: string;
+  mensajePersonalizado?: string;
 }
 
 function SuccessPage() {
@@ -22,26 +24,78 @@ function SuccessPage() {
   const [token, setToken] = useState<string>("");
   const [transactionId, setTransactionId] = useState<string>("");
   const [copySuccess, setCopySuccess] = useState<string>("");
-  const [emailMarketingInput, setEmailMarketingInput] = useState<string>("");
-  const [marketingSubscribeStatus, setMarketingSubscribeStatus] =
-    useState<string>("");
 
-  // Nuevo estado para los detalles de la compra
+  // ESTADOS para el envío de confirmación
+  const [clientEmailInput, setClientEmailInput] = useState<string>("");
+  const [emailStatus, setEmailStatus] = useState<string>("");
+
+  // ESTADOS CLAVE para la corrección
   const [purchaseDetails, setPurchaseDetails] =
     useState<PurchaseDetails | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true); // Nuevo estado de carga
+
+  // FUNCIÓN CLAVE: Obtiene detalles del backend en caso de recarga o estado perdido
+  const fetchPurchaseDetails = async (token: string, transactionId: string) => {
+    if (token === "N/A" || transactionId === "N/A") {
+      setIsLoading(false);
+      return;
+    }
+
+    setIsLoading(true);
+
+    try {
+      const backendUrl =
+        import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
+
+      // Llama al endpoint /api/webpay/details
+      const response = await fetch(
+        `${backendUrl}/api/webpay/details?token=${token}&transactionId=${transactionId}`
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setPurchaseDetails(data);
+      } else {
+        console.error(
+          "No se pudieron recuperar los detalles de la compra desde el servidor."
+        );
+        setEmailStatus(
+          "⚠️ Error: No se pudieron cargar los detalles de la compra al recargar la página."
+        );
+      }
+    } catch (error) {
+      console.error(
+        "Error de red al recuperar los detalles de la compra:",
+        error
+      );
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
-    setToken(params.get("token") || "N/A");
-    setTransactionId(params.get("transactionId") || "N/A");
+    const urlToken = params.get("token") || "N/A";
+    const urlTransactionId = params.get("transactionId") || "N/A";
 
-    // Recuperar el estado de la navegación
-    if (location.state && typeof location.state === "object") {
+    setToken(urlToken);
+    setTransactionId(urlTransactionId);
+
+    // 1. Intentar recuperar el estado de la navegación (datos al instante)
+    if (
+      location.state &&
+      typeof location.state === "object" &&
+      Object.keys(location.state).length > 0
+    ) {
       setPurchaseDetails(location.state as PurchaseDetails);
+      setIsLoading(false); // Detener la carga si los datos están presentes
+    } else {
+      // 2. Si el estado se perdió (p. ej., recarga), obtener los detalles del backend
+      fetchPurchaseDetails(urlToken, urlTransactionId);
     }
   }, [location]);
 
-  // Función para copiar el texto
+  // Función para copiar el texto (sin cambios)
   const copyToClipboard = async (textToCopy: string, fieldName: string) => {
     try {
       await navigator.clipboard.writeText(textToCopy);
@@ -53,45 +107,61 @@ function SuccessPage() {
     }
   };
 
-  // Función para manejar la suscripción al marketing
-  const handleMarketingSubscribe = async () => {
-    if (!emailMarketingInput) {
-      setMarketingSubscribeStatus("Por favor, ingresa tu correo electrónico.");
+  // FUNCIÓN ACTUALIZADA: Envía el correo de confirmación al cliente
+  const handleSendConfirmationEmail = async () => {
+    if (!clientEmailInput) {
+      setEmailStatus("Por favor, ingresa tu correo electrónico.");
       return;
     }
 
-    setMarketingSubscribeStatus("Suscribiendo...");
+    // Validación que ahora depende de que los datos se hayan cargado correctamente
+    if (!purchaseDetails) {
+      setEmailStatus(
+        "Error: Faltan detalles de la compra para enviar el correo. Por favor, recarga la página o inténtalo más tarde."
+      );
+      return;
+    }
+
+    setEmailStatus("Enviando correo de confirmación...");
 
     try {
       const backendUrl =
         import.meta.env.VITE_BACKEND_URL || "http://localhost:3000";
-      const response = await fetch(`${backendUrl}/api/marketing/subscribe`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email: emailMarketingInput }),
-      });
+
+      // Prepara los datos a enviar.
+      const emailData = {
+        email: clientEmailInput,
+        token: token,
+        transactionId: transactionId,
+        details: purchaseDetails, // Los detalles cargados (ya sea por state o fetch)
+      };
+
+      const response = await fetch(
+        `${backendUrl}/api/marketing/send-confirmation`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(emailData),
+        }
+      );
 
       const data = await response.json();
 
       if (response.ok) {
-        setMarketingSubscribeStatus(
-          data.message || "¡Gracias por suscribirte!"
-        );
-        setEmailMarketingInput("");
+        setEmailStatus(data.message || "¡Confirmación enviada con éxito!");
+        setClientEmailInput("");
       } else {
-        setMarketingSubscribeStatus(
-          data.error || "Hubo un error al suscribirte."
+        setEmailStatus(
+          data.error || "Hubo un error al enviar el correo. Intenta de nuevo."
         );
       }
     } catch (error) {
-      console.error("Error al suscribirse al marketing:", error);
-      setMarketingSubscribeStatus(
-        "Error de conexión. Inténtalo de nuevo más tarde."
-      );
+      console.error("Error al enviar el correo de confirmación:", error);
+      setEmailStatus("Error de conexión. Inténtalo de nuevo más tarde.");
     }
-    setTimeout(() => setMarketingSubscribeStatus(""), 3000);
+    setTimeout(() => setEmailStatus(""), 5000);
   };
 
   return (
@@ -144,8 +214,14 @@ function SuccessPage() {
         Tu camino de sanación ha comenzado.
       </p>
 
+      {/* Nuevo: Bloque de carga */}
+      {isLoading && (
+        <div style={{ marginTop: "20px", color: "#02807d" }}>
+          Cargando detalles de la compra...
+        </div>
+      )}
       {/* Nuevo div para el resumen de la compra */}
-      {purchaseDetails && (
+      {!isLoading && purchaseDetails && (
         <div
           style={{
             background: "#f0f8f8",
@@ -155,9 +231,9 @@ function SuccessPage() {
             maxWidth: "400px",
             width: "100%",
             marginBottom: "20px",
-            marginTop: "20px", // Añade un poco de espacio
+            marginTop: "20px",
             boxSizing: "border-box",
-            textAlign: "left", // Alinea el texto a la izquierda para el resumen
+            textAlign: "left",
           }}
         >
           <h2
@@ -165,7 +241,7 @@ function SuccessPage() {
               color: "#02807d",
               fontSize: "1.5em",
               marginBottom: "15px",
-              textAlign: "center", // Centra el título del resumen
+              textAlign: "center",
             }}
           >
             Resumen de tu Compra
@@ -179,30 +255,82 @@ function SuccessPage() {
           <p>
             <strong>Terapeuta:</strong> {purchaseDetails.nombreTerapeuta}
           </p>
-          <p>
-            <strong>Fecha:</strong> {purchaseDetails.fecha}
-          </p>
-          <p>
-            <strong>Hora:</strong> {purchaseDetails.hora}
-          </p>
+          {/* Secciones de Fecha y Hora solo si no es Gift Card */}
+          {purchaseDetails.servicio !== "GiftCard" && (
+            <>
+              <p>
+                <strong>Fecha:</strong> {purchaseDetails.fecha}
+              </p>
+              <p>
+                <strong>Hora:</strong> {purchaseDetails.hora}
+              </p>
+            </>
+          )}
           <p>
             <strong>Sesiones:</strong> {purchaseDetails.sesiones}
           </p>
           <p>
             <strong>Precio:</strong> {purchaseDetails.precio}
           </p>
-          {/* Datos del cliente si están disponibles */}
+
+          {/* Cliente/Receptor */}
           {purchaseDetails.clienteNombre && (
             <p>
-              <strong>Cliente:</strong> {purchaseDetails.clienteNombre}
+              <strong>Cliente/Receptor:</strong> {purchaseDetails.clienteNombre}
             </p>
           )}
           {purchaseDetails.clienteTelefono && (
             <p>
-              <strong>Teléfono Cliente:</strong>{" "}
+              <strong>Teléfono Cliente/Receptor:</strong>{" "}
               {purchaseDetails.clienteTelefono}
             </p>
           )}
+
+          {/* --- DATOS DEL REMITENTE / TARJETA DE REGALO --- */}
+          {purchaseDetails.remitenteNombre && (
+            <>
+              <h3
+                style={{
+                  marginTop: "15px",
+                  color: "#02807d",
+                  fontSize: "1.2em",
+                  borderTop: "1px dashed #c0e0e0",
+                  paddingTop: "15px",
+                }}
+              >
+                Detalles de la Tarjeta de Regalo
+              </h3>
+              <p>
+                <strong>Remitente:</strong> {purchaseDetails.remitenteNombre}
+              </p>
+              {purchaseDetails.remitenteTelefono && (
+                <p>
+                  <strong>Teléfono Remitente:</strong>{" "}
+                  {purchaseDetails.remitenteTelefono}
+                </p>
+              )}
+              {purchaseDetails.mensajePersonalizado && (
+                <p>
+                  <strong>Mensaje Personalizado:</strong>
+                  <span
+                    style={{
+                      display: "block",
+                      padding: "10px",
+                      border: "1px solid #ddd",
+                      borderRadius: "4px",
+                      marginTop: "5px",
+                      backgroundColor: "#ffffff",
+                      whiteSpace: "pre-wrap", // Conservar saltos de línea y espacios
+                    }}
+                  >
+                    {purchaseDetails.mensajePersonalizado}
+                  </span>
+                </p>
+              )}
+            </>
+          )}
+          {/* --------------------------------------------- */}
+
           <p>
             <strong>Código de Confirmación:</strong> {token}
           </p>
@@ -212,86 +340,7 @@ function SuccessPage() {
         </div>
       )}
 
-      {/* Bloque existente para Código de Confirmación y ID de Transacción (puedes decidir si mantenerlo duplicado o solo en el resumen) */}
-      <div
-        style={{
-          background: "#f0f8f8",
-          padding: "20px",
-          borderRadius: "8px",
-          border: "1px solid #e0f2f2",
-          maxWidth: "400px",
-          width: "100%",
-          marginBottom: "20px",
-          boxSizing: "border-box",
-        }}
-      >
-        <p
-          style={{
-            margin: "5px 0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <strong>Código de Confirmación:</strong> {token}
-          <button
-            onClick={() => copyToClipboard(token, "Token")}
-            style={{
-              marginLeft: "10px",
-              padding: "5px 8px",
-              fontSize: "0.8em",
-              backgroundColor: "#e0f2f2",
-              border: "1px solid #c0e0e0",
-              borderRadius: "3px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-              flexShrink: 0,
-            }}
-            aria-label="Copiar token"
-          >
-            <Copy size={16} /> Copiar
-          </button>
-        </p>
-        <p
-          style={{
-            margin: "5px 0",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            flexWrap: "wrap",
-          }}
-        >
-          <strong>ID de Transacción:</strong> {transactionId}
-          <button
-            onClick={() => copyToClipboard(transactionId, "ID de Transacción")}
-            style={{
-              marginLeft: "10px",
-              padding: "5px 8px",
-              fontSize: "0.8em",
-              backgroundColor: "#e0f2f2",
-              border: "1px solid #c0e0e0",
-              borderRadius: "3px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: "5px",
-              flexShrink: 0,
-            }}
-            aria-label="Copiar ID de Transacción"
-          >
-            <Copy size={16} /> Copiar
-          </button>
-        </p>
-        {copySuccess && (
-          <p style={{ color: "green", fontSize: "0.9em", marginTop: "10px" }}>
-            {copySuccess}
-          </p>
-        )}
-      </div>
-      {/* Sección para el input de correo de Marketing */}
+      {/* SECCIÓN DE CONFIRMACIÓN DE EMAIL */}
       <div
         style={{
           width: "100%",
@@ -304,15 +353,20 @@ function SuccessPage() {
           boxSizing: "border-box",
         }}
       >
-        <p style={{ fontSize: "1em", marginBottom: "10px" }}>
-          Si deseas recibir ofertas o nuevas instancias para eventos de tiempo
-          limitado deja tu correo aqui :
+        <p
+          style={{ fontSize: "1em", marginBottom: "10px", fontWeight: "bold" }}
+        >
+          ¿Necesitas una copia de la confirmación?
+        </p>
+        <p style={{ fontSize: "0.9em", marginBottom: "10px" }}>
+          Ingresa tu correo electrónico para recibir un resumen de tu reserva y
+          los códigos de transacción:
         </p>
         <input
           type="email"
           placeholder="tu_correo@ejemplo.com"
-          value={emailMarketingInput}
-          onChange={(e) => setEmailMarketingInput(e.target.value)}
+          value={clientEmailInput}
+          onChange={(e) => setClientEmailInput(e.target.value)}
           style={{
             width: "calc(100% - 22px)",
             padding: "10px",
@@ -324,15 +378,18 @@ function SuccessPage() {
           }}
         />
         <button
-          onClick={handleMarketingSubscribe}
+          onClick={handleSendConfirmationEmail}
+          // Deshabilitar si está cargando o no hay detalles
+          disabled={isLoading || !purchaseDetails}
           style={{
             padding: "10px 20px",
             fontSize: "1em",
-            backgroundColor: "#02807d",
+            backgroundColor:
+              isLoading || !purchaseDetails ? "#a0a0a0" : "#02807d",
             color: "white",
             border: "none",
             borderRadius: "5px",
-            cursor: "pointer",
+            cursor: isLoading || !purchaseDetails ? "not-allowed" : "pointer",
             transition: "background-color 0.3s ease",
             display: "flex",
             alignItems: "center",
@@ -342,19 +399,17 @@ function SuccessPage() {
             boxSizing: "border-box",
           }}
         >
-          <Mail size={20} /> Suscribirme
+          <Mail size={20} /> Enviar Confirmación por Email
         </button>
-        {marketingSubscribeStatus && (
+        {emailStatus && (
           <p
             style={{
               fontSize: "0.9em",
               marginTop: "10px",
-              color: marketingSubscribeStatus.includes("Error")
-                ? "red"
-                : "green",
+              color: emailStatus.includes("Error") ? "red" : "green",
             }}
           >
-            {marketingSubscribeStatus}
+            {emailStatus}
           </p>
         )}
       </div>

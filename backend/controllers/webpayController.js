@@ -16,6 +16,71 @@ const { Op } = require("sequelize");
 const sequelize = db.sequelize;
 
 // Importación de servicios personalizados
+const getPurchaseDetails = async (req, res) => {
+  // Usamos req.query porque el frontend envía los parámetros en la URL
+  const { token, transactionId } = req.query;
+
+  if (!token || !transactionId) {
+    return res
+      .status(400)
+      .json({ error: "Faltan parámetros de token o ID de transacción." });
+  }
+
+  try {
+    // 1. Buscar la transacción por el ID de la tabla Transacciones (transactionId)
+    const transaccion = await db.Transaccion.findOne({
+      where: {
+        id: transactionId, // Buscamos por el ID interno de la tabla Transacciones
+        tokenTransaccion: token, // Y validamos que el token coincida
+      },
+    });
+
+    if (!transaccion) {
+      return res.status(404).json({
+        error:
+          "Transacción no encontrada o los datos de confirmación no coinciden.",
+      });
+    }
+
+    // 2. Buscar la reserva asociada a la Transaccion.
+    // Usamos el ID interno de la Transacción (transaccion.id) para buscar en la tabla Reservas.
+    const reserva = await db.Reserva.findOne({
+      where: { transaccionId: transaccion.id }, // <--- Usamos transaccionId de la reserva
+    });
+
+    // Si tu relación es por buyOrder, usarías:
+    // where: { buyOrder: transaccion.buyOrder }
+
+    if (!reserva) {
+      return res
+        .status(404)
+        .json({ error: "Reserva asociada a la transacción no encontrada." });
+    }
+
+    // 3. Construir el objeto PurchaseDetails para el frontend
+    const purchaseDetails = {
+      servicio: reserva.servicio,
+      especialidad: reserva.especialidad,
+      nombreTerapeuta: reserva.terapeuta,
+      fecha: reserva.fecha,
+      hora: reserva.hora,
+      sesiones: reserva.sesiones,
+      precio: `$${reserva.precio.toLocaleString("es-CL")} CLP`,
+      clienteNombre: reserva.nombreCliente,
+      clienteTelefono: reserva.telefonoCliente,
+      remitenteNombre: reserva.remitenteNombre,
+      remitenteTelefono: reserva.remitenteTelefono,
+      mensajePersonalizado: reserva.mensajePersonalizado,
+    };
+
+    return res.status(200).json(purchaseDetails);
+  } catch (error) {
+    console.error("Error al buscar detalles de la compra:", error);
+    return res
+      .status(500)
+      .json({ error: "Error interno del servidor al obtener detalles." });
+  }
+};
 const { sendEmail } = require("../services/emailService");
 
 console.log("------------------------------------------");
@@ -184,7 +249,12 @@ const crearReservaDirecta = async (req, res) => {
         cantidad: cantidadCupos || 1, // Por defecto 1 cupo
         terapeuta: terapeuta,
         terapeutaId: terapeutaId,
-        estado: "pendiente", // Nuevo estado para reservas directas (aún no pagadas por Webpay)
+        estado: "pendiente",
+        // *** NUEVOS CAMPOS A GUARDAR ***
+        remitenteNombre: req.body.remitenteNombre, // <-- OK
+        remitenteTelefono: req.body.remitenteTelefono, // <-- OK
+        mensajePersonalizado: req.body.mensajePersonalizado,
+        // *******************************// Nuevo estado para reservas directas (aún no pagadas por Webpay)
         // Puedes añadir aquí un campo 'pagoConfirmado: false' si lo tienes en tu modelo
       },
       { transaction: t }
@@ -383,6 +453,15 @@ const confirmarTransaccion = async (req, res) => {
   let nuevaTransaccion;
 
   try {
+    console.log("==================================================");
+    console.log("!!! INICIO DEPURACIÓN CONFIRMACION DE WEBPAY !!!");
+    console.log(`[DEBUG] Request Method: ${req.method}`);
+    console.log(`[DEBUG] Request URL: ${req.originalUrl}`);
+    console.log(`[DEBUG] Request BODY (POST data):`, req.body);
+    console.log(`[DEBUG] Request QUERY (GET params):`, req.query);
+    console.log(`[DEBUG] Token Intentado Capturar (tokenWs): ${tokenWs}`);
+    console.log("==================================================");
+    // FIN BLOQUE DE DEPURACIÓN
     if (req.query.TBK_TOKEN && !req.query.token_ws) {
       console.log(
         `[INFO] Se recibió TBK_TOKEN (${tokenWs}) sin token_ws. Asumiendo anulación directa por usuario.`
@@ -502,6 +581,7 @@ const confirmarTransaccion = async (req, res) => {
         "Talleres Mensuales",
         "Finde de Talleres",
         "Mente y Ser",
+        "GiftCard",
       ];
       for (const reserva of reservasToProcess) {
         // *** ESTA DESESTRUCTURACIÓN ESTÁ CORRECTA EN `confirmarTransaccion` ***
@@ -519,6 +599,9 @@ const confirmarTransaccion = async (req, res) => {
           terapeutaId,
           sesiones,
           cantidad,
+          remitenteNombre,
+          remitenteTelefono,
+          mensajePersonalizado,
         } = reserva;
         console.log(
           `[DEBUG CONFIRM] Procesando reserva: ID=${id}, ClientBookingId=${clientBookingId}, Servicio=${servicio}`
@@ -582,10 +665,10 @@ const confirmarTransaccion = async (req, res) => {
 
         const terapeutaData = terapeutaEncontrado.get({ plain: true });
 
-        const existingReserva = await Reserva.findOne({
+        let existingReserva = await Reserva.findOne({
           where: {
             id: id,
-            clientBookingId: clientBookingId, // Debería tener un valor ahora
+            clientBookingId: clientBookingId,
           },
           transaction: t,
         });
@@ -615,11 +698,15 @@ const confirmarTransaccion = async (req, res) => {
         await existingReserva.update(
           {
             transaccionId: nuevaTransaccion.id, // Asocia la transacción de pago
-            estado: "confirmado", // Cambia el estado a 'confirmado' o 'pagado'
+            estado: "confirmado",
+            remitenteNombre: remitenteNombre || null,
+            remitenteTelefono: remitenteTelefono || null,
+            mensajePersonalizado: mensajePersonalizado || null, // Cambia el estado a 'confirmado' o 'pagado'
             // No es necesario actualizar otros campos como servicio, especialidad, etc., ya que ya están correctos
           },
           { transaction: t }
         );
+        existingReserva = await existingReserva.reload({ transaction: t });
         console.log(
           `[DEBUG CONFIRM] Existencia de reserva en DB: ${
             !!existingReserva ? "Encontrada" : "NO ENCONTRADA"
@@ -630,10 +717,23 @@ const confirmarTransaccion = async (req, res) => {
         );
         // *** FIN MODIFICACIÓN PARA EXCLUIR FORMACIONES, TALLERES Y TRATAMIENTOS ***
 
-        // --- Therapist Notification Logic --- (-- ( ---
+        /// --- Therapist Notification Logic --- (-- ( ---
         try {
+          const serviciosExcluidosDeDisponibilidad = [
+            "Formación de Terapeutas de la Luz",
+            "Tratamiento Integral",
+            "Talleres Mensuales",
+            "Finde de Talleres",
+            "Mente y Ser",
+            "GiftCard", // <--- CORRECCIÓN DE DISPONIBILIDAD: AÑADIDO
+          ];
           // AHORA SE GESTIONA LA DISPONIBILIDAD (SÓLO SI EL PAGO ES EXITOSO)
-          if (serviciosExcluidosDeDisponibilidad.includes(servicio)) {
+
+          // --- CORRECCIÓN DE DISPONIBILIDAD: CONDICIÓN COMPROBADA ---
+          if (
+            serviciosExcluidosDeDisponibilidad.includes(servicio) ||
+            servicio === "GiftCard"
+          ) {
             console.log(
               `[INFO DISPONIBILIDAD] Saltando la lógica de actualización de disponibilidad para el servicio: "${servicio}" (configurado para no modificar horas).`
             );
@@ -709,15 +809,20 @@ const confirmarTransaccion = async (req, res) => {
           // <--- INICIO: LÓGICA AGREGADA PARA DISTINGUIR CRISIS DE NORMAL ---
           let tipoServicio = "Servicio Normal"; // Definición de precios de crisis (Basado en la estructura de TratamientoHolistico.tsx)
 
-          const PRECIO_CRISIS_4_SESIONES = 170000;
-          const PRECIO_CRISIS_10_SESIONES = 370000;
-
-          if (servicio === "Mente y Ser") {
-            if (
-              (sesiones === 4 && precio === PRECIO_CRISIS_4_SESIONES) ||
-              (sesiones === 10 && precio === PRECIO_CRISIS_10_SESIONES)
-            ) {
-              tipoServicio = "¡PAQUETE ASISTENCIA EN CRISIS!";
+          // Lógica para GiftCard
+          if (servicio === "GiftCard") {
+            tipoServicio = "Gift Card / Paquete de Sesiones";
+          } else {
+            // Lógica existente para Mente y Ser (Intervención en Crisis)
+            const PRECIO_CRISIS_4_SESIONES = 170000;
+            const PRECIO_CRISIS_10_SESIONES = 370000;
+            if (servicio === "Mente y Ser") {
+              if (
+                (sesiones === 4 && precio === PRECIO_CRISIS_4_SESIONES) ||
+                (sesiones === 10 && precio === PRECIO_CRISIS_10_SESIONES)
+              ) {
+                tipoServicio = "¡PAQUETE ASISTENCIA EN CRISIS!";
+              }
             }
           }
           // Notificación al terapeuta
@@ -743,37 +848,112 @@ const confirmarTransaccion = async (req, res) => {
             });
 
             if (ofreceServicio) {
-              // --- AJUSTE EN ASUNTO (Añadimos la etiqueta de crisis) ---
+              // --- AJUSTE EN ASUNTO (Añadimos la etiqueta de servicio) ---
               const subjectPrefix =
                 tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!"
                   ? "[Intervención En Crisis] "
+                  : servicio === "GiftCard"
+                  ? "[Gift Card / Paquete] " // Nuevo prefijo para GiftCard
                   : "";
               const subject = `${subjectPrefix}¡Nueva Reserva Confirmada para ${especialidad}!`;
               // ---------------------------------------------------------
-              // --- AJUSTE EN CONTENIDO HTML (Añadimos la línea del tipo de servicio) ---
-              const htmlContent = `
-                <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
-                <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
-                <ul>
-                    <li><strong>Tipo de Servicio:</strong> ${tipoServicio}</li> 
-                  <li><strong>Servicio:</strong> ${servicio}</li>
-                  <li><strong>Especialidad:</strong> ${
-                especialidad || "N/A"
-              }</li>
-                  <li><strong>Cliente:</strong> ${nombreCliente || "N/A"}</li>
-                  <li><strong>Teléfono Cliente:</strong> ${
-                    telefonoCliente || "N/A"
-                  }</li>
-                  <li><strong>Fecha:</strong> ${fecha || "N/A"}</li>
-                  <li><strong>Hora:</strong> ${hora || "N/A"}</li>
-                  <li><strong>Sesiones:</strong> ${sesiones || 1}</li>
-                  <li><strong>Precio:</strong> $${
-                precio ? precio.toLocaleString("es-CL") : "N/A"
-              } CLP</li>
-                </ul>
-                <p>Por favor, revisa tu calendario y prepárate para la sesión.</p>
-                <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
-              `;
+
+              let htmlContent;
+              let mensajeAdicional;
+
+              // ************************************************************
+              // *** LÓGICA CONDICIONAL PARA EMAIL DE GIFTCARD (SIN REGEX) ***
+              // ************************************************************
+              if (servicio === "GiftCard") {
+                // LEEMOS DIRECTAMENTE DE LOS NUEVOS CAMPOS DE LA RESERVA (INSTANCIA EXISTENTE)
+                const destinatario = existingReserva.nombreCliente || "N/A";
+                const telefonoDestinatario =
+                  existingReserva.telefonoCliente || "N/A";
+                const remitente = existingReserva.remitenteNombre || "N/A";
+                const telefonoRemitente =
+                  existingReserva.remitenteTelefono || "N/A";
+                const mensajePersonalizado =
+                  existingReserva.mensajePersonalizado ||
+                  "No se adjuntó mensaje.";
+
+                htmlContent = `
+                  <p>Hola ${terapeutaData.nombre || "Equipo"},</p>
+                  <p>¡Se ha confirmado la compra de una **Gift Card / Paquete de Sesiones**!</p>
+                  <p>Esta compra **NO** representa una hora agendada en tu calendario, sino un paquete de sesiones prepagado que el VALIENTE agendará junto contigo una vez lo contactes</p>
+                  <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+                  
+                  <h4 style="color: #02807d; margin-bottom: 5px;">Detalles del Paquete</h4>
+                  <ul>
+                      <li><strong>Tipo de Producto:</strong> ${tipoServicio}</li> 
+                      <li><strong>Especialidad:</strong> ${
+                        especialidad || "N/A"
+                      }</li>
+                      <li><strong>Paquete:</strong> ${
+                        sesiones || 1
+                      } sesiones</li>
+                      <li><strong>Precio Pagado:</strong> $${
+                        precio ? precio.toLocaleString("es-CL") : "N/A"
+                      } CLP</li>
+                  </ul>
+                  
+                  <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+
+                  <h4 style="color: #02807d; margin-bottom: 5px;">Datos del Regalo</h4>
+                  <ul>
+                      <li><strong>Destinatario (Quien Recibe):</strong> ${destinatario}</li>
+                      <li><strong>Teléfono Destinatario:</strong> ${telefonoDestinatario}</li>
+                  </ul>
+                  
+                  <h4 style="color: #02807d; margin: 15px 0 5px 0;">Remitente (Quien Regala)</h4>
+                  <ul>
+                      <li><strong>Nombre:</strong> ${remitente}</li>
+                      <li><strong>Teléfono:</strong> ${telefonoRemitente}</li>
+                  </ul>
+
+                  <h4 style="color: #02807d; margin: 15px 0 5px 0;">Mensaje Personalizado</h4>
+                  <div style="border: 1px solid #ddd; padding: 10px; background: #f9f9f9; border-radius: 4px; margin-bottom: 15px;">
+                      <p style="margin: 0; white-space: pre-wrap;">${mensajePersonalizado}</p>
+                  </div>
+                  
+                  <p>Contacta con el destinatario para coordinar la toma de hora.</p>
+                  <p style="font-size: 0.9em; color: #888;">Fecha de Compra: ${
+                    fecha || "N/A"
+                  }</p>
+                  `;
+              } else {
+                // Contenido original para reservas de hora normal/crisis
+                const mensajeAdicional =
+                  tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!"
+                    ? `<p style="color:red; font-weight:bold;">¡ATENCIÓN! ESTE ES UN PAQUETE DE INTERVENCIÓN EN CRISIS. REQUIERE ATENCIÓN PRIORITARIA.</p>`
+                    : `<p>Por favor, revisa tu calendario y prepárate para la sesión.</p>`;
+
+                htmlContent = `
+                    <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
+                    <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
+                    <ul>
+                        <li><strong>Tipo de Servicio:</strong> ${tipoServicio}</li> 
+                        <li><strong>Servicio:</strong> ${servicio}</li>
+                        <li><strong>Especialidad:</strong> ${
+                          especialidad || "N/A"
+                        }</li>
+                        <li><strong>Cliente:</strong> ${
+                          nombreCliente || "N/A"
+                        }</li>
+                        <li><strong>Teléfono Cliente:</strong> ${
+                          telefonoCliente || "N/A"
+                        }</li>
+                        <li><strong>Fecha:</strong> ${fecha || "N/A"}</li>
+                        <li><strong>Hora:</strong> ${hora || "N/A"}</li>
+                        <li><strong>Sesiones:</strong> ${sesiones || 1}</li>
+                        <li><strong>Precio:</strong> $${
+                          precio ? precio.toLocaleString("es-CL") : "N/A"
+                        } CLP</li>
+                    </ul>
+                    ${mensajeAdicional}
+                    `;
+              }
+              // ************************************************************
+
               await sendEmail(terapeutaData.email, subject, htmlContent);
               console.log(
                 `[DEBUG NOTIFY] Notificación por correo enviada a ${terapeutaData.email}.`
@@ -810,7 +990,8 @@ const confirmarTransaccion = async (req, res) => {
           "[DEBUG CONFIRM] Intentando crear evento de calendario para reserva:",
           servicio
         );
-        if (fecha && hora) {
+        // Excluir GiftCard de la creación de eventos de calendario
+        if (fecha && hora && servicio !== "GiftCard") {
           try {
             const startDateTime = new Date(`${fecha}T${hora}:00`);
             const endDateTime = new Date(
@@ -840,6 +1021,10 @@ const confirmarTransaccion = async (req, res) => {
               }`
             );
           }
+        } else if (servicio === "GiftCard") {
+          console.warn(
+            "[DEBUG GOOGLE CALENDAR] Saltando creación de evento: Servicio es GiftCard."
+          );
         } else {
           console.warn(
             "[DEBUG GOOGLE CALENDAR] No se puede crear evento de Google Calendar: Falta fecha u hora en la reserva."
@@ -976,4 +1161,5 @@ module.exports = {
   crearTransaccionInicial,
   confirmarTransaccion,
   crearReservaDirecta,
+  getPurchaseDetails,
 };

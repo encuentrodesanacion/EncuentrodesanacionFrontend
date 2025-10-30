@@ -7,6 +7,7 @@ router.post("/create-transaction", webpayController.crearTransaccionInicial);
 
 // Define la ruta GET para confirmar una transacción
 router.get("/confirmacion", webpayController.confirmarTransaccion);
+router.get("/details", webpayController.getPurchaseDetails);
 
 // Asegúrate de exportar el router
 module.exports = router;

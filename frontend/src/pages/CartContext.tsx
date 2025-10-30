@@ -15,6 +15,9 @@ export interface Reserva {
   cantidad: number; // Asumimos que siempre será 1 en el carrito
   categoria?: string; // Opcional si no siempre se usa
   terapeutaId?: number;
+  remitenteNombre?: string;
+  remitenteTelefono?: string;
+  mensajePersonalizado?: string;
 }
 
 interface CartContextType {

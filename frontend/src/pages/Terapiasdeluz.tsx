@@ -145,7 +145,12 @@ export default function Terapias() {
     console.log("País detectado por número telefónico:", detectedCountry);
     const now = new Date();
     const fechaActual = now.toISOString().split("T")[0]; // YYYY-MM-DD
-    const horaGenerica = "17:00"; // Hora genérica, ajusta según necesidad
+    const horaGenerica = now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: undefined,
+      hour12: false,
+    }); // Hora genérica, ajusta según necesidad
 
     const reservaDataToSend = {
       // No incluyas `id` ni `clientBookingId` aquí; el backend los manejará.

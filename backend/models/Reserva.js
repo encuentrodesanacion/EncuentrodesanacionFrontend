@@ -13,12 +13,10 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       transaccionId: {
-        // <--- AGREGAR ESTO: Clave Foránea a Transacciones
         type: DataTypes.STRING,
         allowNull: true, // Debe coincidir con allowNull de tu migración para transaccion_id
       },
       terapeutaId: {
-        // <--- AGREGAR ESTO: Clave Foránea a Terapeutas
         type: DataTypes.INTEGER,
         allowNull: true, // Debe coincidir con allowNull de tu migración para terapeuta_id
       },
@@ -27,11 +25,11 @@ module.exports = (sequelize) => {
         allowNull: false,
       },
       clientBookingId: {
-        type: DataTypes.UUID, // Asumo que el frontend envía un número grande
-        defaultValue: DataTypes.UUIDV4, // Para que Sequelize genere un UUID al crear si no se provee
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
         allowNull: false,
-        unique: true, // Es un ID único por reserva del cliente
-        field: "client_booking_id", // Asegúrate que esto mapee a tu columna snake_case en la DB
+        unique: true,
+        field: "client_booking_id",
       },
       servicio: {
         type: DataTypes.STRING,
@@ -66,6 +64,23 @@ module.exports = (sequelize) => {
         defaultValue: 1,
         allowNull: false,
       },
+      // ---> CAMPOS DE REGALO AGREGADOS CON MAPPING
+      remitenteNombre: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: "remitentenombre", // Mapeo exacto a la columna existente
+      },
+      remitenteTelefono: {
+        type: DataTypes.STRING,
+        allowNull: true,
+        field: "remitentetelefono", // Mapeo exacto a la columna existente
+      },
+      mensajePersonalizado: {
+        type: DataTypes.TEXT,
+        allowNull: true,
+        field: "mensajepersonalizado", // Mapeo exacto a la columna existente
+      },
+      // <--- FIN DE CAMPOS DE REGALO
       cantidad: {
         type: DataTypes.INTEGER,
         defaultValue: 1,
@@ -78,12 +93,5 @@ module.exports = (sequelize) => {
       tableName: "Reservas",
     }
   );
-
-  // No necesitas definir asociaciones aquí si ya las tienes en index.js
-  // Reserva.associate = (models) => {
-  //   Reserva.belongsTo(models.Transaccion, { foreignKey: 'transaccionId', as: 'transaccion' });
-  //   Reserva.belongsTo(models.Terapeuta, { foreignKey: 'terapeutaId', as: 'terapeutaData' }); // Si deseas una relación directa
-  // };
-
   return Reserva;
 };

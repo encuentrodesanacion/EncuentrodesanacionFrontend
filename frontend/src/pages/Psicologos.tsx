@@ -133,7 +133,12 @@ export default function TratamientoHolistico() {
 
     const now = new Date();
     const fechaActual = now.toISOString().split("T")[0];
-    const horaGenerica = "17:00";
+    const horaGenerica = now.toLocaleTimeString("en-US", {
+      hour: "2-digit",
+      minute: "2-digit",
+      second: undefined,
+      hour12: false,
+    });
 
     const reservaDataToSend = {
       servicio: "Mente y Ser",
