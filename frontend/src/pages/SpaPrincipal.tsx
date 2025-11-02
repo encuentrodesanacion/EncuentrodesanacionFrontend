@@ -19,7 +19,6 @@ import anaaros from "../assets/anaaros.jpg";
 import angel from "../assets/Angel.jpeg";
 import sarita from "../assets/sarita.jpeg";
 import marcela from "../assets/marcela.jpeg";
-import renata from "../assets/renata.jpeg";
 import crisol from "../assets/crisol.jpeg";
 import pamela from "../assets/pamela.jpeg";
 import patricia from "../assets/patricia.jpeg";
@@ -219,17 +218,7 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: renata,
-      title: "La Medicina de los Animales",
-      terapeuta: "Renata Santoro",
-      terapeuta_id: 29,
-      description:
-        "Las cartas de la Medicina de los Animales recopila el conocimiento de los pueblos originarios, quienes lograban tener una conexión directa con los animales, quienes te guiarán a través de la Rueda de la Medicina a encontrar tu senda personal a través de la medicina de los animales.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+
     {
       img: crisol,
       title: "Biomagnetismo Emocional",

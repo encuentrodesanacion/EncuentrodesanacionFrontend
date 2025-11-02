@@ -10,7 +10,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 // Importaciones de imágenes (se mantienen igual)
 import radionica from "../assets/radionica.png";
 import limpieza from "../assets/Limpiezaa.png";
-import raices from "../assets/raicess.png";
+import sanarraiz from "../assets/sanarraiz.jpeg";
 import Terapeuta24 from "../assets/Terapeuta24.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 
@@ -66,7 +66,7 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
     {
-      img: raices,
+      img: sanarraiz,
       title: "Sanación de Raíces",
       terapeuta: "Sarita Infante",
       terapeutaId: 26,
