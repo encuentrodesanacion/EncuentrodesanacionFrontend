@@ -12,13 +12,6 @@ import terapeuta1 from "../assets/Terapeuta1.jpg";
 
 const alianzas = [
   {
-    nombre: "Paulina Villablanca Perez",
-    url: "https://www.instagram.com/gotitasdeamor38/",
-    imagen: terapeuta11,
-    descripcion:
-      "Paulina Villablanca: Educadora de párvulos, Terapeuta Holística integral, Terapeuta floral (especializada en niños, niñas, adolescentes y neurodiversidad), Consteladora familiar (individual y grupal), Sanadora de heridas de infancia, Tarotista (predictiva y terapéutica).",
-  },
-  {
     nombre: "Marcela Cabezas",
     url: "https://www.instagram.com/marceterapeuta.cl/",
     imagen: marcela,
@@ -59,21 +52,6 @@ const alianzas = [
     imagen: renata,
     descripcion:
       "Comencé realizando mi práctica profesional en trauma severo para el programa PRAIS en el Hospital Barros Lucos. Posteriormente, me he dedicado al área clínica de forma independiente, con especialidad en neurodivergencia (TEPT-C, TDAH, trastorno bipolar y depresión) además de otros trastornos como alimenticios y del sueño, siempre con un enfoque de género. Luego, de 15 años de experiencia, tengo las habilidades de intervención en crisis y combino mis conocimientos desde el piscoanalisis, neurociencias y medicina ancestral de nuestros pueblos originarios. “No vine a enseñar… vine a recordar contigo lo que ya habita en tu alma.",
-  },
-  {
-    nombre: "Brenda Rivas",
-    url: "https://www.instagram.com/trazos_del_alma2024/",
-    imagen: terapeuta1,
-    descripcion:
-      "Brenda Rivas: En mi trayectoria en el campo de la salud, evidencié cómo las patologías o padecimientos físicos constituían el pilar en los cuidados de enfermería, restando importancia al cuerpo energético. Por lo que me interesé en el estudio de la biodecodificación emocional, llevándome a profundizar en la filosofía holística, tratando así al paciente en su totalidad: espíritu, alma y cuerpo. Las Terapias holísticas que realizo son : Canalización energética - Apertura de Registros Akáshicos - Lectura del Tarot Rider Waite - Lectura del Oráculo Angelical - Lectura del Oráculo de Vidas Pasadas - Consulta de Runas Vikingas - Reiki Unitario - Reiki Angelical",
-  },
-
-  {
-    nombre: "Sandra Da Silva",
-    url: "https://www.instagram.com/serendipiall/",
-    imagen: terapeuta5,
-    descripcion:
-      "Sandra Da Silva: Terapeuta Holistica Integral. Mi conexión con el mundo Holistico inició para superar un proceso emocional personal, profundizando en distintas herramientas en las que me apoye para sanar y ahora pongo al servicio del bienestar de quien lo requiera: Terapia de Respuesta Espiritual - Purificación y Limpieza de Energías Negativas - Sanacion con Péndulo Hebreo - Liberación de Implantes - Sanacion Energética con Cruz de Anhk - Conexión Angelical. Mi propósito es brindarles un canal de expansión que les permita sanar desde la consciencia de lo vivido y conectar con su Plan de Alma original.",
   },
 ];
 
