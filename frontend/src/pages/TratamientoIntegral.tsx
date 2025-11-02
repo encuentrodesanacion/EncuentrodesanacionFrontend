@@ -405,7 +405,7 @@ export default function TratamientoHolistico() {
       {/* Botón de volver al inicio (ajustado para que no lo tape el menú móvil) */}
       <button
         onClick={() => navigate("/")}
-        className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 md:top-20 md:left-6"
+        className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Volver al Inicio
       </button>

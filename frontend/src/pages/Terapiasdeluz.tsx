@@ -107,6 +107,7 @@ export default function Terapias() {
 
   // --- NUEVOS ESTADOS para controlar el modal de contacto ---
   const [showContactModal, setShowContactModal] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [currentTerapia, setCurrentTerapia] = useState<ImagenData | null>(null); // Para guardar la terapia seleccionada temporalmente
@@ -212,45 +213,143 @@ export default function Terapias() {
   };
 
   return (
-    <>
-      <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800">
-          Formación Terapeutas de la Luz
+    <div className="min-h-screen bg-white">
+            {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}     {" "}
+      <header className="fixed top-0 left-0 w-full bg-white shadow z-10 flex justify-between items-center px-4 py-0">
+                {/* Título de la Página (Ajustado) */}       {" "}
+        <h1 className="text-xl font-semibold text-gray-800 z-50">
+                    Formación Terapeutas de la Luz        {" "}
         </h1>
-        <CartIcon />
+                {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}       {" "}
+        {/* Usamos ml-auto y -mr-4 para desplazar a la izquierda y separar del carrito */}
+               {" "}
+        <div className="flex items-center gap-4 md:hidden ml-auto -mr-4">
+                    {/* 1. Botón Hamburguesa */}         {" "}
+          <button
+            className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Abrir menú de navegación"
+          >
+                       {" "}
+            {isMenuOpen ? (
+              // Icono X (Cerrar)
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                               {" "}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+                             {" "}
+              </svg>
+            ) : (
+              // Icono Menú Hamburguesa
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                               {" "}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+                             {" "}
+              </svg>
+            )}
+                     {" "}
+          </button>
+                    {/* Icono del Carrito (se mantiene) */}             {" "}
+        </div>
+                {/* --- MENÚ ESCRITORIO (md:flex) --- */}       {" "}
+        {/* Esto solo se muestra en PC (md:flex) */}       {" "}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
+                   {" "}
           <Link
             to="/terapeutasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Terapeutas de la Luz
+                        Terapeutas de la Luz          {" "}
           </Link>
+                   {" "}
           <Link
             to="/tratamientointegral"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Tratamiento Int.
+                        Tratamiento Int.          {" "}
           </Link>
+                   {" "}
           <Link
             to="/tallermensual"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Talleres Mensuales
+                        Talleres Mensuales          {" "}
           </Link>
+                   {" "}
           <Link
             to="/psicologos"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            Mente y Ser
+                        Mente y Ser          {" "}
           </Link>
+                   {" "}
           <Link
             to="/giftcard"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
-            GiftCards
+                        GiftCards          {" "}
           </Link>
+                 {" "}
         </div>
+             {" "}
       </header>
+            {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}     {" "}
+      {/* Se muestra si isMenuOpen es true y solo en pantallas pequeñas (md:hidden) */}
+           {" "}
+      <div
+        className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? "max-h-screen opacity-100 py-4"
+            : "max-h-0 opacity-0 overflow-hidden"
+        } z-40`}
+      >
+               {" "}
+        <div className="flex flex-col items-center space-y-3 px-4">
+                    {/* Enlaces del menú móvil */}         {" "}
+          {[
+            { to: "/terapeutasdeluz", label: "Terapeutas de la Luz" },
+            { to: "/tratamientointegral", label: "Tratamiento Int." },
+            { to: "/tallermensual", label: "Talleres Mensuales" },
+            { to: "/psicologos", label: "Mente y Ser" },
+            { to: "/giftcard", label: "GiftCards" },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer clic
+              className="text-lg text-gray-800 hover:text-pink-600 py-2 w-full text-center border-b border-gray-100"
+            >
+                            {item.label}           {" "}
+            </Link>
+          ))}
+                 {" "}
+        </div>
+             {" "}
+      </div>
+            {/* --- FIN DEL NAVEGADOR MÓVIL --- */}     {" "}
+      {/* Botón de volver a Servicios (ajustado para que no lo tape el menú móvil) */}
+           {" "}
       <div
         style={{
           padding: "2rem",
@@ -259,17 +358,16 @@ export default function Terapias() {
           minHeight: "100vh",
         }}
       >
+               <br></br>
         <button
           onClick={() => navigate("/servicios")}
           className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
         >
-          Volver a Servicios
+                    Volver a Servicios        {" "}
         </button>
-
         <h2 className="text-2xl font-bold text-center text-purple-700 mb-8">
           Menciones Disponibles
         </h2>
-
         <div className="flip-wrapper-container">
           {imagenesData.map((img) => (
             <div key={img.id} className="flip-wrapper">
@@ -390,6 +488,6 @@ export default function Terapias() {
           </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
