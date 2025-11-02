@@ -81,7 +81,7 @@ export default function TratamientoHolistico() {
 
     {
       img: sarita,
-      title: "Camino de Regreso al SER: Un viaje intimo hasta tu centro",
+      title: "Camino de Regreso al SER",
       terapeuta: "Sarita Infante",
       terapeutaId: 26,
       description:
@@ -107,24 +107,20 @@ export default function TratamientoHolistico() {
     },
     {
       img: silvana,
-      title:
-        "Sanación Energética con Cruz de Ankh - Metodología PSI-NERGIA que combina Terapia energética y elementos de Psicoterapia Tradicional como apoyo",
+      title: "PSI-NERGIA",
       terapeuta: "Silvana Ríos",
-      terapeutaId: 10,
+      terapeutaId: 36,
       description:
         "Sanación Energética de Personas y Espacios, con enfoque en liberación de cargas energéticas y emocionales que impiden el normal y tranquilo desarrollo de relaciones consigo mismo y con el mundo que nos rodea.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
+      opciones: [{ sesiones: 4, precio: 70000 }],
     },
     {
       img: pamela,
-      title: "Biomagnetismo/Bioenergetico",
+      title: "Bioenergía con esencias florales etéricas",
       terapeuta: "Pamela Benavides",
       terapeutaId: 31,
       description:
-        "Terapia con imanes para eliminar microorganismos que producen enfermedades y restablecer el flujo vital del organismo.",
+        "Terapia de detección y corrección del flujo energético del cuerpo, activando la energía vital y autosanadora, acompañado con envío etérico de alta vibración de flores de Bach y/ Australia.",
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
