@@ -7,11 +7,15 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes (se mantienen igual)
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta31 from "../assets/Terapeuta31.jpeg";
+import pamela from "../assets/pamela.jpeg";
 import Terapeuta5 from "../assets/Terapeuta5.jpg";
-import Terapeuta24 from "../assets/Terapeuta24.jpeg";
-
+import silvana from "../assets/silvana.jpeg";
+import renata from "../assets/renata.jpeg";
+import sanchez from "../assets/sanchez.jpeg";
+import crisol from "../assets/crisol.jpeg";
+import sarita from "../assets/sarita.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+import marcela from "../assets/marcela.jpeg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 interface TerapiaItem {
@@ -40,53 +44,93 @@ export default function TratamientoHolistico() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta1,
-      title: "Canalización Energética",
-      terapeuta: "Brenda Rivas",
-      terapeutaId: 7,
+      img: crisol,
+      title: "Trilogía del desbloqueo de emociones atrapadas",
+      terapeuta: "Crisolde Valenzuela",
+      terapeutaId: 30,
       description:
-        "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales, angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
+        "Liberar emociones  qué tu cuerpo aún guarda aprendiendo a reconocer,sanar y transformar tú energía interior  a través de técnicas  simples de sanación.",
       opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
     {
-      img: Terapeuta5,
-      title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
-      terapeuta: "Sandra Da Silva",
-      terapeutaId: 9,
+      img: sanchez,
+      title: "Psicoterapia basada en el Arteterapia",
+      terapeuta: "Catalina Sánchez",
+      terapeutaId: 33,
       description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+        "Sesiones de psicoterapia con perspectiva de género, inclusión, derechos humanos e interculturalidad. El objetivo es proporcionar un espacio para iniciar un proceso de salud mental, que aborde los malestares de quién decida ser parte de este llamado. Las sesiones se trabajan mediante herramientas arteterapeuticas, a través de un enfoque humanista como también con herramientas de la terapia y la psicología clínica. Abordando un proceso de salud mental completo, es decir: diagnóstico, objetivos del tratamiento y proyección de metas a lograr.",
+      opciones: [
+        { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 120000 },
+      ],
+    },
+    {
+      img: marcela,
+      title: "Biomagnetismo",
+      terapeuta: "Marcela Cabezas",
+      terapeutaId: 32,
+      description:
+        "Es una terapia que se usa con imanes en el cuerpo, ayudándolo a mantener el equilibrio, estimula la circulación, ayuda a eliminar toxinas y desintoxicar el cuerpo.",
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 120000 },
       ],
     },
-    // {
-    //   img: creadorvirtual,
-    //   title: "Biomagnetismo",
-    //   terapeuta: "Marcela Cabezas",
-    //   terapeutaId: 25,
-    //   description:
-    //     "Es una terapia que se usa con imanes en el cuerpo, ayudándolo a mantener el equilibrio, estimula la circulación, ayuda a eliminar toxinas y desintoxicar el cuerpo.",
-    //   opciones: [
-    //     { sesiones: 3, precio: 88000 },
-    //     { sesiones: 4, precio: 99000 },
-    //     { sesiones: 5, precio: 120000 },
-    //   ],
-    // },
-    // {
-    //   img: creadorvirtual,
-    //   title: "Camino de Regreso al SER: Un viaje intimo hasta tu centro",
-    //   terapeuta: "Sarita Infante",
-    //   terapeutaId: 26,
-    //   description:
-    //     "Es una experiencia terapéutica profunda que invita a regresar a tu centro y reconectar con la sabiduría que ya habita en ti. A través de un proceso de 3, 4 o 5 sesiones personalizadas, te acompaño a liberar bloqueos emocionales, activar tu energía interior y recuperar la claridad para habitar tu vida desde un lugar más consciente, liviano y pleno. Cada sesión se convierte en un pequeño ritual de transformación: combinamos coaching del SER, escucha profunda, reconexión energética y prácticas de integración que armonizan mente, cuerpo y alma. Es un espacio seguro, amoroso y profundo para volver a sentirte en equilibrio contigo misma. Beneficios: Reconexión con tu energía y propósito interior ✨ Liberación emocional y claridad mental 🌿 Activación de tu poder personal y confianza 💫 Sensación de calma, ligereza y expansión 🌸 Dirigido a: Personas en procesos de cambio, búsqueda interior o que desean abrir un nuevo ciclo desde el bienestar y la conciencia. 🌺 “Porque cuando vuelves a ti, todo comienza a alinearse.",
-    //   opciones: [
-    //     { sesiones: 3, precio: 88000 },
-    //     { sesiones: 4, precio: 99000 },
-    //     { sesiones: 5, precio: 120000 },
-    //   ],
-    // },
+
+    {
+      img: sarita,
+      title: "Camino de Regreso al SER: Un viaje intimo hasta tu centro",
+      terapeuta: "Sarita Infante",
+      terapeutaId: 26,
+      description:
+        "Es una experiencia terapéutica profunda que invita a regresar a tu centro y reconectar con la sabiduría que ya habita en ti. A través de un proceso de 3, 4 o 5 sesiones personalizadas, te acompaño a liberar bloqueos emocionales, activar tu energía interior y recuperar la claridad para habitar tu vida desde un lugar más consciente, liviano y pleno. Cada sesión se convierte en un pequeño ritual de transformación: combinamos coaching del SER, escucha profunda, reconexión energética y prácticas de integración que armonizan mente, cuerpo y alma. Es un espacio seguro, amoroso y profundo para volver a sentirte en equilibrio contigo misma. Beneficios: Reconexión con tu energía y propósito interior ✨ Liberación emocional y claridad mental 🌿 Activación de tu poder personal y confianza 💫 Sensación de calma, ligereza y expansión 🌸 Dirigido a: Personas en procesos de cambio, búsqueda interior o que desean abrir un nuevo ciclo desde el bienestar y la conciencia. 🌺 “Porque cuando vuelves a ti, todo comienza a alinearse.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 120000 },
+      ],
+    },
+    {
+      img: renata,
+      title: "Psicología Clínica",
+      terapeuta: "Renata Santoro",
+      terapeutaId: 29,
+      description:
+        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión) y con 15 años de experiencia en intervenciones en crisis.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 120000 },
+      ],
+    },
+    {
+      img: silvana,
+      title:
+        "Sanación Energética con Cruz de Ankh - Metodología PSI-NERGIA que combina Terapia energética y elementos de Psicoterapia Tradicional como apoyo",
+      terapeuta: "Silvana Ríos",
+      terapeutaId: 10,
+      description:
+        "Sanación Energética de Personas y Espacios, con enfoque en liberación de cargas energéticas y emocionales que impiden el normal y tranquilo desarrollo de relaciones consigo mismo y con el mundo que nos rodea.",
+      opciones: [
+        { sesiones: 3, precio: 55000 },
+        { sesiones: 4, precio: 70000 },
+      ],
+    },
+    {
+      img: pamela,
+      title: "Biomagnetismo/Bioenergetico",
+      terapeuta: "Pamela Benavides",
+      terapeutaId: 31,
+      description:
+        "Terapia con imanes para eliminar microorganismos que producen enfermedades y restablecer el flujo vital del organismo.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 120000 },
+      ],
+    },
 
     // {
     //   img: creadorvirtual,

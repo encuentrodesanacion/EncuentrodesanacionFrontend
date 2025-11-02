@@ -8,9 +8,9 @@ import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes (se mantienen igual)
-import Terapeuta29 from "../assets/mesaradio.jpeg";
-import limpieza from "../assets/limpieza.jpeg";
-import Terapeuta5 from "../assets/Terapeuta5.jpg";
+import radionica from "../assets/radionica.png";
+import limpieza from "../assets/Limpiezaa.png";
+import raices from "../assets/raicess.png";
 import Terapeuta24 from "../assets/Terapeuta24.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 
@@ -47,7 +47,7 @@ export default function TratamientoHolistico() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta29,
+      img: radionica,
       title: "Mesa radionica para la abundancia y prosperidad",
       terapeuta: "Ana Aros",
       terapeutaId: 23,
@@ -62,6 +62,15 @@ export default function TratamientoHolistico() {
       terapeutaId: 23,
       description:
         "Esta terapia te ayuda a limpiar toda la energía que está estancada en ti y no te permite avanzar en diferentes aspectos de tu vida, a través de esta terapia lograrás identificar lo que hay en ti y luego poder elevar tu vibración alcanzando un bienestar físico, emocional y mental.",
+      opciones: [{ sesiones: 1, precio: 20000 }],
+    },
+    {
+      img: raices,
+      title: "Sanación de Raíces",
+      terapeuta: "Sarita Infante",
+      terapeutaId: 26,
+      description:
+        "Un espacio terapéutico para quienes sienten que repiten patrones o cargan con emociones que no les permiten lograr sus objetivos. (Bloqueos energéticos en finanzas, en relaciones , negocios, etc.) En esta sesión te acompaño a identificar el origen del bloqueo y transformarlo desde el amor y la conciencia",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
     // {
