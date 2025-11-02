@@ -434,7 +434,7 @@ export default function TratamientoHolistico() {
                 <div className="flip-front">
                   <img src={t.img} alt={t.title} />
                   <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
+                    <p>{t.title}</p>
                   </div>
                 </div>
                 <div className="flip-back">
