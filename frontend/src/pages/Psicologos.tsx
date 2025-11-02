@@ -236,6 +236,12 @@ export default function TratamientoHolistico() {
           >
             Mente y Ser
           </Link>
+          <Link
+            to="/giftcard"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            GiftCards
+          </Link>
                  {" "}
         </div>
              {" "}
@@ -272,7 +278,7 @@ export default function TratamientoHolistico() {
             <img
               src={t.img}
               alt={t.terapeuta}
-              className="w-full h-56 object-cover object-top"
+              className="w-full h-64 object-contain object-center"
             />
             {/* Contenido Principal de la Tarjeta */}             {" "}
             <div className="p-4 flex flex-col">

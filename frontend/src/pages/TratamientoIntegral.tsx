@@ -30,7 +30,7 @@ interface TerapiaItem {
 export default function TratamientoHolistico() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
@@ -281,11 +281,59 @@ export default function TratamientoHolistico() {
 
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
+      {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800">
+        {/* Título de la Página */}
+        <h1 className="text-xl font-semibold text-gray-800 z-50">
           Tratamiento Integral
         </h1>
+
+        {/* Icono del Carrito (se mantiene) */}
         <CartIcon />
+
+        {/* --- BOTÓN HAMBURGUESA (MÓVIL) --- */}
+        <button
+          className="md:hidden p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Abrir menú de navegación"
+        >
+          {isMenuOpen ? (
+            // Icono X (Cerrar)
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M6 18L18 6M6 6l12 12"
+              ></path>
+            </svg>
+          ) : (
+            // Icono Menú Hamburguesa
+            <svg
+              className="w-6 h-6"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M4 6h16M4 12h16M4 18h16"
+              ></path>
+            </svg>
+          )}
+        </button>
+
+        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
+        {/* Esto solo se muestra en PC (md:flex) */}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link
             to="/terapeutasdeluz"
@@ -311,16 +359,53 @@ export default function TratamientoHolistico() {
           >
             Mente y Ser
           </Link>
+          <Link
+            to="/giftcard"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            GiftCards
+          </Link>
         </div>
       </header>
 
+      {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}
+      {/* Se muestra si isMenuOpen es true y solo en pantallas pequeñas (md:hidden) */}
+      <div
+        className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
+          isMenuOpen
+            ? "max-h-screen opacity-100 py-4"
+            : "max-h-0 opacity-0 overflow-hidden"
+        } z-40`}
+      >
+        <div className="flex flex-col items-center space-y-3 px-4">
+          {/* Enlaces del menú móvil */}
+          {[
+            { to: "/terapeutasdeluz", label: "Terapeutas de la Luz" },
+            { to: "/tratamientointegral", label: "Tratamiento Int." },
+            { to: "/tallermensual", label: "Talleres Mensuales" },
+            { to: "/psicologos", label: "Mente y Ser" },
+            { to: "/giftcard", label: "GiftCards" },
+          ].map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer clic
+              className="text-lg text-gray-800 hover:text-pink-600 py-2 w-full text-center border-b border-gray-100"
+            >
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      </div>
+      {/* --- FIN DEL NAVEGADOR MÓVIL --- */}
+
+      {/* Botón de volver al inicio (ajustado para que no lo tape el menú móvil) */}
       <button
         onClick={() => navigate("/")}
-        className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+        className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 md:top-20 md:left-6"
       >
         Volver al Inicio
       </button>
-
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Tratamiento Integral
       </h2>

@@ -282,6 +282,12 @@ export default function TalleresMensuales() {
           >
             Mente y Ser
           </Link>
+          <Link
+            to="/giftcard"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            GiftCards
+          </Link>
         </div>
       </header>
 
