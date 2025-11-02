@@ -283,55 +283,58 @@ export default function TratamientoHolistico() {
     <div className="min-h-screen bg-white pt-24 px-6">
       {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        {/* Título de la Página */}
+        {/* Título de la Página (Se mantiene a la izquierda) */}
         <h1 className="text-xl font-semibold text-gray-800 z-50">
           Tratamiento Integral
         </h1>
 
-        {/* Icono del Carrito (se mantiene) */}
-        <CartIcon />
+        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
+        {/* Este contenedor usa un gap (espacio) para separar los íconos */}
+        <div className="flex items-center gap-4 md:hidden ml-auto mr-8">
+          {/* 1. Botón Hamburguesa */}
+          <button
+            className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Abrir menú de navegación"
+          >
+            {isMenuOpen ? (
+              // Icono X (Cerrar)
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
+            ) : (
+              // Icono Menú Hamburguesa
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
+            )}
+          </button>
 
-        {/* --- BOTÓN HAMBURGUESA (MÓVIL) --- */}
-        <button
-          className="md:hidden p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Abrir menú de navegación"
-        >
-          {isMenuOpen ? (
-            // Icono X (Cerrar)
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M6 18L18 6M6 6l12 12"
-              ></path>
-            </svg>
-          ) : (
-            // Icono Menú Hamburguesa
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M4 6h16M4 12h16M4 18h16"
-              ></path>
-            </svg>
-          )}
-        </button>
-
+          {/* Icono del Carrito (se mantiene) */}
+          <CartIcon />
+        </div>
         {/* --- MENÚ ESCRITORIO (md:flex) --- */}
         {/* Esto solo se muestra en PC (md:flex) */}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
