@@ -62,7 +62,7 @@ export default function TratamientoHolistico() {
         "Sesiones de psicoterapia con perspectiva de género, inclusión, derechos humanos e interculturalidad. El objetivo es proporcionar un espacio para iniciar un proceso de salud mental, que aborde los malestares de quién decida ser parte de este llamado. Las sesiones se trabajan mediante herramientas arteterapeuticas, a través de un enfoque humanista como también con herramientas de la terapia y la psicología clínica. Abordando un proceso de salud mental completo, es decir: diagnóstico, objetivos del tratamiento y proyección de metas a lograr.",
       opciones: [
         { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 120000 },
+        { sesiones: 5, precio: 111111 },
       ],
     },
     {
@@ -75,7 +75,7 @@ export default function TratamientoHolistico() {
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 120000 },
+        { sesiones: 5, precio: 111111 },
       ],
     },
 
@@ -89,7 +89,7 @@ export default function TratamientoHolistico() {
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 120000 },
+        { sesiones: 5, precio: 111111 },
       ],
     },
 
@@ -127,7 +127,7 @@ export default function TratamientoHolistico() {
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 120000 },
+        { sesiones: 5, precio: 111111 },
       ],
     },
     {
