@@ -100,7 +100,10 @@ export default function TratamientoHolistico() {
       terapeutaId: 36,
       description:
         "Sanación Energética de Personas y Espacios, con enfoque en liberación de cargas energéticas y emocionales que impiden el normal y tranquilo desarrollo de relaciones consigo mismo y con el mundo que nos rodea.",
-      opciones: [{ sesiones: 4, precio: 99000 }],
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+      ],
     },
     {
       img: sandra,
