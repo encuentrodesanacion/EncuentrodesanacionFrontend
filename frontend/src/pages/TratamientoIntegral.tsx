@@ -437,7 +437,7 @@ export default function TratamientoHolistico() {
               <div className="flip-card">
                 {/* MODIFICACIÓN AQUÍ: Eliminar flip-inner y aplicar estilos directamente a flip-card */}
                 <div className="flip-front">
-                  <img src={t.img} alt={t.title} />
+                  <img src={t.img} alt={t.terapeuta} />
                   <div className="nombre-overlay">
                     <p>{t.title}</p>
                   </div>
