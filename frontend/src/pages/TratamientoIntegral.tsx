@@ -6,9 +6,9 @@ import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes (se mantienen igual)
-import Terapeuta1 from "../assets/Terapeuta1.jpg";
+import brenda from "../assets/Terapeuta1.jpg";
 import pamela from "../assets/pamela.jpeg";
-import Terapeuta5 from "../assets/Terapeuta5.jpg";
+import sandra from "../assets/Terapeuta5.jpg";
 import silvana from "../assets/silvana.jpeg";
 import renata from "../assets/renata.jpeg";
 import sanchez from "../assets/sanchez.jpeg";
@@ -115,6 +115,18 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 4, precio: 70000 }],
     },
     {
+      img: sandra,
+      title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
+      terapeuta: "Sandra Da Silva",
+      terapeutaId: 9,
+      description:
+        "Esta Técnica de Sanación te ofrece una conexión íntima con tu Ser y funciona como una profunda investigación para descubrir y liberar todo aquello grabado en tu alma y subconsciente que impide tu evolución y te genera peso. Este tratamiento se puede solicitar para limpiar sentimientos, actitudes y emociones tóxicas como la ansiedad o la depresión, remover patrones emocionales familiares, de pareja o laborales, eliminar bloqueos de cualquier índole, incluyendo energías de bajo astral como la hechicería o la envidia, permitiéndote re-conectar con tu esencia e iniciar cambios positivos en tu vida.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+      ],
+    },
+    {
       img: pamela,
       title: "Bioenergía con esencias florales etéricas",
       terapeuta: "Pamela Benavides",
@@ -126,6 +138,15 @@ export default function TratamientoHolistico() {
         { sesiones: 4, precio: 99000 },
         { sesiones: 5, precio: 120000 },
       ],
+    },
+    {
+      img: brenda,
+      title: "Canalización Energética",
+      terapeuta: "Brenda Rivas",
+      terapeutaId: 7,
+      description:
+        "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales,angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida.",
+      opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
     // {
