@@ -92,19 +92,7 @@ export default function TratamientoHolistico() {
         { sesiones: 5, precio: 120000 },
       ],
     },
-    {
-      img: renata,
-      title: "Psicología Clínica",
-      terapeuta: "Renata Santoro",
-      terapeutaId: 29,
-      description:
-        "Psicoterapia clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión) y con 15 años de experiencia en intervenciones en crisis.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 120000 },
-      ],
-    },
+
     {
       img: silvana,
       title: "PSI-NERGIA",
@@ -112,7 +100,7 @@ export default function TratamientoHolistico() {
       terapeutaId: 36,
       description:
         "Sanación Energética de Personas y Espacios, con enfoque en liberación de cargas energéticas y emocionales que impiden el normal y tranquilo desarrollo de relaciones consigo mismo y con el mundo que nos rodea.",
-      opciones: [{ sesiones: 4, precio: 70000 }],
+      opciones: [{ sesiones: 4, precio: 99000 }],
     },
     {
       img: sandra,
