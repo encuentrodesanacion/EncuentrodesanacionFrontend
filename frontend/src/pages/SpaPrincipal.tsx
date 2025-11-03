@@ -15,7 +15,7 @@ import Terapeuta12 from "../assets/Terapeuta12.jpeg";
 import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
-import anaaros from "../assets/anaaros.jpg";
+import renata from "../assets/renata.jpeg";
 import angel from "../assets/Angel.jpeg";
 import sarita from "../assets/sarita.jpeg";
 import marcela from "../assets/marcela.jpeg";
@@ -170,6 +170,17 @@ export default function SpaPrincipal() {
       terapeuta_id: 27,
       description:
         "El tarot como herramienta terapéutica y guía para encontrar el camino más indicado en el momento presente, complementado con la guía y respaldo de una sesión psicoterapéutica, trabajando lo presentado con las cartas en paralelo con el trabajo emocional, vivencial, y la historia de la persona.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: renata,
+      title: "La Medicina de los Animales",
+      terapeuta: "Renata Santoro",
+      terapeuta_id: 29,
+      description:
+        "Las cartas de la Medicina de los Animales recopila el conocimiento de los pueblos originarios, quienes lograban tener una conexion directacon los animales, quienes te guiarán a través de la Rueda de la Medicina a encontrar tu senda personal a través de la medicina de los animales.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],

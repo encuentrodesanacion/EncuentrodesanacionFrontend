@@ -11,7 +11,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 import radionica from "../assets/radionica.png";
 import limpieza from "../assets/Limpiezaa.png";
 import sanarraiz from "../assets/sanarraiz.jpeg";
-import Terapeuta24 from "../assets/Terapeuta24.jpeg";
+import recalibracion from "../assets/recalibracion.png";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
@@ -72,6 +72,15 @@ export default function TratamientoHolistico() {
       terapeutaId: 26,
       description:
         "Un espacio terapéutico para quienes sienten que repiten patrones o cargan con emociones que no les permiten lograr sus objetivos. (Bloqueos energéticos en finanzas, en relaciones , negocios, etc.) En esta sesión te acompaño a identificar el origen del bloqueo y transformarlo desde el amor y la conciencia",
+      opciones: [{ sesiones: 1, precio: 20000 }],
+    },
+    {
+      img: recalibracion,
+      title: "Recalibración con Péndulo de Isis",
+      terapeuta: "Maribel Muñoz",
+      terapeutaId: 32,
+      description:
+        "Sesión a través de canalización con herramienta Péndulo de Isis, la cual permitirá activar y  disponer los centros energéticos a su máximo disponible, reafirmando los canales de conexión tierra y cielo, limpieza del campo mental de ataques psíquicos y liberando las cargas eléctromagnéticas.",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
     // {

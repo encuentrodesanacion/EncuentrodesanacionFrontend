@@ -6,6 +6,7 @@ import TuLuz from "../assets/TuLuz.jpeg";
 import Cocrea from "../assets/Cocrea.jpeg";
 import Caldero from "../assets/Caldero.jpeg";
 import yuniverse from "../assets/Yunivers.jpeg";
+import venceraperse from "../assets/venceraperse.jpeg";
 
 const alianzas = [
   {
@@ -29,9 +30,9 @@ const alianzas = [
     descripcion: "Obtén visibilidad real y comparte sanación.",
   },
   {
-    nombre: "Yuniverse - Diseño y Creacion de Espacios Digitales",
-    url: "https://www.instagram.com/yuniverse_digital/",
-    imagen: yuniverse,
+    nombre: "Venceraperse - Diseño y Creacion de Espacios Digitales",
+    url: "https://www.instagram.com/venceraperse/",
+    imagen: venceraperse,
     descripcion:
       "Sabemos que tu visión es ilimitada. Ayudamos a empresas y profesionales en su lanzamiento a Internet , ofrecemos servicios de creación de páginas web que amplificarán tu mensaje y te conectarán con tu audiencia global. Expande tu alcance y materializa tu potencial en el vasto cosmos digital.",
   },
