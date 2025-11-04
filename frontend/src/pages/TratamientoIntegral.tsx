@@ -141,7 +141,7 @@ export default function TratamientoHolistico() {
     },
 
     // {
-    //   img: creadorvirtual,
+    //   img: creadorvirtual, ass
     //   title: "Regresión",
     //   terapeuta: "Alice Basay",
     //   terapeutaId: 10,
