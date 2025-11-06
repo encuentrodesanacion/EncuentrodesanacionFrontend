@@ -22,7 +22,8 @@ import marcela from "../assets/marcela.jpeg";
 import crisol from "../assets/crisol.jpeg";
 import pamela from "../assets/pamela.jpeg";
 import patricia from "../assets/patricia.jpeg";
-import ReservaConFecha from "../components/ReservaConFecha";
+// import ReservaConFecha from "../components/ReservaConFecha";
+import ReservaConFechaAmigable from "../components/ReservaConFechaAmigable";
 import {
   OpcionSesion,
   TerapiaItem,
@@ -515,7 +516,7 @@ export default function SpaPrincipal() {
             >
               X
             </button>
-            <ReservaConFecha
+            <ReservaConFechaAmigable
               terapia={reservaPendiente.terapia}
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
