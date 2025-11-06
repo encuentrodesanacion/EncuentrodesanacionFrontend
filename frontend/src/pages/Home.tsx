@@ -286,15 +286,18 @@ const App = () => {
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           {/* Título Principal */}
           <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight">
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-purple-800 block">
-              Encuentro de Sanación
+            <span className=" bg-clip-text text-pink-600">
+              <strong> Encuentro de Sanación</strong>
             </span>
           </h1>
 
           {/* Subtítulo (Frase de apertura) */}
           <p className="text-2xl md:text-4xl text-gray-1000 font-light mb-8 max-w-4xl mx-auto">
-            Bienvenido, Valiente, al Primer Spa Holístico Online. De Chile para
-            el Mundo.
+            <strong>
+              {" "}
+              Bienvenido, Valiente, al Primer Spa Holístico Online. De Chile
+              para el Mundo.
+            </strong>
           </p>
 
           {/* Descripción Principal y Lista de Profesionales */}
