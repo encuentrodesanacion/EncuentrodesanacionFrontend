@@ -243,30 +243,82 @@ const App = () => {
       {/* Hero Section */}
       <section
         id="inicio"
-        className="pt-20 pb-12 md:pt-32 md:pb-24 bg-gradient-to-r from-pastel-green/20 to-pastel-mint/20"
+        // Aumentamos ligeramente el padding inferior para más aire
+        className="pt-32 pb-32 md:pt-48 md:pb-40 bg-gradient-to-r from-pastel-green/20 to-pastel-mint/20"
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
-              <h1 className="text-4xl md:text-5xl font-light text-transparent bg-clip-text bg-gradient-to-r from-fuchsia-500 to-pink-500 mb-6">
-                {" "}
-              </h1>
-              <p className="text-1xl md:text-3xl  text-black-500 mb-2 font-bold  ">
-                Bienvenido Valiente al Primer Spa Holístico Online. De Chile
-                para el Mundo. Aquí encontrarás a los mejores especialistas
-                Holísticos quiénes te ayudarán a avanzar en tu proceso de
-                Sanación, ya sea emocional, física, mental y/o espiritual.
-              </p>
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          {/* Título Principal - SOMBRA DE TEXTO ELIMINADA */}
+          <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-purple-800 block">
+              Encuentro de Sanación
+            </span>
+          </h1>
+
+          {/* Subtítulo (Frase de apertura) */}
+          <p className="text-2xl md:text-4xl text-gray-800 font-light mb-8 max-w-4xl mx-auto">
+            Bienvenido, Valiente, al Primer Spa Holístico Online. De Chile para
+            el Mundo.
+          </p>
+
+          {/* Descripción Principal y Lista de Profesionales */}
+          <div className="text-lg md:text-xl text-gray-900 max-w-3xl mx-auto font-medium mb-12 leading-relaxed">
+            <p className="mb-4">
+              Aquí comienza tu{" "}
+              <strong className="text-pink-600">
+                camino de transformación profunda
+              </strong>
+              . Encuentro de Sanación es la plataforma más grande de bienestar,
+              donde encontrarás a la élite de profesionales listos para guiarte.
+            </p>
+
+            {/* Mejora: Lista de profesionales con mejor formato */}
+            <p className="font-semibold text-gray-800 mt-6 mb-3">
+              Nuestros Expertos Incluyen:
+            </p>
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-base md:text-lg">
+              {/* Tags o Badges para los profesionales */}
+              <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full border border-pink-300">
+                Psicólogos
+              </span>
+              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full border border-purple-300">
+                Terapeutas Holísticos
+              </span>
+              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full border border-green-300">
+                Coaches
+              </span>
+              <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full border border-yellow-300">
+                Instructores de Yoga y Fitness
+              </span>
+              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full border border-indigo-300">
+                + Expertos en Sanación
+              </span>
             </div>
-            <div className="relative">
-              <img
-                src={Fondo3}
-                alt="Encuentro de sanación"
-                className="rounded-2xl shadow-xl"
-                style={{ borderRadius: "50%" }}
-              />
-              <div className="absolute inset-0 rounded-2xl bg-gradient-to-t from-pastel-green/10 to-transparent"></div>
-            </div>
+
+            <p className="mt-6">
+              Ellos te ayudarán a avanzar en tu proceso, garantizando el sostén
+              y la excelencia que mereces.
+            </p>
+          </div>
+
+          {/* Botón de Llamada a la Acción (CTA) */}
+          <button
+            onClick={() => console.log("Ir a Servicios")}
+            className="inline-block px-12 py-5 text-xl font-bold rounded-full text-white bg-pink-500 hover:bg-pink-600 shadow-xl transition duration-500 transform hover:scale-105 hover:shadow-2xl"
+          >
+            Explorar Terapias
+          </button>
+
+          {/* Imagen Centrada Debajo del Contenido */}
+          <div className="relative mt-20 max-w-xs mx-auto">
+            <img
+              src={Fondo3}
+              alt="Símbolo Holístico"
+              // Usamos rounded-full de Tailwind y añadimos un borde elegante
+              className="object-cover w-full h-auto rounded-full shadow-2xl ring-4 ring-pink-400/50 ring-offset-4 ring-offset-pastel-green/10 transition duration-500 hover:shadow-pink-400/80"
+              style={{
+                aspectRatio: "1 / 1",
+              }}
+            />
           </div>
         </div>
       </section>
