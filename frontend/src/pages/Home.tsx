@@ -32,8 +32,12 @@ import "../index.css";
 // y está en la carpeta 'assets', la ruta sería:
 import Cristal from "../assets/Cristal.jpg"; // ¡Cambia esto por la ruta real de tu imagen!
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
+
 const App = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobilea
+  const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobile
+  // ESTADO DEL TOOLTIP DE NAVEGACIÓN
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
   const [nombre, setNombre] = useState("");
@@ -42,6 +46,7 @@ const App = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const location = useLocation();
 
+  // EFECTO PARA SCROLL SUAVE
   useEffect(() => {
     if (location.hash) {
       const element = document.querySelector(location.hash);
@@ -50,11 +55,26 @@ const App = () => {
       }
     }
   }, [location]);
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault(); // Evitar la recarga de la página
-    setIsSubmitting(true); // Deshabilitar el botón
 
-    // Validaciones básicas en el frontend
+  // EFECTO PARA EL TOOLTIP DE NAVEGACIÓN
+  useEffect(() => {
+    // 2. Mostrarlo inicialmente
+    setShowTooltip(true);
+
+    // 3. Ocultar el tooltip después de 8 segundos
+    const timer = setTimeout(() => {
+      setShowTooltip(false);
+      // 4. Marcar en localStorage que ya lo vio
+      localStorage.setItem("navTooltipSeen", "true");
+    }, 8000);
+
+    return () => clearTimeout(timer); // Limpiar el timer al desmontar
+  }, []);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+
     if (!nombre.trim() || !email.trim() || !mensaje.trim()) {
       alert("Por favor, completa todos los campos.");
       setIsSubmitting(false);
@@ -68,17 +88,14 @@ const App = () => {
 
     try {
       const response = await fetch(`${API_BASE_URL}/comentarios`, {
-        // Llama a tu nueva API
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ nombre, email, mensaje }),
       });
 
       if (response.ok) {
         alert("¡Mensaje enviado con éxito! Gracias por tu sugerencia.");
-        setNombre(""); // Limpiar el formulario
+        setNombre("");
         setEmail("");
         setMensaje("");
       } else {
@@ -92,22 +109,22 @@ const App = () => {
       console.error("Error de red o del servidor:", error);
       alert("Hubo un problema de conexión. Intenta de nuevo más tarde.");
     } finally {
-      setIsSubmitting(false); // Habilitar el botón nuevamente
+      setIsSubmitting(false);
     }
   };
 
   return (
-    // Aplica las clases de Tailwind y el estilo de la imagen de fondo al div principal
     <div
       className="min-h-screen bg-cover bg-center bg-fixed relative z-0 overflow-auto"
       style={{ backgroundImage: `url(${Cristal})` }}
     >
-      {/* Navigation */}
+      {/* --- BARRA DE NAVEGACIÓN --- */}
       <nav className="bg-purple-600/95 fixed w-full z-10 border-b border-pastel-green/10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          {/* HACEMOS EL CONTENEDOR RELATIVO PARA EL TOOLTIP */}
           <div className="flex justify-between h-16 items-center">
             {/* Logo o Título */}
-            <div className="flex items-center">
+            <div className="flex items-center flex-shrink-0">
               <span className="text-2xl font-light text-white">
                 <div>
                   <span className="text-bisque-200 font-bold">
@@ -117,6 +134,27 @@ const App = () => {
                 </div>
               </span>
             </div>
+
+            {/* 1. TOOLTIP / POPUP MOMENTÁNEO (ESCRITORIO) */}
+            {showTooltip && (
+              <div
+                // Posiciona el tooltip sobre el área de enlaces importantes
+                className="hidden md:block absolute top-14 left-1/2 transform -translate-x-1/2 
+                           bg-pink-600 text-white p-3 rounded-lg shadow-2xl z-[60] 
+                           transition-opacity duration-1000 animate-bounceOnce"
+                style={{ minWidth: "350px" }}
+              >
+                {/* Flecha del tooltip */}
+                <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
+
+                <p className="font-semibold text-sm">
+                  ¡Encuentra tu camino! ➡️ Navega a{" "}
+                  <span className="underline">Servicios</span> y{" "}
+                  <span className="underline">Días de ofrenda</span> desde aquí.
+                </p>
+              </div>
+            )}
+            {/* FIN: TOOLTIP */}
 
             {/* Menú de escritorio */}
             <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2">
@@ -132,17 +170,18 @@ const App = () => {
               >
                 Servicios
               </a>
-              <a
-                href="#alianzas"
-                className="text-blue-300 hover:text-white font-bold"
-              >
-                Alianzas
-              </a>
+
               <a
                 href="#otros"
                 className="text-blue-300 hover:text-white font-bold"
               >
                 Días de ofrenda
+              </a>
+              <a
+                href="#alianzas"
+                className="text-blue-300 hover:text-white font-bold"
+              >
+                Alianzas
               </a>
               <Link
                 to="/Staff-Terapéutico"
@@ -165,7 +204,7 @@ const App = () => {
             </div>
 
             {/* Menú móvil + Cart Icon */}
-            <div className="flex items-center gap-1 mr-auto">
+            <div className="flex items-center gap-1">
               <CartIcon />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -184,7 +223,7 @@ const App = () => {
               {/* Enlaces de ancla */}
               <a
                 href="#inicio"
-                onClick={() => setIsMenuOpen(false)} // Cerrar al hacer clic (buena práctica)
+                onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Inicio
@@ -233,21 +272,19 @@ const App = () => {
               >
                 Misión
               </Link>
-
-              {/* Eliminado el ancla a #contacto que no estaba en el menú de escritorio */}
             </div>
           </div>
         )}
       </nav>
 
-      {/* Hero Section */}
+      {/* --- SECCIÓN DE INICIO (HERO SECTION) --- */}
       <section
         id="inicio"
-        // Aumentamos ligeramente el padding inferior para más aire
+        // Estilos finales sin animación de entrada
         className="pt-32 pb-32 md:pt-48 md:pb-40 bg-gradient-to-r from-pastel-green/20 to-pastel-mint/20"
       >
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Título Principal - SOMBRA DE TEXTO ELIMINADA */}
+          {/* Título Principal */}
           <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight">
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-700 to-purple-800 block">
               Encuentro de Sanación
@@ -271,12 +308,11 @@ const App = () => {
               donde encontrarás a la élite de profesionales listos para guiarte.
             </p>
 
-            {/* Mejora: Lista de profesionales con mejor formato */}
+            {/* Mejora: Lista de profesionales con mejor formato (Tags/Badges) */}
             <p className="font-semibold text-gray-800 mt-6 mb-3">
               Nuestros Expertos Incluyen:
             </p>
             <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-base md:text-lg">
-              {/* Tags o Badges para los profesionales */}
               <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full border border-pink-300">
                 Psicólogos
               </span>
@@ -313,7 +349,7 @@ const App = () => {
             <img
               src={Fondo3}
               alt="Símbolo Holístico"
-              // Usamos rounded-full de Tailwind y añadimos un borde elegante
+              // Uso de rounded-full y anillo (ring) para destacar la imagen
               className="object-cover w-full h-auto rounded-full shadow-2xl ring-4 ring-pink-400/50 ring-offset-4 ring-offset-pastel-green/10 transition duration-500 hover:shadow-pink-400/80"
               style={{
                 aspectRatio: "1 / 1",
