@@ -186,13 +186,7 @@ const App = () => {
             {/* FIN: TOOLTIP */}
 
             {/* Menú de escritorio */}
-            <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2">
-              <a
-                href="#inicio"
-                className="text-blue-300 hover:text-white font-bold"
-              >
-                {t("nav_inicio")}
-              </a>
+            <div className="hidden md:flex items-center justify-start gap-6 p-8 pl-2">
               <a
                 href="#servicios"
                 className="text-blue-300 hover:text-white font-bold"
@@ -224,17 +218,9 @@ const App = () => {
               >
                 {t("nav_comunidad")}
               </Link>
-              <Link
-                to="/quienes-somos"
-                className="text-blue-300 hover:text-white font-bold"
-              >
-                {t("nav_mision")}
-              </Link>
             </div>
-
             {/* Menú móvil + Cart Icon */}
             <div className="flex items-center gap-1">
-              <CartIcon />
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden text-white/70 hover:text-pastel-green"
@@ -250,13 +236,7 @@ const App = () => {
           <div className="md:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-pastel-green/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {/* Enlaces de ancla */}
-              <a
-                href="#inicio"
-                onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
-              >
-                Inicio
-              </a>
+
               <a
                 href="#servicios"
                 onClick={() => setIsMenuOpen(false)}

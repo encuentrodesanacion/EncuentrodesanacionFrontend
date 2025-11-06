@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom"; // Importamos 'Link'
 // Importamos los íconos necesarios para las tres tarjetas
 import { Instagram, Mail, HeartHandshake, Orbit } from "lucide-react";
 
@@ -94,15 +94,27 @@ const ComunidadYLeadsPage = () => {
   const navigate = useNavigate();
   return (
     <div className="min-h-screen flex flex-col items-center justify-center py-10 bg-gray-50">
-      {" "}
-      {/* Añadido bg-gray-50 para mejor contraste */}
       <ComunidadYLeads />
-      <button
-        onClick={() => navigate("/#contacto")}
-        className="mt-12 px-6 py-3 bg-purple-600 text-white font-semibold rounded-full shadow-md hover:bg-purple-700 transition duration-300 ease-in-out transform hover:-translate-y-1"
-      >
-        Volver al Inicio
-      </button>
+
+      {/* CONTENEDOR DE BOTONES (MODIFICADO) */}
+      <div className="mt-12 flex flex-col sm:flex-row gap-6 justify-center">
+        {/* BOTÓN 1: Volver al Inicio (Mantenido) */}
+        <button
+          onClick={() => navigate("/")} // Navegar a la raíz (Inicio)
+          className="px-6 py-3 bg-purple-600 text-white font-semibold rounded-full shadow-md hover:bg-purple-700 transition duration-300 ease-in-out transform hover:-translate-y-1"
+        >
+          Volver al Inicio
+        </button>
+
+        {/* BOTÓN 2: Enlace Directo a Misión (NUEVO) */}
+        {/* Usamos Link de react-router-dom para una navegación limpia a la ruta */}
+        <Link
+          to="/quienes-somos"
+          className="px-6 py-3 bg-pink-500 text-white font-semibold rounded-full shadow-md hover:bg-pink-600 transition duration-300 ease-in-out transform hover:-translate-y-1 flex items-center justify-center"
+        >
+          Conocer Nuestra Misión
+        </Link>
+      </div>
     </div>
   );
 };
