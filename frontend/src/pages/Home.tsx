@@ -292,7 +292,7 @@ const App = () => {
           </h1>
 
           {/* Subtítulo (Frase de apertura) */}
-          <p className="text-2xl md:text-4xl text-gray-800 font-light mb-8 max-w-4xl mx-auto">
+          <p className="text-2xl md:text-4xl text-gray-1000 font-light mb-8 max-w-4xl mx-auto">
             Bienvenido, Valiente, al Primer Spa Holístico Online. De Chile para
             el Mundo.
           </p>
@@ -335,14 +335,6 @@ const App = () => {
               y la excelencia que mereces.
             </p>
           </div>
-
-          {/* Botón de Llamada a la Acción (CTA) */}
-          <button
-            onClick={() => console.log("Ir a Servicios")}
-            className="inline-block px-12 py-5 text-xl font-bold rounded-full text-white bg-pink-500 hover:bg-pink-600 shadow-xl transition duration-500 transform hover:scale-105 hover:shadow-2xl"
-          >
-            Explorar Terapias
-          </button>
 
           {/* Imagen Centrada Debajo del Contenido */}
           <div className="relative mt-20 max-w-xs mx-auto">
