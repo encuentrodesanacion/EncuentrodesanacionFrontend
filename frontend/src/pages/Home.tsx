@@ -22,6 +22,7 @@ import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import FindeTalleres from "../assets/FindeTalleres.jpeg";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import Giftcard from "../pages/Gifcard";
 import CartIcon from "../components/CartIcon";
 import SpaLittle from "../assets/Spa Little.jpeg";
@@ -37,6 +38,10 @@ const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // menú mobile
   // ESTADO DEL TOOLTIP DE NAVEGACIÓN
   const [showTooltip, setShowTooltip] = useState(false);
+  const { t, i18n } = useTranslation();
+  const changeLanguage = (lng: string) => {
+    i18n.changeLanguage(lng);
+  };
 
   const [servicioSeleccionado, setServicioSeleccionado] = useState("");
   const [especialidadSeleccionada, setEspecialidadSeleccionada] = useState("");
@@ -125,6 +130,30 @@ const App = () => {
           <div className="flex justify-between h-16 items-center">
             {/* Logo o Título */}
             <div className="flex items-center flex-shrink-0">
+              {/* Botones de Idioma */}
+              <div className="flex items-center gap-2 mr-4">
+                <button
+                  onClick={() => changeLanguage("es")}
+                  className={`text-sm font-bold transition-colors duration-200 ${
+                    i18n.language === "es"
+                      ? "text-white"
+                      : "text-blue-300 hover:text-white"
+                  }`}
+                >
+                  ES
+                </button>
+                <span className="text-blue-300">|</span>
+                <button
+                  onClick={() => changeLanguage("en")}
+                  className={`text-sm font-bold transition-colors duration-200 ${
+                    i18n.language === "en"
+                      ? "text-white"
+                      : "text-blue-300 hover:text-white"
+                  }`}
+                >
+                  EN
+                </button>
+              </div>
               <span className="text-2xl font-light text-white">
                 <div>
                   <span className="text-bisque-200 font-bold">
@@ -162,44 +191,44 @@ const App = () => {
                 href="#inicio"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Inicio
+                {t("nav_inicio")}
               </a>
               <a
                 href="#servicios"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Servicios
+                {t("nav_servicios")}
               </a>
 
               <a
                 href="#otros"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Días de ofrenda
+                {t("nav_ofrenda")}
               </a>
               <a
                 href="#alianzas"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Alianzas
+                {t("nav_alianzas")}
               </a>
               <Link
                 to="/Staff-Terapéutico"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Staff Terapeutico
+                {t("nav_staff")}
               </Link>
               <Link
                 to="/nuestra-comunidad"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Nuestra Comunidad
+                {t("nav_comunidad")}
               </Link>
               <Link
                 to="/quienes-somos"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                Misión
+                {t("nav_mision")}
               </Link>
             </div>
 
@@ -287,56 +316,48 @@ const App = () => {
           {/* Título Principal */}
           <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight">
             <span className=" bg-clip-text text-pink-600">
-              <strong> Encuentro de Sanación</strong>
+              <strong> {t("hero_title")}</strong>
             </span>
           </h1>
 
           {/* Subtítulo (Frase de apertura) */}
           <p className="text-2xl md:text-4xl text-gray-1000 font-light mb-8 max-w-4xl mx-auto">
-            <strong>
-              {" "}
-              Bienvenido, Valiente, al Primer Spa Holístico Online. De Chile
-              para el Mundo.
-            </strong>
+            <strong> {t("hero_subtitle")}</strong>
           </p>
 
           {/* Descripción Principal y Lista de Profesionales */}
           <div className="text-lg md:text-xl text-gray-900 max-w-3xl mx-auto font-medium mb-12 leading-relaxed">
             <p className="mb-4">
-              Aquí comienza tu{" "}
+              {t("hero_description_p1")} {""}
               <strong className="text-pink-600">
-                camino de transformación profunda
+                {t("hero_description_p2")} {""}
               </strong>
-              . Encuentro de Sanación es la plataforma más grande de bienestar,
-              donde encontrarás a la élite de profesionales listos para guiarte.
+              {t("hero_description_p3")}
             </p>
 
             {/* Mejora: Lista de profesionales con mejor formato (Tags/Badges) */}
             <p className="font-semibold text-gray-800 mt-6 mb-3">
-              Nuestros Expertos Incluyen:
+              {t("expert_heading")}
             </p>
             <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-base md:text-lg">
               <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full border border-pink-300">
-                Psicólogos
+                {t("expert_psychologists")}
               </span>
               <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full border border-purple-300">
-                Terapeutas Holísticos
+                {t("expert_holistic_therapists")}
               </span>
               <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full border border-green-300">
-                Coaches
+                {t("expert_coaches")}
               </span>
               <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full border border-yellow-300">
-                Instructores de Yoga y Fitness
+                {t("expert_yoga_fitness")}
               </span>
               <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full border border-indigo-300">
-                + Expertos en Sanación
+                {t("expert_plus")}
               </span>
             </div>
 
-            <p className="mt-6">
-              Ellos te ayudarán a avanzar en tu proceso, garantizando el sostén
-              y la excelencia que mereces.
-            </p>
+            <p className="mt-6">{t("hero_description_p4")}</p>
           </div>
 
           {/* Imagen Centrada Debajo del Contenido */}
