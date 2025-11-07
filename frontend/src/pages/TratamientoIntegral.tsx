@@ -411,7 +411,7 @@ export default function TratamientoHolistico() {
           <div className="flex items-center gap-4">
             {/* 1. Botón Hamburguesa (SOLO MÓVIL) */}
             <button
-              className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none md:hidden z-50"
+              className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none md:hidden z-50 pr-10"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Abrir menú de navegación"
             >

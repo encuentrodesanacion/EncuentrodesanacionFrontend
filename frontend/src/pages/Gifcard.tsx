@@ -493,12 +493,24 @@ export default function TratamientoHolistico() {
         </div>
         {/* --- MODAL DE CONTACTO MODIFICADO --- */}
         {showContactModal && currentTerapiaData && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
-            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
-              <h3 className="text-xl font-semibold mb-4 text-center">
+          <div
+            // OVERLAY: Permite el scroll vertical si el modal es más alto que la ventana (para móviles)
+            className="fixed inset-0 bg-black bg-opacity-75 flex items-start justify-center z-[100] p-4 overflow-y-auto"
+          >
+            <div
+              // MODAL BLANCO: Reducir padding (p-6 a p-4) y ancho (max-w-xs).
+              // CLAVE: Aplicar altura máxima (max-h-[90vh]) y scroll interno
+              className="bg-white p-4 rounded-lg shadow-2xl max-w-sm md:max-w-xs w-full mt-10 mb-10 max-h-[90vh] overflow-y-scroll relative"
+            >
+              {/* 1. Encabezado */}
+              <h3 className="text-xl font-semibold mb-2 text-center text-pink-700">
+                {" "}
+                {/* mb-4 a mb-2 */}
                 Confirmar Compra de Gift Card
               </h3>
-              <p className="text-gray-700 mb-4 text-center text-sm">
+              <p className="text-gray-700 mb-3 text-center text-sm">
+                {" "}
+                {/* mb-4 a mb-3 */}
                 Ingresa los datos del regalo para continuar con la reserva de{" "}
                 <strong>
                   {currentTerapiaData.sesiones} sesiones por $
@@ -507,10 +519,15 @@ export default function TratamientoHolistico() {
                 .
               </p>
               {/* --- CAMPOS DEL REMITENTE (QUIEN REGALA) --- */}
-              <div className="mb-4">
+              <h4 className="text-md font-bold mt-3 mb-2 text-gray-800">
+                Datos del Remitente:
+              </h4>
+              <div className="mb-3">
+                {" "}
+                {/* mb-4 a mb-3 */}
                 <label
                   htmlFor="senderName"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-1"
                 >
                   1. Nombre de quien regala:
                 </label>
@@ -518,15 +535,18 @@ export default function TratamientoHolistico() {
                   type="text"
                   id="senderName"
                   placeholder="Tu Nombre Completo"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  // py-2 a py-1.5 (reduce altura)
+                  className="shadow appearance-none border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
                   value={senderName}
                   onChange={(e) => setSenderName(e.target.value)}
                 />
               </div>
-              <div className="mb-6">
+              <div className="mb-4">
+                {" "}
+                {/* mb-6 a mb-4 */}
                 <label
                   htmlFor="senderPhone"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-1"
                 >
                   2. Número del remitente (Quien regala):
                 </label>
@@ -534,18 +554,23 @@ export default function TratamientoHolistico() {
                   type="tel"
                   id="senderPhone"
                   placeholder="Ej: +56912345678"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
                   value={senderPhone}
                   onChange={(e) => setSenderPhone(e.target.value)}
                 />
               </div>
               {/* --- SEPARADOR --- */}
-              <hr className="my-4" />
+              <hr className="my-3" /> {/* my-4 a my-3 */}
               {/* --- CAMPOS DEL DESTINATARIO (QUIEN RECIBE) --- */}
-              <div className="mb-4">
+              <h4 className="text-md font-bold mt-3 mb-2 text-gray-800">
+                Datos del Destinatario:
+              </h4>
+              <div className="mb-3">
+                {" "}
+                {/* mb-4 a mb-3 */}
                 <label
                   htmlFor="recipientName"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-1"
                 >
                   3. Nombre del destinatario (Quien recibe):
                 </label>
@@ -553,15 +578,17 @@ export default function TratamientoHolistico() {
                   type="text"
                   id="recipientName"
                   placeholder="Nombre de la persona que recibe el regalo"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
                   value={recipientName}
                   onChange={(e) => setRecipientName(e.target.value)}
                 />
               </div>
-              <div className="mb-6">
+              <div className="mb-4">
+                {" "}
+                {/* mb-6 a mb-4 */}
                 <label
                   htmlFor="recipientPhone"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-1"
                 >
                   4. Número del destinatario:
                 </label>
@@ -569,29 +596,29 @@ export default function TratamientoHolistico() {
                   type="tel"
                   id="recipientPhone"
                   placeholder="Ej: +56912345678"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                  className="shadow appearance-none border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline text-sm"
                   value={recipientPhone}
                   onChange={(e) => setRecipientPhone(e.target.value)}
                 />
               </div>
-
               <div className="mb-6">
                 <label
                   htmlFor="personalMessage"
-                  className="block text-gray-700 text-sm font-bold mb-2"
+                  className="block text-gray-700 text-sm font-bold mb-1"
                 >
                   5. Déjale un mensaje personalizado:
                 </label>
                 <textarea
                   id="personalMessage"
                   placeholder="Ej: ¡Feliz cumpleaños! Espero que disfrutes de tu sesión."
-                  rows={3} // Opcional: define la altura del textarea
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none"
+                  rows={2} // Reducido de rows={3} a rows={2}
+                  className="shadow appearance-none border rounded w-full py-1.5 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline resize-none text-sm"
                   value={personalMessage}
                   onChange={(e) => setPersonalMessage(e.target.value)}
                 />
               </div>
-              <div className="flex justify-end space-x-3">
+              {/* --- BOTONES DE ACCIÓN (Se mantendrán visibles gracias al scroll interno) --- */}
+              <div className="flex justify-end space-x-3 sticky bottom-0 bg-white pt-2 border-t border-gray-200 -mx-4 px-4">
                 <button
                   onClick={() => setShowContactModal(false)}
                   className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
@@ -604,11 +631,16 @@ export default function TratamientoHolistico() {
                 >
                   Confirmar y Añadir al Carrito
                 </button>
+                             {" "}
               </div>
+                         {" "}
             </div>
+                     {" "}
           </div>
         )}
+             {" "}
       </div>
+         {" "}
     </div>
   );
 }
