@@ -172,7 +172,7 @@ export default function SpaPrincipal() {
       description:
         "El tarot como herramienta terapéutica y guía para encontrar el camino más indicado en el momento presente, complementado con la guía y respaldo de una sesión psicoterapéutica, trabajando lo presentado con las cartas en paralelo con el trabajo emocional, vivencial, y la historia de la persona.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -183,7 +183,7 @@ export default function SpaPrincipal() {
       description:
         "Las cartas de la Medicina de los Animales recopila el conocimiento de los pueblos originarios, quienes lograban tener una conexion directacon los animales, quienes te guiarán a través de la Rueda de la Medicina a encontrar tu senda personal a través de la medicina de los animales.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -194,7 +194,7 @@ export default function SpaPrincipal() {
       description:
         "Liberar emociones es el proceso de reconocer, expresar y soltar emociones reprimidas o no resultas. En la terapia se usan piedras energéticas para liberar emociones atrapadas, equilibrar los chakras y restaurar la armonía emocional y espiritual.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -205,7 +205,7 @@ export default function SpaPrincipal() {
       description:
         "Un espacio seguro y profundo para volver a ti. A través del coaching, PNL y canalizaciones, encuentras claridad, fuerza interior y dirección para tu vida. Juntos escuchamos tu alma, creamos metas, objetivos que te lleven a vivir en tu propósito",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -216,7 +216,7 @@ export default function SpaPrincipal() {
       description:
         "Transforma tu crecimiento, nuestros pensamientos y emociones definen cómo nos relacionamos. Aquí te entrego herramientas para llevar tus heridas y emociones al siguiente nivel de liberación.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
@@ -227,7 +227,7 @@ export default function SpaPrincipal() {
       description:
         "Terapia energética que alinea tu cuerpo con tu Alma, limpiando toda interferencia (entidades, parásitos, hilos de conexión, magia ritual). Incluye masaje energético y campos de protección.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -239,7 +239,7 @@ export default function SpaPrincipal() {
       description:
         "Rastreo energético completo guiado con péndulo terapéutico,identificando los puntos del cuerpo donde existen bloqueos o emociones reprimidas,equilibrando el bloqueo a través  de colocación de imanes a distancia.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -251,7 +251,7 @@ export default function SpaPrincipal() {
       description:
         "Abre camino con Fuego Sagrado es un ritual que utiliza una vela para desbloquear obstáculos y atraer nuevas oportunidades. Durante la sesión, se interpreta la danza de la llama, el color y la forma de la cera, descubriendo las energías que necesitas equilibrar y potenciar. Este ritual te invita a sanar bloqueos, atraer abundancia y clarificar tucamino, transformando la luz del fuego en guía y protecciónpara tu viaje espiritual",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -263,7 +263,7 @@ export default function SpaPrincipal() {
       description:
         "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
@@ -275,20 +275,20 @@ export default function SpaPrincipal() {
       description:
         "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
       precio: 16000,
-      isDisabled: true,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: creadorvirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeuta_id: 10,
-      description:
-        "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
-      precio: 1000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
+    // {
+    //   img: creadorvirtual,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeuta_id: 10,
+    //   description:
+    //     "¿Dolores que no entiendes? ¿Cansancio sin explicación? ¿Sientes que es momento de soltar algo viejo? Este espacio es para ti Vivenciaras -Decodificación del código del cuerpo; útero -Liberación de memorias y de lo que ya lo necesitas -Soltar cargas -Facilita conexión con tu esencia y tu energía -Favorece equilibrio,bienestar,salud y proceso de autoconomiento -Facilita la Integración en tu proceso  y escucha a tus recursos internos -Honrar tu historia",
+    //   precio: 1000,
+    //   isDisabled: true,
+    //   opciones: [{ sesiones: 1, precio: 16000 }],
+    // },
   ];
 
   const reservar = (
