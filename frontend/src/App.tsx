@@ -59,7 +59,11 @@ export default function App() {
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
           <Route path="/giftcard" element={<Giftcard />} />
           <Route path="/psicologos" element={<Psicologos />} />
-          <Route path="/encuentrofacil" element={<Encuentrofacil />} />
+
+          <Route
+            path="/encuentrofacil/:slugTerapeuta?"
+            element={<Encuentrofacil />}
+          />
           <Route path="/pago-confirmacion-exito" element={<SuccessPage />} />
           <Route
             path="/politicas-de-privacidad"

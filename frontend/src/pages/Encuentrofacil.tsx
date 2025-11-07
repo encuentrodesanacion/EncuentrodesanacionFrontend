@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom"; // Se usa useLocation
 import "../styles/tratamientoIntegral.css";
 import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
@@ -21,10 +21,23 @@ import {
 import { Terapeuta, terapeutasData } from "../data/terapeutas-data";
 import parsePhoneNumberFromString from "libphonenumber-js";
 
+// --- FUNCIÓN SLUGIFY (MANTENIDA EN ESTA UBICACIÓN) ---
+const slugify = (text: string): string => {
+  return text
+    .toLowerCase()
+    .trim()
+    .replace(/[ñ]/g, "n")
+    .replace(/[^a-z0-9\s-]/g, "")
+    .replace(/[\s_-]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+};
+// ----------------------------------------------------
+
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function AgendaSanacion() {
   const navigate = useNavigate();
+  const location = useLocation(); // Hook para leer la URL
   const { addToCart } = useCart();
   const [terapeutaSeleccionado, setTerapeutaSeleccionado] =
     useState<Terapeuta | null>(null);
@@ -34,8 +47,9 @@ export default function AgendaSanacion() {
     Map<string, DisponibilidadTerapeuta>
   >(new Map());
 
-  // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (Esta parte sigue necesitando la API) ---
+  // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (Mantenido) ---
   useEffect(() => {
+    // ... (Tu lógica existente para fetchAndProcessDisponibilidades)
     const fetchAndProcessDisponibilidades = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/disponibilidades`);
@@ -124,6 +138,60 @@ export default function AgendaSanacion() {
     fetchAndProcessDisponibilidades();
   }, []);
 
+  // --- EFECTO 2: LEER LA URL Y CARGAR AL TERAPEUTA ---
+  useEffect(() => {
+    // Se asume que la ruta es /encuentrofacil/nombre-del-terapeuta
+    const pathSegments = location.pathname.split("/").filter(Boolean);
+
+    // El slug del terapeuta es el último segmento si la URL contiene el prefijo "encuentrofacil"
+    if (pathSegments.length >= 2 && pathSegments[0] === "encuentrofacil") {
+      const slugTerapeuta = pathSegments[1];
+
+      const terapeutaEncontrado = terapeutasData.find(
+        (t) => slugify(t.nombre) === slugTerapeuta
+      );
+
+      // Actualizar el estado del terapeuta basado en la URL
+      setTerapeutaSeleccionado(terapeutaEncontrado || null);
+
+      if (!terapeutaEncontrado) {
+        // Si el slug no es válido, asegúrate de que el usuario vea la lista
+        // Podrías redirigir a /encuentrofacil aquí si quieres forzar la lista
+        if (slugTerapeuta) {
+          console.warn(
+            `Terapeuta no encontrado para el slug: ${slugTerapeuta}`
+          );
+        }
+      }
+    } else if (
+      pathSegments.length === 1 &&
+      pathSegments[0] === "encuentrofacil"
+    ) {
+      // Estamos en la ruta base /encuentrofacil, mostramos la lista.
+      setTerapeutaSeleccionado(null);
+    }
+
+    // Se ejecuta cada vez que la URL cambia
+  }, [location.pathname]);
+
+  // --- FUNCIÓN MODIFICADA: AL HACER CLIC EN EL PERFIL ---
+  const handleSelectTerapeuta = (terapeuta: Terapeuta) => {
+    const slug = slugify(terapeuta.nombre);
+    // Navega a la URL amigable (esto activará el useEffect 2)
+    navigate(`/encuentrofacil/${slug}`);
+  };
+
+  // --- FUNCIÓN MODIFICADA: AL VOLVER ---
+  const handleBackNavigation = () => {
+    if (terapeutaSeleccionado) {
+      // Si estamos en /encuentrofacil/terapeuta, volvemos a /encuentrofacil
+      navigate(`/encuentrofacil`);
+    } else {
+      // Si estamos en /encuentrofacil, volvemos al inicio de la web
+      navigate("/");
+    }
+  };
+
   const getDisponibilidadForTerapeutaAndService = (
     terapeutaNombre: string,
     servicioNombre: string
@@ -136,6 +204,7 @@ export default function AgendaSanacion() {
   };
 
   const reservar = (terapiaItem: TerapiaItem) => {
+    // ... (Tu lógica existente para reservar)
     const terapeuta = terapeutasData.find(
       (t) => t.nombre === terapiaItem.terapeuta
     );
@@ -157,6 +226,7 @@ export default function AgendaSanacion() {
     nombreCliente: string,
     telefonoCliente: string
   ) => {
+    // ... (Tu lógica existente para confirmarReserva)
     const year = fechaHora.getFullYear();
     const month = String(fechaHora.getMonth() + 1).padStart(2, "0");
     const day = String(fechaHora.getDate()).padStart(2, "0");
@@ -244,13 +314,7 @@ export default function AgendaSanacion() {
       </header>
 
       <button
-        onClick={() => {
-          if (terapeutaSeleccionado) {
-            setTerapeutaSeleccionado(null);
-          } else {
-            navigate("/");
-          }
-        }}
+        onClick={handleBackNavigation} // <-- USAMOS LA NUEVA FUNCIÓN
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         {terapeutaSeleccionado ? "Volver a Terapeutas" : "Volver al Inicio"}
@@ -267,7 +331,7 @@ export default function AgendaSanacion() {
             <TherapistProfile
               key={t.id}
               terapeuta={t}
-              onClick={setTerapeutaSeleccionado}
+              onClick={handleSelectTerapeuta} // <-- USAMOS LA FUNCIÓN QUE NAVEGA
             />
           ))}
         </div>

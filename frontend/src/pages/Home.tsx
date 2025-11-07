@@ -177,9 +177,8 @@ const App = () => {
                 <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
 
                 <p className="font-semibold text-sm">
-                  ¡Encuentra tu camino! ➡️ Navega a{" "}
-                  <span className="underline">Servicios</span> y{" "}
-                  <span className="underline">Días de ofrenda</span> desde aquí.
+                  ¡Sanación al alcance de tu mano! ➡️ Navega a{" "}
+                  <span className="underline">Días de ofrenda</span> desde aquí.{" "}
                 </p>
               </div>
             )}

@@ -34,6 +34,7 @@ export default function TratamientoHolistico() {
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
   const [currentTerapiaData, setCurrentTerapiaData] = useState<{
     terapiaTitle: string;
     sesiones: number;
@@ -140,18 +141,18 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
-    // {
-    //   img: creadorvirtual, ass
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeutaId: 10,
-    //   description:
-    //     "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
-    //   opciones: [
-    //     { sesiones: 3, precio: 55000 },
-    //     { sesiones: 4, precio: 70000 },
-    //   ],
-    // },
+    {
+      img: creadorvirtual,
+      title: "Regresión",
+      terapeuta: "Alice Basay",
+      terapeutaId: 10,
+      description:
+        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+      opciones: [
+        { sesiones: 3, precio: 55000 },
+        { sesiones: 4, precio: 70000 },
+      ],
+    },
   ];
 
   const reservarSesion = (
@@ -188,6 +189,85 @@ export default function TratamientoHolistico() {
     setClientPhone("");
     console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
   };
+
+  const handlePayNow = async () => {
+    if (!currentTerapiaData || currentTerapiaData.precio <= 0) {
+      alert("Error: Datos de la terapia incompletos.");
+      return;
+    }
+    if (clientName.trim() === "" || clientPhone.trim() === "") {
+      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
+      return;
+    }
+
+    const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) {
+      alert(
+        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
+      );
+      return;
+    }
+
+    setIsProcessing(true);
+
+    // Datos Placeholder para Tratamientos (Webpay requiere un item con datos de reserva)
+    const now = new Date();
+    const fechaPlaceholder = now.toISOString().split("T")[0]; // YYYY-MM-DD
+    const horaPlaceholder = "09:00";
+
+    const reservaParaWebpay: Reserva[] = [
+      {
+        clientBookingId: "direct-pay-" + Date.now(),
+        terapeuta: currentTerapiaData.terapeutaNombre,
+        servicio: "Tratamiento Integral",
+        especialidad: currentTerapiaData.terapiaTitle,
+        fecha: fechaPlaceholder,
+        hora: horaPlaceholder,
+        precio: currentTerapiaData.precio,
+        nombreCliente: clientName.trim(),
+        telefonoCliente: clientPhone.trim(),
+        sesiones: currentTerapiaData.sesiones,
+        cantidad: 1,
+        terapeutaId: currentTerapiaData.terapeutaId,
+      },
+    ];
+
+    try {
+      const returnUrl = `${window.location.origin}/pago-confirmacion`; // URL de retorno
+
+      // Llama al endpoint de iniciar transacción (que guarda la reserva temporal)
+      const response = await fetch(
+        `${API_BASE_URL}/webpay/create-transaction`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            monto: currentTerapiaData.precio,
+            returnUrl: returnUrl,
+            reservas: reservaParaWebpay,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorBody = await response.json();
+        throw new Error(
+          errorBody.mensaje || "Error al iniciar la transacción con Webpay."
+        );
+      }
+
+      const { url, token } = await response.json();
+
+      // Redirigir al cliente a la pasarela de pago
+      window.location.href = `${url}?token_ws=${token}`;
+    } catch (error: any) {
+      console.error("Error al procesar el pago directo:", error);
+      alert(`Error: No se pudo iniciar el pago. ${error.message}`);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+  // --- FIN NUEVA FUNCIÓN: PAGO DIRECTO ---
 
   const handleConfirmAndAddToCart = async () => {
     if (!currentTerapiaData) {
@@ -378,7 +458,6 @@ export default function TratamientoHolistico() {
           </Link>
         </div>
       </header>
-
       {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}
       {/* Se muestra si isMenuOpen es true y solo en pantallas pequeñas (md:hidden) */}
       <div
@@ -409,7 +488,6 @@ export default function TratamientoHolistico() {
         </div>
       </div>
       {/* --- FIN DEL NAVEGADOR MÓVIL --- */}
-
       {/* Botón de volver al inicio (ajustado para que no lo tape el menú móvil) */}
       <button
         onClick={() => navigate("/")}
@@ -422,14 +500,12 @@ export default function TratamientoHolistico() {
       </h2>
       <br></br>
       <br></br>
-
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
         Este tratamiento incluye sesiones personalizadas orientadas a tu
         bienestar físico, emocional y espiritual.
       </p>
       <br></br>
       <br></br>
-
       <div className="flip-wrapper-container mt-10">
         {terapias.map(
           (
@@ -480,7 +556,6 @@ export default function TratamientoHolistico() {
           )
         )}
       </div>
-
       {/* --- MODAL DE CONTACTO --- */}
       {showContactModal && currentTerapiaData && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
@@ -528,23 +603,50 @@ export default function TratamientoHolistico() {
                 onChange={(e) => setClientPhone(e.target.value)}
               />
             </div>
-            <div className="flex justify-end space-x-3">
+            {/* --- CONTENEDOR DE BOTONES (Modificado) --- */}           {" "}
+            <div className="flex flex-col space-y-3 mt-4">
+              {" "}
+              {/* Agregado mt-4 para separación superior */}             
+              {/* BOTÓN 1: PAGAR YA (NUEVO) */}
               <button
-                onClick={() => setShowContactModal(false)}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
+                onClick={handlePayNow} // Llama a la nueva función de pago directo
+                disabled={isProcessing}
+                className={`text-white px-4 py-3 rounded transition-colors duration-200 w-full font-semibold ${
+                  isProcessing
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-green-600 hover:bg-green-700"
+                }`}
               >
-                Cancelar
+                {isProcessing ? "Procesando Pago..." : "Pagar Ahora"}
               </button>
+              {/* BOTÓN 2: AÑADIR AL CARRITO (Mantenido) */}
               <button
                 onClick={handleConfirmAndAddToCart}
-                className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors duration-200"
+                disabled={isProcessing}
+                className={`text-white px-4 py-3 rounded transition-colors duration-200 w-full ${
+                  isProcessing
+                    ? "bg-gray-400 cursor-not-allowed"
+                    : "bg-pink-600 hover:bg-pink-700"
+                }`}
               >
-                Confirmar y Añadir al Carrito
+                Añadir al Carrito
               </button>
+                         {/* BOTÓN 3: CANCELAR */}
+              <button
+                onClick={() => setShowContactModal(false)}
+                disabled={isProcessing}
+                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
+              >
+                      Cancelar            
+              </button>
+                         {" "}
             </div>
+                     {" "}
           </div>
+                 {" "}
         </div>
       )}
+         {" "}
     </div>
   );
 }
