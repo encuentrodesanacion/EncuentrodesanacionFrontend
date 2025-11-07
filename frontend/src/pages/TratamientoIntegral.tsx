@@ -141,18 +141,18 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
-    {
-      img: creadorvirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeutaId: 10,
-      description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
-    },
+    // {
+    //   img: creadorvirtual,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeutaId: 10,
+    //   description:
+    //     "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+    //   opciones: [
+    //     { sesiones: 3, precio: 55000 },
+    //     { sesiones: 4, precio: 70000 },
+    //   ],
+    // },
   ];
 
   const reservarSesion = (
