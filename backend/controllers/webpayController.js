@@ -667,46 +667,75 @@ const confirmarTransaccion = async (req, res) => {
 
         let existingReserva = await Reserva.findOne({
           where: {
-            id: id,
             clientBookingId: clientBookingId,
+            // Solo busca por ID si el frontend proporcionó uno (flujo normal de carrito)
+            ...(id && { id: id }),
           },
           transaction: t,
         });
 
-        console.log(
-          `[DEBUG CONFIRM] Existencia de reserva en DB: ${
-            !!existingReserva ? "Encontrada" : "NO ENCONTRADA"
-          }`
-        ); // *** NUEVO LOG ***
+        // --- LÓGICA CONDICIONAL: CREAR O ACTUALIZAR ---
 
         if (!existingReserva) {
-          console.error(
-            `[ERROR] Reserva con ID ${id} (clientBookingId: ${clientBookingId}) no encontrada para actualización. Esto no debería pasar.`
+          // 🎯 Caso 1: La reserva NO existe (¡Es un pago directo de Tratamiento/GiftCard!)
+          console.log(
+            `[INFO CONFIRM] Reserva (ClientBookingId: ${clientBookingId}) NO encontrada. Creando nueva reserva...`
           );
-          await nuevaTransaccion.update(
-            { estadoPago: "fallo_reserva_no_encontrada" },
+
+          // Creamos la reserva con todos los datos del temporal, y con estado 'confirmado'
+          existingReserva = await Reserva.create(
+            {
+              transaccionId: nuevaTransaccion.id,
+              estado: "confirmado",
+
+              // Copiamos los campos del objeto reservaToProcess
+              clientBookingId: clientBookingId,
+              terapeuta: terapeuta,
+              servicio: servicio,
+              especialidad: especialidad,
+              fecha: fecha,
+              hora: hora,
+              precio: precio,
+              nombreCliente: nombreCliente,
+              telefonoCliente: telefonoCliente,
+              sesiones: sesiones || 1,
+              cantidad: cantidad || 1,
+              terapeutaId: terapeutaId,
+              remitenteNombre: remitenteNombre || null,
+              remitenteTelefono: remitenteTelefono || null,
+              mensajePersonalizado: mensajePersonalizado || null,
+            },
             { transaction: t }
           );
-          throw new Error(
-            `Reserva no encontrada en la base de datos para actualizar el pago.`
+
+          console.log(
+            `[INFO CONFIRM] Nueva Reserva creada con éxito en la tabla Reservas. ID: ${existingReserva.id}`
           );
+        } else {
+          // 🎯 Caso 2: La reserva SÍ existe (flujo normal con hora agendada previamente)
+          console.log(
+            `[DEBUG CONFIRM] Reserva existente encontrada con ID: ${existingReserva.id}. Actualizando estado.`
+          );
+
+          // Solo actualizamos los campos de pago y estado
+          await existingReserva.update(
+            {
+              transaccionId: nuevaTransaccion.id,
+              estado: "confirmado",
+              // Actualizamos los campos de GiftCard si existen (inofensivo si son null)
+              remitenteNombre:
+                remitenteNombre || existingReserva.remitenteNombre || null,
+              remitenteTelefono:
+                remitenteTelefono || existingReserva.remitenteTelefono || null,
+              mensajePersonalizado:
+                mensajePersonalizado ||
+                existingReserva.mensajePersonalizado ||
+                null,
+            },
+            { transaction: t }
+          );
+          existingReserva = await existingReserva.reload({ transaction: t });
         }
-        console.log(
-          `[DEBUG CONFIRM] Actualizando reserva con ID: ${existingReserva.id}`
-        ); // *** NUEVO LOG ***
-        // Actualiza los campos relevantes de la reserva existente
-        await existingReserva.update(
-          {
-            transaccionId: nuevaTransaccion.id, // Asocia la transacción de pago
-            estado: "confirmado",
-            remitenteNombre: remitenteNombre || null,
-            remitenteTelefono: remitenteTelefono || null,
-            mensajePersonalizado: mensajePersonalizado || null, // Cambia el estado a 'confirmado' o 'pagado'
-            // No es necesario actualizar otros campos como servicio, especialidad, etc., ya que ya están correctos
-          },
-          { transaction: t }
-        );
-        existingReserva = await existingReserva.reload({ transaction: t });
         console.log(
           `[DEBUG CONFIRM] Existencia de reserva en DB: ${
             !!existingReserva ? "Encontrada" : "NO ENCONTRADA"

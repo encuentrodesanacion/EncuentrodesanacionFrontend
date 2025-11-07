@@ -141,18 +141,18 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 3, precio: 88000 }],
     },
 
-    {
-      img: creadorvirtual,
-      title: "Regresión",
-      terapeuta: "Alice Basay",
-      terapeutaId: 10,
-      description:
-        "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
-      opciones: [
-        { sesiones: 3, precio: 55000 },
-        { sesiones: 4, precio: 70000 },
-      ],
-    },
+    // {
+    //   img: creadorvirtual,
+    //   title: "Regresión",
+    //   terapeuta: "Alice Basay",
+    //   terapeutaId: 10,
+    //   description:
+    //     "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
+    //   opciones: [
+    //     { sesiones: 3, precio: 55000 },
+    //     { sesiones: 4, precio: 70000 },
+    //   ],
+    // },
   ];
 
   const reservarSesion = (
@@ -233,7 +233,7 @@ export default function TratamientoHolistico() {
     ];
 
     try {
-      const returnUrl = `${window.location.origin}/pago-confirmacion`; // URL de retorno
+      const returnUrl = `${API_BASE_URL}/webpay/confirmacion`; // URL de retorno
 
       // Llama al endpoint de iniciar transacción (que guarda la reserva temporal)
       const response = await fetch(
@@ -371,91 +371,88 @@ export default function TratamientoHolistico() {
     <div className="min-h-screen bg-white pt-24 px-6">
       {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        {/* Título de la Página (Se mantiene a la izquierda) */}
+        {/* 1. Título de la Página (Extremo Izquierdo) */}
         <h1 className="text-xl font-semibold text-gray-800 z-50">
           Tratamiento Integral
         </h1>
 
-        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
-        {/* Este contenedor usa un gap (espacio) para separar los íconos */}
-        <div className="flex items-center gap-4 md:hidden ml-auto mr-8">
-          {/* 1. Botón Hamburguesa */}
-          <button
-            className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Abrir menú de navegación"
-          >
-            {isMenuOpen ? (
-              // Icono X (Cerrar)
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
-            ) : (
-              // Icono Menú Hamburguesa
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
-            )}
-          </button>
+        {/* 2. CONTENEDOR DERECHO COMPLETO (Menú Escritorio + Iconos Móviles) */}
+        <div className="flex items-center gap-4">
+          {/* A. MENÚ ESCRITORIO (md:flex) --- Oculto en móvil --- */}
+          <div className="hidden md:flex items-center justify-start gap-6 pr-20 p-4 pl-1">
+            <Link
+              to="/terapeutasdeluz"
+              className="text-blue-500 hover:text-gray-800 font-bold"
+            >
+              Terapeutas de la Luz
+            </Link>
 
-          {/* Icono del Carrito (se mantiene) */}
-          <CartIcon />
-        </div>
-        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
-        {/* Esto solo se muestra en PC (md:flex) */}
-        <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link
-            to="/terapeutasdeluz"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Terapeutas de la Luz
-          </Link>
-          <Link
-            to="/tratamientointegral"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Tratamiento Int.
-          </Link>
-          <Link
-            to="/tallermensual"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Talleres Mensuales
-          </Link>
-          <Link
-            to="/psicologos"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Mente y Ser
-          </Link>
-          <Link
-            to="/giftcard"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            GiftCards
-          </Link>
+            <Link
+              to="/tallermensual"
+              className="text-blue-500 hover:text-gray-800 font-bold"
+            >
+              Talleres Mensuales
+            </Link>
+            <Link
+              to="/psicologos"
+              className="text-blue-500 hover:text-gray-800 font-bold"
+            >
+              Mente y Ser
+            </Link>
+            <Link
+              to="/giftcard"
+              className="text-blue-500 hover:text-gray-800 font-bold"
+            >
+              GiftCards
+            </Link>
+          </div>
+
+          {/* B. ICONOS MÓVILES (Visible en todas las vistas, pero la hamburguesa se oculta en md) */}
+          <div className="flex items-center gap-4">
+            {/* 1. Botón Hamburguesa (SOLO MÓVIL) */}
+            <button
+              className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none md:hidden z-50"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Abrir menú de navegación"
+            >
+              {isMenuOpen ? (
+                // Icono X (Cerrar)
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M6 18L18 6M6 6l12 12"
+                  ></path>
+                </svg>
+              ) : (
+                // Icono Menú Hamburguesa
+                <svg
+                  className="w-6 h-6"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  ></path>
+                </svg>
+              )}
+            </button>
+
+            {/* 2. Icono del Carrito (Visible Siempre en el extremo derecho) */}
+            <CartIcon />
+          </div>
         </div>
       </header>
       {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}
