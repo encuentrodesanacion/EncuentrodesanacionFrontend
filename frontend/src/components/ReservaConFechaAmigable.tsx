@@ -42,14 +42,14 @@ export default function ReservaConFechaAmigable({
     if (!nombre.trim()) {
       alert("Por favor, ingresa tu nombre.");
       return;
-    } // La validación de teléfono se basa en la lógica que tienes en SpaPrincipal.tsx // (que usa libphonenumber-js, que no está disponible aquí, pero mantendremos la regex del original por ahora)
+    }
     const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
     if (!phoneRegex.test(telefono.trim())) {
       alert(
         "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
       );
       return;
-    } // Convertir la hora seleccionada a la zona horaria de Chile para la validación
+    }
 
     const zonedDate = toZonedTime(fechaHora, CHILE_TIME_ZONE);
     const selectedTimeString = format(zonedDate, "HH:mm");
@@ -61,99 +61,84 @@ export default function ReservaConFechaAmigable({
     if (!hoursForSelectedDay.includes(selectedTimeString)) {
       alert("La hora seleccionada no está disponible.");
       return;
-    } // Pasa la fecha en el estado original (la Date object)
+    }
 
     onConfirm(fechaHora, nombre, telefono);
-  }; // Función para filtrar días (MANTENIDA IDÉNTICA)
+  };
 
   const filterDay = (date: Date) => {
     const today = new Date();
-    today.setHours(0, 0, 0, 0); // No permitir seleccionar días pasados
+    today.setHours(0, 0, 0, 0);
 
     if (date < today) {
       return false;
     }
 
     if (disponibilidadPorFechaDelServicio) {
-      const dateString = formatFns(date, "yyyy-MM-dd"); // Usar formatFns para evitar confusión con el format de date-fns-tz
+      const dateString = formatFns(date, "yyyy-MM-dd");
       const hasHoursForThisDay =
         disponibilidadPorFechaDelServicio[dateString] &&
         disponibilidadPorFechaDelServicio[dateString].length > 0;
       return hasHoursForThisDay;
     }
     return false;
-  }; // Función para manejar la selección del día en el DatePicker
+  };
 
   const handleDateChange = (date: Date | null) => {
-    setSelectedDate(date); // Guarda solo el día
-    setSelectedTime(""); // Limpia la hora seleccionada al cambiar de día
-    setFechaHora(null); // Limpia la fecha y hora final
-  }; // Función para manejar la selección de la hora en el <select>
+    setSelectedDate(date);
+    setSelectedTime("");
+    setFechaHora(null);
+  };
 
   const handleTimeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const time = e.target.value;
     setSelectedTime(time);
 
     if (selectedDate && time) {
-      // Combina la fecha seleccionada con la hora elegida
-      // Nota: El DatePicker retorna una Date con la hora 00:00 en la zona local.
-      // Aquí creamos una nueva Date que combina esa fecha con la hora (HH:mm)
-      // La forma más segura es reconstruir una Date en la zona horaria local (del cliente, que es lo que espera DatePicker)
-      const dateString = formatFns(selectedDate, "yyyy-MM-dd"); // Creamos una Date a partir de la fecha (yyyy-MM-dd) y la hora (HH:mm) en el Huso Horario del CLIENTE. // Es crucial que 'fechaHora' sea una Date local para que luego 'onConfirm' // la procese y la convierta correctamente a Chile/Santiago.
+      const dateString = formatFns(selectedDate, "yyyy-MM-dd");
 
       const dateWithTime = parse(
         `${dateString} ${time}`,
         "yyyy-MM-dd HH:mm",
         new Date()
-      ); // Verificación de la zona horaria: // El componente original enviaba una Date de la zona horaria del cliente. // Al hacer parse, esta dateWithTime es una Date en la zona horaria del cliente. // El componente padre (SpaPrincipal) y la lógica de confirmación se encargarán de // convertirla a 'yyyy-MM-dd' y 'HH:mm' en la zona de CHILE.
+      );
 
       setFechaHora(dateWithTime);
     } else {
       setFechaHora(null);
     }
-  }; // Obtener las horas disponibles para el día seleccionado (memoizado)
+  };
 
   const getAvailableHours = useMemo(() => {
     if (!selectedDate || !disponibilidadPorFechaDelServicio) {
       return [];
     }
     const dateString = formatFns(selectedDate, "yyyy-MM-dd");
-    let hours = disponibilidadPorFechaDelServicio[dateString]; // Si no hay horas disponibles en el array, retornar vacío inmediatamente
+    let hours = disponibilidadPorFechaDelServicio[dateString];
 
     if (!hours || !Array.isArray(hours) || hours.length === 0) {
       return [];
     }
 
-    // --- 💡 CORRECCIÓN CLAVE: FILTRADO POR HORA ACTUAL ---
-
     const zonedNow = toZonedTime(new Date(), CHILE_TIME_ZONE);
     const todayDateString = formatFns(zonedNow, "yyyy-MM-dd");
 
-    // 2. Comprobar si la fecha seleccionada es HOY en Chile
     if (dateString === todayDateString) {
-      // 3. Filtrar las horas
       hours = hours.filter((hour) => {
-        // A. Crear un objeto Date para la hora que se está verificando.
         const dateWithTimeLocal = parse(
           `${dateString} ${hour}`,
           "yyyy-MM-dd HH:mm",
           new Date()
         );
 
-        // B. Convertir la fecha y hora seleccionada a la zona horaria de Chile para la comparación
         const zonedTimeToCheck = toZonedTime(
           dateWithTimeLocal,
           CHILE_TIME_ZONE
         );
 
-        // C. Retorna TRUE solo si la hora de la cita es posterior O IGUAL al momento actual (zonedNow)
-        // Usamos zonedTimeToCheck.getTime() > zonedNow.getTime() para que la hora desaparezca
-        // inmediatamente después de que el minuto actual haya pasado.
         return zonedTimeToCheck.getTime() > zonedNow.getTime();
       });
     }
-
-    // --- FIN LÓGICA DE FILTRADO ---
 
     return hours;
   }, [selectedDate, disponibilidadPorFechaDelServicio]);
