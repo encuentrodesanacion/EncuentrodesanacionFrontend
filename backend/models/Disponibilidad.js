@@ -26,6 +26,12 @@ module.exports = (sequelize) => {
         field: "dias_disponibles",
         // ELIMINAR LOS GETTERS Y SETTERS PERSONALIZADOS DE AQUÍ
       },
+      // --- ¡NUEVA COLUMNA AGREGADA! ---
+      especialidad_servicio: {
+        type: DataTypes.STRING, // Tipo de dato para el nombre del servicio/taller
+        allowNull: false,
+        field: "especialidad_servicio",
+      },
       horasDisponibles: {
         type: DataTypes.ARRAY(DataTypes.STRING), // <--- CAMBIO CLAVE
         allowNull: false,
@@ -45,9 +51,9 @@ module.exports = (sequelize) => {
       timestamps: true,
       indexes: [
         {
-          unique: true,
-          fields: ["terapeuta_id", "dias_disponibles"], // Ajustado
-          name: "unique_terapeuta_disponibilidad_dia",
+          unique: true, // Volvemos a activar la unicidad
+          fields: ["terapeuta_id", "especialidad_servicio", "dias_disponibles"], // <--- CAMBIO CLAVE
+          name: "unique_terapeuta_disponibilidad_servicio_dia", // Renombrado para claridad
         },
       ],
     }

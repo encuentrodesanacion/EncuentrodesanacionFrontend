@@ -468,12 +468,13 @@ const App = () => {
                 price: "Desde 25.000CLP / €32 / $35USD,",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
-                    {/* <Link
-                      to="/encuentrofacil"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-                    >
-                      Ingresa Aquí
-                    </Link> */}
+                                       {" "}
+                    {/* Cambiado de <Link> a <div> para deshabilitar la navegación */}
+                                       {" "}
+                    <div className="mt-2 px-3 py-1 bg-gray-400 text-white text-sm rounded cursor-not-allowed text-center">
+                                            PROXIMAMENTE...                    {" "}
+                    </div>
+                                     {" "}
                   </div>
                 ),
               },
@@ -570,7 +571,7 @@ const App = () => {
                   "Talleres y terapias grupales a valor amoroso durante 3 días",
                 buttonText: "Reserva tu cupo",
                 link: "/findetalleres",
-                isDisabled: true,
+                isDisabled: false,
               },
               {
                 title: "SPA PRINCIPAL",

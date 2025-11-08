@@ -7,8 +7,20 @@ import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes
+import mcab1 from "../assets/mcab.jpeg";
+import mcab2 from "../assets/mcab2.jpeg";
+import anaa from "../assets/anaa1.jpeg";
+import anaa1 from "../assets/anaa2.jpeg";
 import Sentido from "../assets/Sentido.jpg";
 import Sanando from "../assets/Sanando.jpg";
+import crisolde from "../assets/crisolde1.jpg";
+import crisolde2 from "../assets/crisolde2.jpg";
+import puerta from "../assets/puerta.png";
+import llama from "../assets/llamaint.png";
+import danza from "../assets/danza.jpg";
+import manual from "../assets/manual.jpg";
+import altar from "../assets/altar.jpg";
+import abundanc from "../assets/abundancia.png";
 import creadordigital from "../assets/creadorvirtual.jpg";
 
 import "react-datepicker/dist/react-datepicker.css";
@@ -22,6 +34,7 @@ import {
   Reserva,
 } from "../types/index";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import ReservaConFechaAmigable from "../components/ReservaConFechaAmigable";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function Findetalleres() {
@@ -150,28 +163,127 @@ export default function Findetalleres() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: Sentido,
-      title: "Proyecto Sentido",
-      terapeuta: "Paulina Villablanca",
-      terapeuta_id: 2,
+      img: mcab1,
+      title: "Reprograma tu mente (Péndulo)",
+      terapeuta: "Marcela Cabezas",
+      terapeuta_id: 25,
       description:
-        "Dime cómo naciste y te diré quién eres. A través de la indagación de tu Proyecto Sentido, puedes saber cómo las formas en que naciste te entregaron características de tu forma de ser (tipo de parto, emociones vividas por tus padres durante tu gestación, tipo de hijo/a, entre otros aspectos).",
+        "Terapia que utiliza el Péndulo para identificar bloqueos subconscientes y reprogramar patrones mentales limitantes, promoviendo la sanación emocional y el bienestar integral.",
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      img: Sanando,
-      title: "Sanando mis heridas de infancia", //asdsa
-      terapeuta: "Paulina Villablanca",
-      terapeuta_id: 2,
+      img: mcab2,
+      title: "Enseña a tu cuerpo a descansar (Pendulo)",
+      terapeuta: "Marcela Cabezas",
+      terapeuta_id: 25,
       description:
-        "Sientes que tuviste una infancia difícil; que tuviste que crecer rápido; a veces tratas de recordar tu infancia y no llegan recuerdos. Si es así, este taller es para ti: conoceremos las heridas de infancia, nos conectaremos con tu niño/niña herida, y les daremos el amor que quizás faltó.",
+        "Terapia que emplea el Pendulo para armonizar la energía del cuerpo y la mente, ayudándo a liberar tensiones y enseñar al cuerpo a alcanzar un estado profundo de descanso y equilibrio.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: anaa,
+      title: "Fortaleciendo mi diálogo interno",
+      terapeuta: "Ana Aros",
+      terapeuta_id: 23,
+      description:
+        "Este taller busca cambiar nuestro lenguaje interno y la forma en cómo nos tratamos a nosotros mismos, generando un diálogo sano, respetuoso y amoroso en en diario vivir.",
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
 
+    {
+      img: crisolde,
+      title: "Manifiesta tu Realidad",
+      terapeuta: "Crisolde Valenzuela",
+      terapeuta_id: 30,
+      description:
+        "Terapia que te ayudará a conectarte con tú luz interior para soltar cargas energéticas negativas qué bloquean tú avance personal.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: crisolde2,
+      title: "Rompe tus patrones desde el alma",
+      terapeuta: "Crisolde Valenzuela",
+      terapeuta_id: 30,
+      description:
+        "Terapia qué te ayudará a reconocer,liberar y transformar tus patrones limitantes para sanar desde la raíz emocional.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: puerta,
+      title: "Puerta al SER",
+      terapeuta: "Sarita Infante",
+      terapeuta_id: 26,
+      description:
+        "Un encuentro grupal de una hora para abrir nuestra puerta al interior con el cuerpo, las emociones y la voz interior. A través de prácticas suaves, activarás presencia, liberarás lo que pesa y crearás un espacio de calma y expansión.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: llama,
+      title: "La Llama Interior",
+      terapeuta: "Sarita Infante",
+      terapeuta_id: 26,
+      description:
+        "Una experiencia grupal enfocada en liberar bloqueos emocionales, equilibrar energía y reconectar con la fuerza interior. Ideal para quienes están en procesos de cambio, duelo, transiciones o búsqueda de claridad.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: manual,
+      title: "Taller de Arte Terapia con elementos gráficos",
+      terapeuta: "Catalina Sánchez",
+      terapeuta_id: 33,
+      description:
+        "Este taller busca trabajar y enriquecer el lenguaje emocional (reconocimiento, abordaje y expresión asertiva) para mejorar el autoconocimiento personal. Utilizarás materiales gráficos de fácil acceso (lápices, plumones, papel, etc.) en un espacio tranquilo y con buena luz para participar. La actividad consiste en plasmar y expresar las emociones en papel mediante trazos, dibujos, figuras y escritura con el fin de procesarlas.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: danza,
+      title: "Danza Contemporánea",
+      terapeuta: "Catalina Sánchez",
+      terapeuta_id: 33,
+      description:
+        "Este taller ofrece un espacio de exploración corporal usando la técnica de la danza contemporánea, guiando a los participantes a través de movimientos básicos. El objetivo es crear un pequeño fraseo de danza como producto final, utilizando música motivadora y premisas que fomenten la exploración. Solo necesitas un espacio libre para moverte, agua y un computador para un encuentro personal y colectivo con el movimiento.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: altar,
+      title: "Como Crear Tu Altar",
+      terapeuta: "Ana Luisa Solervicens",
+      terapeuta_id: 13,
+      description:
+        "Un encuentro para conectar con la energía sagrada de tu espacio personal. En este taller aprenderás a diseñar y consagrar tu propio altar, comprendiendo el significado de cada elemento y cómo alinearlo con tus intenciones durante una hora, exploraremos los tipos de altares, la elección consciente de objetos, colores y aromas, y realizaremos una activación energética para consagrarlo",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: abundanc,
+      title: "Despierta tu Energía de Prosperidad",
+      terapeuta: "Ana Luisa Solervicens",
+      terapeuta_id: 13,
+      description:
+        "Este taller vivencial será espacio para aprender a atraer y activar la energía de la prosperidad a través de rituales conscientes. Descubrirás cómo preparar tu altar, elegir elementos simbólicos, y realizar rituales guiados para abrir tus caminos de abundancia. Una experiencia práctica y espiritual para conectar con la gratitud, la confianza y el merecimiento.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
     // {
     //   img: creadordigital,
     //   title: "Regresión",
@@ -307,13 +419,18 @@ export default function Findetalleres() {
             <div className="flip-card">
               <div className="flip-inner">
                 <div className="flip-front">
-                  <img src={t.img} alt={t.title} />
+                  <img src={t.img} />
                   <div className="nombre-overlay">
-                    <p>{t.title}</p>
+                    <p
+                      className="font-bold text-"
+                      style={{ pointerEvents: "none" }}
+                    >
+                      {t.title}
+                    </p>
                   </div>
                 </div>
-                <div className="flip-back flex flex-col justify-between p-2">
-                  <div className="overflow-y-auto max-h-[80%]">
+                <div className="flip-back flex flex-col justify-between p-1">
+                  <div className="overflow-y-auto max-h-[75%]">
                     <h3 className="mb-2 font-bold text-lg leading-tight">
                       {t.terapeuta !== "Disponible" && (
                         <span className="text-sm text-gray-600 block">
@@ -322,16 +439,23 @@ export default function Findetalleres() {
                       )}
                       {t.title}
                     </h3>
-
                     <div className="text-sm">
                       {t.description.split("\n").map((line, index) => (
-                        <p key={index}>{line}</p>
+                        <p
+                          key={index}
+                          className="mb-1 text-center text-xs sm:text-sm"
+                          style={{ pointerEvents: "none" }} // <<-- ¡CRÍTICO! Deshabilita el clic en el texto
+                        >
+                          {line}
+                        </p>
                       ))}
+                                         {" "}
                     </div>
+                                     {" "}
                   </div>
-
-                  <form
-                    className="w-full relative z-30 flex-shrink-0 mt-auto"
+                  <form // CLASE MODIFICADA: Cambiamos 'bottom-0' por el estilo en línea para elevarlo
+                    className=" absolute left-0 p-4 pt-2 z-2 flex-shrink-0"
+                    style={{ bottom: "30px" }} // <--- AJUSTE CLAVE: Lo mueve 10px hacia arriba
                     onSubmit={(e) => e.preventDefault()}
                   >
                     {/* Aseguramos que los botones siempre estén en la capa superior (z-30) */}
@@ -407,7 +531,7 @@ export default function Findetalleres() {
             >
               X
             </button>
-            <ReservaConFecha
+            <ReservaConFechaAmigable
               terapia={reservaPendiente.terapia}
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
