@@ -19,5 +19,84 @@
   "nav_staff": "Staff Terapeutico",
   "nav_comunidad": "Nuestra Comunidad",
   "nav_mision": "Misión",
-  "tooltip_message": "¡Encuentra tu camino! ➡️ Navega a Servicios y Días de ofrenda desde aquí."
+  "tooltip_message": "¡Encuentra tu camino! ➡️ Navega a Servicios y Días de ofrenda desde aquí.",
+
+  "main_services_title": "Servicios Principales",
+  "formation_title": "Formación de Terapeutas de la Luz (Con mención en diferentes áreas seleccionadas)",
+  "formation_description": "Espacio enfocado en tu Formación como Terapeuta. Queremos que alcances tu mejor potencial de la mano de los terapeutas más destacados.",
+  "formation_price": "Desde $40.000CLP / €37 / 43USD por sesión",
+  "formation_cta": "Ingresa Aquí",
+
+  "integral_treatment_title": "Tratamiento Integral",
+  "integral_treatment_description": "Pack de sesiones para avanzar en tu proceso de sanación física, mental, emocional y/o espiritual.",
+  "integral_treatment_price": "Desde 88.000CLP / €80 / 93USD",
+  "integral_treatment_cta": "Ingresa Aquí",
+
+  "monthly_workshops_title": "Talleres Mensuales",
+  "monthly_workshops_description": "Encuentros grupales para reconectar con tu esencia, liberar bloqueos y activar tu energía interior. (Yoga, Yoga Infantil, Pilates, etc.)",
+  "monthly_workshops_price": "Desde 35.000CLP / €32 / $37USD",
+  "monthly_workshops_cta": "Ingresa Aquí",
+
+  "encuentrofacil_title": "EncuentroFacil",
+  "encuentrofacil_description": "Sección de Agendamiento: Tu Bienestar a un Solo Clic. El sistema que te garantiza claridad, seguridad y la hora perfecta con tu profesional.",
+  "encuentrofacil_price": "Desde 25.000CLP / €32 / $35USD",
+  "encuentrofacil_status": "PROXIMAMENTE...",
+
+  "giftcard_title": "GiftCard",
+  "giftcard_description": "El Regalo Perfecto está Aquí! Compra una GiftCard con Valor Amoroso y Transforma la vida de un ser querido con una inversión en su bienestar.",
+  "giftcard_price": "Desde 25.000CLP / €32 / $35USD",
+  "giftcard_cta": "Ingresa Aquí",
+
+  "mind_and_being_title": "Mente y ser",
+  "mind_and_being_description": "El Pilar Clínico para tu Crecimiento Profundo. Espacio exclusivo de Psicólogos Clínicos con visión en la sanación del Ser.",
+  "mind_and_being_price": "Desde 120.000CLP / €109 / $127USD",
+  "mind_and_being_cta": "Ingresa Aquí",
+
+  "alliances_title": "ALIANZAS",
+  "smudges_and_salts_title": "Sahumos y Sales",
+  "smudges_and_salts_description": "Sumérgete en la pureza ancestral. Artículos para Sahumar y Sales. Diseñados para limpiar, purificar y armonizar tus espacios y tu energía. Eleva tu vibración y crea un santuario de paz en tu hogar.",
+
+  "healing_encounter_title": "Encuentro de sanación",
+  "healing_encounter_description_1": "Obtén visibilidad real y comparte sanación.",
+  "healing_encounter_cta_1": "¡Atrevete y sé parte de nuestras alianzas!",
+  "healing_encounter_description_2": "Obtén visibilidad real y comparte sanación.",
+
+  "yuniverse_title": "Yuniverse - Diseño y Creacion de Espacios Digitales",
+  "yuniverse_description": "Sabemos que tu visión es ilimitada. Ayudamos a empresas y profesionales en su lanzamiento a Internet , ofrecemos servicios de creación de páginas web que amplificarán tu mensaje y te conectarán con tu audiencia global. Expande tu alcance y materializa tu potencial en el vasto cosmos digital.",
+
+  "offering_days_title": "Días de Ofrenda (POR TIEMPO LIMITADO)",
+  "weekend_workshops_title": "Finde de Talleres Grupales",
+  "weekend_workshops_description": "Talleres y terapias grupales a valor amoroso durante 3 días",
+  "weekend_workshops_cta": "Reserva tu cupo →",
+
+  "main_spa_title": "SPA PRINCIPAL",
+  "main_spa_description": "Espacio donde los terapeutas se reúnen para ofrendar sus terapias...",
+  "main_spa_cta": "Ir al Spa Principal →",
+
+  "little_spa_title": "SPA LITTLE",
+  "little_spa_description": "Espacio donde nuevos terapeutas están creciendo...",
+  "little_spa_cta": "Reserva tu hora →",
+
+  "who_we_are_title": "Quiénes Somos",
+  "therapeutic_staff_title": "Staff Terapéutico",
+  "our_community_title": "Nuestra Comunidad",
+  "conscious_step_message": "Da el primer paso hacia una vida más consciente y equilibrada.",
+  "email_label": "Email:",
+  "phone_label": "Teléfono:",
+  "support_message": "Si tienes alguna sugerencia o problema de navegación en la página web, escríbelo aquí para tener respuestas del soporte técnico e ir mejorando este espacio para todos.",
+  "form_name_label": "Nombre",
+  "form_email_label": "Email",
+  "form_message_label": "Mensaje",
+  "form_send_button": "Enviar Mensaje",
+
+  "footer_title": "Encuentro de Sanación",
+  "footer_description": "Transformando vidas a través del equilibrio holístico y el bienestar integral.",
+  "footer_quick_links_title": "Enlaces Rápidos",
+  "footer_home_link": "Inicio",
+  "footer_services_link": "Servicios",
+  "footer_others_link": "Otros",
+  "footer_follow_us_title": "Sígueme",
+  "footer_copyright": "Encuentro de Sanación. Todos los derechos reservados.",
+  "footer_privacy_policy": "Políticas de Privacidad",
+  "footer_terms_and_conditions": "Términos y Condiciones"
 }

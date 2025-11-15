@@ -49,6 +49,7 @@ export default function TratamientoHolistico() {
         "Con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [
         // Paquete Normal: 4 sesiones @ 120K
+        { sesiones: 1, precio: 40000 },
         { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones @ 170K (120K + 50K)
         { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones @ 270K
         { sesiones: 10, precio: 270000 }, // assPaquete CRISIS: 10 sesiones @ 370K (270K + 100K)

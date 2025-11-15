@@ -19,5 +19,83 @@
   "nav_staff": "Therapeutic Staff",
   "nav_comunidad": "Our Community",
   "nav_mision": "Mission",
-  "tooltip_message": "Find your way! ➡️ Navigate to Services and Offering Days from here."
+  "tooltip_message": "Find your way! ➡️ Navigate to Services and Offering Days from here.",
+  "main_services_title": "Main Services",
+  "formation_title": "Light Therapist Training (Specializing in Selected Areas)",
+  "formation_description": "A space focused on your training as a Therapist. We want you to reach your best potential alongside the most prominent therapists.",
+  "formation_price": "Starting at $40.000CLP / €37 / 43USD per session",
+  "formation_cta": "Enter Here",
+
+  "integral_treatment_title": "Integral Treatment",
+  "integral_treatment_description": "A pack of sessions to advance in your physical, mental, emotional, and/or spiritual healing process.",
+  "integral_treatment_price": "Starting at 88.000CLP / €80 / 93USD",
+  "integral_treatment_cta": "Enter Here",
+
+  "monthly_workshops_title": "Monthly Workshops",
+  "monthly_workshops_description": "Group gatherings to reconnect with your essence, release blockages, and activate your inner energy. (Yoga, Kids Yoga, Pilates, etc.)",
+  "monthly_workshops_price": "Starting at 35.000CLP / €32 / $37USD",
+  "monthly_workshops_cta": "Enter Here",
+
+  "encuentrofacil_title": "EncuentroFacil",
+  "encuentrofacil_description": "Appointment Scheduling Section: Your Wellness with One Click. The system that guarantees clarity, security, and the perfect time with your professional.",
+  "encuentrofacil_price": "Starting at 25.000CLP / €32 / $35USD",
+  "encuentrofacil_status": "COMING SOON...",
+
+  "giftcard_title": "GiftCard",
+  "giftcard_description": "The Perfect Gift is Here! Buy a GiftCard with Loving Value and Transform the life of a loved one with an investment in their well-being.",
+  "giftcard_price": "Starting at 25.000CLP / €32 / $35USD",
+  "giftcard_cta": "Enter Here",
+
+  "mind_and_being_title": "Mind and Being",
+  "mind_and_being_description": "The Clinical Pillar for Your Deep Growth. Exclusive space for Clinical Psychologists with a vision for healing the Self.",
+  "mind_and_being_price": "Starting at 120.000CLP / €109 / $127USD",
+  "mind_and_being_cta": "Enter Here",
+
+  "alliances_title": "ALLIANCES",
+  "smudges_and_salts_title": "Smudges and Salts",
+  "smudges_and_salts_description": "Immerse yourself in ancestral purity. Smudging and Salts Articles. Designed to cleanse, purify, and harmonize your spaces and your energy. Elevate your vibration and create a sanctuary of peace in your home.",
+
+  "healing_encounter_title": "Healing Encounter",
+  "healing_encounter_description_1": "Gain real visibility and share healing.",
+  "healing_encounter_cta_1": "Dare and be part of our alliances!",
+  "healing_encounter_description_2": "Gain real visibility and share healing.",
+
+  "yuniverse_title": "Yuniverse - Digital Space Design and Creation",
+  "yuniverse_description": "We know your vision is limitless. We help companies and professionals in their internet launch, offering web page creation services that will amplify your message and connect you with your global audience. Expand your reach and materialize your potential in the vast digital cosmos.",
+
+  "offering_days_title": "Offering Days (LIMITED TIME)",
+  "weekend_workshops_title": "Group Workshops Weekend",
+  "weekend_workshops_description": "Workshops and group therapies at a loving value for 3 days",
+  "weekend_workshops_cta": "Book Your Spot",
+
+  "main_spa_title": "MAIN SPA",
+  "main_spa_description": "A space where therapists gather to offer their therapies...",
+  "main_spa_cta": "Go to Main Spa →",
+
+  "little_spa_title": "LITTLE SPA",
+  "little_spa_description": "A space where new therapists are growing...",
+  "little_spa_cta": "Book Your Time →",
+
+  "who_we_are_title": "Who We Are",
+  "therapeutic_staff_title": "Therapeutic Staff",
+  "our_community_title": "Our Community",
+  "conscious_step_message": "Take the first step towards a more conscious and balanced life.",
+  "email_label": "Email:",
+  "phone_label": "Phone:",
+  "support_message": "If you have any suggestions or navigation issues on the website, write it here to get support answers and improve this space for everyone.",
+  "form_name_label": "Name",
+  "form_email_label": "Email",
+  "form_message_label": "Message",
+  "form_send_button": "Send Message",
+
+  "footer_title": "Healing Encounter",
+  "footer_description": "Transforming lives through holistic balance and integral well-being.",
+  "footer_quick_links_title": "Quick Links",
+  "footer_home_link": "Home",
+  "footer_services_link": "Services",
+  "footer_others_link": "Others",
+  "footer_follow_us_title": "Follow Us",
+  "footer_copyright": "Healing Encounter. All rights reserved.",
+  "footer_privacy_policy": "Privacy Policy",
+  "footer_terms_and_conditions": "Terms and Conditions"
 }

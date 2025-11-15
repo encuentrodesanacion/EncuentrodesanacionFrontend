@@ -360,18 +360,17 @@ const App = () => {
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="md:text-5xl font-light text-center mb-12 text-cyan-300/95 font-bold">
-            Servicios Principales
+            {t("main_services_title")}
           </h2>
 
           <div className="grid md:grid-cols-3 gap-8">
             {[
               {
                 icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
-                title:
-                  "Formación de Terapeutas de la Luz (Con mención en diferentes áreas seleccionadas)",
-                description:
-                  "Espacio enfocado en tu Formación como Terapeuta. Queremos que alcances tu mejor potencial de la mano de los terapeutas más destacados.",
-                price: "Desde $40.000CLP / €37 / 43USD por sesión",
+                title: <h2> {t("formation_title")}</h2>,
+
+                description: <h2>{t("formation_description")}</h2>,
+                price: <h2>{t("formation_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <a
@@ -385,41 +384,39 @@ const App = () => {
                       to="/terapeutasdeluz"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ingresa Aquí
+                      <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
               },
               {
                 icon: <Heart className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "Tratamiento Integral",
-                description:
-                  "Pack de sesiones para avanzar en tu proceso de sanación física, mental, emocional y/o espiritual.",
-                price: "Desde 88.000CLP / €80 / 93USD",
+                title: <h2>{t("integral_treatment_title")}</h2>,
+                description: <h2>{t("integral_treatment_description")}</h2>,
+                price: <h2>{t("integral_treatment_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/tratamientointegral"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ingresa Aquí
+                      <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
               },
               {
                 icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "Talleres Mensuales",
-                description:
-                  "Encuentros grupales para reconectar con tu esencia, liberar bloqueos y activar tu energía interior. (Yoga, Yoga Infantil, Pilates, etc.)",
-                price: "Desde 35.000CLP / €32 / $37USD,",
+                title: <h2>{t("monthly_workshops_title")}</h2>,
+                description: <h2>{t("monthly_workshops_description")}</h2>,
+                price: <h2>{t("monthly_workshops_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/tallermensual"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ingresa Aquí
+                      <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
@@ -462,17 +459,17 @@ const App = () => {
               // },
               {
                 icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "EncuentroFacil",
-                description:
-                  " Sección de Agendamiento: Tu Bienestar a un Solo Clic. El sistema que te garantiza claridad, seguridad y la hora perfecta con tu profesional.",
-                price: "Desde 25.000CLP / €32 / $35USD,",
+                title: <h2>{t("encuentrofacil_title")}</h2>,
+                description: <h2>{t("encuentrofacil_description")}</h2>,
+                price: <h2>{t("encuentrofacil_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                                        {" "}
                     {/* Cambiado de <Link> a <div> para deshabilitar la navegación */}
                                        {" "}
                     <div className="mt-2 px-3 py-1 bg-gray-400 text-white text-sm rounded cursor-not-allowed text-center">
-                                            PROXIMAMENTE...                    {" "}
+                                           <h2>{t("encuentrofacil_status")}</h2>
+                                   {" "}
                     </div>
                                      {" "}
                   </div>
@@ -480,17 +477,16 @@ const App = () => {
               },
               {
                 icon: <SmilePlus className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "GiftCard",
-                description:
-                  " El Regalo Perfecto está Aquí! Compra una GiftCard con Valor Amoroso y Transforma la vida de un ser querido con una inversión en su bienestar.",
-                price: "Desde 25.000CLP / €32 / $35USD,",
+                title: <h2>{t("giftcard_title")}</h2>,
+                description: <h2>{t("giftcard_description")}</h2>,
+                price: <h2>{t("giftcard_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/giftcard"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ingresa Aquí
+                      <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
@@ -517,17 +513,16 @@ const App = () => {
 
               {
                 icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: "Mente y ser",
-                description:
-                  "El Pilar Clínico para tu Crecimiento Profundo.  Espacio exclusivo de Psicólogos Clínicos con visión en la sanación del Ser.",
-                price: "Desde 120.000CLP / €109 / $127USD,",
+                title: <h2>{t("mind_and_being_title")}</h2>,
+                description: <h2>{t("mind_and_being_description")}</h2>,
+                price: <h2>{t("mind_and_being_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/psicologos"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
-                      Ingresa Aquí
+                      <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
@@ -557,36 +552,33 @@ const App = () => {
       >
         <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-25 md:py-12 font-bold">
-            Días de Ofrenda
-            <p>(POR TIEMPO LIMITADO)</p>
+            <h2>{t("offering_days_title")}</h2>
           </h2>
 
           {/* Contenedor deslizable con snap */}
           <div className="flex justify-center flex-wrap gap-6 pb-6">
             {[
               {
-                title: "Finde de Talleres Grupales",
+                title: <h2>{t("weekend_workshops_title")}</h2>,
                 image: FindeTalleres,
-                excerpt:
-                  "Talleres y terapias grupales a valor amoroso durante 3 días",
-                buttonText: "Reserva tu cupo",
+                excerpt: <h2>{t("weekend_workshops_description")}</h2>,
+                buttonText: <h2>{t("weekend_workshops_cta")}</h2>,
                 link: "/findetalleres",
                 isDisabled: false,
               },
               {
-                title: "SPA PRINCIPAL",
+                title: <h2>{t("main_spa_title")}</h2>,
                 image: SpaPrincipal,
-                excerpt:
-                  "Espacio donde los terapeutas se reúnen para ofrendar sus terapias...",
-                buttonText: "Ir al Spa Principal",
+                excerpt: <h2>{t("main_spa_description")}</h2>,
+                buttonText: <h2>{t("main_spa_cta")}</h2>,
                 link: "/spaprincipal",
                 isDisabled: false,
               },
               {
-                title: "SPA LITTLE",
+                title: <h2>{t("little_spa_title")}</h2>,
                 image: SpaLittle,
-                excerpt: "Espacio donde nuevos terapeutas están creciendo...",
-                buttonText: "Reserva tu hora",
+                excerpt: <h2>{t("little_spa_description")}</h2>,
+                buttonText: <h2>{t("little_spa_cta")}</h2>,
                 link: "/spalittle",
                 isDisabled: true,
               },
@@ -617,7 +609,7 @@ const App = () => {
                       to={post.link}
                       className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
                     >
-                      {post.buttonText} →
+                      {post.buttonText}
                     </Link>
                   )}
                 </div>
@@ -634,31 +626,31 @@ const App = () => {
             <div>
               <Link to="/quienes-somos" className="block">
                 <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
-                  Quiénes Somos
+                  {t("who_we_are_title")}
                 </h2>
               </Link>
               <Link to="/Staff-Terapéutico" className="block">
                 <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
-                  Staff Terapéutico
+                  {t("therapeutic_staff_title")}
                 </h2>
               </Link>
               <div>
                 <Link to="/nuestra-comunidad" className="block">
                   <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
-                    Nuestra Comunidad
+                    {t("our_community_title")}
                   </h2>
                 </Link>
               </div>
               <p className="text-gray-400 mb-8">
-                Da el primer paso hacia una vida más consciente y equilibrada.
+                {t("conscious_step_message")}
               </p>
               <div className="space-y-4">
                 <p className="flex items-center text-gray-400">
-                  <span className="font-light mr-2">Email:</span>
+                  <span className="font-light mr-2"> {t("email_label")}</span>
                   spaholistico@encuentrodesanacion.com
                 </p>
                 <p className="flex items-center text-gray-400">
-                  <span className="font-light mr-2">Teléfono:</span>
+                  <span className="font-light mr-2"> {t("phone_label")}</span>
                   +569 7655 7902
                 </p>
                 <div className="flex space-x-4 mt-6">
@@ -689,16 +681,14 @@ const App = () => {
               {/* Agrega onSubmit */}
               <div>
                 <h1 className="text-center text-lg font-semibold text-white mb-4">
-                  Si tienes alguna sugerencia o problema de navegación en la
-                  página web, escríbelo aquí para tener respuestas del soporte
-                  técnico e ir mejorando este espacio para todos.
+                  {t("support_message")}
                 </h1>
 
                 <label
                   htmlFor="name"
                   className="block text-sm font-light text-gray-300"
                 >
-                  Nombre
+                  {t("form_name_label")}
                 </label>
                 <input
                   type="text"
@@ -714,7 +704,7 @@ const App = () => {
                   htmlFor="email"
                   className="block text-sm font-light text-gray-300"
                 >
-                  Email
+                  {t("form_email_label")}
                 </label>
                 <input
                   type="email"
@@ -730,7 +720,7 @@ const App = () => {
                   htmlFor="message"
                   className="block text-sm font-light text-gray-300"
                 >
-                  Mensaje
+                  {t("form_message_label")}
                 </label>
                 <textarea
                   id="message"
@@ -746,7 +736,7 @@ const App = () => {
                 disabled={isSubmitting} // Deshabilitar durante el envío
                 className="w-full bg-gradient-to-r from-fuchsia-500/80 to-pink-500/90 mb-6 text-black px-6 py-3 rounded-full hover:bg-pastel-green/90 transition-colors"
               >
-                {isSubmitting ? "Enviando..." : "Enviar Mensaje"}{" "}
+                {isSubmitting ? "Enviando..." : t("form_send_button")}{" "}
                 {/* Texto dinámico */}
               </button>
             </form>
@@ -758,23 +748,29 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-3 gap-8">
             <div>
+              {/* Título Principal */}
               <h3 className="text-xl font-light mb-4">
-                <span className="text-pastel-green">Encuentro de</span> Sanación
+                <span className="text-pastel-green">
+                  {t("footer_title").split(" ")[0]}
+                  <br></br>
+                </span>
+                {t("footer_title").split(" ").slice(1).join(" ")}
               </h3>
-              <p className="text-gray-400">
-                Transformando vidas a través del equilibrio holístico y el
-                bienestar integral.
-              </p>
+              {/* Descripción Principal */}
+              <p className="text-gray-400">{t("footer_description")}</p>
             </div>
             <div>
-              <h3 className="text-xl font-light mb-4">Enlaces Rápidos</h3>
+              {/* Título de Enlaces Rápidos */}
+              <h3 className="text-xl font-light mb-4">
+                {t("footer_quick_links_title")}
+              </h3>
               <ul className="space-y-2">
                 <li>
                   <a
                     href="#inicio"
                     className="text-gray-400 hover:text-pastel-green transition-colors"
                   >
-                    Inicio
+                    {t("footer_home_link")}
                   </a>
                 </li>
                 <li>
@@ -782,7 +778,7 @@ const App = () => {
                     href="#servicios"
                     className="text-gray-400 hover:text-pastel-green transition-colors"
                   >
-                    Servicios
+                    {t("footer_services_link")}
                   </a>
                 </li>
                 <li>
@@ -790,13 +786,16 @@ const App = () => {
                     href="#otros"
                     className="text-gray-400 hover:text-pastel-green transition-colors"
                   >
-                    Otros
+                    {t("footer_others_link")}
                   </a>
                 </li>
               </ul>
             </div>
             <div>
-              <h3 className="text-xl font-light mb-4">Sígueme</h3>
+              {/* Título de Sígueme */}
+              <h3 className="text-xl font-light mb-4">
+                {t("footer_follow_us_title")}
+              </h3>
               <div className="flex space-x-4">
                 <a
                   href="https://instagram.com/encuentrodesanacion"
@@ -804,40 +803,38 @@ const App = () => {
                   rel="noopener noreferrer"
                   className="text-gray-400 hover:text-pastel-green transition-colors"
                 >
-                  <Instagram size={24} /> <h1>Encuentro de Sanación</h1>
+                  {/* Se asume que Instagram es un componente React para el ícono */}
+                  <Instagram size={24} />
+                  <h1>{t("footer_title")}</h1>
                 </a>
               </div>
             </div>
           </div>
           <div className="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+            {/* Copyright */}
             <p className="mb-2">
-              {" "}
-              {/* Agregamos un margen inferior para separar de los enlaces */}
-              &copy; {new Date().getFullYear()} Encuentro de Sanación. Todos los
-              derechos reservados.
+              &copy; {new Date().getFullYear()} {t("footer_copyright")}
             </p>
-            {/* --- AQUÍ ES DONDE SE INTEGRA EL ENLACE --- */}
             <div className="flex justify-center space-x-4">
-              {" "}
-              {/* Contenedor para los enlaces de políticas */}
+              {/* Enlace de Políticas de Privacidad */}
               <a
                 href="/politicas-de-privacidad"
                 className="text-gray-400 hover:text-pastel-green transition-colors"
               >
-                Políticas de Privacidad
+                {t("footer_privacy_policy")}
               </a>
-              {/* Si tienes Términos y Condiciones, también iría aquí */}
+              {/* Enlace de Términos y Condiciones */}
               <a
                 href="/terminos-y-condiciones"
                 className="text-gray-400 hover:text-pastel-green transition-colors"
               >
-                Términos y Condiciones
+                {t("footer_terms_and_conditions")}
               </a>
             </div>
           </div>
         </div>
       </footer>
-      {/* WhatsApp Floating Button */}
+      {/* WhatsApp Floating Button y su contenedor envolvente (asumiendo que ese </div> cierra un componente superior) */}
       <a
         href="https://wa.me/56976557902?text=Deseo%20obtener%20m%C3%A1s%20informaci%C3%B3n%20de%20los%20servicios."
         target="_blank"
@@ -859,6 +856,7 @@ const App = () => {
           }}
         />
       </a>
+      {/* Cierre del div contenedor que se vio en el original */}
     </div>
   );
 };
