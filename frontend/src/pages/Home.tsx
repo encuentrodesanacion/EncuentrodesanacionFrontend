@@ -27,7 +27,7 @@ import Giftcard from "../pages/Gifcard";
 import CartIcon from "../components/CartIcon";
 import SpaLittle from "../assets/Spa Little.jpeg";
 import "../index.css";
-
+import LanguageSwitcher from "../components/LanguageSwitcher";
 // Importa tu imagen de fondo aquí.
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
 // y está en la carpeta 'assets', la ruta sería:
@@ -130,8 +130,9 @@ const App = () => {
           <div className="flex justify-between h-16 items-center">
             {/* Logo o Título */}
             <div className="flex items-center flex-shrink-0">
-              {/* Botones de Idioma */}
+              {/* Botones de Idioma / Selector */}
               <div className="flex items-center gap-2 mr-4">
+                {/* Botón ES: Siempre visible, cambia el idioma a español */}
                 <button
                   onClick={() => changeLanguage("es")}
                   className={`text-sm font-bold transition-colors duration-200 ${
@@ -142,25 +143,34 @@ const App = () => {
                 >
                   ES
                 </button>
+
                 <span className="text-blue-300">|</span>
-                <button
-                  onClick={() => changeLanguage("en")}
-                  className={`text-sm font-bold transition-colors duration-200 ${
-                    i18n.language === "en"
-                      ? "text-white"
-                      : "text-blue-300 hover:text-white"
-                  }`}
-                >
-                  EN
-                </button>
+
+                {/* LÓGICA CONDICIONAL AQUÍ */}
+                {i18n.language !== "en" ? (
+                  /* Muestra el BOTÓN EN cuando el idioma NO es inglés (ej. ES) */
+                  <button
+                    onClick={() => changeLanguage("en")}
+                    className={`text-sm font-bold transition-colors duration-200 ${
+                      i18n.language === "en"
+                        ? "text-white"
+                        : "text-blue-300 hover:text-white"
+                    }`}
+                  >
+                    EN
+                  </button>
+                ) : (
+                  /* Muestra el SELECTOR COMPLETO cuando el idioma ES inglés */
+                  <LanguageSwitcher />
+                )}
               </div>
+
+              {/* Título de la página */}
               <span className="text-2xl font-light text-white">
-                <div>
-                  <span className="text-bisque-200 font-bold">
-                    SPA HOLÍSTICO{" "}
-                  </span>
-                  <span className="text-cyan-400 font-bold">ONLINE</span>
-                </div>
+                <span className="text-bisque-200 font-bold">
+                  <h2>{t("spaholistico")}</h2>
+                </span>
+                <span className="text-cyan-400 font-bold">ONLINE</span>
               </span>
             </div>
 
@@ -176,10 +186,7 @@ const App = () => {
                 {/* Flecha del tooltip */}
                 <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
 
-                <p className="font-semibold text-sm">
-                  ¡Sanación al alcance de tu mano! ➡️ Navega a{" "}
-                  <span className="underline">Días de ofrenda</span> desde aquí.{" "}
-                </p>
+                <p className="font-semibold text-sm">{t("tooltip_message")}</p>
               </div>
             )}
             {/* FIN: TOOLTIP */}
@@ -551,34 +558,38 @@ const App = () => {
         className="py-0 bg-gradient-to-r from-pastel-green to-pastel-mint/10"
       >
         <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Título principal corregido: se elimina el <h2> anidado y se usa t() directamente */}
           <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-25 md:py-12 font-bold">
-            <h2>{t("offering_days_title")}</h2>
+            {t("offering_days_title")}
           </h2>
 
           {/* Contenedor deslizable con snap */}
           <div className="flex justify-center flex-wrap gap-6 pb-6">
             {[
               {
-                title: <h2>{t("weekend_workshops_title")}</h2>,
+                // Se pasa solo la cadena de texto traducida (string)
+                title: t("weekend_workshops_title"),
                 image: FindeTalleres,
-                excerpt: <h2>{t("weekend_workshops_description")}</h2>,
-                buttonText: <h2>{t("weekend_workshops_cta")}</h2>,
+                excerpt: t("weekend_workshops_description"),
+                buttonText: t("weekend_workshops_cta"),
                 link: "/findetalleres",
                 isDisabled: false,
               },
               {
-                title: <h2>{t("main_spa_title")}</h2>,
+                // Se pasa solo la cadena de texto traducida (string)
+                title: t("main_spa_title"),
                 image: SpaPrincipal,
-                excerpt: <h2>{t("main_spa_description")}</h2>,
-                buttonText: <h2>{t("main_spa_cta")}</h2>,
+                excerpt: t("main_spa_description"),
+                buttonText: t("main_spa_cta"),
                 link: "/spaprincipal",
                 isDisabled: false,
               },
               {
-                title: <h2>{t("little_spa_title")}</h2>,
+                // Se pasa solo la cadena de texto traducida (string)
+                title: t("little_spa_title"),
                 image: SpaLittle,
-                excerpt: <h2>{t("little_spa_description")}</h2>,
-                buttonText: <h2>{t("little_spa_cta")}</h2>,
+                excerpt: t("little_spa_description"),
+                buttonText: t("little_spa_cta"),
                 link: "/spalittle",
                 isDisabled: true,
               },
@@ -594,15 +605,16 @@ const App = () => {
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-light mb-2 text-center">
-                    {post.title}
+                    {post.title} {/* post.title ya es el texto */}
                   </h3>
-                  <p className="text-gray-600">{post.excerpt}</p>
-                  {post.isDisabled ? ( // <-- Lógica condicional para el botón
+                  <p className="text-gray-600">{post.excerpt}</p>{" "}
+                  {/* post.excerpt ya es el texto */}
+                  {post.isDisabled ? (
                     <span
                       className="text-gray-400 mt-4 inline-block font-medium cursor-not-allowed"
-                      style={{ pointerEvents: "none" }} // Evita eventos de click
+                      style={{ pointerEvents: "none" }}
                     >
-                      {post.buttonText} →
+                      {post.buttonText} → {/* post.buttonText ya es el texto */}
                     </span>
                   ) : (
                     <Link

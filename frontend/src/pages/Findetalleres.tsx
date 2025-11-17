@@ -162,28 +162,28 @@ export default function Findetalleres() {
   };
 
   const terapias: TerapiaItem[] = [
-    {
-      img: mcab1,
-      title: "Reprograma tu mente (Péndulo)",
-      terapeuta: "Marcela Cabezas",
-      terapeuta_id: 25,
-      description:
-        "Terapia que utiliza el Péndulo para identificar bloqueos subconscientes y reprogramar patrones mentales limitantes, promoviendo la sanación emocional y el bienestar integral.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: mcab2,
-      title: "Enseña a tu cuerpo a descansar (Pendulo)",
-      terapeuta: "Marcela Cabezas",
-      terapeuta_id: 25,
-      description:
-        "Terapia que emplea el Pendulo para armonizar la energía del cuerpo y la mente, ayudándo a liberar tensiones y enseñar al cuerpo a alcanzar un estado profundo de descanso y equilibrio.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
+    // {
+    //   img: mcab1,
+    //   title: "Reprograma tu mente (Péndulo)",
+    //   terapeuta: "Marcela Cabezas",
+    //   terapeuta_id: 25,
+    //   description:
+    //     "Terapia que utiliza el Péndulo para identificar bloqueos subconscientes y reprogramar patrones mentales limitantes, promoviendo la sanación emocional y el bienestar integral.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: mcab2,
+    //   title: "Enseña a tu cuerpo a descansar (Pendulo)",
+    //   terapeuta: "Marcela Cabezas",
+    //   terapeuta_id: 25,
+    //   description:
+    //     "Terapia que emplea el Pendulo para armonizar la energía del cuerpo y la mente, ayudándo a liberar tensiones y enseñar al cuerpo a alcanzar un estado profundo de descanso y equilibrio.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
     {
       img: anaa,
       title: "Fortaleciendo mi diálogo interno",
@@ -196,28 +196,28 @@ export default function Findetalleres() {
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
 
-    {
-      img: crisolde,
-      title: "Manifiesta tu Realidad",
-      terapeuta: "Crisolde Valenzuela",
-      terapeuta_id: 30,
-      description:
-        "Terapia que te ayudará a conectarte con tú luz interior para soltar cargas energéticas negativas qué bloquean tú avance personal.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: crisolde2,
-      title: "Rompe tus patrones desde el alma",
-      terapeuta: "Crisolde Valenzuela",
-      terapeuta_id: 30,
-      description:
-        "Terapia qué te ayudará a reconocer,liberar y transformar tus patrones limitantes para sanar desde la raíz emocional.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
+    // {
+    //   img: crisolde,
+    //   title: "Manifiesta tu Realidad",
+    //   terapeuta: "Crisolde Valenzuela",
+    //   terapeuta_id: 30,
+    //   description:
+    //     "Terapia que te ayudará a conectarte con tú luz interior para soltar cargas energéticas negativas qué bloquean tú avance personal.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: crisolde2,
+    //   title: "Rompe tus patrones desde el alma",
+    //   terapeuta: "Crisolde Valenzuela",
+    //   terapeuta_id: 30,
+    //   description:
+    //     "Terapia qué te ayudará a reconocer,liberar y transformar tus patrones limitantes para sanar desde la raíz emocional.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
     {
       img: puerta,
       title: "Puerta al SER",
@@ -240,50 +240,50 @@ export default function Findetalleres() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
-    {
-      img: manual,
-      title: "Taller de Arte Terapia con elementos gráficos",
-      terapeuta: "Catalina Sánchez",
-      terapeuta_id: 33,
-      description:
-        "Este taller busca trabajar y enriquecer el lenguaje emocional (reconocimiento, abordaje y expresión asertiva) para mejorar el autoconocimiento personal. Utilizarás materiales gráficos de fácil acceso (lápices, plumones, papel, etc.) en un espacio tranquilo y con buena luz para participar. La actividad consiste en plasmar y expresar las emociones en papel mediante trazos, dibujos, figuras y escritura con el fin de procesarlas.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: danza,
-      title: "Danza Contemporánea",
-      terapeuta: "Catalina Sánchez",
-      terapeuta_id: 33,
-      description:
-        "Este taller ofrece un espacio de exploración corporal usando la técnica de la danza contemporánea, guiando a los participantes a través de movimientos básicos. El objetivo es crear un pequeño fraseo de danza como producto final, utilizando música motivadora y premisas que fomenten la exploración. Solo necesitas un espacio libre para moverte, agua y un computador para un encuentro personal y colectivo con el movimiento.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: altar,
-      title: "Como Crear Tu Altar",
-      terapeuta: "Ana Luisa Solervicens",
-      terapeuta_id: 13,
-      description:
-        "Un encuentro para conectar con la energía sagrada de tu espacio personal. En este taller aprenderás a diseñar y consagrar tu propio altar, comprendiendo el significado de cada elemento y cómo alinearlo con tus intenciones durante una hora, exploraremos los tipos de altares, la elección consciente de objetos, colores y aromas, y realizaremos una activación energética para consagrarlo",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
-    {
-      img: abundanc,
-      title: "Despierta tu Energía de Prosperidad",
-      terapeuta: "Ana Luisa Solervicens",
-      terapeuta_id: 13,
-      description:
-        "Este taller vivencial será espacio para aprender a atraer y activar la energía de la prosperidad a través de rituales conscientes. Descubrirás cómo preparar tu altar, elegir elementos simbólicos, y realizar rituales guiados para abrir tus caminos de abundancia. Una experiencia práctica y espiritual para conectar con la gratitud, la confianza y el merecimiento.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
+    // {
+    //   img: manual,
+    //   title: "Taller de Arte Terapia con elementos gráficos",
+    //   terapeuta: "Catalina Sánchez",
+    //   terapeuta_id: 33,
+    //   description:
+    //     "Este taller busca trabajar y enriquecer el lenguaje emocional (reconocimiento, abordaje y expresión asertiva) para mejorar el autoconocimiento personal. Utilizarás materiales gráficos de fácil acceso (lápices, plumones, papel, etc.) en un espacio tranquilo y con buena luz para participar. La actividad consiste en plasmar y expresar las emociones en papel mediante trazos, dibujos, figuras y escritura con el fin de procesarlas.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: danza,
+    //   title: "Danza Contemporánea",
+    //   terapeuta: "Catalina Sánchez",
+    //   terapeuta_id: 33,
+    //   description:
+    //     "Este taller ofrece un espacio de exploración corporal usando la técnica de la danza contemporánea, guiando a los participantes a través de movimientos básicos. El objetivo es crear un pequeño fraseo de danza como producto final, utilizando música motivadora y premisas que fomenten la exploración. Solo necesitas un espacio libre para moverte, agua y un computador para un encuentro personal y colectivo con el movimiento.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: altar,
+    //   title: "Como Crear Tu Altar",
+    //   terapeuta: "Ana Luisa Solervicens",
+    //   terapeuta_id: 13,
+    //   description:
+    //     "Un encuentro para conectar con la energía sagrada de tu espacio personal. En este taller aprenderás a diseñar y consagrar tu propio altar, comprendiendo el significado de cada elemento y cómo alinearlo con tus intenciones durante una hora, exploraremos los tipos de altares, la elección consciente de objetos, colores y aromas, y realizaremos una activación energética para consagrarlo",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
+    // {
+    //   img: abundanc,
+    //   title: "Despierta tu Energía de Prosperidad",
+    //   terapeuta: "Ana Luisa Solervicens",
+    //   terapeuta_id: 13,
+    //   description:
+    //     "Este taller vivencial será espacio para aprender a atraer y activar la energía de la prosperidad a través de rituales conscientes. Descubrirás cómo preparar tu altar, elegir elementos simbólicos, y realizar rituales guiados para abrir tus caminos de abundancia. Una experiencia práctica y espiritual para conectar con la gratitud, la confianza y el merecimiento.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
     // {
     //   img: creadordigital,
     //   title: "Regresión",

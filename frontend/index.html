@@ -44,6 +44,23 @@
 
       gtag("config", "G-8SKYBFZ9NG");
     </script>
+    <script type="text/javascript">
+      // Debe ser una propiedad de window para que sea accesible globalmente.
+      window.googleTranslateElementInit = function () {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "es",
+            includedLanguages: "en,fr,de,pt,it,zh-CN",
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE,
+          },
+          "google_translate_element"
+        );
+      };
+    </script>
+    <script
+      type="text/javascript"
+      src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script>
   </head>
   <body>
     <div id="root"></div>
