@@ -8,7 +8,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 // Importaciones de imágenes
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta31 from "../assets/Terapeuta31.jpeg";
-import Terapeuta5 from "../assets/Terapeuta5.jpg";
+import informe from "../assets/INFORME PSICODIA.jpg";
 import renata from "../assets/renata.jpeg";
 
 import creadorvirtual from "../assets/creadorvirtual.jpg";
@@ -66,7 +66,7 @@ export default function TratamientoHolistico() {
       ],
     },
     {
-      img: creadorvirtual, // Usando una imagen existente
+      img: informe, // Usando una imagen existente
       title: "Informes Psicodiagnósticos (4 Sesiones + Informe)",
       terapeuta: "Renata Santoro",
       terapeutaId: 29, // ID genérico para este servicio grupal/especializado
