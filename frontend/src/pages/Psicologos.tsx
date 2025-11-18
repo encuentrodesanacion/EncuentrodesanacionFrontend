@@ -14,13 +14,19 @@ import renata from "../assets/renata.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
+interface OpcionSesion {
+  sesiones: number;
+  precio: number;
+  title?: string; // Permitir título opcional para el botón (usado en informes)
+  subOptions?: { especialidad: string; precioFinal: number }[]; // Permitir subopciones anidadas
+}
 interface TerapiaItem {
   img: string;
   title: string;
   terapeuta: string;
   terapeutaId: number;
   description: string;
-  opciones: { sesiones: number; precio: number }[];
+  opciones: OpcionSesion[];
 }
 
 export default function TratamientoHolistico() {
@@ -37,7 +43,10 @@ export default function TratamientoHolistico() {
     terapeutaNombre: string;
     terapeutaId: number;
   } | null>(null);
-
+  // Dentro de TratamientoHolistico()
+  const [visibleSubOptions, setVisibleSubOptions] = useState<number | null>(
+    null
+  );
   const terapias: TerapiaItem[] = [
     {
       img: renata,
@@ -48,14 +57,34 @@ export default function TratamientoHolistico() {
       description:
         "Con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
       opciones: [
-        // Paquete Normal: 4 sesiones @ 120K
-        { sesiones: 1, precio: 40000 },
-        { sesiones: 4, precio: 120000 }, // Paquete CRISIS: 4 sesiones @ 170K (120K + 50K)
-        { sesiones: 4, precio: 170000 }, // Paquete Normal: 10 sesiones @ 270K
-        { sesiones: 10, precio: 270000 }, // assPaquete CRISIS: 10 sesiones @ 370K (270K + 100K)
-        { sesiones: 10, precio: 370000 },
+        { sesiones: 1, precio: 40000 }, // Sesión Individual Normal: 1 @ 40.000
+        { sesiones: 4, precio: 140000 }, // Paquete Normal: 4 @ 140.000
+        { sesiones: 8, precio: 220000 }, // Paquete Normal: 8 @ 220.000 (Añadido) // --- PRECIOS DE INTERVENCIÓN EN CRISIS (Mantenidos) ---
+        { sesiones: 1, precio: 100000 },
+        // Intervención en crisis: 1 @ 100.000
+        // Paquete CRISIS: 10 @ 370.000
       ],
     },
+    {
+      img: creadorvirtual, // Usando una imagen existente
+      title: "Informes Psicodiagnósticos (4 Sesiones + Informe)",
+      terapeuta: "Renata Santoro",
+      terapeutaId: 29, // ID genérico para este servicio grupal/especializado
+      description:
+        "Evaluación exhaustiva que incluye 4 sesiones de psicoterapia para el proceso de diagnóstico y la entrega de un informe completo y detallado, orientado a la comprensión profunda del caso.",
+      opciones: [
+        {
+          sesiones: 4,
+          precio: 180000,
+          subOptions: [
+            { especialidad: "Niños y Adolescentes", precioFinal: 180000 },
+            { especialidad: "Adultos", precioFinal: 180000 },
+            { especialidad: "Habilidades Parentales", precioFinal: 180000 },
+          ],
+        },
+      ],
+    },
+
     // {
     //   img: renata,
     //   title: "Regresión",
@@ -410,45 +439,116 @@ export default function TratamientoHolistico() {
                 >
                                    {" "}
                   {t.opciones.map(
-                    (op: { sesiones: number; precio: number }, j: number) => {
+                    (
+                      op: {
+                        sesiones: number;
+                        precio: number;
+                        subOptions?: {
+                          especialidad: string;
+                          precioFinal: number;
+                        }[];
+                      },
+                      j: number
+                    ) => {
                       // --- Lógica de Detección de Intervención de Emergencia ---
                       let isCrisisPack = false;
+                      let isPsychodiagnostic =
+                        op.subOptions && op.subOptions.length > 0; // Identificar informe
+
                       if (op.sesiones === 4 && op.precio === 170000) {
                         isCrisisPack = true;
                       } else if (op.sesiones === 10 && op.precio === 370000) {
                         isCrisisPack = true;
-                      }
-                      // --------------------------------------------------------
+                      } else if (op.sesiones === 1 && op.precio === 100000) {
+                        isCrisisPack = true;
+                      } // --------------------------------------------------------
 
-                      const buttonText = isCrisisPack
-                        ? `${op.sesiones} sesiones + Pack Intervención en Crisis`
-                        : `${op.sesiones} sesiones individual clínica`;
+                      let buttonText;
+                      let buttonTitle = `${op.precio.toLocaleString()} CLP`;
+                      const optionKey = i * 1000 + j; // Clave única para el estado
+
+                      if (isPsychodiagnostic) {
+                        buttonText = "Informes Psicodiagnósticos";
+                        buttonTitle = `${op.precio.toLocaleString()} (Ver opciones)`;
+                      } else if (op.sesiones === 1 && op.precio === 100000) {
+                        buttonText = "Intervención en crisis";
+                      } else if (isCrisisPack) {
+                        buttonText = `${op.sesiones} sesiones + Pack Intervención en Crisis`;
+                      } else if (op.sesiones === 1 && op.precio === 40000) {
+                        buttonText = "Sesión Individual Clínica";
+                      } else {
+                        buttonText = `${op.sesiones} sesiones individual clínica`;
+                      }
 
                       const finalTitle = t.title;
 
-                      const buttonClass = isCrisisPack
-                        ? "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-800 text-white hover:bg-pink-900 font-bold shadow-md"
-                        : "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-600 text-white hover:bg-pink-700 shadow-sm";
+                      const buttonClass =
+                        isCrisisPack || isPsychodiagnostic
+                          ? "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-800 text-white hover:bg-pink-900 font-bold shadow-md"
+                          : "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-600 text-white hover:bg-pink-700 shadow-sm";
 
                       return (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() =>
-                            reservarSesion(
-                              finalTitle,
-                              op.sesiones,
-                              op.precio,
-                              t.terapeuta,
-                              t.terapeutaId
-                            )
-                          }
-                          className={buttonClass}
-                        >
-                                                      {buttonText} ($
-                          {op.precio.toLocaleString()} CLP)                    
-                                 {" "}
-                        </button>
+                        <React.Fragment key={j}>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (isPsychodiagnostic) {
+                                // Muestra/Oculta sub-opciones
+                                setVisibleSubOptions(
+                                  visibleSubOptions === optionKey
+                                    ? null
+                                    : optionKey
+                                );
+                              } else {
+                                // Procede a la reserva normal
+                                reservarSesion(
+                                  finalTitle,
+                                  op.sesiones,
+                                  op.precio,
+                                  t.terapeuta,
+                                  t.terapeutaId
+                                );
+                              }
+                            }}
+                            className={buttonClass}
+                          >
+                                                                {buttonText} ($
+                                                              {buttonTitle})    
+                                                       {" "}
+                          </button>
+                          {/* Lógica para desplegar sub-opciones del Informe */}
+                          {isPsychodiagnostic &&
+                            visibleSubOptions === optionKey &&
+                            op.subOptions && (
+                              <div className="flex flex-col space-y-1 ml-2 mt-1 mb-2 border-l-2 border-pink-500 pl-2">
+                                <p className="text-xs text-gray-500 font-semibold">
+                                  Selecciona enfoque del informe:
+                                </p>
+                                {op.subOptions.map((subOp, subJ) => (
+                                  <button
+                                    key={subJ}
+                                    type="button"
+                                    onClick={() => {
+                                      // Usamos la especialidad de la subOp, pero el precio y sesiones del padre
+                                      reservarSesion(
+                                        `${finalTitle} - ${subOp.especialidad}`, // Título detallado
+                                        op.sesiones,
+                                        subOp.precioFinal,
+                                        t.terapeuta,
+                                        t.terapeutaId
+                                      );
+                                      setVisibleSubOptions(null); // Cerrar después de seleccionar
+                                    }}
+                                    className="w-full px-2 py-1 text-xs border rounded bg-pink-300 text-pink-900 hover:bg-pink-400"
+                                  >
+                                    {subOp.especialidad} (${" "}
+                                    {subOp.precioFinal.toLocaleString()} CLP)
+                                  </button>
+                                ))}
+                              </div>
+                            )}
+                                                   {" "}
+                        </React.Fragment>
                       );
                     }
                   )}

@@ -836,22 +836,46 @@ const confirmarTransaccion = async (req, res) => {
             }
           }
           // <--- INICIO: LÓGICA AGREGADA PARA DISTINGUIR CRISIS DE NORMAL ---
-          let tipoServicio = "Servicio Normal"; // Definición de precios de crisis (Basado en la estructura de TratamientoHolistico.tsx)
+          let tipoServicio = "Servicio Normal";
+
+          // --- Nuevas Constantes de Precios de Crisis y Normales para diferenciación ---
+          const PRECIO_NORMAL_1_SESION = 40000;
+          const PRECIO_NORMAL_4_SESIONES = 140000;
+          const PRECIO_NORMAL_8_SESIONES = 220000;
+
+          const PRECIO_CRISIS_1_SESION = 100000; // <--- Intervención en Crisis (1 sesión)
+          const PRECIO_CRISIS_4_SESIONES = 170000; // Paquete de Crisis existente
+          const PRECIO_CRISIS_10_SESIONES = 370000; // Paquete de Crisis existente
+          // --------------------------------------------------------------------------
 
           // Lógica para GiftCard
           if (servicio === "GiftCard") {
             tipoServicio = "Gift Card / Paquete de Sesiones";
           } else {
-            // Lógica existente para Mente y Ser (Intervención en Crisis)
-            const PRECIO_CRISIS_4_SESIONES = 170000;
-            const PRECIO_CRISIS_10_SESIONES = 370000;
-            if (servicio === "Mente y Ser") {
+            // La detección de CRISIS solo aplica si el servicio es Mente y Ser (o Especialidad)
+            if (servicio === "Mente y Ser" || especialidad === "Mente y Ser") {
               if (
+                // Detección de Intervención en Crisis Específica (1 Sesión a 100.000)
+                sesiones === 1 &&
+                precio === PRECIO_CRISIS_1_SESION
+              ) {
+                tipoServicio = "¡INTERVENCIÓN EN CRISIS!";
+              } else if (
+                // Detección de Paquetes Multi-Sesión de Crisis
                 (sesiones === 4 && precio === PRECIO_CRISIS_4_SESIONES) ||
                 (sesiones === 10 && precio === PRECIO_CRISIS_10_SESIONES)
               ) {
                 tipoServicio = "¡PAQUETE ASISTENCIA EN CRISIS!";
+              } else {
+                // Si es Mente y Ser, pero con los precios NORMALES (40K, 140K, 220K), se asume Normal
+                console.log(
+                  `[INFO CRISIS] Mente y Ser comprado a precio normal. Sesiones: ${sesiones}, Precio: ${precio}`
+                );
+                tipoServicio = "Servicio Normal";
               }
+            } else {
+              // Cualquier otro servicio (ej. Spa Principal) es Normal
+              tipoServicio = "Servicio Normal";
             }
           }
           // Notificación al terapeuta
@@ -880,9 +904,11 @@ const confirmarTransaccion = async (req, res) => {
               // --- AJUSTE EN ASUNTO (Añadimos la etiqueta de servicio) ---
               const subjectPrefix =
                 tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!"
-                  ? "[Intervención En Crisis] "
+                  ? "[Paquete de Crisis] " // Paquetes de 4 o 10 sesiones
+                  : tipoServicio === "¡INTERVENCIÓN EN CRISIS!"
+                  ? "[URGENTE - Crisis 1 Sesión] " // Prefijo para 1 sesión/Crisis
                   : servicio === "GiftCard"
-                  ? "[Gift Card / Paquete] " // Nuevo prefijo para GiftCard
+                  ? "[Gift Card / Paquete] "
                   : "";
               const subject = `${subjectPrefix}¡Nueva Reserva Confirmada para ${especialidad}!`;
               // ---------------------------------------------------------
@@ -891,7 +917,7 @@ const confirmarTransaccion = async (req, res) => {
               let mensajeAdicional;
 
               // ************************************************************
-              // *** LÓGICA CONDICIONAL PARA EMAIL DE GIFTCARD (SIN REGEX) ***
+              // *** LÓGICA CONDICIONAL PARA EMAIL DE GIFTCARD ***
               // ************************************************************
               if (servicio === "GiftCard") {
                 // LEEMOS DIRECTAMENTE DE LOS NUEVOS CAMPOS DE LA RESERVA (INSTANCIA EXISTENTE)
@@ -906,82 +932,93 @@ const confirmarTransaccion = async (req, res) => {
                   "No se adjuntó mensaje.";
 
                 htmlContent = `
-                  <p>Hola ${terapeutaData.nombre || "Equipo"},</p>
-                  <p>¡Se ha confirmado la compra de una **Gift Card / Paquete de Sesiones**!</p>
-                  <p>Esta compra **NO** representa una hora agendada en tu calendario, sino un paquete de sesiones prepagado que el VALIENTE agendará junto contigo una vez lo contactes</p>
-                  <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
-                  
-                  <h4 style="color: #02807d; margin-bottom: 5px;">Detalles del Paquete</h4>
-                  <ul>
-                      <li><strong>Tipo de Producto:</strong> ${tipoServicio}</li> 
-                      <li><strong>Especialidad:</strong> ${
-                        especialidad || "N/A"
-                      }</li>
-                      <li><strong>Paquete:</strong> ${
-                        sesiones || 1
-                      } sesiones</li>
-                      <li><strong>Precio Pagado:</strong> $${
-                        precio ? precio.toLocaleString("es-CL") : "N/A"
-                      } CLP</li>
-                  </ul>
-                  
-                  <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+            <p>Hola ${terapeutaData.nombre || "Equipo"},</p>
+            <p>¡Se ha confirmado la compra de una **Gift Card / Paquete de Sesiones**!</p>
+            <p>Esta compra **NO** representa una hora agendada en tu calendario, sino un paquete de sesiones prepagado que el VALIENTE agendará junto contigo una vez lo contactes</p>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
+            
+            <h4 style="color: #02807d; margin-bottom: 5px;">Detalles del Paquete</h4>
+            <ul>
+                <li><strong>Tipo de Producto:</strong> ${tipoServicio}</li> 
+                <li><strong>Especialidad:</strong> ${especialidad || "N/A"}</li>
+                <li><strong>Paquete:</strong> ${sesiones || 1} sesiones</li>
+                <li><strong>Precio Pagado:</strong> $${
+                  precio ? precio.toLocaleString("es-CL") : "N/A"
+                } CLP</li>
+            </ul>
+            
+            <hr style="margin: 15px 0; border: 0; border-top: 1px solid #ccc;">
 
-                  <h4 style="color: #02807d; margin-bottom: 5px;">Datos del Regalo</h4>
-                  <ul>
-                      <li><strong>Destinatario (Quien Recibe):</strong> ${destinatario}</li>
-                      <li><strong>Teléfono Destinatario:</strong> ${telefonoDestinatario}</li>
-                  </ul>
-                  
-                  <h4 style="color: #02807d; margin: 15px 0 5px 0;">Remitente (Quien Regala)</h4>
-                  <ul>
-                      <li><strong>Nombre:</strong> ${remitente}</li>
-                      <li><strong>Teléfono:</strong> ${telefonoRemitente}</li>
-                  </ul>
+            <h4 style="color: #02807d; margin-bottom: 5px;">Datos del Regalo</h4>
+            <ul>
+                <li><strong>Destinatario (Quien Recibe):</strong> ${destinatario}</li>
+                <li><strong>Teléfono Destinatario:</strong> ${telefonoDestinatario}</li>
+            </ul>
+            
+            <h4 style="color: #02807d; margin: 15px 0 5px 0;">Remitente (Quien Regala)</h4>
+            <ul>
+                <li><strong>Nombre:</strong> ${remitente}</li>
+                <li><strong>Teléfono:</strong> ${telefonoRemitente}</li>
+            </ul>
 
-                  <h4 style="color: #02807d; margin: 15px 0 5px 0;">Mensaje Personalizado</h4>
-                  <div style="border: 1px solid #ddd; padding: 10px; background: #f9f9f9; border-radius: 4px; margin-bottom: 15px;">
-                      <p style="margin: 0; white-space: pre-wrap;">${mensajePersonalizado}</p>
-                  </div>
-                  
-                  <p>Contacta con el destinatario para coordinar la toma de hora.</p>
-                  <p style="font-size: 0.9em; color: #888;">Fecha de Compra: ${
-                    fecha || "N/A"
-                  }</p>
-                  `;
+            <h4 style="color: #02807d; margin: 15px 0 5px 0;">Mensaje Personalizado</h4>
+            <div style="border: 1px solid #ddd; padding: 10px; background: #f9f9f9; border-radius: 4px; margin-bottom: 15px;">
+                <p style="margin: 0; white-space: pre-wrap;">${mensajePersonalizado}</p>
+            </div>
+            
+            <p>Contacta con el destinatario para coordinar la toma de hora.</p>
+            <p style="font-size: 0.9em; color: #888;">Fecha de Compra: ${
+              fecha || "N/A"
+            }</p>
+            `;
               } else {
-                // Contenido original para reservas de hora normal/crisis
-                const mensajeAdicional =
-                  tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!"
-                    ? `<p style="color:red; font-weight:bold;">¡ATENCIÓN! ESTE ES UN PAQUETE DE INTERVENCIÓN EN CRISIS. REQUIERE ATENCIÓN PRIORITARIA.</p>`
-                    : `<p>Por favor, revisa tu calendario y prepárate para la sesión.</p>`;
+                // Contenido para reservas de hora normal/crisis (no GiftCard)
+
+                // 1. Determinar el mensaje adicional de urgencia
+                if (tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!") {
+                  mensajeAdicional = `<p style="color:red; font-weight:bold;">¡ATENCIÓN! ESTE ES UN PAQUETE DE INTERVENCIÓN EN CRISIS (${sesiones} SESIONES). REQUIERE ATENCIÓN PRIORITARIA.</p>`;
+                } else if (tipoServicio === "¡INTERVENCIÓN EN CRISIS!") {
+                  mensajeAdicional = `<p style="color:red; font-weight:bold;">🚨 ¡ATENCIÓN URGENTE! ESTA ES UNA INTERVENCIÓN EN CRISIS (1 SESIÓN). EL CLIENTE NECESITA COORDINACIÓN INMEDIATA. 🚨</p>`;
+                } else if (tipoServicio === "Servicio Normal") {
+                  // <-- NUEVA LÓGICA AGREGADA
+                  mensajeAdicional = `
+    <p style="font-weight:bold; color: #0056b3;">
+      ✅ RESERVA DE SESIÓN/PAQUETE NORMAL CONFIRMADA.
+    </p>
+    <p>
+      **ACCIÓN REQUERIDA:** Por favor, contacta al cliente al ${telefonoCliente} para **coordinar la fecha y hora real** de la sesión.
+      (La Fecha y Hora listadas abajo son solo de referencia para el registro de compra.)
+    </p>`;
+                } else {
+                  // Mensaje de fallback (Aunque con la lógica actual, esto no debería ocurrir)
+                  mensajeAdicional = `<p>Por favor, revisa tu calendario y prepárate para la sesión.</p>`;
+                }
 
                 htmlContent = `
-                    <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
-                    <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
-                    <ul>
-                        <li><strong>Tipo de Servicio:</strong> ${tipoServicio}</li> 
-                        <li><strong>Servicio:</strong> ${servicio}</li>
-                        <li><strong>Especialidad:</strong> ${
-                          especialidad || "N/A"
-                        }</li>
-                        <li><strong>Cliente:</strong> ${
-                          nombreCliente || "N/A"
-                        }</li>
-                        <li><strong>Teléfono Cliente:</strong> ${
-                          telefonoCliente || "N/A"
-                        }</li>
-                        <li><strong>Fecha:</strong> ${fecha || "N/A"}</li>
-                        <li><strong>Hora:</strong> ${hora || "N/A"}</li>
-                        <li><strong>Sesiones:</strong> ${sesiones || 1}</li>
-                        <li><strong>Precio:</strong> $${
-                          precio ? precio.toLocaleString("es-CL") : "N/A"
-                        } CLP</li>
-                    </ul>
-                    ${mensajeAdicional}
-                    `;
+    <p>Hola ${terapeutaData.nombre || "Terapeuta"},</p>
+    <p>¡Se ha confirmado una nueva reserva para ${servicio}!</p>
+    
+    ${mensajeAdicional}
+            
+            <ul>
+                <li><strong>Tipo de Servicio:</strong> ${tipoServicio}</li> 
+                <li><strong>Servicio:</strong> ${servicio}</li>
+                <li><strong>Especialidad:</strong> ${especialidad || "N/A"}</li>
+                <li><strong>Cliente:</strong> ${nombreCliente || "N/A"}</li>
+                <li><strong>Teléfono Cliente:</strong> ${
+                  telefonoCliente || "N/A"
+                }</li>
+                <li><strong>Fecha:</strong> ${fecha || "N/A"}</li>
+                <li><strong>Hora:</strong> ${hora || "N/A"}</li>
+                <li><strong>Sesiones:</strong> ${sesiones || 1}</li>
+                <li><strong>Precio:</strong> $${
+                  precio ? precio.toLocaleString("es-CL") : "N/A"
+                } CLP</li>
+            </ul>
+            
+            <p>Atentamente,<br>El equipo de Encuentro de Sanación</p>
+            `;
               }
-              // ************************************************************
 
               await sendEmail(terapeutaData.email, subject, htmlContent);
               console.log(
