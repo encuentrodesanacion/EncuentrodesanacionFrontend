@@ -32,20 +32,6 @@ interface ImagenData {
 
 const imagenesData: ImagenData[] = [
   {
-    id: "Ritual-con-velas",
-    src: velas,
-    alt: "RITUAL CON VELAS",
-    descripcion:
-      "El Maestro Fuego, con mención en magia con velas, es una práctica espiritual que utiliza la energía del fuego como puente entre la intención personal y el universo. Cada color, forma o aroma de la vela se asocia a vibraciones específicas que ayudan a enfocar deseos, peticiones o procesos de sanación. Una sesión de magia con velas es un encuentro con lo sagrado, donde la llama se convierte en un mensajero entre el mundo terrenal y las fuerzas universales. Cada vela encendida despierta la energía ancestral del fuego, capaz de abrir caminos, transformar realidades y guiar el alma hacia la claridad.",
-    terapeuta: "Ana Luisa Solervicens",
-    link: "#",
-    terapeutaId: 13,
-    precio: 40000,
-    duracion:
-      "Inicia el  4 DE NOVIEMBRE A LAS 19:30HRS TODOS LOS MARTES DEL MES",
-    isDisabled: false,
-  },
-  {
     id: "Coach-del-SER",
     src: coachdelser,
     alt: "Coach del SER",
@@ -380,14 +366,14 @@ export default function Terapias() {
                     className="w-full h-full object-cover"
                   />
                   <div className="nombre-overlay">
-                    <p>{img.terapeuta}</p>
+                    <p>{img.alt}</p>
                   </div>
                 </div>
 
                 {/* Reverso de la tarjeta */}
                 <div className="flip-back flex flex-col">
                   <div className="text-center font-semibold text-gray-700 p-2 border-b">
-                    {img.alt}
+                    Facilitadora: {img.terapeuta}
                   </div>
                   <div
                     className="overflow-y-auto p-3 flex-grow"

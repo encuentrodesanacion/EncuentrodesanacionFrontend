@@ -15,7 +15,7 @@ const TerapeutasPage = () => {
       >
         {/* Título Principal */}
         <h2 className="text-4xl font-extrabold text-center text-pink-700 mb-2 tracking-tight">
-          Nuestros Terapeutas
+          Nuestros Terapeutas Destacados
         </h2>
 
         {/* Subtítulo decorativo */}

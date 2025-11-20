@@ -41,19 +41,7 @@ export default function TalleresMensuales() {
   const [currentTaller, setCurrentTaller] = useState<TallerItem | null>(null); // Para guardar el taller seleccionado temporalmente
 
   const talleres: TallerItem[] = [
-    {
-      id: "Taller-Yoga",
-      title: "Yoga Integral",
-      description:
-        "Conecta contigo desde casa: clases de yoga online. Encuentra tu momento de calma sin moverte de tu hogar. Fortalece tu cuerpo, calma tu mente y equilibra tu energía. Yoga para todos los niveles, guiado paso a paso, estés donde estés Transforma tu rutina en un espacio de bienestar.",
-      price: 35000,
-      date: "2025-11-04",
-      time: "19:00",
-
-      instructor: "Susanne Saavedra",
-      instructorId: 24,
-      isDisabled: false,
-    },
+    //
     {
       id: "Movimiento-del-Alma",
       title: "Movimiento del Alma",
@@ -420,13 +408,6 @@ export default function TalleresMensuales() {
                 key={taller.id}
                 className="bg-white rounded-lg shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105"
               >
-                {taller.id === "Taller-Yoga" && (
-                  <img
-                    src={YogaArt} // Revisa si esto es Taller1 o Taller2 para cada caso
-                    alt={taller.title}
-                    className="w-full h-80 object-cover"
-                  />
-                )}
                 {taller.id === "Puntos-Presion" && (
                   <img
                     src={presion} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -480,7 +461,6 @@ export default function TalleresMensuales() {
                 {!(
                   (
                     taller.id === "Falun-Dafa" ||
-                    taller.id === "Taller-Yoga" ||
                     taller.id === "Bordado-Terapeutico" ||
                     taller.id === "Movimiento-del-Alma" ||
                     taller.id === "Entrenamiento-Hiit" ||

@@ -515,11 +515,11 @@ export default function TratamientoHolistico() {
                 <div className="flip-front">
                   <img src={t.img} alt={t.terapeuta} />
                   <div className="nombre-overlay">
-                    <p>{t.terapeuta}</p>
+                    <p>{t.title}</p>
                   </div>
                 </div>
                 <div className="flip-back">
-                  <h3 className="mb-2 font-bold">{t.title}</h3>
+                  <h3 className="mb-2 font-bold">Terapeuta: {t.terapeuta}</h3>
                   <p className="mb-2">{t.description}</p>
                   <form
                     className="w-full px-2"
