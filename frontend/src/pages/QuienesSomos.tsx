@@ -124,7 +124,7 @@ const ArquitectoDigital = () => (
 const CoordinadoraMenteSer = () => (
   <section id="coordinadora-mente-ser" className="py-10 px-6 max-w-4xl mx-auto">
     <h2 className="text-3xl font-bold mb-4">
-      Coordinadora del Espacio Mente y Ser
+      Directora del Espacio Mente y Ser
     </h2>
 
     <div className="flex flex-col md:flex-row md:space-x-8 items-start">
@@ -149,8 +149,7 @@ const CoordinadoraMenteSer = () => (
           servicios psicológicos y de bienestar mental ofrecidos. Renata es
           Psicóloga se encarga de gestionar y supervisar al equipo de
           profesionales del área, garantizando que cada consultante reciba un
-          acompañamiento respetuoso, ético y alineado con la visión holística de
-          la plataforma.
+          acompañamiento profesional, respetuoso y ético
         </p>
         <p>
           Con más de 15 años de trayectoria clínica independiente, su
