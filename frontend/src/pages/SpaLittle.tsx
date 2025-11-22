@@ -202,7 +202,7 @@ export default function SpaLittle() {
         "Sanación energética para una liberación inmediata del estrés y la tensión. Un cambio tangible de forma rápida, armonizando tus chakras y restaurando el flujo de energía vital, que es el primer paso para sentirse listos para el trabajo interno. Además las sesiones combinan la toma de conciencia mental (mindfulness) con la identificación de bloqueos energéticos (Reiki), enseñandote a ser activo en su propia sanación.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true, // Agregado para deshabilitar
+      isDisabled: false, // Agregado para deshabilitar
     },
     {
       img: clau,
@@ -213,7 +213,7 @@ export default function SpaLittle() {
         "Es un  meticuloso proceso de los archivos del subconsciente y del alma. A través del uso del péndulo y gráficos de trabajo y con ayuda de tus guías espirituales investigamos el origen del bloqueo o energías discordantes. Que hace la limpieza? *limpia programas o bloqueos, borrando el patrón de energía negativa de los registros del alma de esta vida o de otras vidas. *Te liberas para poder vivir con todo tu potencial y para poder expresar tu mejor “yo espiritual” sanando  daños mental, emocional o físico.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true, // Agregado para deshabilitar
+      isDisabled: false, // Agregado para deshabilitar
     },
     {
       img: luisa,
@@ -223,7 +223,7 @@ export default function SpaLittle() {
       description:
         "es una experiencia de acompañamiento y guía emocional. A través de tiradas dinámicas y participativas, te ayudo a encontrar claridad en situaciones que necesitan luz, fortaleciendo tu autoestima, habilidades y competencias. Tú también formas parte activa del proceso: interpretamos juntas/os, conectando las cartas con tu historia y tu crecimiento personal.",
       precio: 16000,
-      isDisabled: true,
+      isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     // {
