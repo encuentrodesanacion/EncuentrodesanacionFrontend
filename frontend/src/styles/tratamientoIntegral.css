@@ -94,6 +94,7 @@
   font-size: 1rem;
   font-weight: bold;
   z-index: 1;
+  pointer-events: none;
 }
 
 /* --- MEDIA QUERIES para Responsive --- */

@@ -7,6 +7,7 @@ import TherapistProfile from "../components/TherapistProfile";
 import ReservaConFecha from "../components/ReservaConFecha";
 import TerapeutaPlaceholder from "../assets/terapeuta-placeholder.jpg";
 import ServiceCard from "../components/ServiceCard";
+import { Terapeuta } from "../types/index";
 
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -18,8 +19,9 @@ import {
 } from "../types/index";
 
 // Importa los datos de los terapeutas y la interfaz Terapeuta
-import { Terapeuta, terapeutasData } from "../data/terapeutas-data";
+import { terapeutasData } from "../data/terapeutas-data";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import ReservaConFechaAmigable from "../components/ReservaConFechaAmigable";
 
 // --- FUNCIÓN SLUGIFY (MANTENIDA EN ESTA UBICACIÓN) ---
 const slugify = (text: string): string => {
@@ -49,7 +51,6 @@ export default function AgendaSanacion() {
 
   // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (Mantenido) ---
   useEffect(() => {
-    // ... (Tu lógica existente para fetchAndProcessDisponibilidades)
     const fetchAndProcessDisponibilidades = async () => {
       try {
         const response = await fetch(`${API_BASE_URL}/disponibilidades`);
@@ -155,8 +156,6 @@ export default function AgendaSanacion() {
       setTerapeutaSeleccionado(terapeutaEncontrado || null);
 
       if (!terapeutaEncontrado) {
-        // Si el slug no es válido, asegúrate de que el usuario vea la lista
-        // Podrías redirigir a /encuentrofacil aquí si quieres forzar la lista
         if (slugTerapeuta) {
           console.warn(
             `Terapeuta no encontrado para el slug: ${slugTerapeuta}`
@@ -204,7 +203,6 @@ export default function AgendaSanacion() {
   };
 
   const reservar = (terapiaItem: TerapiaItem) => {
-    // ... (Tu lógica existente para reservar)
     const terapeuta = terapeutasData.find(
       (t) => t.nombre === terapiaItem.terapeuta
     );
@@ -226,7 +224,6 @@ export default function AgendaSanacion() {
     nombreCliente: string,
     telefonoCliente: string
   ) => {
-    // ... (Tu lógica existente para confirmarReserva)
     const year = fechaHora.getFullYear();
     const month = String(fechaHora.getMonth() + 1).padStart(2, "0");
     const day = String(fechaHora.getDate()).padStart(2, "0");
@@ -250,7 +247,7 @@ export default function AgendaSanacion() {
     }
 
     const reservaDataToSend = {
-      servicio: "Agenda de Sanación",
+      servicio: "EncuentroFácil",
       especialidad: reservaPendiente.terapia,
       fecha: fechaFormateada,
       hora: horaFormateada,
@@ -307,14 +304,12 @@ export default function AgendaSanacion() {
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800">
-          Agenda de Sanación
-        </h1>
+        <h1 className="text-xl font-semibold text-gray-800">Encuentro Fácil</h1>
         <CartIcon />
       </header>
 
       <button
-        onClick={handleBackNavigation} // <-- USAMOS LA NUEVA FUNCIÓN
+        onClick={handleBackNavigation} // <-- USAMOS LA FUNCIÓN DE NAVEGACIÓN
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         {terapeutaSeleccionado ? "Volver a Terapeutas" : "Volver al Inicio"}
@@ -331,7 +326,9 @@ export default function AgendaSanacion() {
             <TherapistProfile
               key={t.id}
               terapeuta={t}
-              onClick={handleSelectTerapeuta} // <-- USAMOS LA FUNCIÓN QUE NAVEGA
+              onClick={handleSelectTerapeuta}
+              callToActionText={t.callToActionTextCard}
+              // ✨ IMPLEMENTACIÓN DEL TEXTO PERSONALIZABLE
             />
           ))}
         </div>
@@ -356,7 +353,7 @@ export default function AgendaSanacion() {
             >
               X
             </button>
-            <ReservaConFecha
+            <ReservaConFechaAmigable
               terapia={reservaPendiente.terapia}
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}

@@ -582,6 +582,7 @@ const confirmarTransaccion = async (req, res) => {
         "Finde de Talleres",
         "Mente y Ser",
         "GiftCard",
+        "EncuentroFácil",
       ];
       for (const reserva of reservasToProcess) {
         // *** ESTA DESESTRUCTURACIÓN ESTÁ CORRECTA EN `confirmarTransaccion` ***

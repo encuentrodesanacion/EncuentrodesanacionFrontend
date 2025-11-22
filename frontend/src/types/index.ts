@@ -65,4 +65,5 @@ export interface Terapeuta {
   email: string;
   servicios: TerapiaItem[];
   imagenPerfil: string;
+  callToActionTextCard?: string;
 }

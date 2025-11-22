@@ -8,10 +8,10 @@ import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
 import Terapeuta30 from "../assets/Terapeuta30.jpeg";
-import Terapeuta17 from "../assets/Terapeuta17.jpeg";
-import Terapeuta1 from "../assets/Terapeuta1.jpg";
+import rosario from "../assets/rosario.jpg";
+import clau from "../assets/clau.jpeg";
 import Terapeuta29 from "../assets/Terapeuta29.jpeg";
-import Terapeuta13 from "../assets/Terapeuta13.jpeg";
+import luisa from "../assets/luisa.png";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
 import creadorVirtual from "../assets/creadorvirtual.jpg";
@@ -194,49 +194,49 @@ export default function SpaLittle() {
   // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta17,
-      title: "Clarividencia",
-      terapeuta: "Johana Miranda",
-      terapeuta_id: 19,
+      img: rosario,
+      title: "Sanación Energética Remota con Integración Mente - Energía",
+      terapeuta: "Rosario Devés",
+      terapeuta_id: 40,
       description:
-        "Esta clarividencia terapéutica está enfocada en una sanación para amarse, conocerse uno mismo, sanar y crecer emocionalmente, mejorando situaciones que han estado almacenadas en ti por mucho tiempo, conectando con guías y sanadores por medio de la maravillosa vibración del amor, logrando tu armonización y equilibrio emocional.",
+        "Sanación energética para una liberación inmediata del estrés y la tensión. Un cambio tangible de forma rápida, armonizando tus chakras y restaurando el flujo de energía vital, que es el primer paso para sentirse listos para el trabajo interno. Además las sesiones combinan la toma de conciencia mental (mindfulness) con la identificación de bloqueos energéticos (Reiki), enseñandote a ser activo en su propia sanación.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: true, // Agregado para deshabilitar
     },
     {
-      img: Terapeuta1,
-      title: "Registros Akáshicos",
-      terapeuta: "Brenda Rivas",
-      terapeuta_id: 7,
+      img: clau,
+      title: "Terapia de Respuesta Espiritual (TRE)",
+      terapeuta: "Claudia Diaz",
+      terapeuta_id: 41,
       description:
-        "Los Registros Akáshicos son la memoria universal y biblioteca cósmica que guarda la historia de cada alma a lo largo de todas sus reencarnaciones. A través de una lectura, te permiten adquirir profundo autoconocimiento, sanar heridas del pasado, comprender patrones kármicos y tomar decisiones más conscientes en tu presente, impulsando así tu sanación y evolución personal.",
+        "Es un  meticuloso proceso de los archivos del subconsciente y del alma. A través del uso del péndulo y gráficos de trabajo y con ayuda de tus guías espirituales investigamos el origen del bloqueo o energías discordantes. Que hace la limpieza? *limpia programas o bloqueos, borrando el patrón de energía negativa de los registros del alma de esta vida o de otras vidas. *Te liberas para poder vivir con todo tu potencial y para poder expresar tu mejor “yo espiritual” sanando  daños mental, emocional o físico.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: true, // Agregado para deshabilitar
     },
     {
-      img: Terapeuta30,
+      img: luisa,
       title: "Tarot Terapéutico",
-      terapeuta: "Marcela Solis",
-      terapeuta_id: 30,
+      terapeuta: "Luisa Manríquez",
+      terapeuta_id: 42,
       description:
-        "Conecta y proyecta los procesos personales que la persona está viviendo, para así poder sanar emociones, dando la orientacion en como actuar y seguir adelante en nuestro proceso espiritual. Prepara tu energia  y da herramientas para transitar cada proceso sanamente.",
+        "es una experiencia de acompañamiento y guía emocional. A través de tiradas dinámicas y participativas, te ayudo a encontrar claridad en situaciones que necesitan luz, fortaleciendo tu autoestima, habilidades y competencias. Tú también formas parte activa del proceso: interpretamos juntas/os, conectando las cartas con tu historia y tu crecimiento personal.",
       precio: 16000,
       isDisabled: true,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
-    {
-      img: Terapeuta29,
-      title: "Liberación Emociones Atrapadas",
-      terapeuta: "Ana Aros",
-      terapeuta_id: 29,
-      description:
-        "En nuestra vida hay situaciones que nos generan sufrimiento y diversas emociones, al no trabajar en aquello es que estás emociones quedan atrapadas en nuestro cuerpo generando malestar a nivel físico o emocional. Esta terapia se trabaja a través de un gráfico para identificar la emoción atrapada y posteriormente con un imán liberar la emocion de raíz",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true, // Agregado para deshabilitar
-    },
+    // {
+    //   img: Terapeuta29,
+    //   title: "Liberación Emociones Atrapadas",
+    //   terapeuta: "Ana Aros",
+    //   terapeuta_id: 29,
+    //   description:
+    //     "En nuestra vida hay situaciones que nos generan sufrimiento y diversas emociones, al no trabajar en aquello es que estás emociones quedan atrapadas en nuestro cuerpo generando malestar a nivel físico o emocional. Esta terapia se trabaja a través de un gráfico para identificar la emoción atrapada y posteriormente con un imán liberar la emocion de raíz",
+    //   precio: 16000,
+    //   opciones: [{ sesiones: 1, precio: 16000 }],
+    //   isDisabled: true, // Agregado para deshabilitar
+    // },
   ];
 
   // Mostrar formulario para seleccionar fecha y hora

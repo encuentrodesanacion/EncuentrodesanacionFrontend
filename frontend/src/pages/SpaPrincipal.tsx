@@ -7,8 +7,8 @@ import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes
-import Terapeuta11 from "../assets/Terapeuta11.jpeg";
-import Ximena from "../assets/ximena.jpg";
+import caro from "../assets/caro.jpg";
+import beatriz from "../assets/beatriz.jpg";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta12 from "../assets/Terapeuta12.jpeg";
@@ -16,7 +16,7 @@ import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import renata from "../assets/renata.jpeg";
-import angel from "../assets/Angel.jpeg";
+import paola from "../assets/paola.jpg";
 import sarita from "../assets/sarita.jpeg";
 import marcela from "../assets/marcela.jpeg";
 import crisol from "../assets/crisol.jpeg";
@@ -165,39 +165,6 @@ export default function SpaPrincipal() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: angel,
-      title: "Tarot Terapéutico",
-      terapeuta: "Angel Martin",
-      terapeuta_id: 27,
-      description:
-        "El tarot como herramienta terapéutica y guía para encontrar el camino más indicado en el momento presente, complementado con la guía y respaldo de una sesión psicoterapéutica, trabajando lo presentado con las cartas en paralelo con el trabajo emocional, vivencial, y la historia de la persona.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: renata,
-      title: "La Medicina de los Animales",
-      terapeuta: "Renata Santoro",
-      terapeuta_id: 29,
-      description:
-        "Las cartas de la Medicina de los Animales recopila el conocimiento de los pueblos originarios, quienes lograban tener una conexion directacon los animales, quienes te guiarán a través de la Rueda de la Medicina a encontrar tu senda personal a través de la medicina de los animales.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
-      img: marcela,
-      title: "Liberación Emociones Atrapadas",
-      terapeuta: "Marcela Cabezas",
-      terapeuta_id: 25,
-      description:
-        "Liberar emociones es el proceso de reconocer, expresar y soltar emociones reprimidas o no resultas. En la terapia se usan piedras energéticas para liberar emociones atrapadas, equilibrar los chakras y restaurar la armonía emocional y espiritual.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-    {
       img: sarita,
       title: "Raíz del SER",
       terapeuta: "Sarita Infante",
@@ -208,72 +175,71 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
+
     {
-      img: patricia,
-      title: "Expansión de tu Ser",
-      terapeuta: "Patricia Mondaca",
-      terapeuta_id: 28,
+      img: paola,
+      title: "Tarot",
+      terapeuta: "Paola Rioseco",
+      terapeuta_id: 37,
       description:
-        "Transforma tu crecimiento, nuestros pensamientos y emociones definen cómo nos relacionamos. Aquí te entrego herramientas para llevar tus heridas y emociones al siguiente nivel de liberación.",
+        "El Tarot aporta claridad, orden interno y guía para tomar decisiones más conscientes, ayudando a comprender lo que uno vive y hacia dónde avanzar.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
       img: pamela,
-      title: "Sanación Álmica",
+      title: "Sanación con Cruz Ankh",
       terapeuta: "Pamela Benavides",
       terapeuta_id: 31,
       description:
-        "Terapia energética que alinea tu cuerpo con tu Alma, limpiando toda interferencia (entidades, parásitos, hilos de conexión, magia ritual). Incluye masaje energético y campos de protección.",
+        "Con esta terapia sentirás una limpieza profunda en tu cuerpo, elevarás tu energía y te ayudará en procesos de sanación. Te liberarás de cargas negativas, de parásitos energéticos y de cargas emocionales. Se armonizarán tus centros energéticos al quitar bloqueos que te impiden progresar, ayudándote a que comiencen a fluir la salud, prosperidad y amor y te sientas lleno de energía positiva.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
 
-    {
-      img: crisol,
-      title: "Biomagnetismo Emocional",
-      terapeuta: "Crisolde Valenzuela",
-      terapeuta_id: 30,
-      description:
-        "Rastreo energético completo guiado con péndulo terapéutico,identificando los puntos del cuerpo donde existen bloqueos o emociones reprimidas,equilibrando el bloqueo a través  de colocación de imanes a distancia.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-
-    {
-      img: Terapeuta14,
-      title: "Abrecaminos con Fuego Sagrado",
-      terapeuta: "Ana Luisa Solervicens",
-      terapeuta_id: 13,
-      description:
-        "Abre camino con Fuego Sagrado es un ritual que utiliza una vela para desbloquear obstáculos y atraer nuevas oportunidades. Durante la sesión, se interpreta la danza de la llama, el color y la forma de la cera, descubriendo las energías que necesitas equilibrar y potenciar. Este ritual te invita a sanar bloqueos, atraer abundancia y clarificar tucamino, transformando la luz del fuego en guía y protecciónpara tu viaje espiritual",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
-
-    {
-      img: Terapeuta1,
-      title: "Canalización Energética",
-      terapeuta: "Brenda Rivas",
-      terapeuta_id: 7,
-      description:
-        "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
-      precio: 16000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-    },
+    // {
+    //   img: Terapeuta1,
+    //   title: "Canalización Energética",
+    //   terapeuta: "Brenda Rivas",
+    //   terapeuta_id: 7,
+    //   description:
+    //     "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
+    //   precio: 16000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 16000 }],
+    // },
 
     {
       img: terapeuta5,
-      title: "Purificación y Limpieza de Energías Negativas",
+      title: "Corte de Lazos Energéticos y Ataduras del Alma",
       terapeuta: "Sandra Da Silva",
       terapeuta_id: 9,
       description:
-        "Es una terapia de limpieza profunda que nos permite remover de tu ADN energético toda la contaminación energética absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus pensamientos y emociones así como magia negra, brujerías, hechicerías, maldiciones, envidias y energías densas enviadas por alguien más.",
+        "Esta maravillosa terapia nos permitirá indagar en capas profundas de tu ser en donde están alojados aquellos lazos, pactos, promesas, acuerdos, juramentos, contratos y creencias limitantes que te hacen repetir patrones y vivencias que están tu evolución de vida, estos mismos patrones que vienen de linaje familiar, vínculos de pareja, vínculos en general. Liberando lo que limita tu inconsciente podrás abrir tus caminos para evolucionar en el presente.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: caro,
+      title: "Recupera tu Poder",
+      terapeuta: "Carolina Jimenez",
+      terapeuta_id: 38,
+      description:
+        "Terapia enfocada en encontrar, desde tu yo interior y desde tu realidad actual, el equilibrio entre  tus pensamientos, emociones y acciones. A través del autoconocimiento, de una adecuada gestión emocional y de la toma de decisiones conscientes, podrás recuperar el control de tu vida y convertirte en tu mejor versión.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: beatriz,
+      title: "Espacio de Escucha Consciente",
+      terapeuta: "Beatriz Lagos",
+      terapeuta_id: 39,
+      description:
+        "Acompañamiento espiritual y emocional en un espacio seguro y confidencial. Guiado por escucha consciente, intuición y lectura energética, te ayudo a ordenar tu interior, comprender procesos intensos y reconectar con tu propósito. Un camino para valientes que buscan paz, claridad y una guía que honre tanto lo humano como lo espiritual.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],

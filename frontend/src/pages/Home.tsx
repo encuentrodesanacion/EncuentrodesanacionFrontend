@@ -471,14 +471,12 @@ const App = () => {
                 price: <h2>{t("encuentrofacil_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
-                                       {" "}
-                    {/* Cambiado de <Link> a <div> para deshabilitar la navegación */}
-                                       {" "}
-                    <div className="mt-2 px-3 py-1 bg-gray-400 text-white text-sm rounded cursor-not-allowed text-center">
-                                           <h2>{t("encuentrofacil_status")}</h2>
-                                   {" "}
-                    </div>
-                                     {" "}
+                    <Link
+                      to="/encuentrofacil"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                    >
+                      <h2>{t("formation_cta")}</h2>
+                    </Link>
                   </div>
                 ),
               },
@@ -591,7 +589,7 @@ const App = () => {
                 excerpt: t("little_spa_description"),
                 buttonText: t("little_spa_cta"),
                 link: "/spalittle",
-                isDisabled: true,
+                isDisabled: false,
               },
             ].map((post, index) => (
               <div

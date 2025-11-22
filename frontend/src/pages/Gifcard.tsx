@@ -10,7 +10,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 // Importaciones de imágenes (se mantienen igual)
 import radionica from "../assets/radionica.png";
 import limpieza from "../assets/Limpiezaa.png";
-import sanarraiz from "../assets/sanarraiz.jpeg";
+import paola from "../assets/lectura.png";
 import recalibracion from "../assets/recalibracion.png";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 
@@ -66,13 +66,13 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
     {
-      img: sanarraiz,
-      title: "Sanación de Raíces",
-      terapeuta: "Sarita Infante",
-      terapeutaId: 26,
+      img: paola,
+      title: "La Lectura de Alma",
+      terapeuta: "Paola Rioseco",
+      terapeutaId: 37,
       description:
-        "Un espacio terapéutico para quienes sienten que repiten patrones o cargan con emociones que no les permiten lograr sus objetivos. (Bloqueos energéticos en finanzas, en relaciones , negocios, etc.) En esta sesión te acompaño a identificar el origen del bloqueo y transformarlo desde el amor y la conciencia",
-      opciones: [{ sesiones: 1, precio: 20000 }],
+        "La lectura de alma revela la misión de vida, los aprendizajes esenciales y los bloqueos emocionales que limitan tu camino, ofreciendo claridad profunda para alinearte con tu propósito. Basada en la fecha de nacimiento.",
+      opciones: [{ sesiones: 1, precio: 16000 }],
     },
     {
       img: recalibracion,
