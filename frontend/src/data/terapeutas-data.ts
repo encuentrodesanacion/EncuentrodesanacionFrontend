@@ -1,6 +1,6 @@
 // Importaciones de imágenes
 import TerapeutaPlaceholder from "../assets/ASTRONAUTA3.png";
-import creadordigital from "../assets/creadorvirtual.jpg";
+import ali from "../assets/ali.jpeg";
 import elevacion from "../assets/elevacionenergia.png";
 // Puedes importar otras imágenes específicas de terapeutas aquí
 
@@ -76,8 +76,8 @@ export const terapeutasData: Terapeuta[] = [
     id: 10,
     nombre: "Alice Basay",
     email: "de.serendipia@gmail.com",
-    imagenPerfil: creadordigital, // Reemplaza con la imagen real
-    callToActionTextCard: "Descubre el esta terapia, tal y esta otra",
+    imagenPerfil: ali, // Reemplaza con la imagen real
+    callToActionTextCard: "¡Ve los servicios, Agenda Facil!",
     servicios: [
       {
         img: elevacion,
