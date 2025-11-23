@@ -195,17 +195,6 @@ export default function SpaLittle() {
   // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
   const terapias: TerapiaItem[] = [
     {
-      img: Terapeuta1,
-      title: "Registros Akáshicos",
-      terapeuta: "Brenda Rivas",
-      terapeuta_id: 7,
-      description:
-        "Los Registros Akáshicos son la memoria universal y biblioteca cósmica que guarda la historia de cada alma a lo largo de todas sus reencarnaciones. A través de una lectura, te permiten adquirir profundo autoconocimiento, sanar heridas del pasado, comprender patrones kármicos y tomar decisiones más conscientes en tu presente, impulsando así tu sanación y evolución personal.",
-      precio: 16000,
-      opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: false, // Agregado para deshabilitar
-    },
-    {
       img: clau,
       title: "Terapia de Respuesta Espiritual (TRE)",
       terapeuta: "Claudia Diaz",

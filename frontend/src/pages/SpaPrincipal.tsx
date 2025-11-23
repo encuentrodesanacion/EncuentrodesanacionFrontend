@@ -11,7 +11,7 @@ import caro from "../assets/caro.jpg";
 import beatriz from "../assets/beatriz.jpg";
 import rosario from "../assets/rosario.jpg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta12 from "../assets/Terapeuta12.jpeg";
+import paolaq from "../assets/paolaq.jpg";
 import loreto from "../assets/loreto.jpg";
 import terapeuta5 from "../assets/Terapeuta5.jpg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
@@ -254,6 +254,28 @@ export default function SpaPrincipal() {
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
       isDisabled: false, // Agregado para deshabilitar
+    },
+    {
+      img: Terapeuta1,
+      title: "Canalización Energética",
+      terapeuta: "Brenda Rivas",
+      terapeuta_id: 7,
+      description:
+        "La canalización energética es un método terapéutico que busca reconectar con nuestro poder espiritual, basándose en los conocimientos y habilidades psíquicas de una persona ,donde se canaliza la información que proviene de otras dimensiones. Es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduría superior ,la información recibida durante la canalización nos permite ayudar al consultante a liberar y sanar traumas ,dolor miedos y bloqueos emocionales físicos energéticos o espirituales.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: paolaq,
+      title: "Registros Akáshicos",
+      terapeuta: "Paola Quintero",
+      terapeuta_id: 11,
+      description:
+        "Abrir tus Registros Akáshicos te brinda la oportunidad de mirarte con profundidad, reconectar con tu alma y comprender el propósito detrás de tu historia. Aporta claridad sobre por qué escogiste a tus padres, tus vínculos y el tipo de experiencias que atraes, revelando los aprendizajes ocultos detrás de tus desafíos. Esta guía te permite ordenar tu energía, traer paz a tu interior y liberar creencias, cargas y patrones que arrastras de otras vidas o de tu historia familiar.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
     },
     // {
     //   img: creadorvirtual,

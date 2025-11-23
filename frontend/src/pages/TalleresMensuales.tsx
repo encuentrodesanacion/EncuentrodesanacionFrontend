@@ -134,7 +134,7 @@ export default function TalleresMensuales() {
       description:
         "Es un taller destinado a mujeres que creen posible tener una vida plena, aquellas que anhelan estar bien, avanzar y sanar aquellas situaciones dolorosas vividas. El Útero es nuestro centro energético, al activarlo, sanamos memorias de dolor propias y generacionales, nos liberamos de cargas ancestrales y comenzamos a fluir más libres, a avanzar con esperanza y alegría nuestra vida.",
       price: 35000,
-      date: "2025-12-06",
+      date: "2026-01-06",
       time: "20:00",
       instructor: "Pamela Benavides",
       instructorId: 31,
