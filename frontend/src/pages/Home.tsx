@@ -471,12 +471,14 @@ const App = () => {
                 price: <h2>{t("encuentrofacil_price")}</h2>,
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
-                    <Link
-                      to="/encuentrofacil"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                    {/* REEMPLAZADO <Link> por <div> para hacerlo no cliqueable */}
+                    <div
+                      // Se mantiene la estructura y el margen superior
+                      className="mt-2 px-3 py-1 bg-gray-500 text-white text-sm rounded cursor-not-allowed opacity-70"
+                      // Se elimina el 'hover:bg-cyan-700' y se usa un color gris (gray-500)
                     >
-                      <h2>{t("formation_cta")}</h2>
-                    </Link>
+                      <h2>Próximamente</h2> {/* Texto Fijo de "Próximamente" */}
+                    </div>
                   </div>
                 ),
               },
