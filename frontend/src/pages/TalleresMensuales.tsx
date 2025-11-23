@@ -4,7 +4,7 @@ import "../styles/tratamientoIntegral.css"; // Revisa si necesitas este CSS, o s
 import { useCart, Reserva } from "../pages/CartContext"; // Asegúrate de la ruta correcta
 import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
 
-import YogaArt from "../assets/Yoga integral.jpeg";
+import utero from "../assets/utero.jpg";
 import perfilnum from "../assets/perfilnum.jpeg";
 import Dalun from "../assets/DALUN.jpeg";
 import bordado from "../assets/bordado.jpeg";
@@ -126,6 +126,18 @@ export default function TalleresMensuales() {
       time: "19:30",
       instructor: "Gabriela Pinto",
       instructorId: 34,
+      isDisabled: false,
+    },
+    {
+      id: "Activación-de-Útero",
+      title: "Activación de Útero",
+      description:
+        "Es un taller destinado a mujeres que creen posible tener una vida plena, aquellas que anhelan estar bien, avanzar y sanar aquellas situaciones dolorosas vividas. El Útero es nuestro centro energético, al activarlo, sanamos memorias de dolor propias y generacionales, nos liberamos de cargas ancestrales y comenzamos a fluir más libres, a avanzar con esperanza y alegría nuestra vida.",
+      price: 35000,
+      date: "2025-12-06",
+      time: "20:00",
+      instructor: "Pamela Benavides",
+      instructorId: 31,
       isDisabled: false,
     },
 
@@ -450,6 +462,13 @@ export default function TalleresMensuales() {
                     className="w-full h-80 object-cover"
                   />
                 )}
+                {taller.id === "Activación-de-Útero" && (
+                  <img
+                    src={utero} // Revisa si esto es Taller1 o Taller2 para cada caso
+                    alt={taller.title}
+                    className="w-full h-80 object-cover"
+                  />
+                )}
                 {taller.id === "Falun-Dafa" && (
                   <img
                     src={Dalun} // Revisa si esto es Taller1 o Taller2 para caa caso
@@ -461,6 +480,7 @@ export default function TalleresMensuales() {
                 {!(
                   (
                     taller.id === "Falun-Dafa" ||
+                    taller.id === "Activación-de-Útero" ||
                     taller.id === "Bordado-Terapeutico" ||
                     taller.id === "Movimiento-del-Alma" ||
                     taller.id === "Entrenamiento-Hiit" ||

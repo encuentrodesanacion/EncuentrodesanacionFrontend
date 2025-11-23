@@ -9,7 +9,7 @@ import CartIcon from "../components/CartIcon";
 // Importaciones de imágenes
 import caro from "../assets/caro.jpg";
 import beatriz from "../assets/beatriz.jpg";
-import Terapeuta14 from "../assets/Terapeuta14.jpeg";
+import rosario from "../assets/rosario.jpg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import Terapeuta12 from "../assets/Terapeuta12.jpeg";
 import loreto from "../assets/loreto.jpg";
@@ -244,6 +244,17 @@ export default function SpaPrincipal() {
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
     },
+    {
+      img: rosario,
+      title: "Sanación Energética Remota con Integración Mente - Energía",
+      terapeuta: "Rosario Devés",
+      terapeuta_id: 40,
+      description:
+        "Sanación energética para una liberación inmediata del estrés y la tensión. Un cambio tangible de forma rápida, armonizando tus chakras y restaurando el flujo de energía vital, que es el primer paso para sentirse listos para el trabajo interno. Además las sesiones combinan la toma de conciencia mental (mindfulness) con la identificación de bloqueos energéticos (Reiki), enseñandote a ser activo en su propia sanación.",
+      precio: 16000,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+      isDisabled: false, // Agregado para deshabilitar
+    },
     // {
     //   img: creadorvirtual,
     //   title: "Regresión",
@@ -382,7 +393,7 @@ export default function SpaPrincipal() {
         Bienvenido al Spa Principal
       </h2>
       <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        (Del 3 al 5 de Noviembre 2025)
+        (Del 1 al 3 de Diciembre 2025)
       </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
       <div className="flip-wrapper-container mt-10">

@@ -8,9 +8,9 @@ import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes - Asegúrate de que los nombres de archivo coincidan EXACTAMENTE
 import Terapeuta30 from "../assets/Terapeuta30.jpeg";
-import rosario from "../assets/rosario.jpg";
+
 import clau from "../assets/clau.jpeg";
-import Terapeuta29 from "../assets/Terapeuta29.jpeg";
+import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import luisa from "../assets/luisa.png";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
 import Terapeuta15 from "../assets/Terapeuta15.jpeg";
@@ -30,6 +30,7 @@ import {
   ReservaPendiente,
 } from "../types/index";
 import parsePhoneNumberFromString from "libphonenumber-js";
+import ReservaConFechaAmigable from "../components/ReservaConFechaAmigable";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 export default function SpaLittle() {
@@ -194,15 +195,15 @@ export default function SpaLittle() {
   // Deberías considerar que los datos de 'terapias' también podrían venir del backend en un futuro.
   const terapias: TerapiaItem[] = [
     {
-      img: rosario,
-      title: "Sanación Energética Remota con Integración Mente - Energía",
-      terapeuta: "Rosario Devés",
-      terapeuta_id: 40,
+      img: Terapeuta1,
+      title: "Registros Akáshicos",
+      terapeuta: "Brenda Rivas",
+      terapeuta_id: 7,
       description:
-        "Sanación energética para una liberación inmediata del estrés y la tensión. Un cambio tangible de forma rápida, armonizando tus chakras y restaurando el flujo de energía vital, que es el primer paso para sentirse listos para el trabajo interno. Además las sesiones combinan la toma de conciencia mental (mindfulness) con la identificación de bloqueos energéticos (Reiki), enseñandote a ser activo en su propia sanación.",
+        "Los Registros Akáshicos son la memoria universal y biblioteca cósmica que guarda la historia de cada alma a lo largo de todas sus reencarnaciones. A través de una lectura, te permiten adquirir profundo autoconocimiento, sanar heridas del pasado, comprender patrones kármicos y tomar decisiones más conscientes en tu presente, impulsando así tu sanación y evolución personal.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: false, // Agregado para deshabilitar
+      isDisabled: true, // Agregado para deshabilitar
     },
     {
       img: clau,
@@ -376,19 +377,20 @@ export default function SpaLittle() {
         <h1 className="text-xl font-semibold text-gray-800">Spa Little</h1>
         <CartIcon />
       </header>
-
       <button
         onClick={() => navigate("/")}
         className="fixed top-20 left-6 z-40 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
       >
         Volver al Inicio
       </button>
-
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Bienvenido al Spa Little
       </h2>
-      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6"></h1>
+      <h1 className="text-3xl font-bold text-center text-pink-700 mb-6">
+        (Del 5 al 7 de Diciembre de 2025)
+      </h1>
       <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center"></p>
+
       <div className="flip-wrapper-container mt-10">
         {terapias.map((t, i) => (
           <div key={i} className="flip-wrapper">
@@ -486,7 +488,7 @@ export default function SpaLittle() {
             >
               X
             </button>
-            <ReservaConFecha
+            <ReservaConFechaAmigable
               terapia={reservaPendiente.terapia}
               precio={reservaPendiente.precio}
               onConfirm={confirmarReserva}
