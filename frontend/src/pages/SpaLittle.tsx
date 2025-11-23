@@ -203,7 +203,7 @@ export default function SpaLittle() {
         "Los Registros Akáshicos son la memoria universal y biblioteca cósmica que guarda la historia de cada alma a lo largo de todas sus reencarnaciones. A través de una lectura, te permiten adquirir profundo autoconocimiento, sanar heridas del pasado, comprender patrones kármicos y tomar decisiones más conscientes en tu presente, impulsando así tu sanación y evolución personal.",
       precio: 16000,
       opciones: [{ sesiones: 1, precio: 16000 }],
-      isDisabled: true, // Agregado para deshabilitar
+      isDisabled: false, // Agregado para deshabilitar
     },
     {
       img: clau,
