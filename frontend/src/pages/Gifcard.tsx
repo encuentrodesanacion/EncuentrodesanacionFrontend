@@ -13,6 +13,7 @@ import limpieza from "../assets/Limpiezaa.png";
 import paola from "../assets/lectura.png";
 import recalibracion from "../assets/recalibracion.png";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+import raices from "../assets/raices.jpeg";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
@@ -56,6 +57,24 @@ export default function TratamientoHolistico() {
         "Está terapia te ayuda a trabajar con la energía de la abundancia y prosperidad en todos los ámbitos de tu vida, te ayuda a limpiar creencias limitantes en relación al merecimiento, potenciar ideas y proyectos, equilibrar tus finanzas y aperturar caminos a los cambios que necesitas para transitar desde la prosperidad que mereces.",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
+    {
+      img: limpieza,
+      title: "Limpieza energética y protección",
+      terapeuta: "Ana Aros",
+      terapeutaId: 23,
+      description:
+        "Esta terapia te ayuda a limpiar toda la energía que está estancada en ti y no te permite avanzar en diferentes aspectos de tu vida, a través de esta terapia lograrás identificar lo que hay en ti y luego poder elevar tu vibración alcanzando un bienestar físico, emocional y mental.",
+      opciones: [{ sesiones: 1, precio: 20000 }],
+    },
+    {
+      img: limpieza,
+      title: "Sanación de Raíces",
+      terapeuta: "Sarita Infante",
+      terapeutaId: 26,
+      description:
+        "Esta terapia te ayuda a limpiar toda la energía que está estancada en ti y no te permite avanzar en diferentes aspectos de tu vida, a través de esta terapia lograrás identificar lo que hay en ti y luego poder elevar tu vibración alcanzando un bienestar físico, emocional y mental.",
+      opciones: [{ sesiones: 1, precio: 20000 }],
+    },
     // {
     //   img: limpiezaene,
     //   title: "Limpieza energética",
@@ -63,7 +82,7 @@ export default function TratamientoHolistico() {
     //   terapeutaId: 43,
     //   description:
     //     "El maravilloso sonido del cuenco tibetano nos llega al alma. Hace vibrar nuestra alma. El sonido libera tensiones, moviliza las fuerzas de autocuración, alinear los chakras y libera energía creativa.",
-    //   opciones: [{ sesiones: 1, precio: 20000 }],g
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
     // },
     // {
     //   img: respespi,
