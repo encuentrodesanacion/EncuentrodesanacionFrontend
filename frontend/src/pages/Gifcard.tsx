@@ -13,7 +13,7 @@ import limpieza from "../assets/Limpiezaa.png";
 import paola from "../assets/lectura.png";
 import recalibracion from "../assets/recalibracion.png";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
-import raices from "../assets/raices.jpeg";
+import raices from "../assets/sanarraiz.jpeg";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
@@ -67,7 +67,7 @@ export default function TratamientoHolistico() {
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
     {
-      img: limpieza,
+      img: raices,
       title: "Sanación de Raíces",
       terapeuta: "Sarita Infante",
       terapeutaId: 26,
