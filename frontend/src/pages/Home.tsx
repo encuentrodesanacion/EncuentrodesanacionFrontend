@@ -210,7 +210,7 @@ const App = () => {
             </div>
 
             {/* 3. LADO DERECHO: Botón de Menú Móvil (Hamburguesa) Y Cart Icon */}
-            <div className="flex items-center gap-14">
+            <div className="flex items-center gap-16">
               {/* <--- Botón de Menú (AHORA PRIMERO) ---> */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
