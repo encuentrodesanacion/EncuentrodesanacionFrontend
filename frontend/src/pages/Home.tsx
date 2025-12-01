@@ -128,7 +128,7 @@ const App = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
           {/* HACEMOS EL CONTENEDOR RELATIVO PARA EL TOOLTIP */}
           <div className="flex justify-between h-16 items-center">
-            {/* Logo o Título */}
+            {/* 1. LADO IZQUIERDO: Idioma y Título */}
             <div className="flex items-center flex-shrink-0">
               {/* Botones de Idioma / Selector */}
               <div className="flex items-center gap-2 mr-4">
@@ -174,24 +174,7 @@ const App = () => {
               </span>
             </div>
 
-            {/* 1. TOOLTIP / POPUP MOMENTÁNEO (ESCRITORIO) */}
-            {showTooltip && (
-              <div
-                // Posiciona el tooltip sobre el área de enlaces importantes
-                className="hidden md:block absolute top-14 left-1/2 transform -translate-x-1/2 
-                           bg-pink-600 text-white p-3 rounded-lg shadow-2xl z-[60] 
-                           transition-opacity duration-1000 animate-bounceOnce"
-                style={{ minWidth: "350px" }}
-              >
-                {/* Flecha del tooltip */}
-                <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
-
-                <p className="font-semibold text-sm">{t("tooltip_message")}</p>
-              </div>
-            )}
-            {/* FIN: TOOLTIP */}
-
-            {/* Menú de escritorio */}
+            {/* 2. CENTRO: Menú de escritorio (Oculto en móvil) */}
             <div className="hidden md:flex items-center justify-start gap-6 p-8 pl-2">
               <a
                 href="#servicios"
@@ -225,24 +208,51 @@ const App = () => {
                 {t("nav_comunidad")}
               </Link>
             </div>
-            {/* Menú móvil + Cart Icon */}
-            <div className="flex items-center gap-1">
+
+            {/* 3. LADO DERECHO: Botón de Menú Móvil (Hamburguesa) Y Cart Icon */}
+            <div className="flex items-center gap-14">
+              {/* <--- Botón de Menú (AHORA PRIMERO) ---> */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="md:hidden text-white/70 hover:text-pastel-green"
+                className="block sm:block md:hidden text-white/70 hover:text-pastel-green"
               >
                 {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
               </button>
+              {/* <--- CartIcon (AHORA SEGUNDO) ---> */}
+              <CartIcon />
             </div>
+
+            {/* 4. TOOLTIP / POPUP MOMENTÁNEO (ESCRITORIO) */}
+            {showTooltip && (
+              <div
+                // Posiciona el tooltip sobre el área de enlaces importantes
+                className="hidden md:block absolute top-14 left-1/2 transform -translate-x-1/2 
+                                 bg-pink-600 text-white p-3 rounded-lg shadow-2xl z-[60] 
+                                 transition-opacity duration-1000 animate-bounceOnce"
+                style={{ minWidth: "350px" }}
+              >
+                {/* Flecha del tooltip */}
+                <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
+
+                <p className="font-semibold text-sm">{t("tooltip_message")}</p>
+              </div>
+            )}
+            {/* FIN: TOOLTIP */}
           </div>
         </div>
 
-        {/* Menú móvil desplegable (COINCIDE AHORA CON EL DE ESCRITORIO) */}
+        {/* Menú móvil desplegable */}
         {isMenuOpen && (
           <div className="md:hidden bg-gradient-to-b from-black/95 to-black/90 border-t border-pastel-green/10">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
               {/* Enlaces de ancla */}
-
+              <a
+                href="#inicio"
+                onClick={() => setIsMenuOpen(false)} // Cerrar al hacer clic (buena práctica)
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
+              >
+                Inicio
+              </a>
               <a
                 href="#servicios"
                 onClick={() => setIsMenuOpen(false)}
@@ -287,6 +297,8 @@ const App = () => {
               >
                 Misión
               </Link>
+
+              {/* Eliminado el ancla a #contacto que no estaba en el menú de escritorio */}
             </div>
           </div>
         )}
