@@ -121,56 +121,56 @@ const ArquitectoDigital = () => (
   </section>
 );
 // --- NUEVO COMPONENTE: Coordinadora Mente y Ser ---
-const CoordinadoraMenteSer = () => (
-  <section id="coordinadora-mente-ser" className="py-10 px-6 max-w-4xl mx-auto">
-    <h2 className="text-3xl font-bold mb-4">
-      Directora del Espacio Mente y Ser
-    </h2>
+// const CoordinadoraMenteSer = () => (
+//   <section id="coordinadora-mente-ser" className="py-10 px-6 max-w-4xl mx-auto">
+//     <h2 className="text-3xl font-bold mb-4">
+//       Directora del Espacio Mente y Ser
+//     </h2>
 
-    <div className="flex flex-col md:flex-row md:space-x-8 items-start">
-      {/* Imagen de Renata Santoro */}
-      <div className="mb-6 md:mb-0 md:w-1/3 flex justify-center md:justify-start">
-        <img
-          src={renata} // TEMPORAL: Usa la imagen de la Directora hasta tener 'renata'
-          alt="Renata Santoro, Coordinadora del Espacio Mente y Ser"
-          className="w-full h-auto object-cover shadow-lg rounded-xl"
-        />
-      </div>
+//     <div className="flex flex-col md:flex-row md:space-x-8 items-start">
+//       {/* Imagen de Renata Santoro */}
+//       <div className="mb-6 md:mb-0 md:w-1/3 flex justify-center md:justify-start">
+//         <img
+//           src={renata} // TEMPORAL: Usa la imagen de la Directora hasta tener 'renata'
+//           alt="Renata Santoro, Coordinadora del Espacio Mente y Ser"
+//           className="w-full h-auto object-cover shadow-lg rounded-xl"
+//         />
+//       </div>
 
-      {/* Descripción de Renata Santoro */}
-      <div className="md:w-2/3 text-center md:text-left">
-        <p className="mb-4">
-          <strong>Renata Santoro</strong> Directora del Espacio Mente y Ser Y
-          Coach de Liderazgo del Directorio de Encuentro de Sanación
-        </p>
+//       {/* Descripción de Renata Santoro */}
+//       <div className="md:w-2/3 text-center md:text-left">
+//         <p className="mb-4">
+//           <strong>Renata Santoro</strong> Directora del Espacio Mente y Ser Y
+//           Coach de Liderazgo del Directorio de Encuentro de Sanación
+//         </p>
 
-        <p className="mb-4">
-          Su rol es fundamental para asegurar la armonía y calidad de los
-          servicios psicológicos y de bienestar mental ofrecidos. Renata es
-          Psicóloga se encarga de gestionar y supervisar al equipo de
-          profesionales del área, garantizando que cada consultante reciba un
-          acompañamiento profesional, respetuoso y ético
-        </p>
-        <p>
-          Con más de 15 años de trayectoria clínica independiente, su
-          especialidad se centra en la neurodivergencia (incluyendo TEPT-C,
-          TDAH, Trastorno Bipolar y Depresión), además de trastornos
-          alimenticios y del sueño, siempre abordados con una perspectiva de
-          género integral.
-        </p>
-        <p>
-          Posee una profunda habilidad en intervención en crisis y combina
-          magistralmente sus conocimientos de psicoanálisis y neurociencias con
-          la medicina ancestral de nuestros pueblos originarios. Su trabajo es
-          una invitación al despertar: "No vine a enseñar… vine a recordar
-          contigo lo que ya habita en tu alma."
-        </p>
+//         <p className="mb-4">
+//           Su rol es fundamental para asegurar la armonía y calidad de los
+//           servicios psicológicos y de bienestar mental ofrecidos. Renata es
+//           Psicóloga se encarga de gestionar y supervisar al equipo de
+//           profesionales del área, garantizando que cada consultante reciba un
+//           acompañamiento profesional, respetuoso y ético
+//         </p>
+//         <p>
+//           Con más de 15 años de trayectoria clínica independiente, su
+//           especialidad se centra en la neurodivergencia (incluyendo TEPT-C,
+//           TDAH, Trastorno Bipolar y Depresión), además de trastornos
+//           alimenticios y del sueño, siempre abordados con una perspectiva de
+//           género integral.
+//         </p>
+//         <p>
+//           Posee una profunda habilidad en intervención en crisis y combina
+//           magistralmente sus conocimientos de psicoanálisis y neurociencias con
+//           la medicina ancestral de nuestros pueblos originarios. Su trabajo es
+//           una invitación al despertar: "No vine a enseñar… vine a recordar
+//           contigo lo que ya habita en tu alma."
+//         </p>
 
-        <ul className="list-disc list-inside space-y-2 ml-4 text-left"></ul>
-      </div>
-    </div>
-  </section>
-);
+//         <ul className="list-disc list-inside space-y-2 ml-4 text-left"></ul>
+//       </div>
+//     </div>
+//   </section>
+// );
 // -----------------------------------------------------------
 
 const Equipo = () => (
@@ -254,7 +254,7 @@ const QuienesSomosPage = () => {
       <QuiénesSomos />
       <Directora />
       <ArquitectoDigital />
-      <CoordinadoraMenteSer />
+      {/* <CoordinadoraMenteSer /> */}
       {/* Añadimos el nuevo componente aquí */}
       <Equipo />
       <PropositoYMision />

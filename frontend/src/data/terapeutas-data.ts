@@ -77,7 +77,8 @@ export const terapeutasData: Terapeuta[] = [
     nombre: "Alice Basay",
     email: "de.serendipia@gmail.com",
     imagenPerfil: alicc, // Reemplaza con la imagen real
-    callToActionTextCard: "¡Ve los servicios, Agenda Facil!",
+    callToActionTextCard:
+      "Te guío a manifestar riqueza sostenible. Como Maestra Pleyadiana de Abundancia, desbloqueo tu Energía Vital a nivel de ADN para que el flujo de prosperidad sea constante y alegre.",
     servicios: [
       {
         img: elevacion,

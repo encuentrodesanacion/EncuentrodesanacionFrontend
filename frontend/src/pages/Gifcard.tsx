@@ -56,15 +56,106 @@ export default function TratamientoHolistico() {
         "Está terapia te ayuda a trabajar con la energía de la abundancia y prosperidad en todos los ámbitos de tu vida, te ayuda a limpiar creencias limitantes en relación al merecimiento, potenciar ideas y proyectos, equilibrar tus finanzas y aperturar caminos a los cambios que necesitas para transitar desde la prosperidad que mereces.",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
-    {
-      img: limpieza,
-      title: "Limpieza energética y protección",
-      terapeuta: "Ana Aros",
-      terapeutaId: 23,
-      description:
-        "Esta terapia te ayuda a limpiar toda la energía que está estancada en ti y no te permite avanzar en diferentes aspectos de tu vida, a través de esta terapia lograrás identificar lo que hay en ti y luego poder elevar tu vibración alcanzando un bienestar físico, emocional y mental.",
-      opciones: [{ sesiones: 1, precio: 20000 }],
-    },
+    // {
+    //   img: limpiezaene,
+    //   title: "Limpieza energética",
+    //   terapeuta: "Annette Wanninger",
+    //   terapeutaId: 43,
+    //   description:
+    //     "El maravilloso sonido del cuenco tibetano nos llega al alma. Hace vibrar nuestra alma. El sonido libera tensiones, moviliza las fuerzas de autocuración, alinear los chakras y libera energía creativa.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: respespi,
+    //   title: "Terapia de Respuesta Espiritual (TRE)",
+    //   terapeuta: "Claudia Diaz",
+    //   terapeutaId: 41,
+    //   description:
+    //     "La terapia de respuesta espiritual:es un meticuloso proceso de los archivos del subconsciente y del alma.Con la ayuda de tus guías espirituales y a través del uso del péndulo y gráficos de trabajo, investigamos bloqueos de programas o energías discordantes que afecten tu vida en el área espiritual, física o emocional de esta vida o vidas pasadas. Te liberas para poder vivir con todo tu potencial y para poder expresar tu mejor “yo espiritual”",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: taroterap,
+    //   title: "Tarot Terapéutico",
+    //   terapeuta: "Luisa Manríquez",
+    //   terapeutaId: 42,
+    //   description:
+    //     "Regala una experiencia de claridad y bienestar. Esta sesión de tarot terapéutico ofrece orientación en momentos donde se necesita luz, fortaleciendo la autoestima, las habilidades y las competencias personales. A través de tiradas dinámicas y participativas, la persona atendida forma parte activa del proceso, conectando las cartas con su historia y su crecimiento. Un espacio seguro para encontrarse, reflexionar y avanzar con confianza.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: limpieza,
+    //   title: "Limpieza energética",
+    //   terapeuta: "Ana Aros",
+    //   terapeutaId: 23,
+    //   description:
+    //     "Cierra el año 2025 de la mejor manera, limpia toda aquella energía que necesitas transmutar para elevar y renovar tu bienestar integral.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+
+    // {
+    //   img: biomagnetismocon,
+    //   title: "Biomagnetismo con bioenergía",
+    //   terapeuta: "Pamela Benavides",
+    //   terapeutaId: 31,
+    //   description:
+    //     "Biomagnetismo, terapia basada en las vibraciones magnéticas que generan los imanes, enviada a distancia, para influir beneficiosamente en los órganos, sumada la Bioenergía, que ayuda a equilibrar, ordenar y reestablecer el flujo energético y vital del organismo.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: purificacion,
+    //   title: "Purificación y Limpieza de Energías Negativas",
+    //   terapeuta: "Sandra Da Silva",
+    //   terapeutaId: 9,
+    //   description:
+    //     "Es una Terapia de Limpieza profunda que nos permite remover de tu ADN energético toda la contaminación absorbida y enviada por otras personas hacia ti, liberando tu energía de cargas que te estancan e impiden tu evolución de vida. Nos permite liberar energías negativas producidas por tus propios pensamientos y emociones, magia negra, brujerías, hechicería, maldiciones, envidia y cualquier energía densa enviada por alguien más.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: ejercicios,
+    //   title: "TRE (Ejercicios para liberar estrés/tensión y trauma del cuerpo)",
+    //   terapeuta: "Gabriela Pinto",
+    //   terapeutaId: 34,
+    //   description:
+    //     "Son ejercicios guiados que ayudan a liberar el estrés acumulado, a través, de la vibración natural producida en nuestro cuerpo, libera la tension física y emocional, y te permite volver a un estado de equilibrio.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: limpruido,
+    //   title: "Limpieza de Ruido Mental y Emocional",
+    //   terapeuta: "Beatriz Lagos",
+    //   terapeutaId: 39,
+    //   description:
+    //     "Mi terapia de limpieza de ruido mental y emocional es para valientes que sienten saturación, ansiedad, confusión o simplemente “demasiado dentro de la cabeza”. A través de escucha consciente, lectura intuitiva y reordenamiento energético, disolvemos bloqueos, limpiamos tu campo y abrimos un espacio de calma profunda. Sales con claridad, descanso interior y la sensación real de volver a tu esencia.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: arteterapia,
+    //   title: "Arteterapia Identidad que renace",
+    //   terapeuta: "Belén Vera",
+    //   terapeutaId: 44,
+    //   description:
+    //     "¿Sientes que tolerado relaciones poco sanas, tienes autocrítica excesiva, dificultad para poner límites, comparación constante, miedo a equivocarte y necesidad de aprobación externa? Al finalizar la sesión, no solo serás capaz de reconocer tu propia valía, sino que además podrás adquirir herramientas valiosas para seguir fortaleciendo tu autoestima y amor propio. Utilizo la Arteterapia como medio terapéutico para poder guiarte a descubrir esos maravillosos recursos internos que te harán brillar en tu máximo potencial.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: constfam,
+    //   title: "Constelaciones Familiares",
+    //   terapeuta: "Paola Quintero",
+    //   terapeutaId: 11,
+    //   description:
+    //     "La constelación familiar es una terapia que nos permite comprender cómo nuestra historia y la de nuestros ancestros influye en nuestra vida. A través de ella, reconocemos nuestro lugar dentro del árbol genealógico, sanamos heridas de la infancia, liberamos patrones emocionales heredados, fortalecemos el autoestima,  integramos la energía de mamá y papá de forma adecuada.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
+    // {
+    //   img: delalma,
+    //   title: "La Lectura de Alma",
+    //   terapeuta: "Paola Rioseco",
+    //   terapeutaId: 37,
+    //   description:
+    //     "Revela la misión de vida, los aprendizajes esenciales y los bloqueos emocionales que limitan tu camino, ofreciendo claridad profunda para alinearte con tu propósito. Basada en la fecha de nacimiento.",
+    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    // },
     {
       img: paola,
       title: "La Lectura de Alma",
@@ -72,7 +163,7 @@ export default function TratamientoHolistico() {
       terapeutaId: 37,
       description:
         "La lectura de alma revela la misión de vida, los aprendizajes esenciales y los bloqueos emocionales que limitan tu camino, ofreciendo claridad profunda para alinearte con tu propósito. Basada en la fecha de nacimiento.",
-      opciones: [{ sesiones: 1, precio: 16000 }],
+      opciones: [{ sesiones: 1, precio: 20000 }],
     },
     {
       img: recalibracion,

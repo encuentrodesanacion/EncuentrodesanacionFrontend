@@ -10,11 +10,14 @@ import brenda from "../assets/Terapeuta1.jpg";
 import pamela from "../assets/pamela.jpeg";
 import sandra from "../assets/Terapeuta5.jpg";
 import silvana from "../assets/silvana.jpeg";
-import renata from "../assets/renata.jpeg";
+import anne from "../assets/Anne.jpg";
 import sanchez from "../assets/sanchez.jpeg";
 import crisol from "../assets/crisol.jpeg";
 import sarita from "../assets/sarita.jpeg";
+import clau from "../assets/clau.jpeg";
+import gaby from "../assets/gaby.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
+import beatriz from "../assets/beatriz.jpg";
 import marcela from "../assets/marcela.jpeg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
@@ -129,6 +132,55 @@ export default function TratamientoHolistico() {
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
         { sesiones: 5, precio: 111111 },
+      ],
+    },
+    {
+      img: clau,
+      title: "Terapia de Respuesta Espiritual (TRE)",
+      terapeuta: "Claudia Diaz",
+      terapeutaId: 41,
+      description:
+        "¿Sientes que algo invisible te bloquea, te cansa o te quita claridad? Al liberar esas cargas desde su origen, recuperarás calma, fuerza interior y dirección. La Terapia de Respuesta Espiritual (TRE) es el vehículo que uso para limpiar tu energía y abrirte un camino más ligero y alineado con tu propósito.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 111111 },
+      ],
+    },
+    {
+      img: anne,
+      title: "Sonoterapia con meditación",
+      terapeuta: "Annette Wanninger",
+      terapeutaId: 43,
+      description:
+        "Esta sonoterapia es una maravillosa terapia de meditación acompañada de sonidos y vibraciones que permiten a los valientes soltar más facilmente. Estos sonidos y vibraciones ayudan a calmar el sistema nerviosa, a tranquilizar la mente a recuperar la serenidad. La sonoterapia alivia la tensión y ayuda a recuperar el equilibrio interior, armonizar los chakras y aumenta el bienestar.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+      ],
+    },
+    {
+      img: beatriz,
+      title: "Coaching Espiritual- Escucha Consciente",
+      terapeuta: "Beatriz Lagos",
+      terapeutaId: 43,
+      description:
+        "Esta terapia es un llamado del alma: un portal donde el valiente regresa a sí mismo, a su verdad más profunda y a la memoria silenciosa de su espíritu. Aquí aprenderás a escuchar tu energía, leer las señales de tu vida y sostener tu camino con mayor presencia y consciencia. Mediante prácticas de introspección, guía intuitiva, activación energética y lectura simbólica, alcanzarás mayor claridad: comprenderás los mensajes de tu corazón, reconocerás lo que te bloquea y sentirás cómo tu frecuencia comienza a elevarse. Este espacio te entrega herramientas para sostener tu misión, vivir con propósito y habitar tu verdadero ser. Este tratamiento es para quienes sienten que “algo dentro” pide despertar. Vale la pena vivirlo: la energía cambia, la visión se abre y una nueva versión de ti comienza a nacer.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
+      ],
+    },
+    {
+      img: gaby,
+      title: "Re-conecta tu ruta corporal",
+      terapeuta: "Gabriela Pinto",
+      terapeutaId: 34,
+      description:
+        "Si vives con dolor cronico, Si vives con estrés cronico, Si nunca antes te sentiste relajad@ en la vida, Si necesitas renovar tu energía, Si te sientes desconectad@ de ti, Si el fitness tradicional no es lo tuyo, te preparo y entreno para que en tu día a día sepas escuchar y sentirte primero para luego tomar decisiones con respecto a tu cuerpo, a tus necesidades. Rehabilita tu cuerpo a través de un conjunto de herramientas terapéuticas integrales y hechas a tu medida, que te ayudaran a regular sistema nervioso, a renovar tu energía y a fortalecer tus músculos. Re-conecta tú ruta corporal, tú cuerpo te lo agradecerá.",
+      opciones: [
+        { sesiones: 3, precio: 88000 },
+        { sesiones: 4, precio: 99000 },
       ],
     },
     {
