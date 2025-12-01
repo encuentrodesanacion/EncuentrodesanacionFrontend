@@ -63,7 +63,7 @@ export default function TratamientoHolistico() {
     //   terapeutaId: 43,
     //   description:
     //     "El maravilloso sonido del cuenco tibetano nos llega al alma. Hace vibrar nuestra alma. El sonido libera tensiones, moviliza las fuerzas de autocuración, alinear los chakras y libera energía creativa.",
-    //   opciones: [{ sesiones: 1, precio: 20000 }],
+    //   opciones: [{ sesiones: 1, precio: 20000 }],g
     // },
     // {
     //   img: respespi,
