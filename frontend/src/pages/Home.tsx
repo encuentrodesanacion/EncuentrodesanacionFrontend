@@ -446,7 +446,7 @@ const App = () => {
               //   description:
               //     "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
 
-              //   button: (
+              //   button: (aaaa
               //     <div className="flex flex-col gap-2 mt-4">
               //       <a
               //         href="https://forms.gle/n9cKSVDw9vjzB8QC8"
