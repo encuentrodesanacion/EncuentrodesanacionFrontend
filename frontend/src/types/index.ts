@@ -59,6 +59,10 @@ export interface TerapiaItem {
   opciones?: OpcionSesion[];
   isDisabled?: boolean;
 }
+interface Recurso {
+  name: string;
+  url: string;
+}
 export interface Terapeuta {
   id: number;
   nombre: string;
@@ -66,4 +70,7 @@ export interface Terapeuta {
   servicios: TerapiaItem[];
   imagenPerfil: string;
   callToActionTextCard?: string;
+  enlaceMeet?: string;
+  recursosPersonalizados?: string;
+  recursos?: Recurso[];
 }

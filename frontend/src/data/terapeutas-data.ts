@@ -5,11 +5,36 @@ import elevacion from "../assets/elevacionenergia.png";
 // Puedes importar otras imágenes específicas de terapeutas aquí
 
 import abundancia1 from "../assets/abundancia1.png";
+import creadordigital from "../assets/Yunivers.jpeg";
 import tameana from "../assets/Tameanani.png";
 import sanando from "../assets/Sanando.jpg";
 import { TerapiaItem, Terapeuta } from "../types/index";
+import alicec from "../assets/Cocrea.jpeg";
 
 export const terapeutasData: Terapeuta[] = [
+  // {
+  //   id: 10,
+  //   nombre: "Este podrias ser tu",
+  //   email: "de.serendipia@gmail.com",
+  //   imagenPerfil: TerapeutaPlaceholder, // Reemplaza con la imagen real
+  //   callToActionTextCard:
+  //     "Muestra al mundo tu esencia. EncuentroFácil no es solo una plataforma de reserva; es una vitrina para tu misión y un espacio diseñado para que tu mensaje, por único que sea, llegue a la audiencia que te está buscando.",
+
+  //   servicios: [
+  //     {
+  //       img: elevacion,
+  //       title: "Elevación de energía vital",
+  //       terapeuta: "Tu servicio",
+  //       terapeuta_id: 10,
+  //       description:
+  //         "¿Estás agotado y frustrado de que tu cansancio te robe las mejores oportunidades, dejándote sin la energía vital que necesitas para crear la vida que deseas? En este ciclo de 3 noches, no solo sentirás alivio, sino que recuperarás la frecuencia de tu luz y la claridad mental para que puedas romper el ciclo de fatiga y vivir en un estado de vitalidad y enfoque. Esto es posible porque, a través de una re-calibración energética profunda, mi método garantiza la limpieza de la densidad y la rápida recarga de tu sistema, devolviéndote a tu centro en tan solo 3 sesiones.",
+
+  //       precio: 65000,
+  //       isDisabled: false,
+  //       opciones: [{ sesiones: 1, precio: 65000 }],
+  //     },
+  //   ],
+  // },
   // {
   //   id: 2,
   //   nombre: "Paulina Villablanca",
@@ -40,38 +65,39 @@ export const terapeutasData: Terapeuta[] = [
   //     },
   //   ],
   // },
-  // {
-  //   id: 12,
-  //   nombre: "Rosa Santimone",
-  //   email: "rosa@email.com",
-  //   imagenPerfil: TerapeutaPlaceholder,
-  //   callToActionTextCard: "ROSA",
-  //   servicios: [
-  //     {
-  //       img: TerapeutaPlaceholder,
-  //       title: "Péndulo Hebreo",
-  //       terapeuta: "Rosa Santimone",
-  //       terapeuta_id: 12,
-  //       description:
-  //         "Es una terapia de sanación que trabaja con la vibración de las letras hebreas...",
+  {
+    id: 12,
+    nombre: "Creador Virtual",
+    email: "rosa@email.com",
+    imagenPerfil: creadordigital,
+    callToActionTextCard:
+      "Este podrías ser tú muestra al mundo tu esencia. EncuentroFácil no es solo una plataforma de reserva; es una vitrina para tu misión y un espacio diseñado para que tu mensaje, por único que sea, llegue a la audiencia que te está buscando.",
+    servicios: [
+      {
+        img: TerapeutaPlaceholder,
+        title: "Servicios Digitales",
+        terapeuta: "a",
+        terapeuta_id: 12,
+        description:
+          "Asesoramiento Técnico Personalizado: Resuelve tus dudas sobre plataformas web y software para que la tecnología no sea una barrera, sino un aliado.",
 
-  //       precio: 20000,
-  //       isDisabled: false,
-  //       opciones: [{ sesiones: 1, precio: 20000 }],
-  //     },
-  //     {
-  //       img: TerapeutaPlaceholder,
-  //       title: "Todos los servicios",
-  //       terapeuta: "Rosa Santimone",
-  //       terapeuta_id: 12,
-  //       description:
-  //         "Aquí están todos los servicios disponibles de Rosa Santimone.",
-  //       precio: 15000,
-  //       isDisabled: false,
-  //       opciones: [{ sesiones: 1, precio: 15000 }],
-  //     },
-  //   ],
-  // },
+        precio: 170000,
+        isDisabled: false,
+        opciones: [{ sesiones: 1, precio: 170000 }],
+      },
+      // {
+      //   img: TerapeutaPlaceholder,
+      //   title: "Todos los servicios",
+      //   terapeuta: "Creador Digital",
+      //   terapeuta_id: 12,
+      //   description:
+      //     "Aquí están todos los servicios disponibles de Creador Digital.",
+      //   precio: 15000,
+      //   isDisabled: false,
+      //   opciones: [{ sesiones: 1, precio: 15000 }],
+      // },
+    ],
+  },
   {
     id: 10,
     nombre: "Alice Basay",
@@ -79,6 +105,21 @@ export const terapeutasData: Terapeuta[] = [
     imagenPerfil: alicc, // Reemplaza con la imagen real
     callToActionTextCard:
       "Te guío a manifestar riqueza sostenible. Como Maestra Pleyadiana de Abundancia, desbloqueo tu Energía Vital a nivel de ADN para que el flujo de prosperidad sea constante y alegre.",
+    enlaceMeet: "https://meet.google.com/xyz-abc-123",
+    recursos: [
+      {
+        name: "Código de Esencia: Desbloquea la Confianza y el Propósito Único.",
+        url: "https://url-a-tu-servidor.com/documentos/guia-meditacion.pdf",
+      },
+      {
+        name: "Ver Video: Preparación para Sesión",
+        url: "https://youtube.com/video-de-preparacion",
+      },
+      {
+        name: "Preguntas Frecuentes",
+        url: "https://encuentrodesanacion.com/faq",
+      },
+    ],
     servicios: [
       {
         img: elevacion,

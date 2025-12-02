@@ -45,9 +45,34 @@ export default function AgendaSanacion() {
     useState<Terapeuta | null>(null);
   const [reservaPendiente, setReservaPendiente] =
     useState<ReservaPendiente | null>(null);
+  const [showMeetEmailPrompt, setShowMeetEmailPrompt] = useState(false);
+  const [clientEmail, setClientEmail] = useState("");
   const [disponibilidadesProcesadas, setDisponibilidadesProcesadas] = useState<
     Map<string, DisponibilidadTerapeuta>
   >(new Map());
+  const handleOpenMeetLink = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!clientEmail || !clientEmail.includes("@")) {
+      alert("Por favor, ingresa un correo electrónico válido.");
+      return;
+    }
+    const meetLink = terapeutaSeleccionado?.enlaceMeet;
+
+    if (meetLink) {
+      // 1. Aquí idealmente harías la llamada a tu API (ej. axios.post('/api/send-reminder', { email: clientEmail, terapeuta: terapeutaSeleccionado.nombre }))
+      // Para este ejemplo, solo simulamos la acción.
+      console.log(
+        `Correo capturado: ${clientEmail}. Enviando recordatorio y abriendo Meet.`
+      );
+
+      // 2. Abrir la sala de reunión en una nueva pestaña
+      window.open(meetLink, "_blank");
+
+      // 3. Cerrar el modal
+      setShowMeetEmailPrompt(false);
+      setClientEmail(""); // Limpiar el estado
+    }
+  };
 
   // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (Mantenido) ---
   useEffect(() => {
@@ -304,7 +329,7 @@ export default function AgendaSanacion() {
   return (
     <div className="min-h-screen bg-white pt-24 px-6">
       <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800">Encuentro Fácil</h1>
+        <h1 className="text-xl font-semibold text-gray-800">EncuentroFácil</h1>
         <CartIcon />
       </header>
 
@@ -328,22 +353,155 @@ export default function AgendaSanacion() {
               terapeuta={t}
               onClick={handleSelectTerapeuta}
               callToActionText={t.callToActionTextCard}
-              // ✨ IMPLEMENTACIÓN DEL TEXTO PERSONALIZABLE
             />
           ))}
         </div>
       ) : (
-        // Se muestra la lista de servicios del terapeuta seleccionado
-        <div className="flip-wrapper-container mt-10">
+        // Se muestra la vista del terapeuta seleccionado (¡ORDEN CORRECTO!)
+        <div className="w-full">
+          {/* 1. TÍTULO DE SERVICIOS */}
           <h3 className="text-2xl font-bold text-center text-pink-700 mb-6">
             Servicios de {terapeutaSeleccionado.nombre}
           </h3>
-          {serviciosDelTerapeutaSeleccionado.map((servicio, i) => (
-            <ServiceCard key={i} service={servicio} onReserve={reservar} />
-          ))}
+          {/* 2. LISTA DE SERVICIOS (Contenedor principal) */}
+          <div className="flip-wrapper-container mt-10">
+            {serviciosDelTerapeutaSeleccionado.map((servicio, i) => (
+              <ServiceCard key={i} service={servicio} onReserve={reservar} />
+            ))}
+          </div>
+          {/* 3. SECCIÓN DE RECURSOS Y ENLACE MEET (Aparece POR DEBAJO de los servicios) */}
+          {terapeutaSeleccionado &&
+            ((terapeutaSeleccionado.recursos &&
+              terapeutaSeleccionado.recursos.length > 0) ||
+              terapeutaSeleccionado.enlaceMeet) && (
+              <div className="max-w-4xl mx-auto my-8 p-6 bg-purple-50 rounded-lg shadow-lg border border-purple-200">
+                                               {" "}
+                {/* RECURSOS LISTA DE BOTONES (Se mantiene igual) */}           
+                   {" "}
+                {terapeutaSeleccionado.recursos &&
+                  terapeutaSeleccionado.recursos.length > 0 && (
+                    <div className="mb-6 pb-4 border-b border-purple-300">
+                                             {" "}
+                      <h3 className="text-xl font-bold text-purple-800 mb-4 flex items-center">
+                                                    📚 Recursos para la Sesión  
+                                             {" "}
+                      </h3>
+                                             {" "}
+                      <div className="space-y-3">
+                                                   {" "}
+                        {terapeutaSeleccionado.recursos.map(
+                          (recurso, index) => (
+                            <a
+                              key={index}
+                              href={recurso.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="block w-full text-center px-4 py-2 border border-purple-500 rounded-lg text-purple-700 bg-white hover:bg-purple-100 transition duration-300 ease-in-out font-semibold shadow-sm"
+                            >
+                                                                  {recurso.name}
+                                                             {" "}
+                            </a>
+                          )
+                        )}
+                                               {" "}
+                      </div>
+                                         {" "}
+                    </div>
+                  )}
+                                               {" "}
+                {/* ENLACE MEET MODIFICADO: AHORA ACTIVA EL PROMPT */}         
+                     {" "}
+                {terapeutaSeleccionado.enlaceMeet && (
+                  <div className="mt-4">
+                                           {" "}
+                    <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center">
+                                                  💻 Enlace para la Sesión
+                      Virtual                        {" "}
+                    </h3>
+                                           {" "}
+                    <p className="text-gray-700 mb-3">
+                                                  Una vez confirmada tu reserva,
+                      tu sesión online se llevará a cabo a través de este link.
+                                             {" "}
+                    </p>
+                                           {" "}
+                    <button
+                      // <-- CAMBIO: Llama a la función que abre el modal
+                      onClick={() => setShowMeetEmailPrompt(true)}
+                      className="inline-flex items-center justify-center w-full md:w-auto px-6 py-3 bg-purple-600 text-white font-semibold rounded-full hover:bg-purple-700 transition-colors duration-300 shadow-md"
+                    >
+                                                 {" "}
+                      <svg
+                        className="w-5 h-5 mr-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
+                          d="M15 10l4.55 4.55M15 10l-4.55 4.55M15 10l-.95-.95M15 10l.95.95M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                        ></path>
+                      </svg>
+                                                  Abrir Sala de Reunión (Meet)  
+                                           {" "}
+                    </button>
+                                           {" "}
+                    <p className="text-sm text-gray-500 mt-2">
+                                                 Revisa tu correo de
+                      confirmación, te enviaremos este enlace y la hora de tu
+                      cita.                        {" "}
+                    </p>
+                                       {" "}
+                  </div>
+                )}
+                           {" "}
+              </div>
+            )}
+                 {" "}
+        </div>
+      )}
+      {/* MODAL PARA SOLICITAR GMAIL/CORREO */}
+      {showMeetEmailPrompt && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-xl shadow-2xl max-w-sm w-full relative">
+            <button
+              onClick={() => setShowMeetEmailPrompt(false)}
+              className="absolute top-3 right-3 text-gray-400 hover:text-gray-900 text-2xl font-bold"
+            >
+              &times;
+            </button>
+            <h4 className="text-lg font-bold text-purple-700 mb-4">
+              Recordatorio de Reunión 📧
+            </h4>
+            <p className="text-gray-700 mb-4 text-sm">
+              Para enviarte un recordatorio instantáneo y el enlace a tu Gmail,
+              por favor ingresa tu correo:
+            </p>
+
+            <form onSubmit={handleOpenMeetLink}>
+              <input
+                type="email"
+                placeholder="tu.correo@gmail.com"
+                value={clientEmail}
+                onChange={(e) => setClientEmail(e.target.value)}
+                required
+                className="w-full p-3 border border-gray-300 rounded-lg mb-4 focus:ring-purple-500 focus:border-purple-500"
+              />
+              <button
+                type="submit"
+                className="w-full px-4 py-3 bg-green-500 text-white font-semibold rounded-lg hover:bg-green-600 transition-colors duration-300 shadow-md"
+              >
+                Confirmar Asistencia & Enviar Recordatorio
+              </button>
+            </form>
+          </div>
         </div>
       )}
 
+      {/* EL MODAL DE RESERVA PENDIENTE VIENE DESPUÉS DE ESTO */}
       {reservaPendiente && (
         <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
           <div className="bg-white p-6 rounded shadow-lg max-w-md w-full relative">
