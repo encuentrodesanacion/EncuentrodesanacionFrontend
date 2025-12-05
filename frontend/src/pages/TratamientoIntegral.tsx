@@ -48,42 +48,6 @@ export default function TratamientoHolistico() {
 
   const terapias: TerapiaItem[] = [
     {
-      img: crisol,
-      title: "Trilogía del desbloqueo de emociones atrapadas",
-      terapeuta: "Crisolde Valenzuela",
-      terapeutaId: 30,
-      description:
-        "Liberar emociones  qué tu cuerpo aún guarda aprendiendo a reconocer,sanar y transformar tú energía interior  a través de técnicas  simples de sanación.",
-      opciones: [{ sesiones: 3, precio: 88000 }],
-    },
-
-    {
-      img: sanchez,
-      title: "Psicoterapia basada en el Arteterapia",
-      terapeuta: "Catalina Sánchez",
-      terapeutaId: 33,
-      description:
-        "Sesiones de psicoterapia con perspectiva de género, inclusión, derechos humanos e interculturalidad. El objetivo es proporcionar un espacio para iniciar un proceso de salud mental, que aborde los malestares de quién decida ser parte de este llamado. Las sesiones se trabajan mediante herramientas arteterapeuticas, a través de un enfoque humanista como también con herramientas de la terapia y la psicología clínica. Abordando un proceso de salud mental completo, es decir: diagnóstico, objetivos del tratamiento y proyección de metas a lograr.",
-      opciones: [
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 111111 },
-      ],
-    },
-    {
-      img: marcela,
-      title: "Biomagnetismo",
-      terapeuta: "Marcela Cabezas",
-      terapeutaId: 32,
-      description:
-        "Es una terapia que se usa con imanes en el cuerpo, ayudándolo a mantener el equilibrio, estimula la circulación, ayuda a eliminar toxinas y desintoxicar el cuerpo.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 111111 },
-      ],
-    },
-
-    {
       img: sarita,
       title: "Camino de Regreso al SER",
       terapeuta: "Sarita Infante",
@@ -98,18 +62,6 @@ export default function TratamientoHolistico() {
     },
 
     {
-      img: silvana,
-      title: "PSI-NERGIA",
-      terapeuta: "Silvana Ríos",
-      terapeutaId: 36,
-      description:
-        "Sanación Energética de Personas y Espacios, con enfoque en liberación de cargas energéticas y emocionales que impiden el normal y tranquilo desarrollo de relaciones consigo mismo y con el mundo que nos rodea.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-      ],
-    },
-    {
       img: sandra,
       title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
       terapeuta: "Sandra Da Silva",
@@ -121,19 +73,7 @@ export default function TratamientoHolistico() {
         { sesiones: 4, precio: 99000 },
       ],
     },
-    {
-      img: pamela,
-      title: "Bioenergía con esencias florales etéricas",
-      terapeuta: "Pamela Benavides",
-      terapeutaId: 31,
-      description:
-        "Terapia de detección y corrección del flujo energético del cuerpo, activando la energía vital y autosanadora, acompañado con envío etérico de alta vibración de flores de Bach y/ Australia.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 111111 },
-      ],
-    },
+
     {
       img: clau,
       title: "Terapia de Respuesta Espiritual (TRE)",

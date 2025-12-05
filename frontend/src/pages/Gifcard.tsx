@@ -66,15 +66,7 @@ export default function TratamientoHolistico() {
         "Cierra el año 2025 de la mejor manera, limpia toda aquella energía que necesitas transmutar para elevar y renovar tu bienestar integral.",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
-    {
-      img: radionica,
-      title: "Mesa radionica para la abundancia y prosperidad",
-      terapeuta: "Ana Aros",
-      terapeutaId: 23,
-      description:
-        "Está terapia te ayuda a trabajar con la energía de la abundancia y prosperidad en todos los ámbitos de tu vida, te ayuda a limpiar creencias limitantes en relación al merecimiento, potenciar ideas y proyectos, equilibrar tus finanzas y aperturar caminos a los cambios que necesitas para transitar desde la prosperidad que mereces.",
-      opciones: [{ sesiones: 1, precio: 20000 }],
-    },
+
     {
       img: ruido,
       title: "Limpieza de Ruido Mental y Emocional",
@@ -187,15 +179,7 @@ export default function TratamientoHolistico() {
         "La lectura de alma revela la misión de vida, los aprendizajes esenciales y los bloqueos emocionales que limitan tu camino, ofreciendo claridad profunda para alinearte con tu propósito. Basada en la fecha de nacimiento.",
       opciones: [{ sesiones: 1, precio: 20000 }],
     },
-    {
-      img: recalibracion,
-      title: "Recalibración con Péndulo de Isis",
-      terapeuta: "Maribel Muñoz",
-      terapeutaId: 32,
-      description:
-        "Sesión a través de canalización con herramienta Péndulo de Isis, la cual permitirá activar y  disponer los centros energéticos a su máximo disponible, reafirmando los canales de conexión tierra y cielo, limpieza del campo mental de ataques psíquicos y liberando las cargas eléctromagnéticas.",
-      opciones: [{ sesiones: 1, precio: 20000 }],
-    },
+
     // {
     //   img: creadorvirtual,
     //   title: "Regresión",

@@ -7,13 +7,13 @@ import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 
 // Importaciones de imágenes
-import mcab1 from "../assets/mcab.jpeg";
-import mcab2 from "../assets/mcab2.jpeg";
-import anaa from "../assets/anaa1.jpeg";
-import anaa1 from "../assets/anaa2.jpeg";
-import Sentido from "../assets/Sentido.jpg";
-import Sanando from "../assets/Sanando.jpg";
-import crisolde from "../assets/crisolde1.jpg";
+import pam2 from "../assets/pam2.jpg";
+import pam1 from "../assets/pam1.jpg";
+import sarita1 from "../assets/sarita1.png";
+import sarita2 from "../assets/sarita2.png";
+import gab1 from "../assets/gab1.jpeg";
+import gab2 from "../assets/gab2.jpeg";
+import pamela from "../assets/pamela.jpeg";
 import crisolde2 from "../assets/crisolde2.jpg";
 import puerta from "../assets/puerta.png";
 import llama from "../assets/llamaint.png";
@@ -184,73 +184,84 @@ export default function Findetalleres() {
     //   isDisabled: false,
     //   opciones: [{ sesiones: 1, precio: 10000 }],
     // },
-    {
-      img: anaa,
-      title: "Fortaleciendo mi diálogo interno",
-      terapeuta: "Ana Aros",
-      terapeuta_id: 23,
-      description:
-        "Este taller busca cambiar nuestro lenguaje interno y la forma en cómo nos tratamos a nosotros mismos, generando un diálogo sano, respetuoso y amoroso en en diario vivir.",
-      precio: 10000,
-      isDisabled: false,
-      opciones: [{ sesiones: 1, precio: 10000 }],
-    },
+    // {
+    //   img: anaa,
+    //   title: "Fortaleciendo mi diálogo interno",
+    //   terapeuta: "Ana Aros",
+    //   terapeuta_id: 23,
+    //   description:
+    //     "Este taller busca cambiar nuestro lenguaje interno y la forma en cómo nos tratamos a nosotros mismos, generando un diálogo sano, respetuoso y amoroso en en diario vivir.",
+    //   precio: 10000,
+    //   isDisabled: false,
+    //   opciones: [{ sesiones: 1, precio: 10000 }],
+    // },
 
-    // {
-    //   img: crisolde,
-    //   title: "Manifiesta tu Realidad",
-    //   terapeuta: "Crisolde Valenzuela",
-    //   terapeuta_id: 30,
-    //   description:
-    //     "Terapia que te ayudará a conectarte con tú luz interior para soltar cargas energéticas negativas qué bloquean tú avance personal.",
-    //   precio: 10000,
-    //   isDisabled: false,
-    //   opciones: [{ sesiones: 1, precio: 10000 }],
-    // },
-    // {
-    //   img: crisolde2,
-    //   title: "Rompe tus patrones desde el alma",
-    //   terapeuta: "Crisolde Valenzuela",
-    //   terapeuta_id: 30,
-    //   description:
-    //     "Terapia qué te ayudará a reconocer,liberar y transformar tus patrones limitantes para sanar desde la raíz emocional.",
-    //   precio: 10000,
-    //   isDisabled: false,
-    //   opciones: [{ sesiones: 1, precio: 10000 }],
-    // },
     {
-      img: puerta,
-      title: "Puerta al SER",
-      terapeuta: "Sarita Infante",
-      terapeuta_id: 26,
+      img: pam1,
+      title: "Círculo de Mujeres 'Cerrando ciclos'",
+      terapeuta: "Pamela Benavides",
+      terapeuta_id: 31,
       description:
-        "Un encuentro grupal de una hora para abrir nuestra puerta al interior con el cuerpo, las emociones y la voz interior. A través de prácticas suaves, activarás presencia, liberarás lo que pesa y crearás un espacio de calma y expansión.",
+        "Sanaremos en Clan nuestras memorias uterinas de dolor, para cerrar ciclos ancestrales de sufrimiento femenino familiar. Con meditación guiada liberaremos el dolor acumulado. Será un momento de compartir en relajo, distención y sanación en conjunto.",
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      img: llama,
-      title: "La Llama Interior",
-      terapeuta: "Sarita Infante",
-      terapeuta_id: 26,
+      img: pam2,
+      title: "Aprende a proteger tu Aura",
+      terapeuta: "Pamela Benavides",
+      terapeuta_id: 31,
       description:
-        "Una experiencia grupal enfocada en liberar bloqueos emocionales, equilibrar energía y reconectar con la fuerza interior. Ideal para quienes están en procesos de cambio, duelo, transiciones o búsqueda de claridad.",
+        "Aprenderás que es el Aura y Chakras. Como limpiar tus cuerpos energéticamente. Dominarás técnicas básicas de protección contra ataques energéticos, envidias y vampiros energéticos.",
       precio: 10000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
-    // {
-    //   img: manual,
-    //   title: "Taller de Arte Terapia con elementos gráficos",
-    //   terapeuta: "Catalina Sánchez",
-    //   terapeuta_id: 33,
-    //   description:
-    //     "Este taller busca trabajar y enriquecer el lenguaje emocional (reconocimiento, abordaje y expresión asertiva) para mejorar el autoconocimiento personal. Utilizarás materiales gráficos de fácil acceso (lápices, plumones, papel, etc.) en un espacio tranquilo y con buena luz para participar. La actividad consiste en plasmar y expresar las emociones en papel mediante trazos, dibujos, figuras y escritura con el fin de procesarlas.",
-    //   precio: 10000,
-    //   isDisabled: false,
-    //   opciones: [{ sesiones: 1, precio: 10000 }],
-    // },
+    {
+      img: sarita1,
+      title: "Gratitud y Manifestación: Crea tu Ritual de Abundancia 2026:",
+      terapeuta: "Sarita Infante",
+      terapeuta_id: 26,
+      description:
+        "Experiencia suave y bonita con journaling + numerología + visualización",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: sarita2,
+      title: "Reescribe tu Historia 2025: Del Dolor a la Luz",
+      terapeuta: "Sarita Infante",
+      terapeuta_id: 26,
+      description:
+        "Un taller profundo de resignificación: heridas, aprendizajes, propósito. Súper transformador y alineado contigo.",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: gab1,
+      title: "Taller de Piso Pélvico: Conexión, Fuerza y Bienestar",
+      terapeuta: "Gabriela Pinto",
+      terapeuta_id: 34,
+      description:
+        "Un espacio práctico y educativo donde exploraremos la anatomía del piso pélvico y la pelvis, comprendiendo su función y cómo influye en nuestra salud diaria. Aprenderás estrategias para prevenir la incontinencia urinaria, aliviar el dolor lumbo–sacro y mejorar la postura de los órganos internos a través de ejercicios y hábitos saludables. También abordaremos cómo fortalecer esta zona puede optimizar la función sexual y, para quienes lo necesiten, ofreceremos herramientas específicas de preparación al parto, favoreciendo un embarazo y nacimiento más conscientes. Evitemos el “me hice pipi”",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
+    {
+      img: gab2,
+      title: "Taller de Salud Pélvica y Bienestar Urinario",
+      terapeuta: "Gabriela Pinto",
+      terapeuta_id: 34,
+      description:
+        "Un encuentro informativo y práctico para comprender la anatomía del piso pélvico y la pelvis, y cómo su funcionamiento influye en la salud urinaria. Conversaremos sobre estrategias para prevenir infecciones urinarias, reconocer y manejar el síndrome de vejiga irritable, y comprender posibles causas del dolor al orinar. Además, revisaremos hábitos saludables para el cuidado de la vejiga, promoviendo una mejor calidad de vida desde la educación y la autoconsciencia corporal.Evitemos el “me duele hacer pipi” ",
+      precio: 10000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 10000 }],
+    },
     // {
     //   img: danza,
     //   title: "Danza Contemporánea",

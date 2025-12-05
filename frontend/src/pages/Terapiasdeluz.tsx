@@ -45,20 +45,6 @@ const imagenesData: ImagenData[] = [
       "PRIMERA CONVOCATORIA EL 1 DE DICIEMBRE A LAS 20:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
     isDisabled: false,
   },
-  {
-    id: "Liberacion-de-emociones-atrapadas",
-    src: crisolterap,
-    alt: "Liberación Emociones Atrapadas",
-    descripcion:
-      "Un viaje de transformación interior,aprendiendo a identificar emociones y liberar cargas energéticas para  reconectar con su luz individual y aprender a sanar en forma individual y grupal.",
-    link: "#",
-    terapeuta: "Crisolde Valenzuela",
-    terapeutaId: 30,
-    precio: 50000,
-    duracion:
-      "PRIMERA CONVOCATORIA EL 5 DE DICIEMBRE A LAS 19:00HRS . SEGUNDA CONVOCATORIA EL 11 DE DICIEMBRE A LAS 19:00HRS ",
-    isDisabled: false,
-  },
 
   // {
   //   id: "Tarot-Evolutivo",

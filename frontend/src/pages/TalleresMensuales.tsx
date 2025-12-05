@@ -80,31 +80,6 @@ export default function TalleresMensuales() {
     },
 
     {
-      id: "Perfil-Numerologico-de-tu-alma",
-      title: "Perfil Numerológico de tu alma",
-      description:
-        "Descubrir los números sagrados que revelan la esencia de tú alma,tú propósito de vida y los dones que viniste a manifestar.",
-      price: 35000,
-      date: "2025-12-03",
-      time: "18:00",
-      instructor: "Crisolde Valenzuela",
-      instructorId: 30,
-      isDisabled: false,
-    },
-
-    {
-      id: "Bordado-Terapeutico",
-      title: "Taller de Bordado Arteterapeutico “Emocionario Textil",
-      description:
-        "El objetivo de este taller es incentivar la creatividad, proporcionar un espacio de calma y bienestar integral. Se enseñarán puntos básicos y fáciles del bordado, con la finalidad de crear una obra textil la cual va a describir a través del bordado y la acuarela un registro de nuestras emociones. El formato de la obra textil será un tipo cuaderno o pequeño libro el cual se irá construyendo sesión a sesión.",
-      price: 35000,
-      date: "2025-12-01",
-      time: "20:00",
-      instructor: "Catalina Sánchez",
-      instructorId: 33,
-      isDisabled: false,
-    },
-    {
       id: "Flexibilidad-Consciente",
       title: "Flexibilidad Consciente",
       description:
@@ -441,13 +416,7 @@ export default function TalleresMensuales() {
                     className="w-full h-80 object-cover"
                   />
                 )}
-                {taller.id === "Bordado-Terapeutico" && (
-                  <img
-                    src={bordado} // Revisa si esto es Taller1 o Taller2 para cada caso
-                    alt={taller.title}
-                    className="w-full h-80 object-cover"
-                  />
-                )}
+
                 {taller.id === "Movimiento-del-Alma" && (
                   <img
                     src={movimiento} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -455,13 +424,7 @@ export default function TalleresMensuales() {
                     className="w-full h-80 object-cover"
                   />
                 )}
-                {taller.id === "Perfil-Numerologico-de-tu-alma" && (
-                  <img
-                    src={perfilnum} // Revisa si esto es Taller1 o Taller2 para cada caso
-                    alt={taller.title}
-                    className="w-full h-80 object-cover"
-                  />
-                )}
+
                 {taller.id === "Activación-de-Útero" && (
                   <img
                     src={utero} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -481,12 +444,10 @@ export default function TalleresMensuales() {
                   (
                     taller.id === "Falun-Dafa" ||
                     taller.id === "Activación-de-Útero" ||
-                    taller.id === "Bordado-Terapeutico" ||
                     taller.id === "Movimiento-del-Alma" ||
                     taller.id === "Entrenamiento-Hiit" ||
                     taller.id === "Flexibilidad-Consciente" ||
-                    taller.id === "Puntos-Presion" ||
-                    taller.id === "Perfil-Numerologico-de-tu-alma"
+                    taller.id === "Puntos-Presion"
                   )
                   // taller.id === "Taller-de-Escribir-sobre-Raices"
                 ) && (
