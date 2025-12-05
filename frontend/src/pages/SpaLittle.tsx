@@ -13,7 +13,7 @@ import clau from "../assets/clau.jpeg";
 import Terapeuta1 from "../assets/Terapeuta1.jpg";
 import luisa from "../assets/luisa.png";
 import Terapeuta14 from "../assets/Terapeuta14.jpeg";
-import Terapeuta15 from "../assets/Terapeuta15.jpeg";
+import belen from "../assets/belen.jpg";
 import creadorVirtual from "../assets/creadorvirtual.jpg";
 import Terapeuta25 from "../assets/Terapeuta25.jpeg";
 import Terapeuta24 from "../assets/Terapeuta24.jpeg";
@@ -212,6 +212,17 @@ export default function SpaLittle() {
       terapeuta_id: 42,
       description:
         "es una experiencia de acompañamiento y guía emocional. A través de tiradas dinámicas y participativas, te ayudo a encontrar claridad en situaciones que necesitan luz, fortaleciendo tu autoestima, habilidades y competencias. Tú también formas parte activa del proceso: interpretamos juntas/os, conectando las cartas con tu historia y tu crecimiento personal.",
+      precio: 16000,
+      isDisabled: false,
+      opciones: [{ sesiones: 1, precio: 16000 }],
+    },
+    {
+      img: belen,
+      title: "Arteterapia Raíces en Calma",
+      terapeuta: "Belén Vera",
+      terapeuta_id: 42,
+      description:
+        "¿Te sientes a menudo agotada física y emocionalmente, con poco ánimo, irritable y presentando dificultades para conciliar el sueño? Al finalizar la sesión, no solo contarás con una  herramienta poderosa para combatir el estrés prolongado, sino que además te sentirás con más tranquilidad y paz para continuar con tu vida diaria. Utilizo la Arteterapia como medio terapéutico para que puedas acceder a lo más recóndito de tu ser y así conectar con la paz interior que tu alma y cuerpo necesitan.",
       precio: 16000,
       isDisabled: false,
       opciones: [{ sesiones: 1, precio: 16000 }],
