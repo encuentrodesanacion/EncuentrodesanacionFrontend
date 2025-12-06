@@ -7,7 +7,7 @@ import CartIcon from "../components/CartIcon"; // Asegúrate de la ruta correcta
 import utero from "../assets/utero.jpg";
 import perfilnum from "../assets/perfilnum.jpeg";
 import Dalun from "../assets/DALUN.jpeg";
-import bordado from "../assets/bordado.jpeg";
+import solar from "../assets/solar.jpg";
 import movimiento from "../assets/Movimiento.jpeg";
 import flexi from "../assets/flexi.jpeg";
 import presion from "../assets/presion.jpeg";
@@ -113,6 +113,18 @@ export default function TalleresMensuales() {
       time: "20:00",
       instructor: "Pamela Benavides",
       instructorId: 31,
+      isDisabled: false,
+    },
+    {
+      id: "El-poder-transformador",
+      title: "El Poder Transformador de la Gratitud",
+      description:
+        "Es un espacio dedicado a reconocer cómo este simple acto puede mejorar profundamente nuestro bienestar emocional, mental y relacional. Cultivar la gratitud nos permite cambiar el foco: dejamos de mirar aquello que falta y comenzamos a valorar lo que ya está presente, desarrollando mayor calma, resiliencia y claridad interior. Practicar la gratitud fortalece la autoestima, disminuye el estrés, mejora la calidad del sueño y nos ayuda a construir vínculos más sanos y significativos. También incrementa la sensación de propósito, apertura y esperanza, convirtiéndose en un recurso clave para atravesar desafíos y para vivir con mayor plenitud. Este taller invita a descubrir cómo la gratitud, cuando se practica de manera consciente y sostenida, se transforma en una herramienta poderosa de cambio interno, capaz de ampliar nuestra perspectiva y reconectar con lo que verdaderamente nutre nuestra vida.",
+      price: 35000,
+      date: "2026-01-08",
+      time: "19:00",
+      instructor: "Marisol Solar",
+      instructorId: 45,
       isDisabled: false,
     },
 
@@ -409,6 +421,13 @@ export default function TalleresMensuales() {
                     className="w-full h-80 object-cover"
                   />
                 )}
+                {taller.id === "El-poder-transformador" && (
+                  <img
+                    src={solar} // Revisa si esto es Taller1 o Taller2 para cada caso
+                    alt={taller.title}
+                    className="w-full h-80 object-cover"
+                  />
+                )}
                 {taller.id === "Entrenamiento-Hiit" && (
                   <img
                     src={hiit} // Revisa si esto es Taller1 o Taller2 para cada caso
@@ -446,6 +465,7 @@ export default function TalleresMensuales() {
                     taller.id === "Activación-de-Útero" ||
                     taller.id === "Movimiento-del-Alma" ||
                     taller.id === "Entrenamiento-Hiit" ||
+                    taller.id === "El-poder-transformador" ||
                     taller.id === "Flexibilidad-Consciente" ||
                     taller.id === "Puntos-Presion"
                   )
