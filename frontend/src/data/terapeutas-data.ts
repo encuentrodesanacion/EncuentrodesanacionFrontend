@@ -67,7 +67,7 @@ export const terapeutasData: Terapeuta[] = [
   //   ],
   // },
   {
-    id: 12,
+    id: 44,
     nombre: "Belén Vera",
     email: "belnmvr7@gmail.com",
     imagenPerfil: belen,
@@ -78,12 +78,12 @@ export const terapeutasData: Terapeuta[] = [
         img: conexionemo,
         title: "Conexión Emocional",
         terapeuta: "Belén Vera",
-        terapeuta_id: 12,
+        terapeuta_id: 44,
         description:
           "Es una sesión semioffline en la que se explica la importancia de la conexión emocional para fortalecer el vínculo dentro de la relación. Se realizan dos ejercicios de Escritura Terapéutica. Se hace un cierre en el cual la pareja debe interactuar leyendo para el otro sus respuestas sobre los ejercicios planteados.",
-        precio: 20000,
+        precio: 24000,
         isDisabled: false,
-        opciones: [{ sesiones: 1, precio: 20000 }],
+        opciones: [{ sesiones: 1, precio: 24000 }],
       },
       // {
       //   img: TerapeutaPlaceholder,

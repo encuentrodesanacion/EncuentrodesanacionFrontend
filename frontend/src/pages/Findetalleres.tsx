@@ -197,7 +197,7 @@ export default function Findetalleres() {
     // },
 
     {
-      img: pam1,
+      img: pam2,
       title: "Círculo de Mujeres 'Cerrando ciclos'",
       terapeuta: "Pamela Benavides",
       terapeuta_id: 31,
@@ -208,7 +208,7 @@ export default function Findetalleres() {
       opciones: [{ sesiones: 1, precio: 10000 }],
     },
     {
-      img: pam2,
+      img: pam1,
       title: "Aprende a proteger tu Aura",
       terapeuta: "Pamela Benavides",
       terapeuta_id: 31,
