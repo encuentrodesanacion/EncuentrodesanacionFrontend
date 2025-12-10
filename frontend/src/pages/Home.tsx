@@ -382,32 +382,32 @@ const App = () => {
             {t("main_services_title")}
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {[
-              {
-                icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2> {t("formation_title")}</h2>,
+              // {
+              //   icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: <h2> {t("formation_title")}</h2>,
 
-                description: <h2>{t("formation_description")}</h2>,
-                price: <h2>{t("formation_price")}</h2>,
-                button: (
-                  <div className="flex flex-col gap-2 mt-4">
-                    <a
-                      href="#reserva"
-                      onClick={() => {
-                        setServicioSeleccionado("Terapeutas de la luz");
-                        setEspecialidadSeleccionada("");
-                      }}
-                    ></a>
-                    <Link
-                      to="/terapeutasdeluz"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-                    >
-                      <h2>{t("formation_cta")}</h2>
-                    </Link>
-                  </div>
-                ),
-              },
+              //   description: <h2>{t("formation_description")}</h2>,
+              //   price: <h2>{t("formation_price")}</h2>,
+              //   button: (
+              //     <div className="flex flex-col gap-2 mt-4">
+              //       <a
+              //         href="#reserva"
+              //         onClick={() => {
+              //           setServicioSeleccionado("Terapeutas de la luz");
+              //           setEspecialidadSeleccionada("");
+              //         }}
+              //       ></a>
+              //       <Link
+              //         to="/terapeutasdeluz"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+              //       >
+              //         <h2>{t("formation_cta")}</h2>
+              //       </Link>
+              //     </div>
+              //   ),
+              // },
               {
                 icon: <Heart className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: <h2>{t("integral_treatment_title")}</h2>,
@@ -528,22 +528,22 @@ const App = () => {
               //   ),
               // },
 
-              {
-                icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>{t("mind_and_being_title")}</h2>,
-                description: <h2>{t("mind_and_being_description")}</h2>,
-                price: <h2>{t("mind_and_being_price")}</h2>,
-                button: (
-                  <div className="flex flex-col gap-2 mt-4">
-                    <Link
-                      to="/psicologos"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-                    >
-                      <h2>{t("formation_cta")}</h2>
-                    </Link>
-                  </div>
-                ),
-              },
+              // {
+              //   icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: <h2>{t("mind_and_being_title")}</h2>,
+              //   description: <h2>{t("mind_and_being_description")}</h2>,
+              //   price: <h2>{t("mind_and_being_price")}</h2>,
+              //   button: (
+              //     <div className="flex flex-col gap-2 mt-4">
+              //       <Link
+              //         to="/psicologos"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+              //       >
+              //         <h2>{t("formation_cta")}</h2>
+              //       </Link>
+              //     </div>
+              //   ),
+              // },
             ].map((service, index) => (
               <div key={index} className="bg-gray-900 p-8 rounded-2xl">
                 {service.icon}
