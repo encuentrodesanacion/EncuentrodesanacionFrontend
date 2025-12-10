@@ -6,6 +6,8 @@ const webpayController = require("../controllers/webpayController"); // Asegúra
 router.post("/create-transaction", webpayController.crearTransaccionInicial);
 
 // Define la ruta GET para confirmar una transacción
+router.post("/confirmacion", webpayController.confirmarTransaccion);
+
 router.get("/confirmacion", webpayController.confirmarTransaccion);
 router.get("/details", webpayController.getPurchaseDetails);
 
