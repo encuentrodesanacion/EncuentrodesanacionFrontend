@@ -49,8 +49,8 @@ export default function TalleresMensuales() {
       description:
         "Sistema de meditación en movimiento que permite reciclar la energía desgastada y nutrirse con energía renovada reconociendo el cuerpo como canal de movilización en sincronía con con el dinamismo continuo y perpetuo del universo.",
       price: 35000,
-      date: "2025-12-06",
-      time: "11:00",
+      date: "2025-12-13",
+      time: "16:00",
       instructor: "Maribel Muñoz",
       instructorId: 32,
       isDisabled: false,
@@ -62,8 +62,8 @@ export default function TalleresMensuales() {
       description:
         "Este taller busca generar un espacio de conexión entre mente y cuerpo a través del desarrollo de la flexibilidad física, extrapolándola a su vez a una forma de abrirnos a la vida con mayor fluidez y equilibrio. Partiremos tomando consciencia de nuestro cuerpo, para luego desarrollar técnicas de movilidad articular y muscular, estiramiento, y respiración consciente, con el objetivo de ampliar el rango articular, mejorar la postura, liberar tensiones acumuladas y gestionar el estrés, para finalmente encontrar calma, armonía interior y reencontrarnos con nuestra energía vital.",
       price: 35000,
-      date: "2025-12-04",
-      time: "18:00",
+      date: "2025-12-13",
+      time: "11:00",
       instructor: "Catalina Paredes",
       instructorId: 35,
       isDisabled: false,
@@ -74,7 +74,7 @@ export default function TalleresMensuales() {
       description:
         "Consiste en alternar ráfagas cortas de ejercicio intenso con períodos de descanso o menor intensidad. Es una forma eficiente de entrenar, ya que permite obtener grandes beneficios cardiovasculares y de quema de grasa en sesiones de unos 20-30 minutos, con la posibilidad de adaptar la intensidad al nivel físico de cada persona, adaptable a cualquier nivel. Ponle ritmo, ponle HIIT. Ponte en forma, pierde grasa y mejora tu salud.",
       price: 35000,
-      date: "2025-12-03",
+      date: "2025-12-11",
       time: "19:30",
       instructor: "Gabriela Pinto",
       instructorId: 34,
