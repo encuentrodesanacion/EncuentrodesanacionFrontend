@@ -63,14 +63,15 @@ export default function TratamientoHolistico() {
 
     {
       img: sandra,
-      title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
+      title: "Sanación Física y Energética con Péndulo Hebreo",
       terapeuta: "Sandra Da Silva",
       terapeutaId: 9,
       description:
-        "Esta Técnica de Sanación te ofrece una conexión íntima con tu Ser y funciona como una profunda investigación para descubrir y liberar todo aquello grabado en tu alma y subconsciente que impide tu evolución y te genera peso. Este tratamiento se puede solicitar para limpiar sentimientos, actitudes y emociones tóxicas como la ansiedad o la depresión, remover patrones emocionales familiares, de pareja o laborales, eliminar bloqueos de cualquier índole, incluyendo energías de bajo astral como la hechicería o la envidia, permitiéndote re-conectar con tu esencia e iniciar cambios positivos en tu vida.",
+        "Esta terapia profunda te permitirá limpiar todo tipo de larvas, mal de ojo, energías discordantes internas y externas, limpiar y fortalecer el aura, equilibrar chakras, limpiar estrés, fortalecer el sistema inmunológico minimizar dolencias y malestares físicos y elevar tu vibración para que tengas una gran sensación de bienestar.",
       opciones: [
         { sesiones: 3, precio: 88000 },
         { sesiones: 4, precio: 99000 },
+        { sesiones: 5, precio: 111111 },
       ],
     },
 
