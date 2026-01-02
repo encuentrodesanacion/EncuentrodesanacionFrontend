@@ -96,7 +96,7 @@ export default function OraculoGuia() {
       telefonoCliente: clientPhone.trim(),
       sesiones: selectedPlan.sesiones,
       cantidad: 1,
-      terapeutaId: 10,
+      terapeutaId: 3,
     };
 
     try {
@@ -241,7 +241,7 @@ export default function OraculoGuia() {
             <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4 outline-none focus:ring-2 focus:ring-pink-500" value={clientName} onChange={(e) => setClientName(e.target.value)} />
             <input type="tel" placeholder="+56912345678" className="border rounded w-full py-2 px-3 mb-6 outline-none focus:ring-2 focus:ring-pink-500" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
             <div className="flex flex-col gap-3">
-              <button onClick={() => ejecutarAccionReserva("pago")} disabled={isProcessing} className="bg-green-600 text-white py-3 rounded font-bold hover:bg-green-700">{isProcessing ? "Procesando..." : "Pagar con Webpay"}</button>
+       
               <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Añadir al Carrito</button>
               <button onClick={() => { setShowContactModal(false); setSelectedPlan(null); }} className="bg-gray-200 py-2 rounded text-gray-800">Cancelar</button>
             </div>

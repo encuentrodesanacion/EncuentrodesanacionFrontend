@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 // import ReservaHora from "../ReservaHora";
 import Whatsapp from "../assets/ASTRONAUTA3.png";
-import CarruselAlianzas from "./CarruselAlianzas";
+// import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
 import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
@@ -246,29 +246,29 @@ const App = () => {
               >
                 Servicios
               </a>
-              <a
+              {/* <a
                 href="#alianzas"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Alianzas
-              </a>
-              <a
+              </a> */}
+              {/* <a
                 href="#otros"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Días de ofrenda
-              </a>
+              </a> */}
 
               {/* Enlaces de Link (react-router-dom) */}
-              <Link
+              {/* <Link
                 to="/Staff-Terapéutico"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Staff Terapeutico
-              </Link>
+              </Link> */}
               <Link
                 to="/nuestra-comunidad"
                 onClick={() => setIsMenuOpen(false)}
@@ -361,7 +361,7 @@ const App = () => {
       {/* Services Section */}
       <section
         id="servicios"
-        className="py-16 md:py-24 bg-gradient-to-r from-fuchsia-200 to-pink-600 text-white font-bold"
+        className="py-2 md:py-10 bg-gradient-to-r from-fuchsia-200 to-pink-600 text-white font-bold"
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <h2 className="md:text-5xl font-light text-center mb-12 text-cyan-300/95 font-bold">
@@ -633,7 +633,7 @@ const App = () => {
       </section>
 
       <section id="alianzas">
-        <CarruselAlianzas />
+        {/* <CarruselAlianzas /> */}
       </section>
       {/* Componente ReservaHora agregado aquí abajo */}
 

@@ -131,7 +131,7 @@ export default function SanacionProfunda() {
       telefonoCliente: clientPhone.trim(),
       sesiones: selectedPlan.sesiones,
       cantidad: 1,
-      terapeutaId: 10, 
+      terapeutaId: 1, 
     };
 
     try {
@@ -279,7 +279,7 @@ export default function SanacionProfunda() {
             <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4" value={clientName} onChange={(e) => setClientName(e.target.value)} />
             <input type="tel" placeholder="+569..." className="border rounded w-full py-2 px-3 mb-6" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
             <div className="flex flex-col space-y-3">
-              <button onClick={() => ejecutarAccionReserva("pago")} disabled={isProcessing} className="bg-green-600 text-white py-3 rounded font-bold">{isProcessing ? "Procesando..." : "Pagar con Webpay"}</button>
+           
               <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Al Carrito</button>
               <button onClick={() => setShowContactModal(false)} className="bg-gray-200 py-2 rounded">Cancelar</button>
             </div>

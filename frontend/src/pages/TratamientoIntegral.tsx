@@ -100,7 +100,7 @@ export default function CuerpoConsciente() {
       telefonoCliente: clientPhone.trim(),
       sesiones: selectedPlan.sesiones,
       cantidad: 1,
-      terapeutaId: 10, 
+      terapeutaId: 2, 
     };
 
     try {
@@ -369,13 +369,7 @@ const navLinks = [
               onChange={(e) => setClientPhone(e.target.value)} 
             />
             <div className="flex flex-col space-y-3">
-              <button 
-                onClick={() => ejecutarAccionReserva("pago")} 
-                disabled={isProcessing} 
-                className="bg-green-600 text-white py-3 rounded font-bold hover:bg-green-700"
-              >
-                {isProcessing ? "Procesando..." : "Pagar con Webpay"}
-              </button>
+           
               <button 
                 onClick={() => ejecutarAccionReserva("carrito")} 
                 className="bg-pink-600 text-white py-3 rounded font-bold hover:bg-pink-700"
