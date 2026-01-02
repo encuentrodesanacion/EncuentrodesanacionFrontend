@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom"; // Se usa useLocation
-import "../styles/tratamientoIntegral.css";
+import "../styles/encuentrofacil.css";
 import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 import TherapistProfile from "../components/TherapistProfile";

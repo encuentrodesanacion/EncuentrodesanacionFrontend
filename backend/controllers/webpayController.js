@@ -1034,10 +1034,9 @@ const waLink = `https://wa.me/${waNumber}`;
             `;
               }
 
-              await sendEmail(terapeutaData.email, subject, htmlContent);
-              console.log(
-                `[DEBUG NOTIFY] Notificación por correo enviada a ${terapeutaData.email}.`
-              );
+            sendEmail(terapeutaData.email, subject, htmlContent)
+  .then(() => console.log(`[ASYNC EMAIL] Éxito: Enviado a ${terapeutaData.email}`))
+  .catch((err) => console.error(`[ASYNC EMAIL ERROR] Falló envío a ${terapeutaData.email}:`, err.message));
             } else {
               console.warn(
                 `[DEBUG NOTIFY] Alerta: Terapeuta "${terapeutaData.nombre}" encontrado, pero la especialidad "${especialidad}" NO está en su lista de servicios ofrecidos. No se enviará notificación específica de servicio.`

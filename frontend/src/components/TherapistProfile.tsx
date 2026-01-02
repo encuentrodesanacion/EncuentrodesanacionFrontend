@@ -1,59 +1,58 @@
 import { FC } from "react";
-// Importamos la interfaz Terapeuta para garantizar el tipado correcto
 import { Terapeuta } from "../types/index";
 
-// 1. Definición de la interfaz de Props con el nuevo campo personalizable
 interface TherapistProfileProps {
   terapeuta: Terapeuta;
   onClick: (terapeuta: Terapeuta) => void;
-  // Propiedad opcional para personalizar el texto del Call to Action (CTA)
   callToActionText?: string;
 }
 
 const TherapistProfile: FC<TherapistProfileProps> = ({
   terapeuta,
   onClick,
-  callToActionText, // 2. Destructuramos la nueva prop
+  callToActionText,
 }) => {
-  // Definimos el texto que se mostrará. Si se proporciona callToActionText, lo usa,
-  // si no, usa un texto por defecto.
   const displayText = callToActionText || "Ver servicios y agendar";
 
   return (
     <div
-      className="flip-wrapper cursor-pointer"
-      // La función onClick se llama al hacer clic en cualquier parte de la tarjeta
+      // AUMENTO DE ALTURA: Pasamos a h-[600px] para dar más aire al diseño
+      className="flip-wrapper cursor-pointer w-[360px] h-[600px] m-4"
       onClick={() => onClick(terapeuta)}
     >
-      <div className="flip-card">
-        <div className="flip-inner">
-          {/* Frente de la tarjeta (flip-front) */}
-          <div className="flip-front">
+      <div className="flip-card w-full h-full">
+        <div className="flip-inner w-full h-full">
+          
+          {/* Frente de la tarjeta */}
+          <div className="flip-front w-full h-full">
             <img
               src={terapeuta.imagenPerfil}
               alt={terapeuta.nombre}
               className="w-full h-full object-cover rounded-2xl"
             />
             <div className="nombre-overlay">
-              <p>{terapeuta.nombre}</p>
+              <p className="font-bold text-lg">{terapeuta.nombre}</p>
             </div>
           </div>
 
-          {/* Reverso de la tarjeta (flip-back) */}
-          <div className="flip-back flex flex-col justify-center items-center p-4">
-            <h3 className="mb-2 font-bold text-lg text-center">
+          {/* Reverso de la tarjeta: Máximo espacio para descripción */}
+          <div className="flip-back w-full h-full flex flex-col p-6 bg-white rounded-2xl border-0 border-pink-100 shadow-xl">
+            {/* Título un poco más compacto */}
+            <h3 className="mb-2 font-bold text-xl text-pink-700 text-center border-b border-pink-50 pb-1">
               {terapeuta.nombre}
             </h3>
 
-            {/* 3. Utilizamos la variable displayText que contiene el texto personalizable */}
-            <p className="mb-4 text-center text-sm text-gray-600">
-              {displayText}
-            </p>
+            {/* CONTENEDOR DE DESCRIPCIÓN: Ahora ocupa la mayor parte de la card */}
+            <div className="flex-grow overflow-y-auto mb-2 pr-0 custom-scrollbar">
+              <p className="text-gray-800 text-sm md:text-base leading-relaxed text-left whitespace-pre-wrap">
+                {displayText}
+              </p>
+            </div>
 
-            {/* El botón también llama a la misma función onClick definida en la tarjeta */}
+            {/* BOTÓN REDUCIDO: py-2 y text-sm para no robar protagonismo */}
             <button
               type="button"
-              className="w-full px-4 py-2 border rounded-full bg-pink-600 text-white hover:bg-pink-700 transition-colors duration-300"
+              className="w-full py-1 bg-pink-600 text-white text-sm font-semibold rounded-full hover:bg-pink-700 transition-all shadow-sm active:scale-50"
             >
               Ver Perfil
             </button>

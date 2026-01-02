@@ -84,7 +84,7 @@ import clau from "../assets/clau.png";
 
 import taller from "../assets/poderb.png";
 
-import counseling from "../assets/couselin.png";
+import counseling from "../assets/couselings.png";
 
 // import caro from "../assets/caro.jpg";
 
@@ -476,7 +476,7 @@ servicios: [
 
 id: 6,
 
-nombre: "Cindy Palma",
+nombre: "Cindi Palma",
 
 email: "cindipalma20@gmail.com",
 
@@ -494,7 +494,7 @@ servicios: [
 
  title: "Vortex Aura Healing",
 
- terapeuta: "Cindy Palma",
+ terapeuta: "Cindi Palma",
 
  terapeuta_id: 6,
 
@@ -514,7 +514,7 @@ servicios: [
 
  title: "Liberación Emociones Atrapadas",
 
- terapeuta: "Cindy Palma",
+ terapeuta: "Cindi Palma",
 
  terapeuta_id: 6,
 
