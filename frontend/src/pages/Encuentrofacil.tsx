@@ -217,16 +217,18 @@ export default function AgendaSanacion() {
   };
 
   const getDisponibilidadForTerapeutaAndService = (
-    terapeutaNombre: string,
-    servicioNombre: string
-  ): { [fecha: string]: string[] } | undefined => {
-    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-    if (!terapeutaDisp) {
-      return undefined;
-    }
-    return terapeutaDisp.disponibilidadPorServicio[servicioNombre];
-  };
+  terapeutaNombre: string,
+  servicioNombre: string
+): { [fecha: string]: string[] } | undefined => {
+  const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+  if (!terapeutaDisp) return undefined;
 
+  const servicioKey = Object.keys(terapeutaDisp.disponibilidadPorServicio).find(
+    (key) => key.toLowerCase().includes(servicioNombre.toLowerCase().trim())
+  );
+
+  return servicioKey ? terapeutaDisp.disponibilidadPorServicio[servicioKey] : undefined;
+};
   const reservar = (terapiaItem: TerapiaItem) => {
     const terapeuta = terapeutasData.find(
   (t) => t.nombre.trim().toLowerCase() === terapiaItem.terapeuta.trim().toLowerCase()

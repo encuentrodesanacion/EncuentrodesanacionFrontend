@@ -58,7 +58,7 @@ export default function SemillaDeLuz() {
       sesiones: 4,
       destacado: false,
       objetivo: "🎯 Objetivo: Que el adulto tome conciencia de sí mismo y del impacto que genera en el vínculo con la infancia.",
-      paraQuienes: ["Desean criar consciente", "Sienten que repiten patrones", "Quieren comprender su historia"],
+      paraQuienes: ["Desean criar conscientemente", "Sienten que repiten patrones", "Quieren comprender su historia"],
       incluye: ["Encuentros grupales", "Sanación niño interior", "Actividades de regulación emocional", "Material descargable de apoyo"]
     },
     { 

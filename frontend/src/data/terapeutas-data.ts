@@ -530,27 +530,7 @@ servicios: [
 
 },
 
-{
 
- img: horoscopo,
-
- title: "Horóscopo Chino",
-
- terapeuta: "Cindy Palma",
-
- terapeuta_id: 6,
-
- description:
-
-   "El Horóscopo colabora en la revisión de ciclos del propio vivir y da una visión panorámica de las distintas posibilidades que pueden resultar de los propios actos y acciones.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
 
 ],
 
@@ -559,11 +539,8 @@ servicios: [
 {
 
 id: 8,
-
 nombre: "Maria José Corvalán",
-
 email: "mariajose.cp.flga@gmail.com",
-
 imagenPerfil: cote,
 
 callToActionTextCard:
@@ -660,7 +637,7 @@ servicios: [
 
 {
 
- img: constel,
+ img: counseling,
 
  title: "Constelaciones del Alma",
 
@@ -682,7 +659,7 @@ servicios: [
 
 {
 
- img: liberar,
+ img: constel,
 
  title: "El Poder de la Diosa 2026",
 
