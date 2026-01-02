@@ -61,21 +61,7 @@ const App = () => {
     }
   }, [location]);
 
-  // EFECTO PARA EL TOOLTIP DE NAVEGACIÓN
-  useEffect(() => {
-    // 2. Mostrarlo inicialmente
-    setShowTooltip(true);
-
-    // 3. Ocultar el tooltip después de 8 segundos
-    const timer = setTimeout(() => {
-      setShowTooltip(false);
-      // 4. Marcar en localStorage que ya lo vio
-      localStorage.setItem("navTooltipSeen", "true");
-    }, 8000);
-
-    return () => clearTimeout(timer); // Limpiar el timer al desmontar
-  }, []);
-
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -183,24 +169,24 @@ const App = () => {
                 {t("nav_servicios")}
               </a>
 
-              <a
+              {/* <a
                 href="#otros"
                 className="text-blue-300 hover:text-white font-bold"
               >
                 {t("nav_ofrenda")}
-              </a>
+              </a> */}
               <a
                 href="#alianzas"
                 className="text-blue-300 hover:text-white font-bold"
               >
                 {t("nav_alianzas")}
               </a>
-              <Link
+              {/* <Link
                 to="/Staff-Terapéutico"
                 className="text-blue-300 hover:text-white font-bold"
               >
                 {t("nav_staff")}
-              </Link>
+              </Link> */}
               <Link
                 to="/nuestra-comunidad"
                 className="text-blue-300 hover:text-white font-bold"
@@ -382,7 +368,7 @@ const App = () => {
             {t("main_services_title")}
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-3 gap-8">
             {[
               // {
               //   icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
@@ -410,13 +396,25 @@ const App = () => {
               // },
               {
                 icon: <Heart className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>{t("integral_treatment_title")}</h2>,
-                description: <h2>{t("integral_treatment_description")}</h2>,
-                price: <h2>{t("integral_treatment_price")}</h2>,
+                title: <h2>Cuerpo Consciente</h2>,
+                description: (
+                  <h2>
+                    <strong>
+                      A través de sesiones personalizadas con kinesiologo,
+                      nutricionista, entrenador físico, y terapeuta
+                      complementario
+                    </strong>{" "}
+                    liberamos tensiones, equilibramos tu energía y fortalecemos
+                    tu bienestar físico. Un camino para reconectar con tu cuerpo
+                    consciente, encontrar claridad y vivir con mayor presencia
+                    calma y propósito.
+                  </h2>
+                ),
+                price: "",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/tratamientointegral"
+                      to="/cuerpo-consciente"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -426,13 +424,26 @@ const App = () => {
               },
               {
                 icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>{t("monthly_workshops_title")}</h2>,
-                description: <h2>{t("monthly_workshops_description")}</h2>,
-                price: <h2>{t("monthly_workshops_price")}</h2>,
+                title: <h2>Sanación Profunda</h2>,
+                description: (
+                  <h2>
+                    <strong>
+                      A través de prácticas conscientes y rituales guiados por
+                      Terapeutas Holísticos
+                    </strong>
+                    , armonizamos tu campo energético, elevamos tu vibración y
+                    abrimos espacio para claridad, paz y vitalidad interior.
+                    Este encuentro te invita a soltar lo que no te pertenece,
+                    liberar cargas acumuladas, reconectar con tu esencia y
+                    activar tu energía más pura, permitiendo que tu luz interior
+                    se expanda con propósito y equilibrio.
+                  </h2>
+                ),
+                price: "",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/tallermensual"
+                      to="/sanacion-profunda"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -442,20 +453,31 @@ const App = () => {
               },
               // {
               //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: "Alianzas",
-              //   description:
-              //     "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
-
-              //   button: (aaaa
+              //   title: <h2>Trauma, Dolor Y Reconexión</h2>,
+              //   description: (
+              //     <h2>
+              //       <strong>
+              //         A través de terapias especializadas con Psicologo,
+              //         Kinesiologo, Terapeuta Holístico,Coach de vida y Terapeuta
+              //         Somático{" "}
+              //       </strong>{" "}
+              //       , trabajamos para liberar memorias emocionales atrapadas.
+              //       Reconecta con partes de ti que quedaron fragmentadas.
+              //       Recupera tu sentido de pertenencia, Restauramos tu
+              //       confianza, la seguridad y el equilibrio emocional. Pensado
+              //       para quienes sienten que es momento de sanar heridas del
+              //       pasado.
+              //     </h2>
+              //   ),
+              //   price: "",
+              //   button: (
               //     <div className="flex flex-col gap-2 mt-4">
-              //       <a
-              //         href="https://forms.gle/n9cKSVDw9vjzB8QC8"
-              //         target="_blank"
-              //         rel="noopener noreferrer"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 text-center"
+              //       <Link
+              //         to="/trauma-dolor-reconexion"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
               //       >
-              //         Realizar Formulario
-              //       </a>
+              //         <h2>{t("formation_cta")}</h2>
+              //       </Link>
               //     </div>
               //   ),
               // },
@@ -478,13 +500,26 @@ const App = () => {
               // },
               {
                 icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>{t("encuentrofacil_title")}</h2>,
-                description: <h2>{t("encuentrofacil_description")}</h2>,
-                price: <h2>{t("encuentrofacil_price")}</h2>,
+                title: <h2>Oraculos & Guía</h2>,
+                description: (
+                  <h2>
+                    <strong>Es un programa de acompañamiento espiritual</strong>{" "}
+                    que va más allá de simples lecturas.{" "}
+                    <strong>
+                      Incluye técnicas como Tarot, Registros Akáshicos, Péndulo
+                      y diversas canalizaciones.
+                    </strong>{" "}
+                    Es una puerta a la orientación profunda que guía a quienes
+                    buscan claridad, dirección y entendimiento de su camino,
+                    usando herramientas ancestrales para revelar propósito,
+                    sanar memorias y fortalecer su conexión interior.
+                  </h2>
+                ),
+                price: "",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/encuentrofacil"
+                      to="/oraculos-y-guia"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -494,13 +529,53 @@ const App = () => {
               },
               {
                 icon: <SmilePlus className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>{t("giftcard_title")}</h2>,
-                description: <h2>{t("giftcard_description")}</h2>,
-                price: <h2>{t("giftcard_price")}</h2>,
+                title: <h2>Semillas De Luz</h2>,
+                description: (
+                  <h2>
+                    <strong>
+                      A través del acompañamiento de psicopedagogos, educadores,
+                      terapeutas somáticos, trabajadores sociales y
+                      fonoaudiólogos {""}
+                    </strong>
+                    ofrecemos un espacio dedicado a niños, madres, padres y
+                    cuidadores que buscan contención, orientación y crecimiento
+                    consciente. sostenemos procesos de: Desarrollo emocional y
+                    habilidades socioafectivas Fortalecimiento del vínculo
+                    familiar y la crianza respetuosa Comprensión del
+                    comportamiento desde una mirada integral Conciencia
+                    familiar, bienestar cotidiano y evolución espiritual
+                  </h2>
+                ),
+                price: "",
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/giftcard"
+                      to="/semillas-de-luz"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                    >
+                      <h2>{t("formation_cta")}</h2>
+                    </Link>
+                  </div>
+                ),
+              },
+               {
+                icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
+                title: <h2>Encuentro Facil</h2>,
+                description: (
+                  <h2>
+                    <strong>Es un programa de acompañamiento espiritual</strong>{" "}
+                    que va más allá de simples lecturas.{" "}
+                    <strong>
+                     EncuentroFacil
+                    </strong>{" "}
+                  
+                  </h2>
+                ),
+                price: "",
+                button: (
+                  <div className="flex flex-col gap-2 mt-4">
+                    <Link
+                      to="/encuentrofacil"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -563,18 +638,18 @@ const App = () => {
       {/* Componente ReservaHora agregado aquí abajo */}
 
       {/* Blog Preview Section */}
-      <section
+      {/* <section
         id="otros"
         className="py-0 bg-gradient-to-r from-pastel-green to-pastel-mint/10"
       >
         <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Título principal corregido: se elimina el <h2> anidado y se usa t() directamente */}
-          <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-25 md:py-12 font-bold">
+          {/* <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-25 md:py-12 font-bold">
             {t("offering_days_title")}
-          </h2>
+          </h2> */}
 
           {/* Contenedor deslizable con snap */}
-          <div className="flex justify-center flex-wrap gap-6 pb-6">
+          {/* <div className="flex justify-center flex-wrap gap-6 pb-6">
             {[
               {
                 // Se pasa solo la cadena de texto traducida (string)
@@ -585,8 +660,8 @@ const App = () => {
                 link: "/findetalleres",
                 isDisabled: false,
               },
-              {
-                // Se pasa solo la cadena de texto traducida (string)
+              { */}
+                {/* // Se pasa solo la cadena de texto traducida (string)
                 title: t("main_spa_title"),
                 image: SpaPrincipal,
                 excerpt: t("main_spa_description"),
@@ -594,8 +669,8 @@ const App = () => {
                 link: "/spaprincipal",
                 isDisabled: false,
               },
-              {
-                // Se pasa solo la cadena de texto traducida (string)
+              { */}
+                {/* // Se pasa solo la cadena de texto traducida (string)
                 title: t("little_spa_title"),
                 image: SpaLittle,
                 excerpt: t("little_spa_description"),
@@ -615,31 +690,31 @@ const App = () => {
                 />
                 <div className="p-6">
                   <h3 className="text-xl font-light mb-2 text-center">
-                    {post.title} {/* post.title ya es el texto */}
-                  </h3>
-                  <p className="text-gray-600">{post.excerpt}</p>{" "}
-                  {/* post.excerpt ya es el texto */}
-                  {post.isDisabled ? (
-                    <span
-                      className="text-gray-400 mt-4 inline-block font-medium cursor-not-allowed"
-                      style={{ pointerEvents: "none" }}
-                    >
-                      {post.buttonText} → {/* post.buttonText ya es el texto */}
-                    </span>
-                  ) : (
-                    <Link
-                      to={post.link}
-                      className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
-                    >
-                      {post.buttonText}
-                    </Link>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      //               {post.title} {/* post.title ya es el texto */}
+      {/* //             </h3> */}
+      {/* //             <p className="text-gray-600">{post.excerpt}</p>{" "} */}
+      //             {/* post.excerpt ya es el texto */}
+      {/* //             {post.isDisabled ? ( */}
+      {/* //               <span */}
+      {/* //                 className="text-gray-400 mt-4 inline-block font-medium cursor-not-allowed"
+      //                 style={{ pointerEvents: "none" }}
+      //               >
+      //                 {post.buttonText} → {/* post.buttonText ya es el texto */}
+      {/* //               </span> */}
+      {/* //             ) : ( */} 
+      {/* //               <Link */}
+      {/* //                 to={post.link}
+      //                 className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
+      //               >
+      //                 {post.buttonText}
+      //               </Link> */}
+      {/* //             )
+      //           </div> */}
+      {/* //         </div> */}
+      {/* //       ))} */}
+      {/* //     </div> */}
+      {/* //   </div> */}
+      {/* // </section> */} 
 
       {/* Contact Section */}
       <section id="contacto" className="py-16 md:py-24 bg-black text-white">
@@ -651,11 +726,11 @@ const App = () => {
                   {t("who_we_are_title")}
                 </h2>
               </Link>
-              <Link to="/Staff-Terapéutico" className="block">
+              {/* <Link to="/Staff-Terapéutico" className="block">
                 <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
                   {t("therapeutic_staff_title")}
                 </h2>
-              </Link>
+              </Link> */}
               <div>
                 <Link to="/nuestra-comunidad" className="block">
                   <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">

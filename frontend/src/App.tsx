@@ -20,9 +20,9 @@ import TallerMensual from "./pages/TalleresMensuales";
 import QuienesSomosPage from "./pages/QuienesSomos";
 import TerapeutasPage from "./pages/Staff";
 import ComunidadYLeadsPage from "./pages/ComunidadyLeads";
-import SpaPrincipal from "./pages/SpaPrincipal";
-import SpaLittle from "./pages/SpaLittle";
-import FinDeTalleres from "./pages/Findetalleres";
+// import SpaPrincipal from "./pages/SpaPrincipal";
+// import SpaLittle from "./pages/SpaLittle";
+// import FinDeTalleres from "./pages/Findetalleres";
 import PoliticasdePrivacidad from "./pages/PoliticasdePrivacidad";
 import TerminosyCondiciones from "./pages/TerminosyCondiciones";
 import Psicologos from "./pages/Psicologos";
@@ -47,18 +47,18 @@ export default function App() {
         <ScrollToTop />
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/terapeutasdeluz" element={<Terapias />} />
+          <Route path="/trauma-dolor-reconexion" element={<Terapias />} />
           <Route
-            path="/tratamientointegral"
+            path="/cuerpo-consciente"
             element={<TratamientoHolistico />}
           />
           {/* <Route path="/Findetalleres" element={<Findetalleres />} /> */}
-          <Route path="/spalittle" element={<SpaLittle />} />
-          <Route path="/tallermensual" element={<TallerMensual />} />
+          {/* <Route path="/spalittle" element={<SpaLittle />} /> */}
+          <Route path="/sanacion-profunda" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
-          <Route path="/giftcard" element={<Giftcard />} />
-          <Route path="/psicologos" element={<Psicologos />} />
+          <Route path="/oraculos-y-guia" element={<Giftcard />} />
+          <Route path="/semillas-de-luz" element={<Psicologos />} />
 
           <Route
             path="/encuentrofacil/:slugTerapeuta?"
@@ -73,8 +73,8 @@ export default function App() {
             path="/terminos-y-condiciones"
             element={<TerminosyCondiciones />}
           />
-          <Route path="/spaprincipal" element={<SpaPrincipal />} />
-          <Route path="/findetalleres" element={<FinDeTalleres />} />
+          {/* <Route path="/spaprincipal" element={<SpaPrincipal />} /> */}
+          {/* <Route path="/findetalleres" element={<FinDeTalleres />} /> */}
           <Route path="/nuestra-comunidad" element={<ComunidadYLeadsPage />} />
 
           {/* --- Rutas de pago --- */}

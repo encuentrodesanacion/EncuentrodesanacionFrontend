@@ -347,7 +347,7 @@ const crearTransaccionInicial = async (req, res) => {
           "Advertencia de validación: Reserva en carrito sin especialidad válida. Se usará un valor por defecto si el modelo lo permite."
         );
       }
-      // Validations for date and time
+     // Validations for date and time
       if (typeof resItem.fecha !== "string" || resItem.fecha.trim() === "") {
         console.error(
           "Error de validación: Reserva en carrito sin fecha válida.",
@@ -368,17 +368,20 @@ const crearTransaccionInicial = async (req, res) => {
             "Reserva en carrito contiene una hora inválida (vacía o no string).",
         });
       }
-      // Optional: Validate that date and time are parsable
-      if (isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime())) {
-        console.error(
-          "Error de validación: Fecha/hora de reserva no es un formato válido.",
-          resItem
-        );
-        return res.status(400).json({
-          error: "Formato de fecha u hora de reserva inválido.",
-        });
+
+      // 🛡️ CORRECCIÓN: Solo validamos que fecha/hora sean parseables si NO es "A coordinar"
+      if (resItem.hora !== "A coordinar") {
+        if (isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime())) {
+          console.error(
+            "Error de validación: Fecha/hora de reserva no es un formato válido.",
+            resItem
+          );
+          return res.status(400).json({
+            error: "Formato de fecha u hora de reserva inválido.",
+          });
+        }
       }
-    }
+    } // Fin del bucle for de reservas
 
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
@@ -575,15 +578,7 @@ const confirmarTransaccion = async (req, res) => {
         "*************************************************************"
       );
 
-      const serviciosExcluidosDeDisponibilidad = [
-        "Formación de Terapeutas de la Luz",
-        "Tratamiento Integral",
-        "Talleres Mensuales",
-        "Finde de Talleres",
-        "Mente y Ser",
-        "GiftCard",
-        "EncuentroFácil",
-      ];
+     
       for (const reserva of reservasToProcess) {
         // *** ESTA DESESTRUCTURACIÓN ESTÁ CORRECTA EN `confirmarTransaccion` ***
         const {
@@ -755,19 +750,28 @@ const confirmarTransaccion = async (req, res) => {
             "Talleres Mensuales",
             "Finde de Talleres",
             "Mente y Ser",
-            "GiftCard", // <--- CORRECCIÓN DE DISPONIBILIDAD: AÑADIDO
+            "GiftCard",
+            "Cuerpo Consciente",
+            "Sanación Profunda",
+            "Oráculo & Guía",
+            "Semilla de Luz"// <--- CORRECCIÓN DE DISPONIBILIDAD: AÑADIDO
           ];
           // AHORA SE GESTIONA LA DISPONIBILIDAD (SÓLO SI EL PAGO ES EXITOSO)
-
+// 🆕 Nueva lista para excepciones por nombre específico de terapia
+const especialidadesExcluidas = [
+  "Tameana niños","Carta Natal China"
+ 
+];
           // --- CORRECCIÓN DE DISPONIBILIDAD: CONDICIÓN COMPROBADA ---
-          if (
-            serviciosExcluidosDeDisponibilidad.includes(servicio) ||
-            servicio === "GiftCard"
-          ) {
-            console.log(
-              `[INFO DISPONIBILIDAD] Saltando la lógica de actualización de disponibilidad para el servicio: "${servicio}" (configurado para no modificar horas).`
-            );
-          } else {
+ if (
+  serviciosExcluidosDeDisponibilidad.includes(servicio.trim()) || 
+  especialidadesExcluidas.includes(especialidad.trim()) || // 🛡️ Nueva validación
+  servicio.trim() === "GiftCard"
+) {
+  console.log(
+    `[INFO DISPONIBILIDAD] Saltando actualización para el servicio: "${servicio}" o especialidad: "${especialidad}".`
+  );
+} else {
             // Lógica para servicios que SÍ afectan la disponibilidad del terapeuta
             try {
               console.log(
@@ -899,7 +903,9 @@ const confirmarTransaccion = async (req, res) => {
               const servicioOfrecidoLowerCase =
                 servicioOfrecidoNormalizado.toLowerCase();
               return servicioOfrecidoLowerCase === servicioReservaLowerCase;
-            });
+              }) || ["Cuerpo Consciente", "Semilla de Luz","Sanación Profunda", 
+  "Trauma Dolor & Reconexión"].includes(servicio);
+          
 
             if (ofreceServicio) {
               // --- AJUSTE EN ASUNTO (Añadimos la etiqueta de servicio) ---
@@ -908,8 +914,10 @@ const confirmarTransaccion = async (req, res) => {
                   ? "[Paquete de Crisis] " // Paquetes de 4 o 10 sesiones
                   : tipoServicio === "¡INTERVENCIÓN EN CRISIS!"
                   ? "[URGENTE - Crisis 1 Sesión] " // Prefijo para 1 sesión/Crisis
-                  : servicio === "GiftCard"
+                 : servicio === "GiftCard"
                   ? "[Gift Card / Paquete] "
+                  : ["Cuerpo Consciente", "Semilla de Luz"].includes(servicio) 
+                  ? "[PROGRAMA INTEGRAL] " // ✨ Prefijo para tus nuevos programas
                   : "";
               const subject = `${subjectPrefix}¡Nueva Reserva Confirmada para ${especialidad}!`;
               // ---------------------------------------------------------
@@ -975,6 +983,8 @@ const confirmarTransaccion = async (req, res) => {
               } else {
                 // Contenido para reservas de hora normal/crisis (no GiftCard)
 
+               const waNumber = telefonoCliente.replace(/[\s+()-]/g, "");
+const waLink = `https://wa.me/${waNumber}`;
                 // 1. Determinar el mensaje adicional de urgencia
                 if (tipoServicio === "¡PAQUETE ASISTENCIA EN CRISIS!") {
                   mensajeAdicional = `<p style="color:red; font-weight:bold;">¡ATENCIÓN! ESTE ES UN PAQUETE DE INTERVENCIÓN EN CRISIS (${sesiones} SESIONES). REQUIERE ATENCIÓN PRIORITARIA.</p>`;
@@ -984,12 +994,15 @@ const confirmarTransaccion = async (req, res) => {
                   // <-- NUEVA LÓGICA AGREGADA
                   mensajeAdicional = `
     <p style="font-weight:bold; color: #0056b3;">
-      ✅ RESERVA DE SESIÓN/PAQUETE NORMAL CONFIRMADA.
+      ✅ RESERVA DE SESIÓN/PROGRAMA CONFIRMADO.
     </p>
     <p>
       **ACCIÓN REQUERIDA:** Por favor, contacta al cliente al ${telefonoCliente} para **coordinar la fecha y hora real** de la sesión.
       (La Fecha y Hora listadas abajo son solo de referencia para el registro de compra.)
-    </p>`;
+    <p>
+      <a href="${waLink}" style="background-color: #25D366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; display: inline-block; margin-top: 10px;">
+        Contactar por WhatsApp
+      </a></p>`;
                 } else {
                   // Mensaje de fallback (Aunque con la lógica actual, esto no debería ocurrir)
                   mensajeAdicional = `<p>Por favor, revisa tu calendario y prepárate para la sesión.</p>`;

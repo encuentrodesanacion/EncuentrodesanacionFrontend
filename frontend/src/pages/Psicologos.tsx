@@ -1,713 +1,265 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/tratamientoIntegral.css";
-import { useCart, Reserva } from "../pages/CartContext";
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/tratamientoIntegral.css"; 
+import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes
-import Terapeuta1 from "../assets/Terapeuta1.jpg";
-import Terapeuta31 from "../assets/Terapeuta31.jpeg";
-import informe from "../assets/INFORME PSICODIA.jpg";
-import renata from "../assets/renata.jpeg";
+import paulinaImg from "../assets/Terapeuta11.jpeg"; 
+import karlaImg from "../assets/incog.png"; 
+import natalieImg from "../assets/nataly.png"; 
+import mariajoseImg from "../assets/cote.png"; 
 
-import creadorvirtual from "../assets/creadorvirtual.jpg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-interface OpcionSesion {
-  sesiones: number;
-  precio: number;
-  title?: string; // Permitir título opcional para el botón (usado en informes)
-  subOptions?: {
-    especialidad: string;
-    precioFinal: number;
-    testOptions?: string[]; // AÑADIDO: Opciones de test (solo para Niños/Adolescentes)
-  }[]; // Permitir subopciones anidadas
-}
-interface TerapiaItem {
-  img: string;
-  title: string;
-  terapeuta: string;
-  terapeutaId: number;
-  description: string;
-  opciones: OpcionSesion[];
-}
-
-export default function TratamientoHolistico() {
+export default function SemillaDeLuz() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
+  
+  // --- ESTADOS ---
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
+  const [isProcessing, setIsProcessing] = useState(false);
+  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
 
-  // ESTADO PARA EL SEGUNDO NIVEL (Especialidad: Niños/Adultos/Habilidades)
-  const [selectedSubOption, setSelectedSubOption] = useState<{
-    terapia: TerapiaItem;
-    opcion: OpcionSesion;
-  } | null>(null);
-
-  // ESTADO PARA EL TERCER NIVEL (Tests Específicos)
-  const [selectedTestOption, setSelectedTestOption] = useState<{
-    terapiaTitle: string;
-    sesiones: number;
-    precio: number;
-    terapeutaNombre: string;
-    terapeutaId: number;
-    especialidad: string; // Ejemplo: "Niños y Adolescentes"
-  } | null>(null);
-
-  const [currentTerapiaData, setCurrentTerapiaData] = useState<{
-    terapiaTitle: string;
-    sesiones: number;
-    precio: number;
-    terapeutaNombre: string;
-    terapeutaId: number;
-  } | null>(null);
-
-  const terapias: TerapiaItem[] = [
-    {
-      img: renata,
-      title:
-        "Psicoterapia Clínica con especialidad en neurodivergencias (TETP-C, TDAH, Bipolaridad y depresión)",
-      terapeuta: "Renata Santoro",
-      terapeutaId: 29,
-      description:
-        "Con 15 años de experiencia en intervenciones en crisis. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida",
-      opciones: [
-        { sesiones: 1, precio: 40000 }, // Sesión Individual Normal: 1 @ 40.000
-        { sesiones: 4, precio: 140000 }, // Paquete Normal: 4 @ 140.000assas
-        { sesiones: 8, precio: 220000 }, // Paquete Normal: 8 @ 220.000 (Añadido) // --- PRECIOS DE INTERVENCIÓN EN CRISIS (Mantenidos) ---
-        { sesiones: 1, precio: 100000 },
-        // Intervención en crisis: 1 @ 100.000
-        // Paquete CRISIS: 10 @ 370.000
-      ],
+  // --- DATOS PROFESIONALES ---
+  const terapeutas = [
+    { 
+      nombre: "Paulina Villablanca", rol: "Líder del Programa", especialidad: "Terapeuta Holística", img: paulinaImg, 
+      color: "bg-pink-600", border: "border-pink-200", esLider: true,
+      descripcion: "🌿 Educadora de párvulos y terapeuta holística. Guía el proceso desde la crianza consciente y la sanación del niño interior, acompañando a los adultos a observar su historia emocional."
     },
-    {
-      img: informe, // Usando una imagen existente
-      title: "Informes Psicodiagnósticos (4 Sesiones + Informe)",
-      terapeuta: "Renata Santoro",
-      terapeutaId: 29, // ID genérico para este servicio grupal/especializado
-      description:
-        "Evaluación exhaustiva que incluye 4 sesiones de psicoterapia para el proceso de diagnóstico y la entrega de un informe completo y detallado, orientado a la comprensión profunda del caso.",
-      opciones: [
-        {
-          sesiones: 4,
-          precio: 180000,
-          subOptions: [
-            {
-              especialidad: "Niños y Adolescentes",
-              precioFinal: 180000,
-              // LISTA DE TESTS AÑADIDA
-              testOptions: [
-                "CAT-A",
-                "HTP",
-                "Test de la persona bajo la lluvia",
-                "CAT-H",
-              ],
-            },
-            {
-              especialidad: "Adultos",
-              precioFinal: 180000,
-              // LISTA DE TESTS PARA ADULTOS AÑADIDA
-              testOptions: [
-                "TAT",
-                "HTP",
-                "Test de la persona bajo la lluvia",
-                "Test de Edward",
-                "Instruccion Compleja",
-                "DISC",
-              ],
-            },
-            {
-              especialidad: "Habilidades Parentales",
-              precioFinal: 180000,
-              // LISTA DE TESTS PARA HABILIDADES PARENTALES AÑADIDA
-              testOptions: ["Test de la Familia"],
-            },
-          ],
-        },
-      ],
+    { 
+      nombre: "Natalie Bonysson", rol: "Arteterapia y expresión emocional", especialidad: "Terapeuta Floral", img: natalieImg, 
+      color: "bg-purple-600", border: "border-purple-200", esLider: false,
+      descripcion: "🎨 Facilita espacios de expresión emocional consciente para adultos, utilizando el arte como vía de observación, integración y comprensión interna."
     },
+    { 
+      nombre: "Karla Flores", rol: "Movimiento y vínculo con la infancia", especialidad: "Yogui Infantil", img: karlaImg, 
+      color: "bg-blue-600", border: "border-blue-200", esLider: false,
+      descripcion: "🌈 Yogui infantil y estudiante de psicología. Acompaña a las infancias a través del movimiento consciente, el juego y la expresión corporal."
+    },
+    { 
+      nombre: "Maria Jose Corvalán", rol: "Regulación emocional del adulto", especialidad: "Terapeuta de Liberación", img: mariajoseImg, 
+      color: "bg-green-600", border: "border-green-200", esLider: false,
+      descripcion: "🌱 Especializada en liberación de emociones atrapadas y creencias limitantes. Acompaña a los adultos a reconocer y liberar cargas que interfieren en la crianza."
+    }
   ];
 
-  const reservarSesion = (
-    terapiaTitle: string,
-    sesiones: number,
-    precio: number,
-    terapeutaNombre: string,
-    terapeutaId: number
-  ) => {
-    if (
-      !terapiaTitle ||
-      typeof terapiaTitle !== "string" ||
-      terapiaTitle.trim() === ""
-    ) {
-      alert("Error: El nombre del servicio no es válido.");
-      console.error("Servicio inválido detectado:", terapiaTitle);
-      return;
+  // --- DATOS DE PLANES ---
+  const planes = [
+    { 
+      titulo: "Programa 4 Semanas", 
+      subtitulo: "Programa de conciencia y base emocional", 
+      precio: 145000, 
+      sesiones: 4,
+      destacado: false,
+      objetivo: "🎯 Objetivo: Que el adulto tome conciencia de sí mismo y del impacto que genera en el vínculo con la infancia.",
+      paraQuienes: ["Desean criar consciente", "Sienten que repiten patrones", "Quieren comprender su historia"],
+      incluye: ["Encuentros grupales", "Sanación niño interior", "Actividades de regulación emocional", "Material descargable de apoyo"]
+    },
+    { 
+      titulo: "Programa 8 Semanas", 
+      subtitulo: "Programa de integración y transformación del vínculo", 
+      precio: 185000, 
+      sesiones: 8, 
+      destacado: true, // Activa la etiqueta MÁS COMPLETO
+      objetivo: "🎯 Objetivo: Que el adulto transforme su forma de vincularse, creando una crianza más presente.",
+      paraQuienes: ["Necesitan integrar cambios reales", "Desean llevarlo a la práctica cotidiana", "Buscan acompañamiento extendido"],
+      incluye: ["Todo lo de 4 semanas", "Profundización vincular", "Integración consciente del rol", "Espacios vivenciales de transformación"]
     }
-    if (typeof precio !== "number" || isNaN(precio) || precio <= 0) {
-      alert("Error: El precio no es válido o es cero.");
-      console.error("Precio inválido detectado:", precio);
-      return;
+  ];
+
+  const ejecutarAccionReserva = async (modo: "pago" | "carrito") => {
+    if (!selectedPlan || !clientName.trim() || !clientPhone.trim()) {
+      alert("Por favor, completa tus datos."); return;
     }
-
-    setCurrentTerapiaData({
-      terapiaTitle,
-      sesiones,
-      precio,
-      terapeutaNombre,
-      terapeutaId,
-    });
-    setShowContactModal(true);
-    setClientName("");
-    setClientPhone("");
-    console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
-  };
-
-  const handleConfirmAndAddToCart = async () => {
-    if (!currentTerapiaData) {
-      console.error("Error: currentTerapiaData es nulo al confirmar.");
-      alert("Hubo un error al procesar tu reserva. Intenta de nuevo.");
-      return;
-    }
-
-    if (clientName.trim() === "" || clientPhone.trim() === "") {
-      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
-      return;
-    }
-
     const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
+    if (!phoneNumber || !phoneNumber.isValid()) { alert("Número inválido."); return; }
 
-    if (!phoneNumber || !phoneNumber.isValid()) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
-      );
-      return;
-    }
-
-    const detectedCountry = phoneNumber.country || "Desconocido";
-    console.log("País detectado por número telefónico:", detectedCountry);
-
+    setIsProcessing(true);
     const now = new Date();
-    const fechaActual = now.toISOString().split("T")[0];
-    const horaGenerica = now.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: undefined,
-      hour12: false,
-    });
-
-    const reservaDataToSend = {
-      servicio: "Mente y Ser",
-      especialidad: currentTerapiaData.terapiaTitle,
-      fecha: fechaActual,
-      hora: horaGenerica,
-      precio: currentTerapiaData.precio,
-      sesiones: currentTerapiaData.sesiones,
-      cantidad: 1,
+    const reservaData: Reserva = {
+      clientBookingId: "semilla-luz-" + Date.now(),
+      terapeuta: "Equipo Semilla de Luz",
+      servicio: "Semilla de Luz",
+      especialidad: selectedPlan.titulo,
+      fecha: now.toLocaleDateString('sv-SE'),
+      hora: "A coordinar",
+      precio: selectedPlan.precio,
       nombreCliente: clientName.trim(),
       telefonoCliente: clientPhone.trim(),
-      terapeuta: currentTerapiaData.terapeutaNombre,
-      terapeutaId: currentTerapiaData.terapeutaId,
+      sesiones: selectedPlan.sesiones,
+      cantidad: 1,
+      terapeutaId: 10,
     };
 
-    console.log(
-      "Objeto Reserva a añadir al carrito desde Mente y Ser (después de modal):",
-      reservaDataToSend
-    );
-
     try {
-      // Inicio del bloque `try` para la llamada al backend
-      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reservaDataToSend),
-      });
-
-      if (!response.ok) {
-        const errorBody = await response.json();
-        const errorMessage =
-          errorBody.mensaje ||
-          `Error al confirmar la inscripción: ${response.status} ${response.statusText}`;
-        throw new Error(errorMessage);
+      if (modo === "pago") {
+        const res = await fetch(`${API_BASE_URL}/webpay/create-transaction`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ monto: selectedPlan.precio, returnUrl: `${API_BASE_URL}/webpay/confirmacion`, reservas: [reservaData] }),
+        });
+        const data = await res.json();
+        window.location.href = `${data.url}?token_ws=${data.token}`;
+      } else {
+        const res = await fetch(`${API_BASE_URL}/reservar-directa`, {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reservaData),
+        });
+        const { reserva: confirmed } = await res.json();
+        addToCart(confirmed);
+        alert("¡Añadido al carrito!");
+        setShowContactModal(false);
       }
-
-      const { reserva: confirmedReservation } = await response.json();
-
-      console.log(
-        "Reserva de Mente y Ser confirmada por backend:",
-        confirmedReservation
-      );
-
-      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
-
-      alert(
-        `Reserva agregada: ${confirmedReservation.sesiones} sesiones de ${confirmedReservation.especialidad} con ${confirmedReservation.terapeuta}`
-      ); // Cierra el modal y resetea estados
-
-      setShowContactModal(false);
-      setCurrentTerapiaData(null);
-      setClientName("");
-      setClientPhone("");
-    } catch (error: any) {
-      // Cierre del `try` y comienzo del `catch`
-      console.error("ERROR al crear la reserva de Mente y Ser:", error);
-      alert(`No se pudo completar la inscripción: ${error.message}`);
-    }
+    } catch (e: any) { alert(`Error: ${e.message}`); } finally { setIsProcessing(false); }
   };
+
+  const navLinks = [
+    { to: "/cuerpo-consciente", label: "Cuerpo Consciente" },
+    { to: "/sanacion-profunda", label: "Sanación Profunda" },
+    { to: "/semillas-de-luz", label: "Semillas De Luz" },
+    { to: "/oraculos-y-guia", label: "Oráculos & Guía" },
+  ];
 
   return (
     <div className="min-h-screen bg-white">
-      {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
-      <header className="fixed top-0 left-0 w-full bg-white shadow z-20 flex justify-between items-center px-5 py-5">
-        {/* Título de la Página (Ajustado) */}
-        <h1 className="text-xl font-semibold text-gray-800 z-50">
-          Mente & Ser{" "}
-        </h1>
-        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
-        {/* Usamos ml-auto y -mr-4 para desplazar a la izquierda y separar del carrito */}
+      {/* --- HEADER --- */}
+      <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
+        <h1 className="text-xl font-semibold text-gray-800 z-50">Semilla De Luz</h1>
         <div className="flex items-center gap-4 md:hidden ml-auto -mr-4">
-          {/* 1. Botón Hamburguesa */}
-          <button
-            className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            aria-label="Abrir menú de navegación"
-          >
+          <button className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
             {isMenuOpen ? (
-              // Icono X (Cerrar)
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
-              </svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
             ) : (
-              // Icono Menú Hamburguesa
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
-              </svg>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
             )}
           </button>
-          {/* Icono del Carrito (se mantiene) */}
         </div>
-        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
-        {/* Esto solo se muestra en PC (md:flex) */}
-        <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link
-            to="/terapeutasdeluz"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Terapeutas de la Luz
-          </Link>
-          <Link
-            to="/tratamientointegral"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Tratamiento Int.
-          </Link>
-          <Link
-            to="/tallermensual"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Talleres Mensuales
-          </Link>
-          <Link
-            to="/psicologos"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Mente y Ser
-          </Link>
-          <Link
-            to="/giftcard"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            GiftCards
-          </Link>
+        <div className="hidden md:flex items-center justify-start gap-6 p-4 ml-auto md:mr-20">
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} className="text-blue-500 hover:text-gray-800 font-bold whitespace-nowrap">{link.label}</Link>
+          ))}
+          <CartIcon />
         </div>
       </header>
-      {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}
-      {/* Se muestra si isMenuOpen es true y solo en pantallas pequeñas (md:hidden) */}
-      <div
-        className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen
-            ? "max-h-screen opacity-100 py-4"
-            : "max-h-0 opacity-0 overflow-hidden"
-        } z-40`}
-      >
-        <div className="flex flex-col items-center space-y-3 px-4">
-          {/* Enlaces del menú móvil */}
-          {[
-            { to: "/terapeutasdeluz", label: "Terapeutas de la Luz" },
-            { to: "/tratamientointegral", label: "Tratamiento Int." },
-            { to: "/tallermensual", label: "Talleres Mensuales" },
-            { to: "/psicologos", label: "Mente y Ser" },
-            { to: "/giftcard", label: "GiftCards" },
-          ].map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer clic
-              className="text-lg text-gray-800 hover:text-pink-600 py-2 w-full text-center border-b border-gray-100"
-            >
-              {item.label}
-            </Link>
+
+      {/* --- MENÚ MÓVIL --- */}
+      <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
+        <div className="flex flex-col items-center space-y-4 px-4">
+          {navLinks.map((link) => (
+            <Link key={link.to} to={link.to} onClick={() => setIsMenuOpen(false)} className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100">{link.label}</Link>
           ))}
+          <div className="pt-2"><CartIcon /></div>
         </div>
       </div>
-      {/* --- FIN DEL NAVEGADOR MÓVIL --- */}
-      {/* Botón de volver a Servicios (ajustado para que no lo tape el menú móvil) */}
-      <div
-        style={{
-          padding: "2rem",
-          paddingTop: "6rem",
-          backgroundColor: "#fefefe",
-          minHeight: "100vh",
-        }}
-      >
-        <button
-          onClick={() => navigate("/servicios")}
-          className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-        >
-          Volver a Servicios
-        </button>
-        <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-          Bienvenido a Mente y Ser
-        </h2>
-        <br></br> <br></br>
-        <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-          Querido VALIENTE: Porque mereces vivir en armonía contigo y tu
-          entorno, hemos creado para ti, Mente & Ser: Un espacio profesional
-          creado para brindarte el sostén psicológico que necesitas. Avanza con
-          certeza y de la mano de los mejores profesionales hacia tu bienestar y
-          tu paz.
-        </p>
-        <br></br> <br></br>
-        {/* NUEVA ESTRUCTURA VISUAL - ESTILO TALLERES */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-10">
-          {terapias.map((t: TerapiaItem, i: number) => (
-            <div
-              key={i}
-              className="bg-white rounded-lg shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-[1.02] border border-pink-100"
-            >
-              {/* Imagen del Terapeuta */}
-              <img
-                src={t.img}
-                alt={t.terapeuta}
-                className="w-full h-64 object-contain object-center"
-              />
-              {/* Contenido Principal de la Tarjeta */}
-              <div className="p-4 flex flex-col">
-                <h3 className="text-lg font-semibold text-gray-800 mb-1 leading-tight">
-                  {t.title}
-                </h3>
-                <p className="text-sm text-pink-600 font-bold mb-3">
-                  Terapeuta: {t.terapeuta}
-                </p>
-                {/* Descripción (Usamos una altura máxima definida y scroll) */}
-                <p className="text-gray-600 text-sm mb-4 overflow-y-auto max-h-32">
-                  {t.description}
-                </p>
-                {/* Formulario de Opciones de Sesión (Siempre visible) */}
-                <form
-                  className="w-full mt-2 pt-2 border-t border-gray-100" // Añadido border-t para separador visual
-                  onSubmit={(e) => e.preventDefault()}
-                >
-                  {t.opciones.map(
-                    (
-                      op: {
-                        sesiones: number;
-                        precio: number;
-                        subOptions?: {
-                          especialidad: string;
-                          precioFinal: number;
-                          testOptions?: string[]; // Asegurado el tipo
-                        }[];
-                      },
-                      j: number
-                    ) => {
-                      // --- Lógica de Detección de Servicios Especiales ---
-                      let isCrisisPack = false;
-                      let isPsychodiagnostic =
-                        op.subOptions && op.subOptions.length > 0; // Identificar informe
 
-                      if (op.sesiones === 4 && op.precio === 170000) {
-                        isCrisisPack = true;
-                      } else if (op.sesiones === 10 && op.precio === 370000) {
-                        isCrisisPack = true;
-                      } else if (op.sesiones === 1 && op.precio === 100000) {
-                        isCrisisPack = true;
-                      }
-                      // --------------------------------------------------------
+      <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
+        <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
 
-                      let buttonText;
-                      let buttonTitle = `${op.precio.toLocaleString()} CLP`;
+        {/* INTRODUCCIÓN */}
+        <div className="max-w-4xl mx-auto text-center mb-12">
+          <h2 className="text-4xl font-bold text-pink-700 mb-6">Semilla de Luz</h2>
+          <div className="text-gray-700 text-lg leading-relaxed">
+            <p className="mb-4"><strong>Programa de crianza consciente y sanación del vínculo adulto–niñez.</strong></p>
+            <p className="mb-4 italic">No se trata de criar perfecto. Se trata de criar con conciencia.</p>
+            <p className="mb-4">
+              Semilla de Luz es un programa creado para madres, padres y cuidadores que desean mirarse a sí mismos para transformar la forma en que acompañan a las infancias.
+            </p>
+            <p className="mb-4">
+              Aquí el foco no está en “corregir al niño”, sino en el adulto que se observa, se responsabiliza y elige distinto.
+            </p>
+            <p className="mb-6">Semilla de Luz no busca fórmulas ni recetas. Es un proceso para adultos que se atreven a mirarse.</p>
+            
+            <div className="bg-pink-50 p-6 rounded-lg inline-block text-left mb-6 border border-pink-100 shadow-sm">
+              <h4 className="font-bold text-pink-800 mb-2 uppercase text-sm">🌱 ¿QUÉ TRABAJA ESTE PROGRAMA?</h4>
+              <ul className="list-disc list-inside space-y-1 text-gray-800">
+                <li>Crianza consciente</li>
+                <li>Sanación del niño interior</li>
+                <li>Regulación emocional del adulto</li>
+                <li>Vínculo adulto–infancia</li>
+                <li>Herramientas prácticas para acompañar con presencia</li>
+              </ul>
+            </div>
+          </div>
+        </div>
 
-                      if (isPsychodiagnostic) {
-                        // CAMBIO: Texto y acción para abrir el MODAL DEDICADO
-                        buttonText = "Solicitar Informe";
-                        // El precio base ya está en el título, indicamos que hay opciones a elegir.
-                        buttonTitle = `${op.precio.toLocaleString()} (Ver opciones)`;
-                      } else if (op.sesiones === 1 && op.precio === 100000) {
-                        buttonText = "Intervención en crisis";
-                      } else if (isCrisisPack) {
-                        buttonText = `${op.sesiones} sesiones + Pack Intervención en Crisis`;
-                      } else if (op.sesiones === 1 && op.precio === 40000) {
-                        buttonText = "Sesión Individual Clínica";
-                      } else {
-                        buttonText = `${op.sesiones} sesiones individual clínica`;
-                      }
-
-                      const finalTitle = t.title;
-
-                      const buttonClass =
-                        isCrisisPack || isPsychodiagnostic
-                          ? "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-800 text-white hover:bg-pink-900 font-bold shadow-md"
-                          : "w-full mb-2 px-2 py-2 text-sm border rounded bg-pink-600 text-white hover:bg-pink-700 shadow-sm";
-
-                      return (
-                        <React.Fragment key={j}>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              if (isPsychodiagnostic) {
-                                // Llama al modal para seleccionar la sub-opción
-                                setSelectedSubOption({
-                                  terapia: t,
-                                  opcion: op,
-                                });
-                              } else {
-                                // Procede a la reserva normal
-                                reservarSesion(
-                                  finalTitle,
-                                  op.sesiones,
-                                  op.precio,
-                                  t.terapeuta,
-                                  t.terapeutaId
-                                );
-                              }
-                            }}
-                            className={buttonClass}
-                          >
-                            {buttonText} (${buttonTitle})
-                          </button>
-                          {/* NOTA: Eliminamos la lógica de despliegue in-card de sub-opciones. */}
-                        </React.Fragment>
-                      );
-                    }
-                  )}
-                </form>
+        {/* GRID TERAPEUTAS */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 max-w-7xl mx-auto">
+          {terapeutas.map((t, idx) => (
+            <div key={idx} className="bg-white p-6 rounded-xl shadow-md border border-gray-100 relative flex flex-col items-center overflow-hidden">
+              <div className={`absolute top-0 left-0 w-full h-1.5 ${t.color}`}></div>
+              {t.esLider && <span className="absolute top-0 right-0 bg-pink-700 text-white px-3 py-1 text-[10px] font-bold uppercase rounded-bl-lg">Lider</span>}
+              <img src={t.img} alt={t.nombre} className="w-28 h-28 rounded-full object-cover mb-4 border-2 border-gray-100 shadow-sm" />
+              <h3 className="text-lg font-bold text-gray-800 mb-1">{t.nombre}</h3>
+              <div className="flex flex-col items-center gap-1 mb-4">
+                <span className="text-[10px] font-bold text-pink-600 uppercase text-center px-2">{t.rol}</span>
+                <span className={`px-2 py-0.5 rounded text-[9px] font-bold text-white ${t.color}`}>{t.especialidad}</span>
               </div>
+              <p className="text-[11px] text-gray-600 text-center italic border-t pt-4 leading-relaxed">{t.descripcion}</p>
             </div>
           ))}
         </div>
-        {/* --- MODAL DE CONTACTO --- */}
-        {showContactModal && currentTerapiaData && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
-            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
-              <h3 className="text-xl font-semibold mb-4 text-center">
-                Reservar: "{currentTerapiaData.terapiaTitle}"
-              </h3>
-              <p className="text-gray-700 mb-4 text-center">
-                Ingresa tus datos para continuar con la reserva de{" "}
-                <strong>
-                  {currentTerapiaData.sesiones} sesiones por ${" "}
-                  {currentTerapiaData.precio.toLocaleString()} CLP
-                </strong>
-                .
-              </p>
-              <div className="mb-4">
-                <label
-                  htmlFor="clientName"
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                >
-                  Nombre Completo:
-                </label>
-                <input
-                  type="text"
-                  id="clientName"
-                  placeholder="Tu Nombre Completo"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  value={clientName}
-                  onChange={(e) => setClientName(e.target.value)}
-                />
-              </div>
+
+        {/* GRID PLANES */}
+        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 pb-10">
+          {planes.map((plan, idx) => (
+            <div key={idx} className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${plan.destacado ? 'border-pink-500 bg-pink-50 shadow-xl scale-105 z-10' : 'border-gray-200 bg-white shadow-lg'}`}>
+              
+              {plan.destacado && (
+                <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-1 rounded-full text-xs font-bold uppercase shadow-md">
+                  MÁS COMPLETO
+                </span>
+              )}
+
+              <h4 className="text-2xl font-bold text-pink-700 mb-2 text-center">{plan.titulo}</h4>
+              <p className="text-xs text-pink-600 font-bold mb-4 text-center italic uppercase">{plan.subtitulo}</p>
+              <p className="text-sm font-semibold text-gray-800 mb-6">{plan.objetivo}</p>
+
+              {/* 🛡️ SECCIÓN VISIBLE: PENSADO PARA QUIENES 🛡️ */}
               <div className="mb-6">
-                <label
-                  htmlFor="clientPhone"
-                  className="block text-gray-700 text-sm font-bold mb-2"
-                >
-                  Número de Teléfono:
-                </label>
-                <input
-                  type="tel"
-                  id="clientPhone"
-                  placeholder="Ej: +56912345678"
-                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  value={clientPhone}
-                  onChange={(e) => setClientPhone(e.target.value)}
-                />
-              </div>
-              <div className="flex justify-end space-x-3">
-                <button
-                  onClick={() => setShowContactModal(false)}
-                  className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
-                >
-                  Cancelar
-                </button>
-                <button
-                  onClick={handleConfirmAndAddToCart}
-                  className="bg-pink-600 text-white px-4 py-2 rounded hover:bg-pink-700 transition-colors duration-200"
-                >
-                  Confirmar y Añadir al Carrito
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {/* --- MODAL PARA SELECCIÓN DE ESPECIALIDAD (SEGUNDO NIVEL) --- */}
-        {selectedSubOption && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[101] p-4">
-            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full relative">
-              <button
-                onClick={() => setSelectedSubOption(null)}
-                className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold"
-              >
-                X
-              </button>
-              <h3 className="text-xl font-semibold mb-4 text-center text-pink-700">
-                Selecciona el Enfoque del Informe
-              </h3>
-
-              <p className="text-gray-700 mb-4 text-center text-sm">
-                {selectedSubOption.terapia.title} (
-                {selectedSubOption.opcion.sesiones} Sesiones)
-              </p>
-
-              <div className="flex flex-col space-y-3">
-                {selectedSubOption.opcion.subOptions?.map((subOp, subJ) => (
-                  <button
-                    key={subJ}
-                    type="button"
-                    onClick={() => {
-                      // 1. CHEQUEA SI NECESITA TERCER NIVEL (TESTS)
-                      if (subOp.testOptions && subOp.testOptions.length > 0) {
-                        // Abre el Modal de Tests
-                        setSelectedTestOption({
-                          terapiaTitle: selectedSubOption.terapia.title,
-                          sesiones: selectedSubOption.opcion.sesiones,
-                          precio: subOp.precioFinal,
-                          terapeutaNombre: selectedSubOption.terapia.terapeuta,
-                          terapeutaId: selectedSubOption.terapia.terapeutaId,
-                          especialidad: subOp.especialidad,
-                        });
-                        setSelectedSubOption(null); // Cierra este modal
-                      } else {
-                        // 2. Si NO NECESITA tercer nivel (Adultos/Habilidades), procede a la reserva final
-                        reservarSesion(
-                          `${selectedSubOption.terapia.title} - ${subOp.especialidad}`, // Título detallado
-                          selectedSubOption.opcion.sesiones,
-                          subOp.precioFinal,
-                          selectedSubOption.terapia.terapeuta,
-                          selectedSubOption.terapia.terapeutaId
-                        );
-                        setSelectedSubOption(null); // Cierra este modal
-                      }
-                    }}
-                    className="w-full px-4 py-2 text-sm border rounded bg-pink-500 text-white hover:bg-pink-600 font-semibold transition-colors duration-200"
-                  >
-                    {subOp.especialidad} (${subOp.precioFinal.toLocaleString()}{" "}
-                    CLP)
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        )}
-        {/* --- MODAL PARA SELECCIÓN DE TESTS (TERCER NIVEL) --- */}
-        {selectedTestOption && (
-          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[102] p-4">
-            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full relative">
-              <button
-                onClick={() => setSelectedTestOption(null)}
-                className="absolute top-2 right-2 text-gray-600 hover:text-gray-900 font-bold"
-              >
-                X
-              </button>
-              <h3 className="text-xl font-semibold mb-4 text-center text-purple-700">
-                Selecciona el Test Específico
-              </h3>
-              <p className="text-gray-700 mb-4 text-center text-sm">
-                {selectedTestOption.especialidad} |{" "}
-                {selectedTestOption.sesiones} Sesiones
-              </p>
-
-              <div className="flex flex-col space-y-3">
-                {/* Mapeamos los tests: CAT-A, HTP, etc. */}
-                {/* Buscamos la subOption original que contiene los testOptions */}
-                {terapias
-                  .flatMap((t) =>
-                    t.opciones.flatMap((op) => op.subOptions || [])
-                  )
-                  .find(
-                    (sub) =>
-                      sub.especialidad === selectedTestOption.especialidad
-                  )
-                  ?.testOptions?.map((testName, testJ) => (
-                    <button
-                      key={testJ}
-                      type="button"
-                      onClick={() => {
-                        // 1. Llama a la función de reserva con el test final
-                        reservarSesion(
-                          `${selectedTestOption.terapiaTitle} - ${selectedTestOption.especialidad} - ${testName}`, // Título detallado final
-                          selectedTestOption.sesiones,
-                          selectedTestOption.precio,
-                          selectedTestOption.terapeutaNombre,
-                          selectedTestOption.terapeutaId
-                        );
-                        // 2. Cierra este modal
-                        setSelectedTestOption(null);
-                      }}
-                      className="w-full px-4 py-2 text-sm border rounded bg-purple-500 text-white hover:bg-purple-600 font-semibold transition-colors duration-200"
-                    >
-                      {testName} (${selectedTestOption.precio.toLocaleString()}{" "}
-                      CLP)
-                    </button>
+                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Pensado para quienes:</h5>
+                <ul className="text-sm text-gray-700 space-y-2 text-left list-disc pl-4">
+                  {plan.paraQuienes.map((item: string, i: number) => (
+                    <li key={i}>{item}</li>
                   ))}
-                <button
-                  onClick={() => setSelectedTestOption(null)}
-                  className="w-full px-4 py-2 mt-4 text-sm bg-gray-200 text-gray-700 rounded hover:bg-gray-300"
-                >
-                  Volver
-                </button>
+                </ul>
+              </div>
+
+              <div className="mb-8 flex-grow">
+                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Qué incluye:</h5>
+                <ul className="text-sm text-gray-700 space-y-2 text-left">
+                  {plan.incluye.map((item: string, i: number) => <li key={i} className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span> {item}</li>)}
+                </ul>
+              </div>
+              <div className="text-center pt-6 border-t border-pink-100">
+                <p className="text-3xl font-black text-gray-800 mb-6">${plan.precio.toLocaleString()} CLP</p>
+                <button onClick={() => { setSelectedPlan(plan); setShowContactModal(true); }} className={`w-full py-4 rounded-xl font-bold ${plan.destacado ? 'bg-pink-700 text-white hover:bg-pink-800' : 'bg-pink-600 text-white hover:bg-pink-700'} shadow-md`}>Inscribirme</button>
               </div>
             </div>
-          </div>
-        )}
+          ))}
+        </div>
       </div>
+
+      {/* MODAL INSCRIPCIÓN */}
+      {showContactModal && selectedPlan && (
+        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
+          <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+            <h3 className="text-xl font-semibold mb-2 text-center">Inscripción</h3>
+            <p className="text-xs text-center text-gray-500 mb-4 font-bold">{selectedPlan?.titulo}</p>
+            <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4 outline-none focus:ring-2 focus:ring-pink-500" value={clientName} onChange={(e) => setClientName(e.target.value)} />
+            <input type="tel" placeholder="+56912345678" className="border rounded w-full py-2 px-3 mb-6 outline-none focus:ring-2 focus:ring-pink-500" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
+            <div className="flex flex-col gap-3">
+              <button onClick={() => ejecutarAccionReserva("pago")} disabled={isProcessing} className="bg-green-600 text-white py-3 rounded font-bold hover:bg-green-700">{isProcessing ? "Procesando..." : "Pagar con Webpay"}</button>
+              <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Añadir al Carrito</button>
+              <button onClick={() => { setShowContactModal(false); setSelectedPlan(null); }} className="bg-gray-200 py-2 rounded">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

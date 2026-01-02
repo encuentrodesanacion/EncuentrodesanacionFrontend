@@ -1,192 +1,79 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import "../styles/tratamientoIntegral.css"; // Asegúrate de que esta ruta sea correcta
-import { useCart, Reserva } from "../pages/CartContext";
+
+import { useNavigate, Link } from "react-router-dom";
+import "../styles/tratamientoIntegral.css"; 
+import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
-// Importaciones de imágenes (se mantienen igual)
-import brenda from "../assets/Terapeuta1.jpg";
-import pamela from "../assets/pamela.jpeg";
-import sandra from "../assets/Terapeuta5.jpg";
-import silvana from "../assets/silvana.jpeg";
-import anne from "../assets/Anne.jpg";
-import sanchez from "../assets/sanchez.jpeg";
-import crisol from "../assets/crisol.jpeg";
-import sarita from "../assets/sarita.jpeg";
-import clau from "../assets/clau.jpeg";
-import gaby from "../assets/gaby.jpeg";
-import creadorvirtual from "../assets/creadorvirtual.jpg";
-import beatriz from "../assets/beatriz.jpg";
-import marcela from "../assets/marcela.jpeg";
+// Importaciones de imágenes
+import gaby from "../assets/gaby.jpeg"; 
+import fernanda from "../assets/fernanda.png"; 
+
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-interface TerapiaItem {
-  img: string;
-  title: string;
-  terapeuta: string;
-  terapeutaId: number;
-  description: string;
-  opciones: { sesiones: number; precio: number }[];
-}
-
-export default function TratamientoHolistico() {
+export default function CuerpoConsciente() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [currentTerapiaData, setCurrentTerapiaData] = useState<{
-    terapiaTitle: string;
-    sesiones: number;
-    precio: number;
-    terapeutaNombre: string;
-    terapeutaId: number;
-  } | null>(null);
+  
+  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
 
-  const terapias: TerapiaItem[] = [
-    {
-      img: sarita,
-      title: "Camino de Regreso al SER",
-      terapeuta: "Sarita Infante",
-      terapeutaId: 26,
-      description:
-        "Es una experiencia terapéutica profunda que invita a regresar a tu centro y reconectar con la sabiduría que ya habita en ti. A través de un proceso de 3, 4 o 5 sesiones personalizadas, te acompaño a liberar bloqueos emocionales, activar tu energía interior y recuperar la claridad para habitar tu vida desde un lugar más consciente, liviano y pleno. Cada sesión se convierte en un pequeño ritual de transformación: combinamos coaching del SER, escucha profunda, reconexión energética y prácticas de integración que armonizan mente, cuerpo y alma. Es un espacio seguro, amoroso y profundo para volver a sentirte en equilibrio contigo misma. Beneficios: Reconexión con tu energía y propósito interior ✨ Liberación emocional y claridad mental 🌿 Activación de tu poder personal y confianza 💫 Sensación de calma, ligereza y expansión 🌸 Dirigido a: Personas en procesos de cambio, búsqueda interior o que desean abrir un nuevo ciclo desde el bienestar y la conciencia. 🌺 “Porque cuando vuelves a ti, todo comienza a alinearse.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 111111 },
+  const planes = [
+    { 
+      titulo: "Programa 4 Semanas", 
+      subtitulo: "Iniciar, Reconocer, Reconectar",
+      precio: 145000, 
+      sesiones: 4,
+      destacado: false,
+      objetivo: "🎯 Objetivo: Que la persona comience a habitar su cuerpo con mayor conciencia y presencia.",
+      paraQuienes: [
+        "Se sienten desconectados de su cuerpo",
+        "Viven estrés, tensión o cansancio constante",
+        "Quieren comenzar a escucharse físicamente",
+        "Buscan un primer acercamiento consciente al movimiento"
       ],
+      incluye: [
+        "Encuentros grupales guiados por el equipo profesional",
+        "Actividades de movimiento consciente y presencia corporal",
+        "Espacios de integración a la vida diaria",
+        "Material descargable de apoyo para la fase inicial"
+      ]
     },
-
-    {
-      img: sandra,
-      title: "Terapia de Respuesta Espiritual (Con Conexión Angelical)",
-      terapeuta: "Sandra Da Silva",
-      terapeutaId: 9,
-      description:
-        "Esta Técnica de Sanación te ofrece una conexión íntima con tu Ser y funciona como una profunda investigación para descubrir y liberar todo aquello grabado en tu alma y subconsciente que impide tu evolución y te genera peso. Este tratamiento se puede solicitar para limpiar sentimientos, actitudes y emociones tóxicas como la ansiedad o la depresión, remover patrones emocionales familiares, de pareja o laborales, eliminar bloqueos de cualquier índole, incluyendo energías de bajo astral como la hechicería o la envidia, permitiéndote re-conectar con tu esencia e iniciar cambios positivos en tu vida.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
+    { 
+      titulo: "Programa 8 Semanas", 
+      subtitulo: "Integrar, Sostener y Transformar",
+      precio: 185000, 
+      sesiones: 8,
+      destacado: true,
+      objetivo: "🎯 Objetivo: Que la persona integre una nueva forma de habitar su cuerpo, más consciente y sostenida.",
+      paraQuienes: [
+        "Necesitan tiempo para integrar cambios reales",
+        "Buscan profundizar, sostener y transformar",
+        "Desean evolucionar el proceso inicial, no repetirlo"
       ],
-    },
-
-    {
-      img: clau,
-      title: "Terapia de Respuesta Espiritual (TRE)",
-      terapeuta: "Claudia Diaz",
-      terapeutaId: 41,
-      description:
-        "¿Sientes que algo invisible te bloquea, te cansa o te quita claridad? Al liberar esas cargas desde su origen, recuperarás calma, fuerza interior y dirección. La Terapia de Respuesta Espiritual (TRE) es el vehículo que uso para limpiar tu energía y abrirte un camino más ligero y alineado con tu propósito.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-        { sesiones: 5, precio: 111111 },
-      ],
-    },
-    {
-      img: anne,
-      title: "Sonoterapia con meditación",
-      terapeuta: "Annette Wanninger",
-      terapeutaId: 43,
-      description:
-        "Esta sonoterapia es una maravillosa terapia de meditación acompañada de sonidos y vibraciones que permiten a los valientes soltar más facilmente. Estos sonidos y vibraciones ayudan a calmar el sistema nerviosa, a tranquilizar la mente a recuperar la serenidad. La sonoterapia alivia la tensión y ayuda a recuperar el equilibrio interior, armonizar los chakras y aumenta el bienestar.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-      ],
-    },
-    {
-      img: beatriz,
-      title: "Coaching Espiritual- Escucha Consciente",
-      terapeuta: "Beatriz Lagos",
-      terapeutaId: 43,
-      description:
-        "Esta terapia es un llamado del alma: un portal donde el valiente regresa a sí mismo, a su verdad más profunda y a la memoria silenciosa de su espíritu. Aquí aprenderás a escuchar tu energía, leer las señales de tu vida y sostener tu camino con mayor presencia y consciencia. Mediante prácticas de introspección, guía intuitiva, activación energética y lectura simbólica, alcanzarás mayor claridad: comprenderás los mensajes de tu corazón, reconocerás lo que te bloquea y sentirás cómo tu frecuencia comienza a elevarse. Este espacio te entrega herramientas para sostener tu misión, vivir con propósito y habitar tu verdadero ser. Este tratamiento es para quienes sienten que “algo dentro” pide despertar. Vale la pena vivirlo: la energía cambia, la visión se abre y una nueva versión de ti comienza a nacer.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-      ],
-    },
-    {
-      img: gaby,
-      title: "Re-conecta tu ruta corporal",
-      terapeuta: "Gabriela Pinto",
-      terapeutaId: 34,
-      description:
-        "Si vives con dolor cronico, Si vives con estrés cronico, Si nunca antes te sentiste relajad@ en la vida, Si necesitas renovar tu energía, Si te sientes desconectad@ de ti, Si el fitness tradicional no es lo tuyo, te preparo y entreno para que en tu día a día sepas escuchar y sentirte primero para luego tomar decisiones con respecto a tu cuerpo, a tus necesidades. Rehabilita tu cuerpo a través de un conjunto de herramientas terapéuticas integrales y hechas a tu medida, que te ayudaran a regular sistema nervioso, a renovar tu energía y a fortalecer tus músculos. Re-conecta tú ruta corporal, tú cuerpo te lo agradecerá.",
-      opciones: [
-        { sesiones: 3, precio: 88000 },
-        { sesiones: 4, precio: 99000 },
-      ],
-    },
-    {
-      img: brenda,
-      title: "Canalización Energética",
-      terapeuta: "Brenda Rivas",
-      terapeutaId: 7,
-      description:
-        "Es una terapia en la cual una persona actúa como un conducto para recibir mensajes de guías espirituales,angeles, maestros ascendidos y seres fallecidos. Es una herramienta poderosa para la conexión con lo divino u el crecimiento personal. Es una forma de recibir orientación espiritual, sanar emocionalmente y obtener claridad sobre diversos aspectos de la vida.",
-      opciones: [{ sesiones: 3, precio: 88000 }],
-    },
-
-    // {
-    //   img: creadorvirtual,
-    //   title: "Regresión",
-    //   terapeuta: "Alice Basay",
-    //   terapeutaId: 10,
-    //   description:
-    //     "Esta maravillosa Técnica de Sanación te permitirá una conexión intima con tu Ser, nos ayudará a realizar una investigación para conocer todo aquello que quedo grabado en tu Alma y en tu mente subconsciente, que impide que evoluciones en esta vida y que puedas soltar que le pesa. Puedes solicitar este Tratamiento si quieres: Limpiar sentimientos, actitudes y emociones toxicas. (Ansiedad, Depresión, etc.) Limpiar patrones emocionales familiares, de pareja, laborales. Remover bloqueos de cualquier índole, incluyendo energías de bajo astral  (hechicería, magia negra, envidia, etc.). Re-conectarás con tu esencia para que puedas iniciar cambios positivos en tu vida.",
-    //   opciones: [
-    //     { sesiones: 3, precio: 55000 },
-    //     { sesiones: 4, precio: 70000 },
-    //   ],
-    // },
+      incluye: [
+        "Todo lo del programa de 4 semanas",
+        "Continuidad y profundización del proceso corporal",
+        "Abordaje de patrones físicos y emocionales complejos",
+        "Acompañamiento extendido del equipo profesional",
+        "Proceso vivencial de alta transformación"
+      ]
+    }
   ];
 
-  const reservarSesion = (
-    terapiaTitle: string,
-    sesiones: number,
-    precio: number,
-    terapeutaNombre: string,
-    terapeutaId: number
-  ) => {
-    if (
-      !terapiaTitle ||
-      typeof terapiaTitle !== "string" ||
-      terapiaTitle.trim() === ""
-    ) {
-      alert("Error: El nombre del servicio no es válido.");
-      console.error("Servicio inválido detectado:", terapiaTitle);
-      return;
-    }
-    if (typeof precio !== "number" || isNaN(precio) || precio <= 0) {
-      alert("Error: El precio no es válido o es cero.");
-      console.error("Precio inválido detectado:", precio);
-      return;
-    }
-
-    setCurrentTerapiaData({
-      terapiaTitle,
-      sesiones,
-      precio,
-      terapeutaNombre,
-      terapeutaId,
-    });
+  const abrirModalInscripcion = (plan: any) => {
+    setSelectedPlan(plan);
     setShowContactModal(true);
-    setClientName("");
-    setClientPhone("");
-    console.log("--- DEBUG: Modal de contacto abierto para reservarSesion ---");
   };
 
-  const handlePayNow = async () => {
-    if (!currentTerapiaData || currentTerapiaData.precio <= 0) {
-      alert("Error: Datos de la terapia incompletos.");
-      return;
-    }
+  const ejecutarAccionReserva = async (modo: "pago" | "carrito") => {
+    if (!selectedPlan) return;
     if (clientName.trim() === "" || clientPhone.trim() === "") {
       alert("Por favor, ingresa tu nombre completo y número de teléfono.");
       return;
@@ -194,448 +81,317 @@ export default function TratamientoHolistico() {
 
     const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
     if (!phoneNumber || !phoneNumber.isValid()) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
-      );
+      alert("Por favor, ingresa un número de teléfono válido.");
       return;
     }
 
     setIsProcessing(true);
-
-    // Datos Placeholder para Tratamientos (Webpay requiere un item con datos de reserva)
     const now = new Date();
-    const fechaPlaceholder = now.toISOString().split("T")[0]; // YYYY-MM-DD
-    const horaPlaceholder = "09:00";
 
-    const reservaParaWebpay: Reserva[] = [
-      {
-        clientBookingId: "direct-pay-" + Date.now(),
-        terapeuta: currentTerapiaData.terapeutaNombre,
-        servicio: "Tratamiento Integral",
-        especialidad: currentTerapiaData.terapiaTitle,
-        fecha: fechaPlaceholder,
-        hora: horaPlaceholder,
-        precio: currentTerapiaData.precio,
-        nombreCliente: clientName.trim(),
-        telefonoCliente: clientPhone.trim(),
-        sesiones: currentTerapiaData.sesiones,
-        cantidad: 1,
-        terapeutaId: currentTerapiaData.terapeutaId,
-      },
-    ];
+    const reservaData: Reserva = {
+      clientBookingId: "cuerpo-consciente-" + Date.now(),
+      terapeuta: "Gabriela Pinto & Fernanda Arce",
+      servicio: "Cuerpo Consciente",
+      especialidad: selectedPlan.titulo,
+  fecha: now.toLocaleDateString('sv-SE'),
+      hora: "A coordinar",
+      precio: selectedPlan.precio,
+      nombreCliente: clientName.trim(),
+      telefonoCliente: clientPhone.trim(),
+      sesiones: selectedPlan.sesiones,
+      cantidad: 1,
+      terapeutaId: 10, 
+    };
 
     try {
-      const returnUrl = `${API_BASE_URL}/webpay/confirmacion`; // URL de retorno
-
-      // Llama al endpoint de iniciar transacción (que guarda la reserva temporal)
-      const response = await fetch(
-        `${API_BASE_URL}/webpay/create-transaction`,
-        {
+      if (modo === "pago") {
+        const response = await fetch(`${API_BASE_URL}/webpay/create-transaction`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            monto: currentTerapiaData.precio,
-            returnUrl: returnUrl,
-            reservas: reservaParaWebpay,
+            monto: selectedPlan.precio,
+            returnUrl: `${API_BASE_URL}/webpay/confirmacion`,
+            reservas: [reservaData],
           }),
-        }
-      );
-
-      if (!response.ok) {
-        const errorBody = await response.json();
-        throw new Error(
-          errorBody.mensaje || "Error al iniciar la transacción con Webpay."
-        );
+        });
+        const { url, token } = await response.json();
+        window.location.href = `${url}?token_ws=${token}`;
+      } else {
+        const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(reservaData),
+        });
+        const { reserva: confirmed } = await response.json();
+        addToCart(confirmed);
+        alert("¡Programa añadido al carrito!");
+        setShowContactModal(false);
       }
-
-      const { url, token } = await response.json();
-
-      // Redirigir al cliente a la pasarela de pago
-      window.location.href = `${url}?token_ws=${token}`;
     } catch (error: any) {
-      console.error("Error al procesar el pago directo:", error);
-      alert(`Error: No se pudo iniciar el pago. ${error.message}`);
+      alert(`Error: ${error.message}`);
     } finally {
       setIsProcessing(false);
     }
   };
-  // --- FIN NUEVA FUNCIÓN: PAGO DIRECTO ---
+const navLinks = [
+  { to: "/cuerpo-consciente", label: "Cuerpo Consciente" },
+  { to: "/sanacion-profunda", label: "Sanación Profunda" },
 
-  const handleConfirmAndAddToCart = async () => {
-    if (!currentTerapiaData) {
-      console.error("Error: currentTerapiaData es nulo al confirmar.");
-      alert("Hubo un error al procesar tu reserva. Intenta de nuevo.");
-      return;
-    }
-
-    if (clientName.trim() === "" || clientPhone.trim() === "") {
-      alert("Por favor, ingresa tu nombre completo y número de teléfono.");
-      return;
-    }
-
-    const phoneNumber = parsePhoneNumberFromString(clientPhone.trim());
-
-    if (!phoneNumber || !phoneNumber.isValid()) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido con código de país (ej. +56912345678 o +34699111222)."
-      );
-      return;
-    }
-
-    const detectedCountry = phoneNumber.country || "Desconocido";
-    console.log("País detectado por número telefónico:", detectedCountry);
-
-    const now = new Date();
-    const fechaActual = now.toISOString().split("T")[0];
-    const horaGenerica = now.toLocaleTimeString("en-US", {
-      hour: "2-digit",
-      minute: "2-digit",
-      second: undefined,
-      hour12: false,
-    });
-
-    const reservaDataToSend = {
-      servicio: "Tratamiento Integral",
-      especialidad: currentTerapiaData.terapiaTitle,
-      fecha: fechaActual,
-      hora: horaGenerica,
-      precio: currentTerapiaData.precio,
-      sesiones: currentTerapiaData.sesiones,
-      cantidad: 1,
-      nombreCliente: clientName.trim(),
-      telefonoCliente: clientPhone.trim(),
-      terapeuta: currentTerapiaData.terapeutaNombre,
-      terapeutaId: currentTerapiaData.terapeutaId,
-    };
-
-    console.log(
-      "Objeto Reserva a añadir al carrito desde TratamientoIntegral (después de modal):",
-      reservaDataToSend
-    );
-
-    try {
-      // Inicio del bloque `try` para la llamada al backend
-      const response = await fetch(`${API_BASE_URL}/reservar-directa`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(reservaDataToSend),
-      });
-
-      if (!response.ok) {
-        const errorBody = await response.json();
-        const errorMessage =
-          errorBody.mensaje ||
-          `Error al confirmar la inscripción: ${response.status} ${response.statusText}`;
-        throw new Error(errorMessage);
-      }
-
-      const { reserva: confirmedReservation } = await response.json();
-
-      console.log(
-        "Reserva de Tratamiento Integral confirmada por backend:",
-        confirmedReservation
-      );
-
-      addToCart(confirmedReservation); // Añadir la reserva completa del backend al carrito
-
-      alert(
-        `Reserva agregada: ${confirmedReservation.sesiones} sesiones de ${confirmedReservation.especialidad} con ${confirmedReservation.terapeuta}`
-      );
-
-      // Cierra el modal y resetea estados
-      setShowContactModal(false);
-      setCurrentTerapiaData(null);
-      setClientName("");
-      setClientPhone("");
-    } catch (error: any) {
-      // Cierre del `try` y comienzo del `catch`
-      console.error(
-        "ERROR al crear la reserva de Tratamiento Integral:",
-        error
-      );
-      alert(`No se pudo completar la inscripción: ${error.message}`);
-    }
-  };
-
+  { to: "/semillas-de-luz", label: "Semillas De Luz" },
+  { to: "/oraculos-y-guia", label: "Oráculos & Guía" },
+];
   return (
-    <div className="min-h-screen bg-white pt-24 px-6">
-      {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
-      <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        {/* 1. Título de la Página (Extremo Izquierdo) */}
-        <h1 className="text-xl font-semibold text-gray-800 z-50">
-          Tratamiento Integral
-        </h1>
+    <div className="min-h-screen bg-white">
+    {/* --- HEADER --- */}
+    <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
+      <h1 className="text-xl font-semibold text-gray-800 z-50">Cuerpo Consciente</h1>
 
-        {/* 2. CONTENEDOR DERECHO COMPLETO (Menú Escritorio + Iconos Móviles) */}
-        <div className="flex items-center gap-4">
-          {/* A. MENÚ ESCRITORIO (md:flex) --- Oculto en móvil --- */}
-          <div className="hidden md:flex items-center justify-start gap-6 pr-20 p-4 pl-1">
-            <Link
-              to="/terapeutasdeluz"
-              className="text-blue-500 hover:text-gray-800 font-bold"
-            >
-              Terapeutas de la Luz
-            </Link>
+      {/* ⬅️ CONTENEDOR MÓVIL (Botón Hamburguesa) ⬅️ */}
+      <div className="flex items-center gap-4 md:hidden ml-auto -mr-4">
+        <button
+          className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
+          onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-label="Abrir menú"
+        >
+          {isMenuOpen ? (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          ) : (
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+          )}
+        </button>
+      </div>
 
-            <Link
-              to="/tallermensual"
-              className="text-blue-500 hover:text-gray-800 font-bold"
-            >
-              Talleres Mensuales
-            </Link>
-            <Link
-              to="/psicologos"
-              className="text-blue-500 hover:text-gray-800 font-bold"
-            >
-              Mente y Ser
-            </Link>
-            <Link
-              to="/giftcard"
-              className="text-blue-500 hover:text-gray-800 font-bold"
-            >
-              GiftCards
-            </Link>
-          </div>
+      {/* --- MENÚ ESCRITORIO --- */}
+      <div className="hidden md:flex items-center justify-start gap-6 p-4 ml-auto md:mr-20">
+        {navLinks.map((link) => (
+          <Link 
+            key={link.to} 
+            to={link.to} 
+            className="text-blue-500 hover:text-gray-800 font-bold whitespace-nowrap"
+          >
+            {link.label}
+          </Link>
+        ))}
+        <CartIcon />
+      </div>
+    </header>
 
-          {/* B. ICONOS MÓVILES (Visible en todas las vistas, pero la hamburguesa se oculta en md) */}
-          <div className="flex items-center gap-4">
-            {/* 1. Botón Hamburguesa (SOLO MÓVIL) */}
-            <button
-              className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none md:hidden z-50 pr-10"
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-              aria-label="Abrir menú de navegación"
-            >
-              {isMenuOpen ? (
-                // Icono X (Cerrar)
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M6 18L18 6M6 6l12 12"
-                  ></path>
-                </svg>
-              ) : (
-                // Icono Menú Hamburguesa
-                <svg
-                  className="w-6 h-6"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    d="M4 6h16M4 12h16M4 18h16"
-                  ></path>
-                </svg>
-              )}
-            </button>
-
-            {/* 2. Icono del Carrito (Visible Siempre en el extremo derecho) */}
-            <CartIcon />
-          </div>
-        </div>
-      </header>
-      {/* --- MENÚ DESPLEGABLE (MÓVIL) --- */}
-      {/* Se muestra si isMenuOpen es true y solo en pantallas pequeñas (md:hidden) */}
-      <div
-        className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
-          isMenuOpen
-            ? "max-h-screen opacity-100 py-4"
-            : "max-h-0 opacity-0 overflow-hidden"
-        } z-40`}
-      >
-        <div className="flex flex-col items-center space-y-3 px-4">
-          {/* Enlaces del menú móvil */}
-          {[
-            { to: "/terapeutasdeluz", label: "Terapeutas de la Luz" },
-            { to: "/tratamientointegral", label: "Tratamiento Int." },
-            { to: "/tallermensual", label: "Talleres Mensuales" },
-            { to: "/psicologos", label: "Mente y Ser" },
-            { to: "/giftcard", label: "GiftCards" },
-          ].map((item) => (
-            <Link
-              key={item.to}
-              to={item.to}
-              onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer clic
-              className="text-lg text-gray-800 hover:text-pink-600 py-2 w-full text-center border-b border-gray-100"
-            >
-              {item.label}
-            </Link>
-          ))}
+    {/* --- MENÚ MÓVIL --- */}
+    <div 
+      className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${
+        isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"
+      } z-40`}
+    >
+      <div className="flex flex-col items-center space-y-4 px-4">
+        {navLinks.map((link) => (
+          <Link
+            key={link.to}
+            to={link.to}
+            onClick={() => setIsMenuOpen(false)} // Cierra el menú al hacer click
+            className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+          >
+            {link.label}
+          </Link>
+        ))}
+        {/* Carrito en móvil centrado al final */}
+        <div className="pt-2">
+          <CartIcon />
         </div>
       </div>
-      {/* --- FIN DEL NAVEGADOR MÓVIL --- */}
-      {/* Botón de volver al inicio (ajustado para que no lo tape el menú móvil) */}
-      <button
-        onClick={() => navigate("/")}
-        className="mb-6 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-      >
-        Volver al Inicio
-      </button>
-      <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
-        Bienvenido al Tratamiento Integral
-      </h2>
-      <br></br>
-      <br></br>
-      <p className="text-gray-700 text-lg max-w-3xl mx-auto text-center">
-        Este tratamiento incluye sesiones personalizadas orientadas a tu
-        bienestar físico, emocional y espiritual.
-      </p>
-      <br></br>
-      <br></br>
-      <div className="flip-wrapper-container mt-10">
-        {terapias.map(
-          (
-            t: TerapiaItem,
-            i: number // Añadidos tipos explícitos para 't' y 'i'
-          ) => (
-            <div key={i} className="flip-wrapper">
-              <div className="flip-card">
-                {/* MODIFICACIÓN AQUÍ: Eliminar flip-inner y aplicar estilos directamente a flip-card */}
-                <div className="flip-front">
-                  <img src={t.img} alt={t.terapeuta} />
-                  <div className="nombre-overlay">
-                    <p>{t.title}</p>
-                  </div>
-                </div>
-                <div className="flip-back">
-                  <h3 className="mb-2 font-bold">Terapeuta: {t.terapeuta}</h3>
-                  <p className="mb-2">{t.description}</p>
-                  <form
-                    className="w-full px-2"
-                    onSubmit={(e) => e.preventDefault()}
-                  >
-                    {t.opciones.map(
-                      (op: { sesiones: number; precio: number }, j: number) => (
-                        <button
-                          key={j}
-                          type="button"
-                          onClick={() =>
-                            reservarSesion(
-                              t.title,
-                              op.sesiones,
-                              op.precio,
-                              t.terapeuta,
-                              t.terapeutaId
-                            )
-                          }
-                          className="w-full mb-2 px-2 py-1 border rounded bg-pink-600 text-white hover:bg-pink-700"
-                        >
-                          {op.sesiones} sesiones ($
-                          {op.precio.toLocaleString()} CLP)
-                        </button>
-                      )
-                    )}
-                  </form>
-                </div>
-              </div>
+    </div>
+  
+        <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
+          <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
+          
+      {/* Introducción */}
+      <div className="max-w-4xl mx-auto text-center mb-10">
+        <h2 className="text-4xl font-bold text-pink-700 mb-4">Cuerpo Consciente</h2>
+        <div className="text-gray-700 text-lg leading-relaxed">
+          <p className="mb-4"><strong>Programa de reconexión corporal y presencia consciente.</strong></p>
+          <p className="mb-4 italic">El cuerpo no es algo que haya que corregir. Es el lugar donde comienza la conciencia.</p>
+          <p className="mb-4">
+            Cuerpo Consciente es un programa diseñado para personas que sienten desconexión corporal, tensión, cansancio o estrés, y desean volver a habitar su cuerpo con presencia, respeto y escucha.
+          </p>
+          <p className="mb-6">Aquí el cuerpo deja de ser exigido y comienza a ser comprendido.</p>
+          
+          <div className="bg-pink-50 p-6 rounded-lg inline-block text-left mb-6 border border-pink-100 shadow-sm">
+            <h4 className="font-bold text-pink-800 mb-2">¿QUÉ TRABAJA ESTE PROGRAMA?</h4>
+            <ul className="list-disc list-inside space-y-1">
+              <li>Conciencia Corporal (Presencia y escucha del cuerpo)</li>
+              <li>Movimiento consciente</li>
+              <li>Regulación del sistema nervioso</li>
+              <li>Relación Cuerpo/Emoción</li>
+              <li>Hábitos cotidianos</li>
+            </ul>
+          </div>
+          
+          <p className="font-semibold text-gray-800">
+            <strong>No es un programa de exigencia física.</strong> Es un proceso de reconexión profunda y progresiva con el cuerpo como vehículo de conciencia.
+          </p>
+        </div>
+      </div>
+
+      {/* Sección de Terapeutas */}
+      <div className="flex flex-wrap justify-center gap-10 mb-16">
+        
+        {/* Perfil Gabriela Pinto */}
+        <div className="w-72 text-center bg-white p-6 rounded-xl shadow-md border border-gray-100 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-pink-600"></div>
+          
+          {/* ETIQUETA LIDER */}
+          <span className="absolute top-0 right-0 bg-pink-700 text-white px-3 py-1 text-[10px] font-bold uppercase rounded-bl-lg shadow-sm">
+            Lider
+          </span>
+          
+          <img src={gaby} alt="Gabriela Pinto" className="w-40 h-40 rounded-full mx-auto object-cover mb-4 border-4 border-pink-50 shadow-sm" />
+          
+          <h3 className="text-xl font-bold mb-3 text-gray-800">Gabriela Pinto</h3>
+          
+          <div className="flex flex-col items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-pink-200 text-pink-600 bg-pink-50/50">
+              ROL : Líder & Entrenador Físico
+            </span>
+            <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-pink-600 text-white shadow-sm">
+              Kinesiologa
+            </span>
+          </div>
+        </div>
+
+        {/* Perfil Fernanda Arce */}
+        <div className="w-72 text-center bg-white p-6 rounded-xl shadow-md border border-gray-100 relative overflow-hidden">
+          <div className="absolute top-0 left-0 w-full h-1.5 bg-blue-600"></div>
+          
+          <img src={fernanda} alt="Fernanda Arce" className="w-40 h-40 rounded-full mx-auto object-cover mb-4 border-4 border-blue-50 shadow-sm" />
+          
+          <h3 className="text-xl font-bold mb-3 text-gray-800">Fernanda Arce</h3>
+          
+          <div className="flex flex-col items-center gap-2">
+            <span className="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest border border-blue-200 text-blue-600 bg-blue-50/50">
+              ROL : Nutrición Holística
+            </span>
+            <span className="px-3 py-1 rounded-full text-[10px] font-extrabold uppercase tracking-wider bg-blue-600 text-white shadow-sm">
+              Terapeuta Holística
+            </span>
+          </div>
+        </div>
+      </div>
+
+      {/* Planes con Diferenciación Visual */}
+      <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 items-stretch">
+        {planes.map((plan, idx) => (
+          <div 
+            key={idx} 
+            className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${
+              plan.destacado 
+                ? 'border-pink-500 bg-pink-50 shadow-2xl scale-105 z-10' 
+                : 'border-pink-200 bg-white shadow-lg'
+            }`}
+          >
+            {plan.destacado && (
+              <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-1 rounded-full text-xs font-bold uppercase shadow-md">
+                Más Completo
+              </span>
+            )}
+            
+            <h4 className={`text-2xl font-bold mb-1 text-center ${plan.destacado ? 'text-pink-800' : 'text-pink-700'}`}>
+              {plan.titulo}
+            </h4>
+            
+            {plan.subtitulo && (
+              <p className="text-center text-pink-600 font-bold text-xs mb-4 uppercase tracking-tighter">
+                {plan.subtitulo}
+              </p>
+            )}
+            
+            <div className="mb-6 h-px bg-pink-100 w-full" />
+
+            <p className="font-semibold text-gray-800 mb-6 text-sm leading-snug">{plan.objetivo}</p>
+            
+            <div className="mb-6">
+              <h5 className="text-xs font-bold text-pink-600 uppercase mb-3">Pensado para quienes:</h5>
+              <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
+                {plan.paraQuienes.map((item: string, i: number) => <li key={i}>{item}</li>)}
+              </ul>
             </div>
-          )
-        )}
+
+            <div className="mb-8 flex-grow">
+              <h5 className="text-xs font-bold text-pink-600 uppercase mb-3">Qué incluye:</h5>
+              <ul className="text-sm text-gray-700 space-y-3">
+                {plan.incluye.map((item: string, i: number) => (
+                  <li key={i} className="flex items-start">
+                    <span className="text-green-500 mr-2 font-bold">✓</span> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className={`mt-auto pt-6 border-t text-center ${plan.destacado ? 'border-pink-200' : 'border-gray-100'}`}>
+              <p className="text-gray-500 text-xs mb-1 uppercase tracking-widest">{plan.sesiones} Semanas</p>
+              <p className="text-3xl font-black text-gray-800 mb-6">${plan.precio.toLocaleString()} CLP</p>
+              <button
+                onClick={() => abrirModalInscripcion(plan)}
+                className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-md active:scale-95 ${
+                  plan.destacado 
+                    ? 'bg-pink-700 text-white hover:bg-pink-800' 
+                    : 'bg-pink-600 text-white hover:bg-pink-700'
+                }`}
+              >
+                Elegir este Plan
+              </button>
+            </div>
+          </div>
+        ))}
       </div>
-      {/* --- MODAL DE CONTACTO --- */}
-      {showContactModal && currentTerapiaData && (
+      </div>
+
+      {/* Modal de Inscripción */}
+      {showContactModal && selectedPlan && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
           <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
-            <h3 className="text-xl font-semibold mb-4 text-center">
-              Reservar: "{currentTerapiaData.terapiaTitle}"
-            </h3>
-            <p className="text-gray-700 mb-4 text-center">
-              Ingresa tus datos para continuar con la reserva de{" "}
-              <strong>
-                {currentTerapiaData.sesiones} sesiones por $
-                {currentTerapiaData.precio.toLocaleString()} CLP
-              </strong>
-              .
-            </p>
-            <div className="mb-4">
-              <label
-                htmlFor="clientName"
-                className="block text-gray-700 text-sm font-bold mb-2"
+            <h3 className="text-xl font-semibold mb-2 text-center">Inscripción</h3>
+            <p className="text-sm text-center text-gray-500 mb-4">{selectedPlan.titulo}</p>
+            <input 
+              type="text" 
+              placeholder="Nombre Completo" 
+              className="border rounded w-full py-2 px-3 mb-4 focus:ring-2 focus:ring-pink-500 outline-none" 
+              value={clientName} 
+              onChange={(e) => setClientName(e.target.value)} 
+            />
+            <input 
+              type="tel" 
+              placeholder="Ej: +56912345678" 
+              className="border rounded w-full py-2 px-3 mb-6 focus:ring-2 focus:ring-pink-500 outline-none" 
+              value={clientPhone} 
+              onChange={(e) => setClientPhone(e.target.value)} 
+            />
+            <div className="flex flex-col space-y-3">
+              <button 
+                onClick={() => ejecutarAccionReserva("pago")} 
+                disabled={isProcessing} 
+                className="bg-green-600 text-white py-3 rounded font-bold hover:bg-green-700"
               >
-                Nombre Completo:
-              </label>
-              <input
-                type="text"
-                id="clientName"
-                placeholder="Tu Nombre Completo"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                value={clientName}
-                onChange={(e) => setClientName(e.target.value)}
-              />
-            </div>
-            <div className="mb-6">
-              <label
-                htmlFor="clientPhone"
-                className="block text-gray-700 text-sm font-bold mb-2"
-              >
-                Número de Teléfono:
-              </label>
-              <input
-                type="tel"
-                id="clientPhone"
-                placeholder="Ej: +56912345678"
-                className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                value={clientPhone}
-                onChange={(e) => setClientPhone(e.target.value)}
-              />
-            </div>
-            {/* --- CONTENEDOR DE BOTONES (Modificado) --- */}           {" "}
-            <div className="flex flex-col space-y-3 mt-4">
-              {" "}
-              {/* Agregado mt-4 para separación superior */}             
-              {/* BOTÓN 1: PAGAR YA (NUEVO) */}
-              <button
-                onClick={handlePayNow} // Llama a la nueva función de pago directo
-                disabled={isProcessing}
-                className={`text-white px-4 py-3 rounded transition-colors duration-200 w-full font-semibold ${
-                  isProcessing
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-green-600 hover:bg-green-700"
-                }`}
-              >
-                {isProcessing ? "Procesando Pago..." : "Pagar Ahora"}
+                {isProcessing ? "Procesando..." : "Pagar con Webpay"}
               </button>
-              {/* BOTÓN 2: AÑADIR AL CARRITO (Mantenido) */}
-              <button
-                onClick={handleConfirmAndAddToCart}
-                disabled={isProcessing}
-                className={`text-white px-4 py-3 rounded transition-colors duration-200 w-full ${
-                  isProcessing
-                    ? "bg-gray-400 cursor-not-allowed"
-                    : "bg-pink-600 hover:bg-pink-700"
-                }`}
+              <button 
+                onClick={() => ejecutarAccionReserva("carrito")} 
+                className="bg-pink-600 text-white py-3 rounded font-bold hover:bg-pink-700"
               >
                 Añadir al Carrito
               </button>
-                         {/* BOTÓN 3: CANCELAR */}
-              <button
-                onClick={() => setShowContactModal(false)}
-                disabled={isProcessing}
-                className="bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400 transition-colors duration-200"
+              <button 
+                onClick={() => setShowContactModal(false)} 
+                className="bg-gray-200 py-2 rounded text-gray-800"
               >
-                      Cancelar            
+                Cancelar
               </button>
-                         {" "}
             </div>
-                     {" "}
           </div>
-                 {" "}
         </div>
       )}
-         {" "}
     </div>
   );
 }

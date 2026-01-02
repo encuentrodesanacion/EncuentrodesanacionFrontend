@@ -34,8 +34,9 @@ export default function ReservaConFechaAmigable({
   const [nombre, setNombre] = useState<string>("");
   const [telefono, setTelefono] = useState<string>(""); // Lógica de confirmación (MANTENIDA IDÉNTICA)
 
-  const handleConfirm = () => {
-    if (!fechaHora) {
+ const handleConfirm = () => {
+    // 1. Validaciones básicas
+    if (!selectedDate || !selectedTime || !fechaHora) {
       alert("Por favor, selecciona fecha y hora.");
       return;
     }
@@ -45,27 +46,27 @@ export default function ReservaConFechaAmigable({
     }
     const phoneRegex = /^\+?\d[\d\s-]{7,15}\d$/;
     if (!phoneRegex.test(telefono.trim())) {
-      alert(
-        "Por favor, ingresa un número de teléfono válido (ej. +XX YYYYYYYYY)."
-      );
+      alert("Por favor, ingresa un número de teléfono válido.");
       return;
     }
 
-    const zonedDate = toZonedTime(fechaHora, CHILE_TIME_ZONE);
-    const selectedTimeString = format(zonedDate, "HH:mm");
-    const selectedDateString = format(zonedDate, "yyyy-MM-dd");
+    // 🛡️ CORRECCIÓN CRÍTICA: 
+    // Usamos el formato directo del estado para evitar desfases de zona horaria en la comparación
+    const selectedDateString = formatFns(selectedDate, "yyyy-MM-dd");
+    const selectedTimeString = selectedTime; // "HH:mm" que viene del <select>
 
-    const hoursForSelectedDay =
-      disponibilidadPorFechaDelServicio?.[selectedDateString] || [];
+    // Obtenemos las horas disponibles para ese día desde la DB
+    const hoursForSelectedDay = disponibilidadPorFechaDelServicio?.[selectedDateString] || [];
 
+    // Comparamos el string directo (ej: "20:00" === "20:00")
     if (!hoursForSelectedDay.includes(selectedTimeString)) {
-      alert("La hora seleccionada no está disponible.");
+      alert(`La hora ${selectedTimeString} no está disponible para el día ${selectedDateString}.`);
       return;
     }
 
+    // Si todo es correcto, pasamos el objeto Date original
     onConfirm(fechaHora, nombre, telefono);
   };
-
   const filterDay = (date: Date) => {
     const today = new Date();
     today.setHours(0, 0, 0, 0);

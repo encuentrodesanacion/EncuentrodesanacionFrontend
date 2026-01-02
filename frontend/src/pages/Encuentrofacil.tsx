@@ -229,8 +229,8 @@ export default function AgendaSanacion() {
 
   const reservar = (terapiaItem: TerapiaItem) => {
     const terapeuta = terapeutasData.find(
-      (t) => t.nombre === terapiaItem.terapeuta
-    );
+  (t) => t.nombre.trim().toLowerCase() === terapiaItem.terapeuta.trim().toLowerCase()
+);
     if (!terapeuta) {
       console.error("Terapeuta no encontrado para la reserva.");
       return;
@@ -375,20 +375,20 @@ export default function AgendaSanacion() {
               terapeutaSeleccionado.recursos.length > 0) ||
               terapeutaSeleccionado.enlaceMeet) && (
               <div className="max-w-4xl mx-auto my-8 p-6 bg-purple-50 rounded-lg shadow-lg border border-purple-200">
-                                               {" "}
-                {/* RECURSOS LISTA DE BOTONES (Se mantiene igual) */}           
-                   {" "}
+                {" "}
+                {/* RECURSOS LISTA DE BOTONES (Se mantiene igual) */}
+               {" "}
                 {terapeutaSeleccionado.recursos &&
                   terapeutaSeleccionado.recursos.length > 0 && (
                     <div className="mb-6 pb-4 border-b border-purple-300">
-                                             {" "}
+                     {" "}
                       <h3 className="text-xl font-bold text-purple-800 mb-4 flex items-center">
-                                                    📚 Recursos para la Sesión  
-                                             {" "}
+                         📚 Recursos para la Sesión 
+                       {" "}
                       </h3>
-                                             {" "}
+                     {" "}
                       <div className="space-y-3">
-                                                   {" "}
+                        {" "}
                         {terapeutaSeleccionado.recursos.map(
                           (recurso, index) => (
                             <a
@@ -398,39 +398,39 @@ export default function AgendaSanacion() {
                               rel="noopener noreferrer"
                               className="block w-full text-center px-4 py-2 border border-purple-500 rounded-lg text-purple-700 bg-white hover:bg-purple-100 transition duration-300 ease-in-out font-semibold shadow-sm"
                             >
-                                                                  {recurso.name}
-                                                             {" "}
+                               {recurso.name}
+                              {" "}
                             </a>
                           )
                         )}
-                                               {" "}
+                       {" "}
                       </div>
-                                         {" "}
+                      {" "}
                     </div>
                   )}
-                                               {" "}
-                {/* ENLACE MEET MODIFICADO: AHORA ACTIVA EL PROMPT */}         
-                     {" "}
+                {" "}
+                {/* ENLACE MEET MODIFICADO: AHORA ACTIVA EL PROMPT */}
+                {" "}
                 {terapeutaSeleccionado.enlaceMeet && (
                   <div className="mt-4">
-                                           {" "}
+                   {" "}
                     <h3 className="text-xl font-bold text-purple-800 mb-2 flex items-center">
-                                                  💻 Enlace para la Sesión
-                      Virtual                        {" "}
+                       💻 Enlace para la Sesión
+                      Virtual{" "}
                     </h3>
-                                           {" "}
+                   {" "}
                     <p className="text-gray-700 mb-3">
-                                                  Una vez confirmada tu reserva,
-                      tu sesión online se llevará a cabo a través de este link.
-                                             {" "}
+                      
+                      Tu sesión online se llevará a cabo a través de este link.
+                     {" "}
                     </p>
-                                           {" "}
+                   {" "}
                     <button
                       // <-- CAMBIO: Llama a la función que abre el modal
                       onClick={() => setShowMeetEmailPrompt(true)}
                       className="inline-flex items-center justify-center w-full md:w-auto px-6 py-3 bg-purple-600 text-white font-semibold rounded-full hover:bg-purple-700 transition-colors duration-300 shadow-md"
                     >
-                                                 {" "}
+                      {" "}
                       <svg
                         className="w-5 h-5 mr-2"
                         fill="none"
@@ -445,22 +445,22 @@ export default function AgendaSanacion() {
                           d="M15 10l4.55 4.55M15 10l-4.55 4.55M15 10l-.95-.95M15 10l.95.95M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                         ></path>
                       </svg>
-                                                  Abrir Sala de Reunión (Meet)  
-                                           {" "}
+                       Abrir Sala de Reunión (Meet) 
+                     {" "}
                     </button>
-                                           {" "}
+                   {" "}
                     <p className="text-sm text-gray-500 mt-2">
-                                                 Revisa tu correo de
+                      {/* Revisa tu correo de
                       confirmación, te enviaremos este enlace y la hora de tu
-                      cita.                        {" "}
+                      cita.{" "} */}
                     </p>
-                                       {" "}
+                    {" "}
                   </div>
                 )}
-                           {" "}
+                {" "}
               </div>
             )}
-                 {" "}
+         {" "}
         </div>
       )}
       {/* MODAL PARA SOLICITAR GMAIL/CORREO */}

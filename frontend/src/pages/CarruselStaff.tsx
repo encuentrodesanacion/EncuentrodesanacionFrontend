@@ -1,83 +1,95 @@
-import "../styles/flipCards.css"; // Asegúrate de tener los estilos aquí o adaptarlos a Tailwind
+import React from "react";
+import "../styles/flipCards.css";
 
-import marcela from "../assets/marcela.jpeg";
-import terapeuta11 from "../assets/Terapeuta11.jpeg";
-import sanchez from "../assets/sanchez.jpeg";
-import terapeuta14 from "../assets/Terapeuta14.jpeg";
-import crisol from "../assets/crisol.jpeg";
+// Importaciones de imágenes
+import claudiaI from "../assets/Terapeuta1.jpg";
+import paola from "../assets/terapeuta1.jpg"; // Ajustar según corresponda
+import paulina from "../assets/Terapeuta11.jpeg";
+import mariajose from "../assets/Terapeuta5.jpg";
 import sarita from "../assets/sarita.jpeg";
-import renata from "../assets/renata.jpeg";
-import terapeuta5 from "../assets/Terapeuta5.jpg";
-import terapeuta1 from "../assets/Terapeuta1.jpg";
+import anaLuisa from "../assets/Terapeuta14.jpeg";
+// ... (resto de tus imports de imágenes)
 
-const alianzas = [
-  {
-    nombre: "Ana Luisa Solervicens",
-    url: "https://www.instagram.com/susurro_ancestralcl/",
-    imagen: terapeuta14,
-    descripcion:
-      "Ana Luisa: Fundadora de Susurro Ancestral. Soy terapeuta holística y artesana del alma, guiada por la sabiduría ancestral y la energía de la naturaleza. A través de terapias energéticas, oráculos y rituales, acompaño a quienes buscan reconectar con su esencia, sanar desde lo profundo y abrir caminos de armonía y abundancia. Mi amor por lo sagrado también se expresa en cada vela que creo: piezas únicas cargadas de intención, cuarzos, hierbas y colores que equilibran cuerpo, mente y espíritu. Cada creación está diseñada para ser un susurro de luz en tu camino. Creo en la magia que habita en lo simple, en la fuerza de los rituales cotidianos y en el poder transformador del amor propio. Mis terapias son: lectura de runas, oráculo Ogham, Gemoterapia, Radiestesia y Radiónica. Además, realizo trabajos de limpieza, armonización y velomancia. Te invito a compartir este viaje de sanación, creación y reconexión.",
-  },
+interface StaffMember {
+  nombre: string;
+  url: string;
+  imagen: any;
+  descripcion: string;
+}
 
-  {
-    nombre: "Sarita Infante",
-    url: "https://www.instagram.com/sarita.infante.coachdelser/",
-    imagen: sarita,
-    descripcion:
-      "Mi camino como terapeuta nació desde una búsqueda profunda: encontrar sentido, propósito y una forma de habitar la vida desde el alma. Durante años me formé como coach profesional, guiando procesos de transformación desde la mente y la acción. Sin embargo, fue en mi propio viaje interior donde comprendí que el verdadero cambio comienza cuando recordamos quiénes somos en esencia. De ese despertar nació en mí la figura de Coach del SER: un acompañamiento que va más allá de las palabras, donde la escucha se vuelve sagrada y cada encuentro es un portal de reconexión con la verdad interior. Mi labor no es “arreglar” a nadie, sino sostener el espacio para que cada alma pueda recordar su luz, su poder y su camino. Trabajo desde la presencia amorosa, la sensibilidad y la energía como lenguaje sutil. Creo en el poder de los procesos que honran la emoción, la intuición y la conexión con lo divino que habita en cada ser. “No vine a enseñar… vine a recordar contigo lo que ya habita en tu alma.",
-  },
-];
+const staffData: Record<string, StaffMember[]> = {
+  Elite: [
+    { nombre: "Claudia Ibarra", url: "#", imagen: claudiaI, descripcion: "Líder del Programa. Guía el proceso grupal y acompaña la sanación desde el origen sistémico." },
+    { nombre: "Paola Quintero", url: "#", imagen: paola, descripcion: "Especialista en lectura consciente y acompañamiento emocional profundo." },
+    { nombre: "Paulina Villablanca", url: "#", imagen: paulina, descripcion: "Educadora y terapeuta holística, experta en sanación del niño interior." },
+    { nombre: "Gabriela Pinto", url: "#", imagen: claudiaI, descripcion: "Especialista en procesos de transformación y equilibrio energético." },
+  ],
+  Profesional: [
+    { nombre: "Fernanda Arce", url: "#", imagen: claudiaI, descripcion: "Acompañamiento en procesos de sanación profunda y trauma." },
+    { nombre: "Brenda Rivas", url: "#", imagen: claudiaI, descripcion: "Terapeuta energética y canalización espiritual." },
+    { nombre: "Cindy Palma", url: "#", imagen: claudiaI, descripcion: "Especialista en limpieza y protección del campo energético." },
+    { nombre: "Claudia Diaz", url: "#", imagen: claudiaI, descripcion: "Terapeuta de respuesta espiritual y liberación de bloqueos." },
+    { nombre: "Maria Jose Corvalan", url: "#", imagen: mariajose, descripcion: "Especialista en regulación emocional y liberación de creencias." },
+    { nombre: "Natalie Bonysson", url: "#", imagen: claudiaI, descripcion: "Arteterapia y expresión emocional consciente." },
+    { nombre: "Lea Parra", url: "#", imagen: claudiaI, descripcion: "Consteladora familiar y dinámicas sistémicas." },
+    { nombre: "Karla Flores", url: "#", imagen: claudiaI, descripcion: "Yogui infantil y movimiento consciente." },
+   
+  ],
+  Básico: [
+    { nombre: "Ana Luisa Solervicens", url: "https://www.instagram.com/susurro_ancestralcl/", imagen: anaLuisa, descripcion: "Terapeuta holística y artesana del alma, guiada por sabiduría ancestral y rituales." },
+    { nombre: "Anette Wanninger", url: "#", imagen: claudiaI, descripcion: "Apoyo en terapias complementarias y bienestar general." },
+    { nombre: "Carolina Jimenez", url: "#", imagen: claudiaI, descripcion: "Terapeuta integral en procesos de reconexión." },
+  ],
+};
+
+const StaffSection = ({ categoria, integrantes }: { categoria: string; integrantes: StaffMember[] }) => (
+  <div className="mb-16">
+    <div className="flex items-center mb-8">
+      <div className="flex-grow h-px bg-cyan-200"></div>
+      <h3 className="px-4 text-2xl font-semibold text-cyan-800 uppercase tracking-widest">
+        Staff {categoria}
+      </h3>
+      <div className="flex-grow h-px bg-cyan-200"></div>
+    </div>
+    
+    <div className="flip-wrapper-container">
+      {integrantes.map(({ nombre, url, imagen, descripcion }, index) => (
+        <div className="flip-wrapper" key={index}>
+          <a href={url} target="_blank" rel="noopener noreferrer" className="flip-card">
+            <div className="flip-inner">
+              <div className="flip-front">
+                <img src={imagen} alt={nombre} className="object-cover w-full h-full" />
+                <div className="nombre-overlay">
+                  <p>{nombre}</p>
+                </div>
+              </div>
+              <div className="flip-back">
+                <p className="font-semibold mb-2">{nombre}</p>
+                <p className="text-xs leading-relaxed">{descripcion}</p>
+              </div>
+            </div>
+          </a>
+        </div>
+      ))}
+    </div>
+  </div>
+);
 
 const CarruselStaff = () => {
   return (
-    <section className="bg-white py-12 px-6">
-           {" "}
-      <h2 className="text-3xl font-bold text-center mb-8 text-cyan-700">
-                Staff Terapéutico      {" "}
-      </h2>
-           {" "}
-      <div className="flip-wrapper-container">
-               {" "}
-        {alianzas.map(({ nombre, url, imagen, descripcion }, index) => (
-          <div className="flip-wrapper" key={index}>
-                       {" "}
-            <a
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flip-card"
-            >
-                           {" "}
-              <div className="flip-inner">
-                {" "}
-                {/* Agregar flip-inner para volteo si no estaba */}             
-                 {" "}
-                <div className="flip-front">
-                                    <img src={imagen} alt={nombre} />
-                  {/* INSERCIÓN CLAVE: Overlay del nombre */}
-                  <div className="nombre-overlay">
-                    <p>{nombre}</p>
-                  </div>
-                                 {" "}
-                </div>
-                               {" "}
-                <div className="flip-back">
-                                   {" "}
-                  <p className="font-semibold mb-2">{nombre}</p>{" "}
-                  {/* También agregamos el nombre en el back, aunque ya debería estar implícito */}
-                                    <p className="text-sm">{descripcion}</p>   
-                             {" "}
-                </div>
-                             {" "}
-              </div>
-                         {" "}
-            </a>
-                     {" "}
-          </div>
+    <section className="bg-slate-50 py-16 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="text-center mb-16">
+          <h2 className="text-4xl font-bold text-cyan-900 mb-4">Nuestro Staff Terapéutico</h2>
+          <p className="text-gray-600 max-w-2xl mx-auto italic">
+            "Acompañando tu camino de sanación con diferentes niveles de especialización y profundidad."
+          </p>
+        </div>
+
+        {Object.entries(staffData).map(([categoria, integrantes]) => (
+          <StaffSection key={categoria} categoria={categoria} integrantes={integrantes} />
         ))}
-             {" "}
       </div>
-         {" "}
     </section>
   );
 };
