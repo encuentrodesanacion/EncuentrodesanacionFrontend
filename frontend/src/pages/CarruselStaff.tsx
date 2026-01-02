@@ -3,7 +3,7 @@ import "../styles/flipCards.css";
 
 // Importaciones de imágenes
 import claudiaI from "../assets/Terapeuta1.jpg";
-import paola from "../assets/terapeuta1.jpg"; // Ajustar según corresponda
+import paola from "../assets/Terapeuta1.jpg"; // Ajustar según corresponda
 import paulina from "../assets/Terapeuta11.jpeg";
 import mariajose from "../assets/Terapeuta5.jpg";
 import sarita from "../assets/sarita.jpeg";
