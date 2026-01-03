@@ -175,12 +175,13 @@ const App = () => {
               >
                 {t("nav_ofrenda")}
               </a> */}
-              <a
-                href="#alianzas"
+             
+              <Link
+                to="/encuentrofacil"
                 className="text-blue-300 hover:text-white font-bold"
               >
-                {t("nav_alianzas")}
-              </a>
+              Encuentro Facil
+              </Link>
               {/* <Link
                 to="/Staff-Terapéutico"
                 className="text-blue-300 hover:text-white font-bold"
@@ -262,13 +263,13 @@ const App = () => {
               </a> */}
 
               {/* Enlaces de Link (react-router-dom) */}
-              {/* <Link
-                to="/Staff-Terapéutico"
+              <Link
+                to="/encuentrofacil"
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
-                Staff Terapeutico
-              </Link> */}
+                Encuentro Fácil
+              </Link>
               <Link
                 to="/nuestra-comunidad"
                 onClick={() => setIsMenuOpen(false)}
@@ -563,8 +564,8 @@ const App = () => {
                 title: <h2>Encuentro Facil</h2>,
                 description: (
                   <h2>
-                    <strong>Es un programa de acompañamiento espiritual</strong>{" "}
-                    que va más allá de simples lecturas.{" "}
+                    <strong>es la plataforma de agendamiento en línea de Encuentro de Sanación </strong>{" "}
+                    donde puedes conocer a cada terapeuta y reservar sus sesiones de forma simple y directa.{" "}
                     <strong>
                      EncuentroFacil
                     </strong>{" "}

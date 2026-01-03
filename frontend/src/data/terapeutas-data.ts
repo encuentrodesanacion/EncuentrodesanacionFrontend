@@ -4,7 +4,7 @@ import yuniver from "../assets/Alquimia.jpeg";
 
 import yuniver2 from "../assets/tarotter.jpg";
 
-import alicc from "../assets/alicc.jpg";
+import karla from "../assets/karla.jpg";
 
 import caro from "../assets/caro.jpg";
 
@@ -208,7 +208,7 @@ nombre: "Karla Flores",
 
 email: "ckarlaflorencia5@gmail.com",
 
-imagenPerfil: relajacion, // Reemplaza con la imagen real
+imagenPerfil: karla, // Reemplaza con la imagen real
 
 callToActionTextCard:
 

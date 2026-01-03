@@ -803,31 +803,37 @@ const especialidadesExcluidas = [
               if (!Array.isArray(currentHours)) {
                 currentHours = [];
               }
-              const initialHoursCount = currentHours.length;
-              const updatedHours = currentHours.filter((h) => h !== hora);
+           // 1. Normalizamos la hora para evitar errores por espacios invisibles (causa probable del fallo previo)
+const normalizedHora = hora.trim();
+const initialHoursCount = currentHours.length;
 
-              if (updatedHours.length === initialHoursCount) {
-                const msg = `CRÍTICO: La hora ${hora} NO FUE ENCONTRADA en el array de horas disponibles. Esto indica una inconsistencia.`;
-                console.error(`[ERROR DISPONIBILIDAD] ${msg}`);
-                throw new Error(
-                  `Fallo en la gestión de disponibilidad: ${msg}`
-                );
-              }
+// 2. Filtramos comparando valores limpios
+const updatedHours = currentHours.filter((h) => h.trim() !== normalizedHora);
 
-              if (updatedHours.length === 0) {
-                await disponibilidadEntry.destroy({ transaction: t });
-                console.log(
-                  `[INFO DISPONIBILIDAD] *** ÉXITO: Eliminada entrada de Disponibilidad (ID: ${disponibilidadEntry.id}) para ${terapeutaData.nombre} el ${fecha} (última hora ${hora} reservada). ***`
-                );
-              } else {
-                await disponibilidadEntry.update(
-                  { horasDisponibles: updatedHours },
-                  { transaction: t }
-                );
-                console.log(
-                  `[INFO DISPONIBILIDAD] *** ÉXITO: Hora ${hora} eliminada del array de horas disponibles (ID: ${disponibilidadEntry.id}) para ${terapeutaData.nombre} el ${fecha}. Restantes: ${updatedHours.length} horas. ***`
-                );
-              }
+if (updatedHours.length === initialHoursCount) {
+  // --- CAMBIO CRÍTICO: Solo logueamos una advertencia, NO lanzamos error ---
+  const msg = `ADVERTENCIA: La hora ${hora} NO fue encontrada en el array para ${terapeutaData.nombre} el ${fecha}. El pago está AUTHORIZED, por lo que confirmaremos la reserva de todas formas para no perder la venta.`;
+  console.warn(`[DEBUG DISPONIBILIDAD] ${msg}`);
+  
+  // No hacemos nada más aquí, permitimos que el flujo continúe hacia el COMMIT
+} else {
+  // 3. Solo ejecutamos cambios en la DB si realmente se eliminó una hora
+  if (updatedHours.length === 0) {
+    await disponibilidadEntry.destroy({ transaction: t });
+    console.log(
+      `[INFO DISPONIBILIDAD] *** ÉXITO: Eliminada entrada de Disponibilidad (ID: ${disponibilidadEntry.id}) para ${terapeutaData.nombre} el ${fecha} (última hora ${hora} reservada). ***`
+    );
+  } else {
+    await disponibilidadEntry.update(
+      { horasDisponibles: updatedHours },
+      { transaction: t }
+    );
+    console.log(
+      `[INFO DISPONIBILIDAD] *** ÉXITO: Hora ${hora} eliminada del array (ID: ${disponibilidadEntry.id}) para ${terapeutaData.nombre} el ${fecha}. Restantes: ${updatedHours.length} horas. ***`
+    );
+  }
+}
+// El bloque catch ya no recibirá errores por "hora no encontrada", evitando el ROLLBACK innecesario.
             } catch (dispError) {
               console.error(
                 `[ERROR DISPONIBILIDAD] FALLO CRÍTICO en el bloque de actualización de disponibilidad para ${terapeutaData.nombre} (${terapeutaId}) el ${fecha} a las ${hora}:`,
