@@ -25,7 +25,7 @@ import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import Giftcard from "../pages/Gifcard";
 import CartIcon from "../components/CartIcon";
-import SpaLittle from "../assets/Spa Little.jpeg";
+import encuentrofacil from "../assets/EncuentroFácil.png";
 import "../index.css";
 import LanguageSwitcher from "../components/LanguageSwitcher";
 // Importa tu imagen de fondo aquí.
@@ -369,7 +369,7 @@ const App = () => {
             {t("main_services_title")}
           </h2>
 
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 gap-8">
             {[
               // {
               //   icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
@@ -559,31 +559,31 @@ const App = () => {
                   </div>
                 ),
               },
-               {
-                icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-                title: <h2>Encuentro Facil</h2>,
-                description: (
-                  <h2>
-                    <strong>es la plataforma de agendamiento en línea de Encuentro de Sanación </strong>{" "}
-                    donde puedes conocer a cada terapeuta y reservar sus sesiones de forma simple y directa.{" "}
-                    <strong>
-                     EncuentroFacil
-                    </strong>{" "}
+              //  {
+              //   icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
+              //   title: <h2>Encuentro Facil</h2>,
+              //   description: (
+              //     <h2>
+              //       <strong>Es la plataforma de Agendamiento en línea de Encuentro de Sanación. </strong>{" "}
+              //      ¡Aqui puedes conocer a cada terapeuta y reservar sus sesiones de forma simple y directa.!{" "}
+              //       <strong>
+                    
+              //       </strong>{" "}
                   
-                  </h2>
-                ),
-                price: "",
-                button: (
-                  <div className="flex flex-col gap-2 mt-4">
-                    <Link
-                      to="/encuentrofacil"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-                    >
-                      <h2>{t("formation_cta")}</h2>
-                    </Link>
-                  </div>
-                ),
-              },
+              //     </h2>
+              //   ),
+              //   price: "",
+              //   button: (
+              //     <div className="flex flex-col gap-2 mt-4">
+              //       <Link
+              //         to="/encuentrofacil"
+              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+              //       >
+              //         <h2>{t("formation_cta")}</h2>
+              //       </Link>
+              //     </div>
+              //   ),
+              // },
               // {
               //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
               //   title: "Alianzas",
@@ -639,83 +639,68 @@ const App = () => {
       {/* Componente ReservaHora agregado aquí abajo */}
 
       {/* Blog Preview Section */}
-      {/* <section
-        id="otros"
-        className="py-0 bg-gradient-to-r from-pastel-green to-pastel-mint/10"
-      >
-        <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Título principal corregido: se elimina el <h2> anidado y se usa t() directamente */}
-          {/* <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-25 md:py-12 font-bold">
-            {t("offering_days_title")}
-          </h2> */}
+     <section
+  id="otros"
+  className="py-0 bg-gradient-to-r from-pastel-green to-pastel-mint/10"
+>
+  <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* Título principal: se usa t() directamente */}
+    <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-12 md:py-12 font-bold">
+      {t("offering_days_title")}
+    </h2>
 
-          {/* Contenedor deslizable con snap */}
-          {/* <div className="flex justify-center flex-wrap gap-6 pb-6">
-            {[
-              {
-                // Se pasa solo la cadena de texto traducida (string)
-                title: t("weekend_workshops_title"),
-                image: FindeTalleres,
-                excerpt: t("weekend_workshops_description"),
-                buttonText: t("weekend_workshops_cta"),
-                link: "/findetalleres",
-                isDisabled: false,
-              },
-              { */}
-                {/* // Se pasa solo la cadena de texto traducida (string)
-                title: t("main_spa_title"),
-                image: SpaPrincipal,
-                excerpt: t("main_spa_description"),
-                buttonText: t("main_spa_cta"),
-                link: "/spaprincipal",
-                isDisabled: false,
-              },
-              { */}
-                {/* // Se pasa solo la cadena de texto traducida (string)
-                title: t("little_spa_title"),
-                image: SpaLittle,
-                excerpt: t("little_spa_description"),
-                buttonText: t("little_spa_cta"),
-                link: "/spalittle",
-                isDisabled: false,
-              },
-            ].map((post, index) => (
-              <div
-                key={index}
-                className="min-w-[300px] max-w-xs bg-white rounded-2xl overflow-hidden shadow-lg flex-shrink-0 snap-start"
-              >
-                <img
-                  src={post.image}
-                  alt={post.title}
-                  className="w-full h-48 object-cover"
-                />
-                <div className="p-6">
-                  <h3 className="text-xl font-light mb-2 text-center">
-      //               {post.title} {/* post.title ya es el texto */}
-      {/* //             </h3> */}
-      {/* //             <p className="text-gray-600">{post.excerpt}</p>{" "} */}
-      //             {/* post.excerpt ya es el texto */}
-      {/* //             {post.isDisabled ? ( */}
-      {/* //               <span */}
-      {/* //                 className="text-gray-400 mt-4 inline-block font-medium cursor-not-allowed"
-      //                 style={{ pointerEvents: "none" }}
-      //               >
-      //                 {post.buttonText} → {/* post.buttonText ya es el texto */}
-      {/* //               </span> */}
-      {/* //             ) : ( */} 
-      {/* //               <Link */}
-      {/* //                 to={post.link}
-      //                 className="text-black hover:text-pastel-green mt-4 inline-block font-medium"
-      //               >
-      //                 {post.buttonText}
-      //               </Link> */}
-      {/* //             )
-      //           </div> */}
-      {/* //         </div> */}
-      {/* //       ))} */}
-      {/* //     </div> */}
-      {/* //   </div> */}
-      {/* // </section> */} 
+    {/* Contenedor con flex-wrap */}
+    <div className="flex justify-center flex-wrap gap-6 pb-6">
+      {[
+        {
+          title: "Es la plataforma de Agendamiento en línea de Encuentro de Sanación. Aqui puedes conocer a cada terapeuta y reservar sus sesiones de forma simple y directa",
+          image: encuentrofacil,
+          excerpt:  "",
+                    
+                    
+                    
+          buttonText: t("weekend_workshops_cta"),
+          link: "/encuentrofacil",
+          isDisabled: false,
+        },
+       
+      ].map((post, index) => (
+        <div
+          key={index}
+          className="min-w-[400px] max-w-xs bg-white rounded-2xl overflow-hidden shadow-lg flex-shrink-0"
+        >
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full h-89 object-cover"
+          />
+         <div className="p-6 flex flex-col items-center"> {/* Agregamos flex-col e items-center para centrar el contenido */}
+  <h3 className="text-xl font-semibold mb-2 text-center text-gray-800">
+    {post.title}
+  </h3>
+  <p className="text-gray-600 text-center text-sm mb-4">{post.excerpt}</p>
+
+  {post.isDisabled ? (
+    <span
+      className="w-full text-center bg-gray-300 text-gray-500 py-3 px-6 rounded-xl font-bold cursor-not-allowed shadow-inner"
+      style={{ pointerEvents: "none" }}
+    >
+      {post.buttonText}
+    </span>
+  ) : (
+    <Link
+      to={post.link}
+      className="w-full text-center bg-pink-600 text-white py-3 px-6 rounded-xl font-bold hover:bg-pink-700 hover:shadow-lg transform hover:-translate-y-1 transition-all duration-300 block"
+    >
+      {post.buttonText}
+    </Link>
+  )}
+</div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Contact Section */}
       <section id="contacto" className="py-16 md:py-24 bg-black text-white">
