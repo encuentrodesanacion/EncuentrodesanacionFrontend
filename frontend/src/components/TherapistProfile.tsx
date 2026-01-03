@@ -17,7 +17,7 @@ const TherapistProfile: FC<TherapistProfileProps> = ({
   return (
     <div
       // AUMENTO DE ALTURA: Pasamos a h-[600px] para dar más aire al diseño
-      className="flip-wrapper cursor-pointer w-[360px] h-[600px] m-4"
+      className="flip-wrapper cursor-pointer w-[230px] h-[600px] m-4"
       onClick={() => onClick(terapeuta)}
     >
       <div className="flip-card w-full h-full">

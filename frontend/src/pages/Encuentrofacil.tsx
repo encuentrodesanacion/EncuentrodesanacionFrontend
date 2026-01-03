@@ -355,11 +355,11 @@ export default function AgendaSanacion() {
         key={t.id}
         className={`aura-container relative transition-all duration-500 rounded-2xl w-full max-w-[350px] ${
           t.isElite 
-            ? "aura-elite ring-4 ring-pink-500/80 scale-[1.02] sm:scale-[1.02] z-10" 
+            ? "aura-elite ring-4 ring-pink-500/80 scale-[1.00] sm:scale-[1.02] z-10" 
             : t.isProfesional 
-            ? "aura-profesional ring-4 ring-blue-500/40 scale-[1.02] sm:scale-[1.03] z-10" 
+            ? "aura-profesional ring-4 ring-blue-500/40 scale-[1.00] sm:scale-[1.03] z-10" 
             : t.isBasic
-            ? "aura-basic ring-4 ring-yellow-500/40 scale-[1.01] z-10"
+            ? "aura-basic ring-4 ring-yellow-500/40 scale-[1.00] z-10"
             : "border border-gray-100 shadow-sm"
         }`}
       >
