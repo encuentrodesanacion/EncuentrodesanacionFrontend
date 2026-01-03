@@ -120,199 +120,71 @@ import alicec from "../assets/Cocrea.jpeg";
 
 export const terapeutasData: Terapeuta[] = [
 
-  {
-
-id: 12,
-
-nombre: "Ana Luisa Solervicens",
-
-email: "analuisasr@gmail.com",
-
-imagenPerfil: analuisa, // Reemplaza con la imagen real
-
-callToActionTextCard:
-
-"Soy Ana Luisa, terapeuta holística y guía en lecturas de runas ancestrales. Acompaño procesos de autoconocimiento y claridad espiritual, conectando con la sabiduría antigua para iluminar tu camino.",
-servicios: [
-
-{
-
- img: lecturarunas,
-
- title: "Lectura de Runas",
-
- terapeuta: "Ana Luisa Solervicens",
-
- terapeuta_id: 12,
-
- description:
-
-   "La lectura de runas es una práctica milenaria de origen nórdico que va más allá de la simple adivinación. Cada runa es un símbolo sagrado que guarda en sí mismo un poder espiritual, representando fuerzas de la naturaleza, energías cósmicas y la guía de los dioses.",
-precio: 18000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 18000 }],
-
-},
-
-],
-
-  },
-
    {
 
-id: 5,
+id: 4,
 
-nombre: "Brenda Rivas",
+nombre: "Paulina Villablanca",
+isElite: true,
 
-email: "rbrenda895@gmail.com",
+email: "paulina@email.com",
 
-imagenPerfil: brenda, // Reemplaza con la imagen real
+imagenPerfil: paulina, // Reemplaza con la imagen real
 
-callToActionTextCard:
-
-"Mi nombre es brenda rivas, en mi trayectoria en el campo de la salud evidencie como las enfermedades o padecimientos fisicos ,constituian el pilar en los cuidados de enfermeria restando importancia al cuerpo energetico por lo que me interese en e estudio de el individuo en sus distintos cuerpos (enrgetico /fisco /emocional ) llevandome a profundizar en la filosofia holistica ,tratando asi al paciente en su totalidad ,espiritu ,alma y cuerpo.",
-servicios: [
-
-{
-
- img: trazos,
-
- title: "Canalización Energética",
-
- terapeuta: "Brenda Rivas",
-
- terapeuta_id: 5,
-
- description:
-
-   "La canalizacion energetica es un metodo terapeutico que busca reconectar con nuestro poder espiritual ,basandose en los conocimientos y habilidades psiquicas de una persona donde se canaliza la informacion que proviene de otras dimensiones .es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduria superior, la informacion recibida durante la  canalizacion nos permite ayudar consultante a liberar y sanar traumas ,dolor ,miedos y bloqueos emocionales ,fisicos energeticos o espirituales.",
-precio: 25000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 25000 }],
-
-},
-
-],
-
-  },
-
-  {
-
-id: 16,
-
-nombre: "Karla Flores",
-
-email: "ckarlaflorencia5@gmail.com",
-
-imagenPerfil: karla, // Reemplaza con la imagen real
-
-callToActionTextCard:
-
-"Terapeuta holística, estudiante de último año de Psicología y deportista, con formación y experiencia en el ámbito educacional, donde ha realizado su práctica profesional. Cuenta con una trayectoria sostenida en el acompañamiento terapéutico de personas que presentan duelos no resueltos, crisis de ansiedad, trastornos de pánico y procesos de regulación emocional. Se ha especializado en la aplicación de terapias complementarias, tales como Flores de Bach, reiki, cuenco terapia,mindfulness (meditaciones guiadas), yoga restaurativo para adultos , embarazadas y yoga para niños, con énfasis en la autorregulación emocional. Asimismo, desarrolla talleres psicoeducativos de educación emocional, y otros. Talleres orientados a la promoción del bienestar integral en contextos individuales y grupales. Su enfoque de trabajo integra una mirada sistémica, incorporando herramientas de terapia de constelaciones familiares, junto con fundamentos psicológicos y prácticas corporales conscientes, lo que le permite ofrecer un abordaje restaurativo e integral, centrado en la persona y su contexto. Es autora del libro “De la oscuridad hacia la luz” y practica yoga de manera continua desde los 16 años, disciplina que, junto a su formación académica y experiencia profesional, sustenta una propuesta terapéutica coherente, ética y orientada al bienestar integral. Entre sus estudios tiene un diplomado en terapia de sistema, terapia ABA y TTO.   Neurodesarrollo. Si bien, también apoya procesos gestacionales y post parto. Se reserva la propiedad intelectual ante cualquier actividad o archivo informativo enviado al centro.",
-servicios: [
-
-{
-
- img: relajacion,
-
- title: "Sesión Relajación y Reconexión",
-
- terapeuta: "Karla Flores",
-
- terapeuta_id: 16,
-
- description:
-
-   "Actividad orientada a la promoción del bienestar integral, que consiste en una meditación guiada centrada en el enfoque mindfulness, favoreciendo la atención plena al momento presente y la escucha consciente del yo interior. A través de ejercicios de respiración, focalización corporal y visualizaciones guiadas, se busca fortalecer la autorregulación emocional, la reducción del estrés y la ansiedad, y el desarrollo de una mayor conciencia personal. De manera complementaria, la actividad puede incorporar Reiki como práctica energética de apoyo, orientada a facilitar la relajación profunda, el equilibrio emocional y la armonización del bienestar físico, emocional y mental. La actividad es adaptable a distintos rangos etarios y contextos (individual o grupal), y se enmarca en un enfoque integrativo y restaurativo, respetando los ritmos y necesidades de cada participante.",
-precio: 25000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 25000 }],
-
-},
-
-{
-
- img: bach,
-
- title: "Terapia Esencia Flores de DR.BACH",
-
- terapeuta: "Karla Flores",
-
- terapeuta_id: 16,
-
- description:
-
-   "Actividad terapéutica orientada al acompañamiento emocional y al autoconocimiento, basada en un espacio de diálogo consciente y escucha activa, donde la persona puede explorar sus vivencias, emociones y procesos internos en un entorno seguro y contenido. La intervención se apoya, de manera complementaria, en el uso de Flores de Bach, como herramienta natural para favorecer el equilibrio emocional, así como en la lectura simbólica del inconsciente mediante oráculos (por ejemplo, oráculo de ángeles), utilizada como recurso reflexivo que facilita la toma de conciencia, la resignificación de experiencias y la conexión con recursos personales. La actividad se desarrolla desde un enfoque integrativo y respetuoso, considerando a la persona en su dimensión emocional, mental y espiritual, sin sustituir procesos clínicos cuando estos sean necesarios. Está dirigida a personas que buscan orientación emocional, claridad personal y fortalecimiento del bienestar integral, y puede realizarse de forma individual o grupal, según el contexto.",
-precio: 25000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 25000 }],
-
-},
-
-{
-
- img: yogar,
-
- title: "Yoga Restaurativo",
-
- terapeuta: "Karla Flores",
-
- terapeuta_id: 16,
-
- description:
-
-   "Actividad orientada a la liberación de la tensión corporal y la promoción del bienestar físico y emocional, a través de una práctica de yoga adaptada a las necesidades y características de niños, personas gestantes y adultos. La sesión integra movimientos conscientes, posturas suaves, ejercicios de respiración y momentos de relajación guiada, favoreciendo la conexión cuerpo–mente, la autorregulación emocional y la disminución del estrés acumulado. En el caso de niños, se incorporan dinámicas lúdicas que facilitan la participación y el desarrollo de la conciencia corporal; en personas gestantes, la práctica prioriza el cuidado, la seguridad y el acompañamiento del proceso corporal; y en adultos, se enfoca en la liberación de tensiones y el equilibrio integral. La actividad se desarrolla desde un enfoque respetuoso y restaurativo, adaptable a distintos niveles de experiencia, y orientada a fortalecer hábitos de autocuidado y bienestar integral, tanto en modalidad individual como grupal.",
-precio: 25000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 25000 }],
-
-},
-
-],
-
-  },
-
- 
-
-  {
-
-id: 15,
-
-nombre: "Annette Wanninger",
-
-email: "anettewanninger@gmail.com",
-
-imagenPerfil: annete,
-
-callToActionTextCard:
-
-"Soy de Alemania y vivio en Chile desde hace 8 años. Desde hace 6 años trabaja como terapeuta holística (sonoterapia, limpieza energética, cromoterapia, arteterapia) además soy instructora de meditación y consultora de Ayurveda. Hago  masajes ayurvedicos, masajes fango, moxibustión, limpieza facial curativa. Como profesora Waldorf y terapeuta trabajo tabién mucho con niños.",
+callToActionTextCard: "Si quieres resolver y sanar diversos aspectos de tu vida como son tu niñez, tu relacion con los linajes paternos y/o maternos e incusive si te cuesta mucho tomar decisiones;  yo te puedo acompañar en este proceso; a traves de una  escucha atenta, acogedora y empatica; ideal para quienes quieren sanar buscando espacios de contencion.",
 
 servicios: [
 
 {
 
- img: sonoterapia,
+ img: constelacion,
 
- title: "Sonoterapia con meditación",
+ title: "Constelaciones Familiares Individuales",
 
- terapeuta: "Annette Wanninger",
+ terapeuta: "Paulina Villablanca",
 
- terapeuta_id: 15,
+ terapeuta_id: 4,
 
- description:
+ description: "Es una tecnica terapeutica para sanar conflictos emocionales y patrones que tienen origen en el sistema familiar .Revela dinamicas o bloqueos que afectan tu vida actual  Beneficios;  comprension del origen de los conflictos, liberacion emocional, reconciliacion con la historia familiar, paz y claridad interior",
+precio: 24000,
 
-   "La sonoterapia es un método médico holístico y alternativo que utiliza específicamente vibraciones, tonos y sonidos (por ejemplo, de cuencos tibetanos) para promover una relajación profunda, reducir el estrés, liberar bloqueos internos y aumentar el bienestar físico y mental al poner el cuerpo y la mente en resonancia y estimular los procesos de autocuración. A menudo afecta a todo el cuerpo, ya que se compone aproximadamente de un 75 % de agua, que conduce las vibraciones y se utiliza para aliviar el estrés, la tensión, las molestias psicosomáticas o para favorecer la circulación sanguínea. La sonoterapia se acompaña de una meditación guiada, que tiene un efecto muy relajante y abre el cuerpo y la mente a la sonoterapia.",
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 24000 }],
+
+},
+
+{
+
+ img: tarot,
+
+ title: "Lectura Predictiva Y Terapéutica de Tarot",
+
+ terapeuta: "Paulina Villablanca",
+
+ terapeuta_id: 4,
+
+ description: "A traves de esta tirada de tarot de 30 minutos; podras resolver tus conflictos de alguna situacion determinada, te permitira visualizar situaciones bloqueadas y que poder hacer para salir de o emergentes.",
+
+ precio: 20000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 20000 }],
+
+},
+
+{
+
+ img: espejo,
+
+ title: "Diagnostico Heridas de Infancia",
+
+ terapeuta: "Paulina Villablanca",
+
+ terapeuta_id: 4,
+
+ description: "Por que es importante conocer y sanar tus heridas de infancia; te permite entender lo que te toco vivir y comprendiendolo desde el amor, aprendiendo a confiar en ti mismo y en tus sentimientos, entendiendo que debes priorizar tus necesidades hablando de lo que te pasa o paso, aprendiendo a pedir ayuda, de esta manera podras crecer, madurar y ser feliz  ",
 
  precio: 16000,
 
@@ -324,306 +196,13 @@ servicios: [
 
 ],
 
-},
-
- {
-
-id: 11,
-
-nombre: "Lea Parra",
-
-email: "leaparra@gmail.com",
-
-imagenPerfil: lea,
-
-callToActionTextCard:
-
-"Soy consteladora familiar y acompañante en procesos de conciencia y sanacion emocional. Mi enfoque integra las Constelaciones Familiares y la Biodecodificacion, acompañando a las personas a mirar con amor aquello que necesita ser ordenado para que la vida fluya con mas calma, claridad y sentido. Trabajo desde una energia cercana, respetuosa y profunda, creando espacios seguros donde cada persona puede sentirse vista, sostenida y honrada.",
-
-servicios: [
-
-{
-
- img: constfam,
-
- title: "Constelaciones Familiares",
-
- terapeuta: "Lea Parra",
-
- terapeuta_id: 11,
-
- description:
-
-   "Las Constelaciones Familiares son una herramienta terapeutica que permite observar dinamicas inconscientes heredadas del sistema familiar que hoy impactan en nuestras relaciones, emociones, salud, prosperidad y proposito. Durante el encuentro: exploramos el motivo de consulta, observamos la dinamica del sistema, permitimos que emerja la informacion necesaria y acompaño el proceso de integracion. El objetivo no es revivir el dolor, sino darle un nuevo lugar.",
-
- precio: 34000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 34000 }],
-
-},{
-
- img: constfam1,
-
- title: "Constelaciones Familiares Grupal",
-
- terapeuta: "Lea Parra",
-
- terapeuta_id: 11,
-
- description:
-
-   "Las Constelaciones Familiares grupales de manera presencial, se realizan con un minimo de 5 personas maximo 10, lo que permite una dinamica intima y profunda. a traves de estas constelaciones, acompaño a las personas en el descubrimiento y la resolucion de dinamicas familiares, promoviendo la sanacion y el bienestar integral.",
-
- precio: 20000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 20000 }],
-
-},
-
-],
-
-},
-
-{
-
-id: 10,
-
-nombre: "Natalie Bonysson",
-
-email: "nbonysson@gmail.com",
-
-imagenPerfil: nataly,
-
-callToActionTextCard:
-
-"Te acompaño en el autoconocimiento, a través de diversas guías para tu propia exploración, tanto de ti como de tus posibilidades.",
-
-servicios: [
-
-{
-
- img: horoscopo,
-
- title: "Horóscopo Chino",
-
- terapeuta: "Natalie Bonysson",
-
- terapeuta_id: 10,
-
- description:
-
-   "El Horóscopo colabora en la revisión de ciclos del propio vivir y da una visión panorámica de las distintas posibilidades que pueden resultar de los propios actos y acciones.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},{
-
- img: Carta,
-
- title: "Carta Natal China",
-
- terapeuta: "Natalie Bonysson",
-
- terapeuta_id: 10,
-
- description:
-
-   "La Astrología China, con su cosmovisión, permite reconocerse como parte del mundo y del tiempo. Pudiendo enteneder los elementos que influyen en cada quien para avanzar al equilibrio, a través de la Carta Natal.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-{
-
- img: arteterapia,
-
- title: "Taller Arteterapéutico: Conectando con el Verano",
-
- terapeuta: "Natalie Bonysson",
-
- terapeuta_id: 10,
-
- description:
-
-   "El Arte-terapia colabora con el autoconocimiento y desarrollo personal, a través de una experiencia artística y terapéutica. Ayudando a prevenir, apoyar, mejorar y/o acompañar algún proceso determinado (individual, familiar, laboral, social, de enfermedad u otro), gracias a la expresión creativa",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-],
-
-},
-
-{
-
-id: 6,
-
-nombre: "Cindi Palma",
-
-email: "cindipalma20@gmail.com",
-
-imagenPerfil: cindy,
-
-callToActionTextCard:
-
-"¿Cuánto tiempo más vas a cargar con una mochila que ni siquiera es tuya?  A veces el cansancio que sientes no es falta de sueño, es el peso de energías estancadas, de patrones que repites sin entender. Las enfermedades y bloqueos no son accidentes, son el grito de una raíz que pide ser vista. No estoy aquí para decirtr que será un camino pasivo, estoy aquí para sacudirte y acompañarte a transformar ese dolor en paz consciente. ¿Estás list@ para dejar de arrastrar el pasado y vivir TÚ presente?",
-
-servicios: [
-
-{
-
- img: vortex,
-
- title: "Vortex Aura Healing",
-
- terapeuta: "Cindi Palma",
-
- terapeuta_id: 6,
-
- description:
-
-   "Es una terapia que se usa para limpiar, purificar, equilibrar el campo energético y los Chakras, eliminando negatividad, bloqueos emocionales y  elevando la vibración personal.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},  {
-
- img: liberacion,
-
- title: "Liberación Emociones Atrapadas",
-
- terapeuta: "Cindi Palma",
-
- terapeuta_id: 6,
-
- description:
-
-   "Con ésta herramienta te ayudo a gestionar y soltar emociones que no supiste manejar en el momento en que ocurrió, que ha quedado estancado en tú inconsciente y está dañando tú salud física y mental. Atrévete a soltar ésta mochila que no te deja avanzar.",
-
- precio: 35000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 35000 }],
-
-},
-
-
-
-],
-
-},
-
-{
-
-id: 8,
-nombre: "Maria José Corvalán",
-email: "mariajose.cp.flga@gmail.com",
-imagenPerfil: cote,
-
-callToActionTextCard:
-
-"Soy María José, fonoaudióloga, coach y terapeuta, acompaño a personas en procesos de liberación emocional y transformación de creencias, ayudándolas a soltar lo que hoy les pesa y a reconectar con mayor calma, claridad y bienestar. Trabajo desde un enfoque cercano y consciente, facilitando la liberación de bloqueos internos y la armonización emocional, permitiendo que la energía se ordene y que los cambios se integren de manera suave y natural en la vida diaria, para que las personas puedan sentirse más livianas, en equilibrio y alineadas con la vida que desean vivir.",
-
-servicios: [
-
-{
-
- img: liberar,
-
- title: "Liberación de Creencias Limitantes",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Sientes que algún área de tu vida no fluye como a ti te gustaría? ¿A través de qué lentes estás viendo tu vida? Mediante esta terapia podrás tomar conciencia y comenzar a soltar creencias que estén alejándote de lo que si quieres atraer a tu vida. Revisaremos en base a un tema cuántas tienes activas, cuáles son, sus causas, que áreas están afectando y más. Luego de ser liberadas se implantarán en ti creencias potenciadoras y se te entregarán estrategias, con el fin de que puedas abrirte a nuevas posibilidades y comenzar a cambiar tu realidad ¿Vienes?",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-{
-
- img: Reset,
-
- title: "Reset Emocional",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Y si algunas emociones que no has podido soltar aún estuvieran influyendo en tu bienestar y en tu vida actual? Es una terapia que utiliza diferentes herramientas, para favorecer tu salud, bienestar y equilibrio energético, mediante la liberación de emociones que por distintos motivos han quedado atrapadas en tu cuerpo y campo energético, y que pueden debilitar el sistema inmune, generar malestares físicos, manifestarse como enfermedades o estar limitando distintas áreas de tu vida; al liberarlas, la energía comenzará a fluir con mayor armonía, lo que podrá reflejarse incluso en mejoras en tus relaciones y en cambios positivos en tu realidad, y además durante la sesión se realizará la limpieza de dos creencias limitantes que podrían estar interfiriendo en tu bienestar ¿Y si funciona para ti?",
-
- precio: 29000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 29000 }],
-
-},  {
-
- img: ansiedad,
-
- title: "Sanación Ansiedad",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Sientes que la ansiedad te desconecta de tu paz y tu poder? La Mesa de Sanación de Ansiedad es una experiencia transformadora que te ayuda a liberar emociones atrapadas que generan ansiedad, angustia o sensación de descontrol, ayuda también en ataques de pánico, a regular tu sistema nervioso y protegerte de energías externas que generan desequilibrio. Además, te permite soltar creencias limitantes, romper con pensamientos repetitivos y cortar lazos energéticos que sostienen miedos o bloqueos. ¿Y si es el momento de volver a tu centro, recuperar tu tranquilidad y habitar tu vida con presencia, confianza y mayor serenidad?",
-
- precio: 29000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 29000 }],
-
-},
-
- 
-
-],
-
-},
-
- {
+  },
+  {
 
 id: 1,
 
 nombre: "Claudia Ibarra",
+isElite: true,
 
 email: "cibarraari@gmail.com",
 
@@ -724,48 +303,606 @@ servicios: [
 ],
 
 },
+{
 
- {
+id: 2,
 
-id: 13,
+nombre: "Gabriela Pinto",
+isElite: true,
 
-nombre: "Carolina Jiménez",
+email: "gabykinetre@gmail.com",
 
-email: "caje77@hotmail.com",
-
-imagenPerfil: caro,
+imagenPerfil: gaby,
 
 callToActionTextCard:
 
-"Cuenta Conmigo para encontrar, desde tu yo interior y desde tu realidad actual, el equilibrio entre tus pensamientos, emociones y acciones. A través del enfoque mental, de una adecuada gestion emocional y de la toma de decisiones conscientes, podrás recuperar el control de tu vida, convertirte en tu mejor versión y comenzar a disfrutar de tu mejor momento.",
+"Kinesiología Integral y Bienestar Consciente Mi propósito es acompañarte a redescubrir el lenguaje de tu cuerpo, transformando el dolor y el estrés en libertad de movimiento. Soy una kinesióloga apasionada por la salud integral, con un enfoque humano centrado en la escucha activa y la creación de un espacio seguro para tu recuperación. Entiendo que cada cuerpo cuenta una historia y mi labor es guiarte para que esa historia deje de ser una de tensión y se convierta en una de bienestar.",
 
 servicios: [
 
 {
 
- img: sonoterapia,
+ img: rehab,
 
- title: "Recupera tu Poder",
+ title: "Rehabilitacion Kinesica /Reconecta tu Ruta Corporal",
 
- terapeuta: "Carolina Jiménez",
+ terapeuta: "Gabriela Pinto",
 
- terapeuta_id: 13,
+ terapeuta_id: 2,
 
  description:
 
    "La terapia de Bienestar emocional consite en una primera instancia en descongestionar la mente de pensamientos intrusivos, de sobrepensamientos, de recuerdos y preocupaciones que ya no son parte de nuestra realidad y que nos mantienen viviendo en modo alerta a través de las emociones que generan, alejandonos de la tranquilidad nececsaria para tener una buena calidad de vida. Es una terapia enfocada en educar tus propias habilidades para tomar desiciones alineadas con tu proposito y bienestar. El trabajo terapeutico contempla 4 fases: Conocerme - aceptarme - amarme y cuidarme. En este proceso se trabajan distintas tematicas desde tu presente y tu necesidad: patrones errados, experiencias influyentes, control de pensamientos, gestion emocional, autoconcepto, desapego, codependencia, aclaración de ideas y de conceptos predeterminados, manejo de relaciones interpersonales, crecimiento personal, desarrollo espiritual, expectativas, propósito. Es una herramienta abierta a reconectarte con la experiencia de la vida desde otra sintonía, desde un anclaje interior , desde tu evolución, experimentando una vida sin idealismos, pero mucha mas plena y desde tu realidad.",
 
- precio: 40000,
+ precio: 30000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 40000 }],
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},
+
+{
+
+ img: vago,
+
+ title: "Activa tu Nervio Vago, Regula tu Estrés",
+
+ terapeuta: "Gabriela Pinto",
+
+ terapeuta_id: 2,
+
+ description:
+
+   "La calma en el cuerpo es la llave para regular la mente. Como especialista en terapia corporal para la regulación del sistema nervioso, te ayudo a reducir los niveles de cortisol y combatir el estrés crónico. ¿Cuándo fue la última vez que sentiste una relajación profunda y real? Mi enfoque te permite resetear tu sistema y recuperar el equilibrio emocional desde lo corporal.",
+
+ precio: 25000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 25000 }],
+
+},
+
+{
+
+ img: piso,
+
+ title: "Rehabilitación Piso Pelvico",
+
+ terapeuta: "Gabriela Pinto",
+
+ terapeuta_id: 2,
+
+ description:
+
+   "Acompaño y apoyo a mujeres en todas sus etapas vitales. Brindo atención especializada en necesidades musculoesqueléticas críticas, desde el manejo de dolencias durante el embarazo y la recuperación en el postparto, hasta el tratamiento de disfunciones pelviperineales como incontinencia y prolapsos. Mi objetivo es que habites tu cuerpo con confianza, seguridad y salud en cada ciclo de tu vida.",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
 
 },
 
 ],
 
 },
+{
+
+id: 7,
+
+nombre: "Claudia Diaz",
+isProfesional:true,
+email: "dcclaudia21@gmail.com",
+
+imagenPerfil: claudiad,
+
+callToActionTextCard:
+
+"Soy Claudia Díaz Catalán, docente y terapeuta en Terapia de Respuesta Espiritual, y acompaño procesos de sanación energética orientados a identificar y liberar bloqueos, programas y lazos que afectan el bienestar emocional, fisico y mental. Trabajo en equipo, junto a tus guías  espiruales, quienes nos muestran programas , energías y bloqueos que te afectan.Facilitando procesos que permiten orden interno, cierre de ciclos y reconexión con tu propósito, siempre alineados al bien más elevado del alma de cada persona.",
+
+servicios: [
+
+{
+
+ img: tre,
+
+ title: "Terapia de Respuesta Espiritual",
+
+ terapeuta: "Claudia Diaz",
+
+ terapeuta_id: 7,
+
+ description:
+
+   "¿Sientes cansancio, bloqueos o confusión sin una causa clara? A través de la Terapia de Respuesta Espiritual  y con ayuda de tus guías espirituales, accedemos a la información del Yo Superior para identificar y liberar programas y cargas energéticas que afectan tu bienestar, ayudándote a recuperar claridad, equilibrio y paz interior. “En Terapia de Respuesta Espiritual trabajamos programas, lazos kármicos, votos, pactos y bloqueos energéticos que muchas veces no son conscientes, pero que siguen influyendo en tu vida.",
+
+ precio: 35000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 35000 }],
+
+},
+
+{
+
+ img: lazo,
+
+ title: "Cortar Lazos Familiares, Lealtades Ancestrales y Lazos Kármicos",
+
+ terapeuta: "Claudia Diaz",
+
+ terapeuta_id: 7,
+
+ description:
+
+   "¿Sientes lazos que te atan o limitan o situaciones que te drenan y no logras soltar? Mediante la Terapia de Respuesta Espiritual, con ayuda de tus guías espirituales, se trabaja la liberación de lazos kármicos asociados a relaciones, emociones o experiencias del pasado que hoy interfieren en tu vida, permitiéndote cerrar ciclos y avanzar con mayor libertad.",
+
+ precio: 35000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 35000 }],
+
+},
+
+ {
+
+ img: terapgrupo,
+
+ title: "Terapia de grupo/reuniones o proyectos",
+
+ terapeuta: "Claudia Diaz",
+
+ terapeuta_id: 7,
+
+ description:
+
+   "¿Tu grupo, equipo o proyecto está estancado o con tensiones invisibles? Usando la Terapia de Respuesta Espiritual se armoniza la energía grupal, liberando bloqueos individuales y colectivos, favoreciendo claridad, fluidez, cooperación y un propósito común alineado.",
+
+ precio: 35000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 35000 }],
+
+},
+
+],
+
+},
+  
+
+   {
+
+id: 5,
+
+nombre: "Brenda Rivas",
+isProfesional:true,
+email: "rbrenda895@gmail.com",
+
+imagenPerfil: brenda, // Reemplaza con la imagen real
+
+callToActionTextCard:
+
+"Mi nombre es brenda rivas, en mi trayectoria en el campo de la salud evidencie como las enfermedades o padecimientos fisicos ,constituian el pilar en los cuidados de enfermeria restando importancia al cuerpo energetico por lo que me interese en e estudio de el individuo en sus distintos cuerpos (enrgetico /fisco /emocional ) llevandome a profundizar en la filosofia holistica ,tratando asi al paciente en su totalidad ,espiritu ,alma y cuerpo.",
+servicios: [
+
+{
+
+ img: trazos,
+
+ title: "Canalización Energética",
+
+ terapeuta: "Brenda Rivas",
+
+ terapeuta_id: 5,
+
+ description:
+
+   "La canalizacion energetica es un metodo terapeutico que busca reconectar con nuestro poder espiritual ,basandose en los conocimientos y habilidades psiquicas de una persona donde se canaliza la informacion que proviene de otras dimensiones .es un proceso mediante el cual el terapeuta conecta con una fuente de sabiduria superior, la informacion recibida durante la  canalizacion nos permite ayudar consultante a liberar y sanar traumas ,dolor ,miedos y bloqueos emocionales ,fisicos energeticos o espirituales.",
+precio: 25000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 25000 }],
+
+},
+
+],
+
+  },
+
+  {
+
+id: 16,
+
+nombre: "Karla Flores",
+isProfesional:true,
+
+email: "ckarlaflorencia5@gmail.com",
+
+imagenPerfil: karla, // Reemplaza con la imagen real
+
+callToActionTextCard:
+
+"Terapeuta holística, estudiante de último año de Psicología y deportista, con formación y experiencia en el ámbito educacional, donde ha realizado su práctica profesional. Cuenta con una trayectoria sostenida en el acompañamiento terapéutico de personas que presentan duelos no resueltos, crisis de ansiedad, trastornos de pánico y procesos de regulación emocional. Se ha especializado en la aplicación de terapias complementarias, tales como Flores de Bach, reiki, cuenco terapia,mindfulness (meditaciones guiadas), yoga restaurativo para adultos , embarazadas y yoga para niños, con énfasis en la autorregulación emocional. Asimismo, desarrolla talleres psicoeducativos de educación emocional, y otros. Talleres orientados a la promoción del bienestar integral en contextos individuales y grupales. Su enfoque de trabajo integra una mirada sistémica, incorporando herramientas de terapia de constelaciones familiares, junto con fundamentos psicológicos y prácticas corporales conscientes, lo que le permite ofrecer un abordaje restaurativo e integral, centrado en la persona y su contexto. Es autora del libro “De la oscuridad hacia la luz” y practica yoga de manera continua desde los 16 años, disciplina que, junto a su formación académica y experiencia profesional, sustenta una propuesta terapéutica coherente, ética y orientada al bienestar integral. Entre sus estudios tiene un diplomado en terapia de sistema, terapia ABA y TTO.   Neurodesarrollo. Si bien, también apoya procesos gestacionales y post parto. Se reserva la propiedad intelectual ante cualquier actividad o archivo informativo enviado al centro.",
+servicios: [
+
+{
+
+ img: relajacion,
+
+ title: "Sesión Relajación y Reconexión",
+
+ terapeuta: "Karla Flores",
+
+ terapeuta_id: 16,
+
+ description:
+
+   "Actividad orientada a la promoción del bienestar integral, que consiste en una meditación guiada centrada en el enfoque mindfulness, favoreciendo la atención plena al momento presente y la escucha consciente del yo interior. A través de ejercicios de respiración, focalización corporal y visualizaciones guiadas, se busca fortalecer la autorregulación emocional, la reducción del estrés y la ansiedad, y el desarrollo de una mayor conciencia personal. De manera complementaria, la actividad puede incorporar Reiki como práctica energética de apoyo, orientada a facilitar la relajación profunda, el equilibrio emocional y la armonización del bienestar físico, emocional y mental. La actividad es adaptable a distintos rangos etarios y contextos (individual o grupal), y se enmarca en un enfoque integrativo y restaurativo, respetando los ritmos y necesidades de cada participante.",
+precio: 25000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 25000 }],
+
+},
+
+{
+
+ img: bach,
+
+ title: "Terapia Esencia Flores de DR.BACH",
+
+ terapeuta: "Karla Flores",
+
+ terapeuta_id: 16,
+
+ description:
+
+   "Actividad terapéutica orientada al acompañamiento emocional y al autoconocimiento, basada en un espacio de diálogo consciente y escucha activa, donde la persona puede explorar sus vivencias, emociones y procesos internos en un entorno seguro y contenido. La intervención se apoya, de manera complementaria, en el uso de Flores de Bach, como herramienta natural para favorecer el equilibrio emocional, así como en la lectura simbólica del inconsciente mediante oráculos (por ejemplo, oráculo de ángeles), utilizada como recurso reflexivo que facilita la toma de conciencia, la resignificación de experiencias y la conexión con recursos personales. La actividad se desarrolla desde un enfoque integrativo y respetuoso, considerando a la persona en su dimensión emocional, mental y espiritual, sin sustituir procesos clínicos cuando estos sean necesarios. Está dirigida a personas que buscan orientación emocional, claridad personal y fortalecimiento del bienestar integral, y puede realizarse de forma individual o grupal, según el contexto.",
+precio: 25000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 25000 }],
+
+},
+
+{
+
+ img: yogar,
+
+ title: "Yoga Restaurativo",
+
+ terapeuta: "Karla Flores",
+
+ terapeuta_id: 16,
+
+ description:
+
+   "Actividad orientada a la liberación de la tensión corporal y la promoción del bienestar físico y emocional, a través de una práctica de yoga adaptada a las necesidades y características de niños, personas gestantes y adultos. La sesión integra movimientos conscientes, posturas suaves, ejercicios de respiración y momentos de relajación guiada, favoreciendo la conexión cuerpo–mente, la autorregulación emocional y la disminución del estrés acumulado. En el caso de niños, se incorporan dinámicas lúdicas que facilitan la participación y el desarrollo de la conciencia corporal; en personas gestantes, la práctica prioriza el cuidado, la seguridad y el acompañamiento del proceso corporal; y en adultos, se enfoca en la liberación de tensiones y el equilibrio integral. La actividad se desarrolla desde un enfoque respetuoso y restaurativo, adaptable a distintos niveles de experiencia, y orientada a fortalecer hábitos de autocuidado y bienestar integral, tanto en modalidad individual como grupal.",
+precio: 25000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 25000 }],
+
+},
+
+],
+
+  },
+
+ 
+
+  
+
+ {
+
+id: 11,
+
+nombre: "Lea Parra",
+isProfesional:true,
+
+email: "leaparra@gmail.com",
+
+imagenPerfil: lea,
+
+callToActionTextCard:
+
+"Soy consteladora familiar y acompañante en procesos de conciencia y sanacion emocional. Mi enfoque integra las Constelaciones Familiares y la Biodecodificacion, acompañando a las personas a mirar con amor aquello que necesita ser ordenado para que la vida fluya con mas calma, claridad y sentido. Trabajo desde una energia cercana, respetuosa y profunda, creando espacios seguros donde cada persona puede sentirse vista, sostenida y honrada.",
+
+servicios: [
+
+{
+
+ img: constfam,
+
+ title: "Constelaciones Familiares",
+
+ terapeuta: "Lea Parra",
+
+ terapeuta_id: 11,
+
+ description:
+
+   "Las Constelaciones Familiares son una herramienta terapeutica que permite observar dinamicas inconscientes heredadas del sistema familiar que hoy impactan en nuestras relaciones, emociones, salud, prosperidad y proposito. Durante el encuentro: exploramos el motivo de consulta, observamos la dinamica del sistema, permitimos que emerja la informacion necesaria y acompaño el proceso de integracion. El objetivo no es revivir el dolor, sino darle un nuevo lugar.",
+
+ precio: 34000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 34000 }],
+
+},{
+
+ img: constfam1,
+
+ title: "Constelaciones Familiares Grupal",
+
+ terapeuta: "Lea Parra",
+
+ terapeuta_id: 11,
+
+ description:
+
+   "Las Constelaciones Familiares grupales de manera presencial, se realizan con un minimo de 5 personas maximo 10, lo que permite una dinamica intima y profunda. a traves de estas constelaciones, acompaño a las personas en el descubrimiento y la resolucion de dinamicas familiares, promoviendo la sanacion y el bienestar integral.",
+
+ precio: 20000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 20000 }],
+
+},
+
+],
+
+},
+
+{
+
+id: 10,
+
+nombre: "Natalie Bonysson",
+isProfesional:true,
+
+email: "nbonysson@gmail.com",
+
+imagenPerfil: nataly,
+
+callToActionTextCard:
+
+"Te acompaño en el autoconocimiento, a través de diversas guías para tu propia exploración, tanto de ti como de tus posibilidades.",
+
+servicios: [
+
+{
+
+ img: horoscopo,
+
+ title: "Horóscopo Chino",
+
+ terapeuta: "Natalie Bonysson",
+
+ terapeuta_id: 10,
+
+ description:
+
+   "El Horóscopo colabora en la revisión de ciclos del propio vivir y da una visión panorámica de las distintas posibilidades que pueden resultar de los propios actos y acciones.",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},{
+
+ img: Carta,
+
+ title: "Carta Natal China",
+
+ terapeuta: "Natalie Bonysson",
+
+ terapeuta_id: 10,
+
+ description:
+
+   "La Astrología China, con su cosmovisión, permite reconocerse como parte del mundo y del tiempo. Pudiendo enteneder los elementos que influyen en cada quien para avanzar al equilibrio, a través de la Carta Natal.",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},
+
+{
+
+ img: arteterapia,
+
+ title: "Taller Arteterapéutico: Conectando con el Verano",
+
+ terapeuta: "Natalie Bonysson",
+
+ terapeuta_id: 10,
+
+ description:
+
+   "El Arte-terapia colabora con el autoconocimiento y desarrollo personal, a través de una experiencia artística y terapéutica. Ayudando a prevenir, apoyar, mejorar y/o acompañar algún proceso determinado (individual, familiar, laboral, social, de enfermedad u otro), gracias a la expresión creativa",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},
+
+],
+
+},
+
+{
+
+id: 6,
+
+nombre: "Cindi Palma",
+isProfesional:true,
+
+email: "cindipalma20@gmail.com",
+
+imagenPerfil: cindy,
+
+callToActionTextCard:
+
+"¿Cuánto tiempo más vas a cargar con una mochila que ni siquiera es tuya?  A veces el cansancio que sientes no es falta de sueño, es el peso de energías estancadas, de patrones que repites sin entender. Las enfermedades y bloqueos no son accidentes, son el grito de una raíz que pide ser vista. No estoy aquí para decirtr que será un camino pasivo, estoy aquí para sacudirte y acompañarte a transformar ese dolor en paz consciente. ¿Estás list@ para dejar de arrastrar el pasado y vivir TÚ presente?",
+
+servicios: [
+
+{
+
+ img: vortex,
+
+ title: "Vortex Aura Healing",
+
+ terapeuta: "Cindi Palma",
+
+ terapeuta_id: 6,
+
+ description:
+
+   "Es una terapia que se usa para limpiar, purificar, equilibrar el campo energético y los Chakras, eliminando negatividad, bloqueos emocionales y  elevando la vibración personal.",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},  {
+
+ img: liberacion,
+
+ title: "Liberación Emociones Atrapadas",
+
+ terapeuta: "Cindi Palma",
+
+ terapeuta_id: 6,
+
+ description:
+
+   "Con ésta herramienta te ayudo a gestionar y soltar emociones que no supiste manejar en el momento en que ocurrió, que ha quedado estancado en tú inconsciente y está dañando tú salud física y mental. Atrévete a soltar ésta mochila que no te deja avanzar.",
+
+ precio: 35000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 35000 }],
+
+},
+
+
+
+],
+
+},
+
+{
+
+id: 8,
+nombre: "Maria José Corvalán",
+isProfesional:true,
+email: "mariajose.cp.flga@gmail.com",
+imagenPerfil: cote,
+
+callToActionTextCard:
+
+"Soy María José, fonoaudióloga, coach y terapeuta, acompaño a personas en procesos de liberación emocional y transformación de creencias, ayudándolas a soltar lo que hoy les pesa y a reconectar con mayor calma, claridad y bienestar. Trabajo desde un enfoque cercano y consciente, facilitando la liberación de bloqueos internos y la armonización emocional, permitiendo que la energía se ordene y que los cambios se integren de manera suave y natural en la vida diaria, para que las personas puedan sentirse más livianas, en equilibrio y alineadas con la vida que desean vivir.",
+
+servicios: [
+
+{
+
+ img: liberar,
+
+ title: "Liberación de Creencias Limitantes",
+
+ terapeuta: "Maria José Corvalán",
+
+ terapeuta_id: 8,
+
+ description:
+
+   "¿Sientes que algún área de tu vida no fluye como a ti te gustaría? ¿A través de qué lentes estás viendo tu vida? Mediante esta terapia podrás tomar conciencia y comenzar a soltar creencias que estén alejándote de lo que si quieres atraer a tu vida. Revisaremos en base a un tema cuántas tienes activas, cuáles son, sus causas, que áreas están afectando y más. Luego de ser liberadas se implantarán en ti creencias potenciadoras y se te entregarán estrategias, con el fin de que puedas abrirte a nuevas posibilidades y comenzar a cambiar tu realidad ¿Vienes?",
+
+ precio: 30000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 30000 }],
+
+},
+
+{
+
+ img: Reset,
+
+ title: "Reset Emocional",
+
+ terapeuta: "Maria José Corvalán",
+
+ terapeuta_id: 8,
+
+ description:
+
+   "¿Y si algunas emociones que no has podido soltar aún estuvieran influyendo en tu bienestar y en tu vida actual? Es una terapia que utiliza diferentes herramientas, para favorecer tu salud, bienestar y equilibrio energético, mediante la liberación de emociones que por distintos motivos han quedado atrapadas en tu cuerpo y campo energético, y que pueden debilitar el sistema inmune, generar malestares físicos, manifestarse como enfermedades o estar limitando distintas áreas de tu vida; al liberarlas, la energía comenzará a fluir con mayor armonía, lo que podrá reflejarse incluso en mejoras en tus relaciones y en cambios positivos en tu realidad, y además durante la sesión se realizará la limpieza de dos creencias limitantes que podrían estar interfiriendo en tu bienestar ¿Y si funciona para ti?",
+
+ precio: 29000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 29000 }],
+
+},  {
+
+ img: ansiedad,
+
+ title: "Sanación Ansiedad",
+
+ terapeuta: "Maria José Corvalán",
+
+ terapeuta_id: 8,
+
+ description:
+
+   "¿Sientes que la ansiedad te desconecta de tu paz y tu poder? La Mesa de Sanación de Ansiedad es una experiencia transformadora que te ayuda a liberar emociones atrapadas que generan ansiedad, angustia o sensación de descontrol, ayuda también en ataques de pánico, a regular tu sistema nervioso y protegerte de energías externas que generan desequilibrio. Además, te permite soltar creencias limitantes, romper con pensamientos repetitivos y cortar lazos energéticos que sostienen miedos o bloqueos. ¿Y si es el momento de volver a tu centro, recuperar tu tranquilidad y habitar tu vida con presencia, confianza y mayor serenidad?",
+
+ precio: 29000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 29000 }],
+
+},
+
+ 
+
+],
+
+},
+
+ 
+
+ 
 
  
 
@@ -774,6 +911,7 @@ servicios: [
 id: 9,
 
 nombre: "Fernanda Arce",
+isProfesional:true,
 
 email: "arcen.fernanda@gmail.com",
 
@@ -854,92 +992,131 @@ servicios: [
 ],
 
 },
+{
 
- {
+id: 13,
 
-id: 7,
+nombre: "Carolina Jiménez",
+isBasic:true,
 
-nombre: "Claudia Diaz",
+email: "caje77@hotmail.com",
 
-email: "dcclaudia21@gmail.com",
-
-imagenPerfil: claudiad,
+imagenPerfil: caro,
 
 callToActionTextCard:
 
-"Soy Claudia Díaz Catalán, docente y terapeuta en Terapia de Respuesta Espiritual, y acompaño procesos de sanación energética orientados a identificar y liberar bloqueos, programas y lazos que afectan el bienestar emocional, fisico y mental. Trabajo en equipo, junto a tus guías  espiruales, quienes nos muestran programas , energías y bloqueos que te afectan.Facilitando procesos que permiten orden interno, cierre de ciclos y reconexión con tu propósito, siempre alineados al bien más elevado del alma de cada persona.",
+"Cuenta Conmigo para encontrar, desde tu yo interior y desde tu realidad actual, el equilibrio entre tus pensamientos, emociones y acciones. A través del enfoque mental, de una adecuada gestion emocional y de la toma de decisiones conscientes, podrás recuperar el control de tu vida, convertirte en tu mejor versión y comenzar a disfrutar de tu mejor momento.",
 
 servicios: [
 
 {
 
- img: tre,
+ img: sonoterapia,
 
- title: "Terapia de Respuesta Espiritual",
+ title: "Recupera tu Poder",
 
- terapeuta: "Claudia Diaz",
+ terapeuta: "Carolina Jiménez",
 
- terapeuta_id: 7,
-
- description:
-
-   "¿Sientes cansancio, bloqueos o confusión sin una causa clara? A través de la Terapia de Respuesta Espiritual  y con ayuda de tus guías espirituales, accedemos a la información del Yo Superior para identificar y liberar programas y cargas energéticas que afectan tu bienestar, ayudándote a recuperar claridad, equilibrio y paz interior. “En Terapia de Respuesta Espiritual trabajamos programas, lazos kármicos, votos, pactos y bloqueos energéticos que muchas veces no son conscientes, pero que siguen influyendo en tu vida.",
-
- precio: 35000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 35000 }],
-
-},
-
-{
-
- img: lazo,
-
- title: "Cortar Lazos Familiares, Lealtades Ancestrales y Lazos Kármicos",
-
- terapeuta: "Claudia Diaz",
-
- terapeuta_id: 7,
+ terapeuta_id: 13,
 
  description:
 
-   "¿Sientes lazos que te atan o limitan o situaciones que te drenan y no logras soltar? Mediante la Terapia de Respuesta Espiritual, con ayuda de tus guías espirituales, se trabaja la liberación de lazos kármicos asociados a relaciones, emociones o experiencias del pasado que hoy interfieren en tu vida, permitiéndote cerrar ciclos y avanzar con mayor libertad.",
+   "La terapia de Bienestar emocional consite en una primera instancia en descongestionar la mente de pensamientos intrusivos, de sobrepensamientos, de recuerdos y preocupaciones que ya no son parte de nuestra realidad y que nos mantienen viviendo en modo alerta a través de las emociones que generan, alejandonos de la tranquilidad nececsaria para tener una buena calidad de vida. Es una terapia enfocada en educar tus propias habilidades para tomar desiciones alineadas con tu proposito y bienestar. El trabajo terapeutico contempla 4 fases: Conocerme - aceptarme - amarme y cuidarme. En este proceso se trabajan distintas tematicas desde tu presente y tu necesidad: patrones errados, experiencias influyentes, control de pensamientos, gestion emocional, autoconcepto, desapego, codependencia, aclaración de ideas y de conceptos predeterminados, manejo de relaciones interpersonales, crecimiento personal, desarrollo espiritual, expectativas, propósito. Es una herramienta abierta a reconectarte con la experiencia de la vida desde otra sintonía, desde un anclaje interior , desde tu evolución, experimentando una vida sin idealismos, pero mucha mas plena y desde tu realidad.",
 
- precio: 35000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 35000 }],
-
-},
-
- {
-
- img: terapgrupo,
-
- title: "Terapia de grupo/reuniones o proyectos",
-
- terapeuta: "Claudia Diaz",
-
- terapeuta_id: 7,
-
- description:
-
-   "¿Tu grupo, equipo o proyecto está estancado o con tensiones invisibles? Usando la Terapia de Respuesta Espiritual se armoniza la energía grupal, liberando bloqueos individuales y colectivos, favoreciendo claridad, fluidez, cooperación y un propósito común alineado.",
-
- precio: 35000,
+ precio: 40000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 35000 }],
+ opciones: [{ sesiones: 1, precio: 40000 }],
 
 },
 
 ],
 
 },
+{
+
+id: 12,
+
+nombre: "Ana Luisa Solervicens",
+isBasic:true,
+
+email: "analuisasr@gmail.com",
+
+imagenPerfil: analuisa, // Reemplaza con la imagen real
+
+callToActionTextCard:
+
+"Soy Ana Luisa, terapeuta holística y guía en lecturas de runas ancestrales. Acompaño procesos de autoconocimiento y claridad espiritual, conectando con la sabiduría antigua para iluminar tu camino.",
+servicios: [
+
+{
+
+ img: lecturarunas,
+
+ title: "Lectura de Runas",
+
+ terapeuta: "Ana Luisa Solervicens",
+
+ terapeuta_id: 12,
+
+ description:
+
+   "La lectura de runas es una práctica milenaria de origen nórdico que va más allá de la simple adivinación. Cada runa es un símbolo sagrado que guarda en sí mismo un poder espiritual, representando fuerzas de la naturaleza, energías cósmicas y la guía de los dioses.",
+precio: 18000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 18000 }],
+
+},
+
+],
+
+  },
+{
+
+id: 15,
+
+nombre: "Annette Wanninger",
+isBasic:true,
+
+email: "anettewanninger@gmail.com",
+
+imagenPerfil: annete,
+
+callToActionTextCard:
+
+"Soy de Alemania y vivio en Chile desde hace 8 años. Desde hace 6 años trabaja como terapeuta holística (sonoterapia, limpieza energética, cromoterapia, arteterapia) además soy instructora de meditación y consultora de Ayurveda. Hago  masajes ayurvedicos, masajes fango, moxibustión, limpieza facial curativa. Como profesora Waldorf y terapeuta trabajo tabién mucho con niños.",
+
+servicios: [
+
+{
+
+ img: sonoterapia,
+
+ title: "Sonoterapia con meditación",
+
+ terapeuta: "Annette Wanninger",
+
+ terapeuta_id: 15,
+
+ description:
+
+   "La sonoterapia es un método médico holístico y alternativo que utiliza específicamente vibraciones, tonos y sonidos (por ejemplo, de cuencos tibetanos) para promover una relajación profunda, reducir el estrés, liberar bloqueos internos y aumentar el bienestar físico y mental al poner el cuerpo y la mente en resonancia y estimular los procesos de autocuración. A menudo afecta a todo el cuerpo, ya que se compone aproximadamente de un 75 % de agua, que conduce las vibraciones y se utiliza para aliviar el estrés, la tensión, las molestias psicosomáticas o para favorecer la circulación sanguínea. La sonoterapia se acompaña de una meditación guiada, que tiene un efecto muy relajante y abre el cuerpo y la mente a la sonoterapia.",
+
+ precio: 16000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 16000 }],
+
+},
+
+],
+
+},
+ 
 
   //   {
 
@@ -1111,168 +1288,9 @@ servicios: [
 
   // },
 
-   {
+  
 
-id: 4,
-
-nombre: "Paulina Villablanca",
-
-email: "paulina@email.com",
-
-imagenPerfil: paulina, // Reemplaza con la imagen real
-
-callToActionTextCard: "Si quieres resolver y sanar diversos aspectos de tu vida como son tu niñez, tu relacion con los linajes paternos y/o maternos e incusive si te cuesta mucho tomar decisiones;  yo te puedo acompañar en este proceso; a traves de una  escucha atenta, acogedora y empatica; ideal para quienes quieren sanar buscando espacios de contencion.",
-
-servicios: [
-
-{
-
- img: constelacion,
-
- title: "Constelaciones Familiares Individuales",
-
- terapeuta: "Paulina Villablanca",
-
- terapeuta_id: 4,
-
- description: "Es una tecnica terapeutica para sanar conflictos emocionales y patrones que tienen origen en el sistema familiar .Revela dinamicas o bloqueos que afectan tu vida actual  Beneficios;  comprension del origen de los conflictos, liberacion emocional, reconciliacion con la historia familiar, paz y claridad interior",
-precio: 24000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 24000 }],
-
-},
-
-{
-
- img: tarot,
-
- title: "Lectura Predictiva Y Terapéutica de Tarot",
-
- terapeuta: "Paulina Villablanca",
-
- terapeuta_id: 4,
-
- description: "A traves de esta tirada de tarot de 30 minutos; podras resolver tus conflictos de alguna situacion determinada, te permitira visualizar situaciones bloqueadas y que poder hacer para salir de o emergentes.",
-
- precio: 20000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 20000 }],
-
-},
-
-{
-
- img: espejo,
-
- title: "Diagnostico Heridas de Infancia",
-
- terapeuta: "Paulina Villablanca",
-
- terapeuta_id: 4,
-
- description: "Por que es importante conocer y sanar tus heridas de infancia; te permite entender lo que te toco vivir y comprendiendolo desde el amor, aprendiendo a confiar en ti mismo y en tus sentimientos, entendiendo que debes priorizar tus necesidades hablando de lo que te pasa o paso, aprendiendo a pedir ayuda, de esta manera podras crecer, madurar y ser feliz  ",
-
- precio: 16000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 16000 }],
-
-},
-
-],
-
-  },
-
-  {
-
-id: 2,
-
-nombre: "Gabriela Pinto",
-
-email: "gabykinetre@gmail.com",
-
-imagenPerfil: gaby,
-
-callToActionTextCard:
-
-"Kinesiología Integral y Bienestar Consciente Mi propósito es acompañarte a redescubrir el lenguaje de tu cuerpo, transformando el dolor y el estrés en libertad de movimiento. Soy una kinesióloga apasionada por la salud integral, con un enfoque humano centrado en la escucha activa y la creación de un espacio seguro para tu recuperación. Entiendo que cada cuerpo cuenta una historia y mi labor es guiarte para que esa historia deje de ser una de tensión y se convierta en una de bienestar.",
-
-servicios: [
-
-{
-
- img: rehab,
-
- title: "Rehabilitacion Kinesica /Reconecta tu Ruta Corporal",
-
- terapeuta: "Gabriela Pinto",
-
- terapeuta_id: 2,
-
- description:
-
-   "La terapia de Bienestar emocional consite en una primera instancia en descongestionar la mente de pensamientos intrusivos, de sobrepensamientos, de recuerdos y preocupaciones que ya no son parte de nuestra realidad y que nos mantienen viviendo en modo alerta a través de las emociones que generan, alejandonos de la tranquilidad nececsaria para tener una buena calidad de vida. Es una terapia enfocada en educar tus propias habilidades para tomar desiciones alineadas con tu proposito y bienestar. El trabajo terapeutico contempla 4 fases: Conocerme - aceptarme - amarme y cuidarme. En este proceso se trabajan distintas tematicas desde tu presente y tu necesidad: patrones errados, experiencias influyentes, control de pensamientos, gestion emocional, autoconcepto, desapego, codependencia, aclaración de ideas y de conceptos predeterminados, manejo de relaciones interpersonales, crecimiento personal, desarrollo espiritual, expectativas, propósito. Es una herramienta abierta a reconectarte con la experiencia de la vida desde otra sintonía, desde un anclaje interior , desde tu evolución, experimentando una vida sin idealismos, pero mucha mas plena y desde tu realidad.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-{
-
- img: vago,
-
- title: "Activa tu Nervio Vago, Regula tu Estrés",
-
- terapeuta: "Gabriela Pinto",
-
- terapeuta_id: 2,
-
- description:
-
-   "La calma en el cuerpo es la llave para regular la mente. Como especialista en terapia corporal para la regulación del sistema nervioso, te ayudo a reducir los niveles de cortisol y combatir el estrés crónico. ¿Cuándo fue la última vez que sentiste una relajación profunda y real? Mi enfoque te permite resetear tu sistema y recuperar el equilibrio emocional desde lo corporal.",
-
- precio: 25000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 25000 }],
-
-},
-
-{
-
- img: piso,
-
- title: "Rehabilitación Piso Pelvico",
-
- terapeuta: "Gabriela Pinto",
-
- terapeuta_id: 2,
-
- description:
-
-   "Acompaño y apoyo a mujeres en todas sus etapas vitales. Brindo atención especializada en necesidades musculoesqueléticas críticas, desde el manejo de dolencias durante el embarazo y la recuperación en el postparto, hasta el tratamiento de disfunciones pelviperineales como incontinencia y prolapsos. Mi objetivo es que habites tu cuerpo con confianza, seguridad y salud en cada ciclo de tu vida.",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-],
-
-},
+  
 
   // Añade más terapeutas y sus servicios aquí
 

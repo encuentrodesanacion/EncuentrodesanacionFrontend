@@ -69,6 +69,9 @@ export interface Terapeuta {
   email: string;
   servicios: TerapiaItem[];
   imagenPerfil: string;
+  isElite?: boolean;
+  isProfesional?: boolean;
+  isBasic?: boolean;
   callToActionTextCard?: string;
   enlaceMeet?: string;
   recursosPersonalizados?: string;

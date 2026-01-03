@@ -346,19 +346,32 @@ export default function AgendaSanacion() {
         Agenda una sesión
       </h2>
 
-      {!terapeutaSeleccionado ? (
-        // Se muestra la lista de terapeutas desde el archivo de datos
-        <div className="flip-wrapper-container mt-10">
-          {terapeutasData.map((t) => (
-            <TherapistProfile
-              key={t.id}
-              terapeuta={t}
-              onClick={handleSelectTerapeuta}
-              callToActionText={t.callToActionTextCard}
-            />
-          ))}
-        </div>
-      ) : (
+
+
+{!terapeutaSeleccionado ? (
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-16 mt-6 max-w-5xl mx-auto justify-items-center">
+    {terapeutasData.map((t) => (
+      <div
+        key={t.id}
+        className={`aura-container relative transition-all duration-500 rounded-2xl w-full max-w-[350px] ${
+          t.isElite 
+            ? "aura-elite ring-4 ring-pink-500/80 scale-[1.02] sm:scale-[1.02] z-10" 
+            : t.isProfesional 
+            ? "aura-profesional ring-4 ring-blue-500/40 scale-[1.02] sm:scale-[1.03] z-10" 
+            : t.isBasic
+            ? "aura-basic ring-4 ring-yellow-500/40 scale-[1.01] z-10"
+            : "border border-gray-100 shadow-sm"
+        }`}
+      >
+        <TherapistProfile
+          terapeuta={t}
+          onClick={handleSelectTerapeuta}
+          callToActionText={t.callToActionTextCard}
+        />
+      </div>
+    ))}
+  </div>
+) : (
         // Se muestra la vista del terapeuta seleccionado (¡ORDEN CORRECTO!)
         <div className="w-full">
           {/* 1. TÍTULO DE SERVICIOS */}
