@@ -919,7 +919,7 @@ servicios: [
 
  img: terapgrupo,
 
- title: "TRE: Iniciación de Proyectos",
+ title: "Terapia de grupo/reuniones o proyectos",
 
  terapeuta: "Claudia Diaz",
 

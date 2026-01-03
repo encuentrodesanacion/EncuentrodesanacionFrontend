@@ -221,7 +221,7 @@ const App = () => {
                 {/* Flecha del tooltip */}
                 <div className="absolute top-[-8px] left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-8 border-l-transparent border-r-8 border-r-transparent border-b-8 border-b-pink-600"></div>
 
-                <p className="font-semibold text-sm">{t("tooltip_message")}</p>
+                <p className="font-semibold text-sm">Hola!</p>
               </div>
             )}
             {/* FIN: TOOLTIP */}
