@@ -646,7 +646,7 @@ const App = () => {
   <div className="bg-gradient-to-r from-fuchsia-200 to-pink-600 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     {/* Título principal: se usa t() directamente */}
     <h2 className="text-3xl md:text-4xl text-yellow-400 text-center py-12 md:py-12 font-bold">
-      {t("offering_days_title")}
+     Plataforma de Agendamiento
     </h2>
 
     {/* Contenedor con flex-wrap */}
