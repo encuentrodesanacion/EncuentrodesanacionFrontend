@@ -353,9 +353,9 @@ export default function AgendaSanacion() {
     {terapeutasData.map((t) => (
       <div
         key={t.id}
-        className={`aura-container relative transition-all duration-500 rounded-2xl w-full max-w-[350px] ${
+        className={`aura-container relative transition-all duration-500 rounded-2xl p-[0px] w-[350px] ${
           t.isElite 
-            ? "aura-elite ring-4 ring-pink-500/80 scale-[1.00] sm:scale-[1.02] z-10" 
+            ? "aura-elite ring-4 ring-pink-500/80 scale-[1.00] sm:scale-[1.03]" 
             : t.isProfesional 
             ? "aura-profesional ring-4 ring-blue-500/40 scale-[1.00] sm:scale-[1.03] z-10" 
             : t.isBasic
