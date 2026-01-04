@@ -108,7 +108,7 @@
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
-  padding: 1.5rem; 
+  padding: 1rem; 
 }
 
 .flip-back .font-bold {

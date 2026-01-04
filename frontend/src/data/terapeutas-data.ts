@@ -1048,7 +1048,7 @@ imagenPerfil: analuisa, // Reemplaza con la imagen real
 
 callToActionTextCard:
 
-"Soy Ana Luisa, terapeuta holística y guía en lecturas de runas ancestrales. Acompaño procesos de autoconocimiento y claridad espiritual, conectando con la sabiduría antigua para iluminar tu camino.",
+"Las lecturas de runas están orientadas a entregar claridad, guía y comprensión profunda de los procesos que estás viviendo. A través de la sabiduría ancestral nórdica, la intuición terapéutica y un espacio de escucha consciente, te acompaño a reconocer bloqueos, tomar decisiones con mayor seguridad y reconectar con tu propósito. Cada lectura es un encuentro respetuoso y personalizado, enfocado en abrir caminos y traer luz a tu presente.",
 servicios: [
 
 {
@@ -1088,7 +1088,7 @@ imagenPerfil: annete,
 
 callToActionTextCard:
 
-"Soy de Alemania y vivio en Chile desde hace 8 años. Desde hace 6 años trabaja como terapeuta holística (sonoterapia, limpieza energética, cromoterapia, arteterapia) además soy instructora de meditación y consultora de Ayurveda. Hago  masajes ayurvedicos, masajes fango, moxibustión, limpieza facial curativa. Como profesora Waldorf y terapeuta trabajo tabién mucho con niños.",
+"Soy de Alemania y vivo en Chile desde hace 8 años. Desde hace 6 años trabaja como terapeuta holística (sonoterapia, limpieza energética, cromoterapia, arteterapia) además soy instructora de meditación y consultora de Ayurveda. Hago  masajes ayurvedicos, masajes fango, moxibustión, limpieza facial curativa. Como profesora Waldorf y terapeuta trabajo tabién mucho con niños.",
 
 servicios: [
 

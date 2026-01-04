@@ -180,7 +180,7 @@ const App = () => {
                 to="/encuentrofacil"
                 className="text-blue-300 hover:text-white font-bold"
               >
-              Encuentro Facil
+              EncuentroFacil
               </Link>
               <Link
                 to="/Staff-Terapéutico"
