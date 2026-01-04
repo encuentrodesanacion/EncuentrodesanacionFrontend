@@ -1,5 +1,5 @@
 import React from "react";
-import "../styles/flipCards.css";
+import "../styles/flipCards1.css";
 
 // Importaciones de imágenes
 import claudiaI from "../assets/clau.png";
@@ -55,40 +55,51 @@ const StaffSection = ({ categoria, integrantes }: { categoria: string; integrant
   <div className="mb-16">
     <div className="flex items-center mb-8">
       <div className="flex-grow h-px bg-cyan-200"></div>
-      <h3 className="px-4 text-2xl font-semibold text-cyan-800 uppercase tracking-widest">
+      <h3 className="px-4 text-2xl font-semibold text-cyan-800 uppercase tracking-widest text-center">
         Staff {categoria}
       </h3>
       <div className="flex-grow h-px bg-cyan-200"></div>
     </div>
     
     <div className="flip-wrapper-container">
-      {integrantes.map(({ nombre, url, imagen, descripcion }, index) => (
-        <div className="flip-wrapper" key={index}>
-          <a href={url} target="_blank" rel="noopener noreferrer" className="flip-card">
-            <div className="flip-inner">
-              <div className="flip-front">
-                <img src={imagen} alt={nombre} className="object-cover w-full h-full" />
-                <div className="nombre-overlay">
-                  <p>{nombre}</p>
+      {integrantes.map(({ nombre, url, imagen, descripcion }, index) => {
+        // Determinamos la clase del aura según la categoría de los datos
+        const auraClass = 
+          categoria === "Elite" ? "aura-elite" : 
+          categoria === "Profesional" ? "aura-profesional" : 
+          "aura-basic";
+
+        return (
+          <div className={`flip-wrapper aura-container ${auraClass}`} key={index}>
+            <a href={url} target="_blank" rel="noopener noreferrer" className="flip-card">
+              <div className="flip-inner">
+                {/* Cara Frontal con imagen completa y overlay corregido */}
+                <div className="flip-front">
+                  <img src={imagen} alt={nombre} className="object-cover w-full h-full" />
+                  <div className="nombre-overlay">
+                    <p>{nombre}</p>
+                  </div>
+                </div>
+
+                {/* Cara Trasera con scroll para la descripción */}
+                <div className="flip-back">
+                  <p className="font-bold text-sm mb-2">{nombre}</p>
+                  <div className="descripcion-scroll">
+                    <p className="text-xs leading-relaxed">{descripcion}</p>
+                  </div>
                 </div>
               </div>
-              <div className="flip-back">
-                <p className="font-semibold mb-2">{nombre}</p>
-                <p className="text-xs leading-relaxed">{descripcion}</p>
-              </div>
-            </div>
-          </a>
-        </div>
-      ))}
+            </a>
+          </div>
+        );
+      })}
     </div>
   </div>
 );
 
 const CarruselStaff = () => {
   return (
-
     <section className="bg-slate-50 py-16 px-6">
-      
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl font-bold text-cyan-900 mb-4">Nuestro Staff Terapéutico</h2>

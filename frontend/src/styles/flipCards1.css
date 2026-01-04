@@ -1,56 +1,150 @@
-/* Contenedor general */
+/* ============================================================
+   1. GRID RESPONSIVO (2 COLUMNAS EN MÓVIL)
+   ============================================================ */
 .flip-wrapper-container {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.5rem;
+  display: grid;
+  /* Estado base: 2 columnas para celular para evitar amontonamiento */
+  grid-template-columns: repeat(2, 1fr); 
+  gap: 1rem;
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-/* Cada tarjeta */
+@media (min-width: 768px) {
+  .flip-wrapper-container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .flip-wrapper-container {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================================================
+   2. ESTRUCTURA DE LA TARJETA
+   ============================================================ */
 .flip-wrapper {
-  width: 200px;
-  height: 250px;
+  position: relative;
+  width: 100%;
+  /* Aumentamos ligeramente la altura en móvil para que quepa la descripción */
+  height: 320px; 
   perspective: 1000px;
 }
 
-/* Estructura del flip */
-.flip-card {
+@media (min-width: 768px) {
+  .flip-wrapper {
+    height: 420px; /* Altura optimizada para escritorio */
+  }
+}
+
+.flip-inner {
+  position: relative;
   width: 100%;
   height: 100%;
   transition: transform 0.6s;
   transform-style: preserve-3d;
-  position: relative;
 }
 
-.flip-wrapper:hover .flip-card {
-  transform: rotateY(180deg);
+.flip-card:hover .flip-inner {
+  transform: rotateY(0deg);
 }
 
-.flip-front,
-.flip-back {
+.flip-front, .flip-back {
   position: absolute;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
   border-radius: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Imagen a pantalla completa sin bordes blancos laterales */
 .flip-front img {
-  width: 100%;
-  height: 100%;
+  width: 100% !important;
+  height: 100% !important;
   object-fit: cover;
+  display: block;
 }
 
+/* ============================================================
+   3. OVERLAY DEL NOMBRE (VISIBILIDAD CORREGIDA)
+   ============================================================ */
+.nombre-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  /* Gradiente oscuro para contraste */
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
+  color: #ffffff;
+  padding: 15px 5px 10px;
+  text-align: center;
+  z-index: 30; 
+}
+
+.nombre-overlay p {
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin: 0;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.6);
+  letter-spacing: 0.040em;
+}
+
+@media (max-width: 767px) {
+  .nombre-overlay p {
+    font-size: 0.75rem; /* Ajuste para evitar cortes en nombres largos en móvil */
+  }
+}
+
+/* ============================================================
+   4. REVERSO (AJUSTE DE DESCRIPCIÓN)
+   ============================================================ */
 .flip-back {
-  background-color: #e0f7fa;
-  color: #0d47a1;
+  background-color: #f0f9ff;
+  color: #0c4a6e;
+  transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  transform: rotateY(180deg);
-  padding: 1rem;
+  padding: 1rem; /* Espacio interno equilibrado */
+}
+
+.flip-back .font-bold {
+  border-bottom: 1px solid #bae6fd;
+  padding-bottom: 1rem;
+  margin-bottom: 0.5rem;
   text-align: center;
+}
+
+.descripcion-scroll {
+  flex-grow: 1;
+  overflow-y: auto; /* Permite scroll si la descripción es larga */
+  padding-right: 5px;
+  text-align: left;
+}
+
+/* Scroll personalizado para que no sea invasivo */
+.descripcion-scroll::-webkit-scrollbar {
+  width: 4px;
+}
+.descripcion-scroll::-webkit-scrollbar-thumb {
+  background: #bae6fd;
+  border-radius: 10px;
+}
+
+.descripcion-scroll p {
+  font-size: 0.8rem;
+  line-height: 1.4;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .descripcion-scroll p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
 }
