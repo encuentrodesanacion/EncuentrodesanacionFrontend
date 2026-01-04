@@ -182,12 +182,12 @@ const App = () => {
               >
               Encuentro Facil
               </Link>
-              {/* <Link
+              <Link
                 to="/Staff-Terapéutico"
                 className="text-blue-300 hover:text-white font-bold"
               >
                 {t("nav_staff")}
-              </Link> */}
+              </Link>
               <Link
                 to="/nuestra-comunidad"
                 className="text-blue-300 hover:text-white font-bold"
@@ -269,6 +269,13 @@ const App = () => {
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
                 Encuentro Fácil
+              </Link>
+                      <Link
+                to="/Staff-Terapéutico"
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
+              >
+            Staff Terapeútico
               </Link>
               <Link
                 to="/nuestra-comunidad"

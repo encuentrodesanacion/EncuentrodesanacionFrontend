@@ -19,6 +19,7 @@ import espejo from "../assets/Espej.png";
 import lea from "../assets/Lea.png";
 
 import constfam from "../assets/Constfam.png";
+import caritoef from "../assets/tupoder.png";
 
 import constfam1 from "../assets/constfamgrup.png";
 
@@ -26,7 +27,7 @@ import nataly from "../assets/nataly.png";
 
 import horoscopo from "../assets/horoscopo.png";
 
-import Carta from "../assets/horoscopo.png";
+import Carta from "../assets/cartanatal.png";
 
 import arteterapia from "../assets/arteterapia.png";
 
@@ -38,7 +39,7 @@ import Reset from "../assets/reset.png";
 
 import ansiedad from "../assets/ansiedad.png";
 
-import claudiad from "../assets/claudiad.png";
+import claudiad from "../assets/claudiadd.png";
 
 import tre from "../assets/tre.png";
 
@@ -1011,7 +1012,7 @@ servicios: [
 
 {
 
- img: sonoterapia,
+ img: caritoef,
 
  title: "Recupera tu Poder",
 

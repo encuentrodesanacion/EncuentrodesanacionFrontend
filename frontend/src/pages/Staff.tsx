@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-// Asegúrate de que este componente CarruselStaff usa Tailwind CSS para una consistencia visual
 import CarruselStaff from "./CarruselStaff";
 
 const TerapeutasPage = () => {
@@ -7,18 +6,32 @@ const TerapeutasPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 pt-20">
-      {" "}
-      {/* Fondo suave y padding superior para la navegación fija */}
+      {/* Agregamos 'relative' a la sección para que el botón 'absolute' 
+         se posicione respecto a este cuadro blanco.
+      */}
       <section
         id="terapeutas"
-        className="py-12 px-6 max-w-5xl mx-auto bg-white shadow-xl rounded-2xl my-10 border border-gray-100" // Contenedor estilizado
+        className="relative py-12 px-6 max-w-5xl mx-auto bg-white shadow-xl rounded-2xl my-10 border border-gray-100"
       >
-        {/* Título Principal */}
-        <h2 className="text-4xl font-extrabold text-center text-pink-700 mb-2 tracking-tight">
+        {/* BOTÓN FLOTANTE (ABSOLUTE)
+           - top-6 left-6: Posición en la esquina superior izquierda.
+           - hidden sm:block: Opcional, puedes ocultarlo en móviles muy pequeños si prefieres.
+        */}
+        <button
+          onClick={() => navigate("/#contacto")}
+          className="absolute top-6 left-6 px-4 py-2 bg-pink-600 text-white text-sm font-semibold rounded-lg hover:bg-pink-700 transition duration-300 shadow-md z-20"
+        >
+          ← Volver
+        </button>
+
+        {/* TÍTULO PRINCIPAL 
+           Agregamos pt-8 (o más) para asegurar que el título baje y no 
+           se solape con el botón en ninguna resolución.
+        */}
+        <h2 className="text-3xl md:text-4xl font-extrabold text-center text-pink-700 mb-2 tracking-tight pt-8 sm:pt-0">
           Nuestros Terapeutas Destacados
         </h2>
 
-        {/* Subtítulo decorativo */}
         <p className="text-center text-lg text-gray-500 mb-8 font-light">
           Encuentra la guía perfecta para tu camino de sanación.
         </p>
@@ -26,24 +39,14 @@ const TerapeutasPage = () => {
         {/* Bloque de Información */}
         <div className="bg-pink-50 p-6 rounded-xl border-l-4 border-pink-500 mb-10">
           <p className="text-gray-700 leading-relaxed text-base">
-            <strong className="text-pink-600">¡Siguelos!</strong> Haz clic en la
+            <strong className="text-pink-600">¡Síguelos!</strong> Haz clic en la
             imagen de cada profesional para ir directamente a su perfil de
-            Instagram. Así podrás conocer su trayectoria, su energía y su
-            estilo, y asegurarte de que resuene contigo antes de agendar.
-            ¡Encuentra tu guía y comienza tu proceso de sanación hoy!
+            Instagram.
           </p>
         </div>
 
         {/* Carrusel del Staff */}
         <CarruselStaff />
-
-        {/* Botón de Navegación Estilizado */}
-        <button
-          onClick={() => navigate("/#contacto")}
-          className="mt-12 px-8 py-3 bg-pink-600 text-white font-semibold rounded-full hover:bg-pink-700 transition duration-300 transform hover:scale-105 shadow-lg block mx-auto"
-        >
-          Volver al Inicio
-        </button>
       </section>
     </div>
   );
