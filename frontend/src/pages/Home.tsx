@@ -719,11 +719,11 @@ const App = () => {
                   {t("who_we_are_title")}
                 </h2>
               </Link>
-              {/* <Link to="/Staff-Terapéutico" className="block">
+              <Link to="/Staff-Terapéutico" className="block">
                 <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
                   {t("therapeutic_staff_title")}
                 </h2>
-              </Link> */}
+              </Link>
               <div>
                 <Link to="/nuestra-comunidad" className="block">
                   <h2 className="text-3xl md:text-4xl font-light mb-6 hover:underline cursor-pointer">
