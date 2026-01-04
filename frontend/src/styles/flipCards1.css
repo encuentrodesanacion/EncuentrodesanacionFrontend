@@ -2,16 +2,16 @@
    1. GRID RESPONSIVO (2 COLUMNAS EN MÓVIL)
    ============================================================ */
 .flip-wrapper-container {
-  display: grid;
+  
   /* Estado base: 2 columnas para celular para evitar amontonamiento */
-  grid-template-columns: repeat(2, 1fr); 
+  
   gap: 1rem;
   padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 1024px) {
   .flip-wrapper-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
