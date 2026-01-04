@@ -1,23 +1,26 @@
 /* ============================================================
-   1. GRID RESPONSIVO (2 COLUMNAS EN MÓVIL)
+   1. GRID RESPONSIVO (1 COLUMNA EN MÓVIL)
    ============================================================ */
 .flip-wrapper-container {
-  
-  /* Estado base: 2 columnas para celular para evitar amontonamiento */
-  
-  gap: 1rem;
+  display: grid;
+  /* Estado base: 1 sola columna centrada para celular */
+  grid-template-columns: 1fr; 
+  justify-items: center; /* Centra la tarjeta en la columna */
+  gap: 2.5rem; /* Espacio vertical entre tarjetas */
   padding: 1rem;
   max-width: 1200px;
   margin: 0 auto;
 }
 
-@media (min-width: 1024px) {
+/* Tablets (2 o 3 columnas) */
+@media (min-width: 768px) {
   .flip-wrapper-container {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
 }
 
+/* Escritorio (4 columnas) */
 @media (min-width: 1024px) {
   .flip-wrapper-container {
     grid-template-columns: repeat(4, 1fr);
@@ -30,8 +33,9 @@
 .flip-wrapper {
   position: relative;
   width: 100%;
-  /* Aumentamos ligeramente la altura en móvil para que quepa la descripción */
-  height: 320px; 
+  /* Limitamos el ancho para que la imagen no se deforme en móviles */
+  max-width: 300px; 
+  height: 400px; /* Altura fija para evitar el efecto "alargado" */
   perspective: 1000px;
 }
 
@@ -49,7 +53,8 @@
   transform-style: preserve-3d;
 }
 
-.flip-card:hover .flip-inner {
+/* Activación del giro al pasar el mouse */
+.flip-wrapper:hover .flip-inner {
   transform: rotateY(0deg);
 }
 
@@ -67,19 +72,18 @@
 .flip-front img {
   width: 100% !important;
   height: 100% !important;
-  object-fit: cover;
+  object-fit: cover; /* Mantiene la proporción de la foto */
   display: block;
 }
 
 /* ============================================================
-   3. OVERLAY DEL NOMBRE (VISIBILIDAD CORREGIDA)
+   3. OVERLAY DEL NOMBRE
    ============================================================ */
 .nombre-overlay {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  /* Gradiente oscuro para contraste */
   background: linear-gradient(to top, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0) 100%);
   color: #ffffff;
   padding: 15px 5px 10px;
@@ -95,12 +99,6 @@
   letter-spacing: 0.040em;
 }
 
-@media (max-width: 767px) {
-  .nombre-overlay p {
-    font-size: 0.75rem; /* Ajuste para evitar cortes en nombres largos en móvil */
-  }
-}
-
 /* ============================================================
    4. REVERSO (AJUSTE DE DESCRIPCIÓN)
    ============================================================ */
@@ -110,24 +108,24 @@
   transform: rotateY(180deg);
   display: flex;
   flex-direction: column;
-  padding: 1rem; /* Espacio interno equilibrado */
+  padding: 1.5rem; 
 }
 
 .flip-back .font-bold {
   border-bottom: 1px solid #bae6fd;
-  padding-bottom: 1rem;
+  padding-bottom: 2rem;
   margin-bottom: 0.5rem;
   text-align: center;
 }
 
 .descripcion-scroll {
   flex-grow: 1;
-  overflow-y: auto; /* Permite scroll si la descripción es larga */
-  padding-right: 5px;
+  overflow-y: auto; /* Mantenemos el scroll interno */
+  padding-right: 1px;
   text-align: left;
 }
 
-/* Scroll personalizado para que no sea invasivo */
+/* Scroll personalizado */
 .descripcion-scroll::-webkit-scrollbar {
   width: 4px;
 }
@@ -137,14 +135,7 @@
 }
 
 .descripcion-scroll p {
-  font-size: 0.8rem;
-  line-height: 1.4;
+  font-size: 0.85rem;
+  line-height: 1.5;
   margin: 0;
-}
-
-@media (min-width: 768px) {
-  .descripcion-scroll p {
-    font-size: 0.9rem;
-    line-height: 1.5;
-  }
 }
