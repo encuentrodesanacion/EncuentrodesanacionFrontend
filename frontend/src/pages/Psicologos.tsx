@@ -94,7 +94,7 @@ export default function SemillaDeLuz() {
       telefonoCliente: clientPhone.trim(),
       sesiones: selectedPlan.sesiones,
       cantidad: 1,
-      terapeutaId: 10,
+      terapeutaId: 4,
     };
 
     try {
