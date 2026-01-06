@@ -8,7 +8,7 @@
   justify-items: center; /* Centra la tarjeta en la columna */
   gap: 2.5rem; /* Espacio vertical entre tarjetas */
   padding: 1rem;
-  max-width: 1200px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
@@ -39,7 +39,7 @@
   perspective: 1000px;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .flip-wrapper {
     height: 420px; /* Altura optimizada para escritorio */
   }

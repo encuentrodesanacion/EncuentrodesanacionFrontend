@@ -39,7 +39,7 @@ import Reset from "../assets/reset.png";
 
 import ansiedad from "../assets/ansiedad.png";
 
-import claudiad from "../assets/claudiadd.png";
+import claudiad from "../assets/claudia.png";
 
 import tre from "../assets/tre.png";
 
