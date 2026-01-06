@@ -759,7 +759,7 @@ const confirmarTransaccion = async (req, res) => {
           // AHORA SE GESTIONA LA DISPONIBILIDAD (SÓLO SI EL PAGO ES EXITOSO)
 // 🆕 Nueva lista para excepciones por nombre específico de terapia
 const especialidadesExcluidas = [
-  "Tameana niños","Carta Natal China"
+  "Tameana niños","Carta Natal China","Taller El Poder Mágico de las Brujas","Taller Arteterapéutico: Conectando con el Verano","Constelaciones Familiares","Terapia de grupo/reuniones o proyectos"
  
 ];
           // --- CORRECCIÓN DE DISPONIBILIDAD: CONDICIÓN COMPROBADA ---
