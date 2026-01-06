@@ -35,22 +35,22 @@ export default function SanacionProfunda() {
     { 
       nombre: "Claudia Ibarra", rol: "Líder del Programa", especialidad: "Terapeuta Sistémica", img: claudiaIImg, 
       color: "bg-pink-600", border: "border-pink-200", esLider: true,
-      descripcion: "🌌 Guía el proceso grupal y acompaña la sanación del trauma desde el origen sistémico y transgeneracional, ordenando el sistema familiar y liberando patrones heredados."
+      descripcion: "Guía el proceso grupal y acompaña la sanación del trauma desde el origen sistémico y transgeneracional, ordenando el sistema familiar y liberando patrones heredados."
     },
     { 
       nombre: "Lea Parra", rol: "Constelaciones Familiares", especialidad: "Consteladora Familiar", img: leaPImg, 
       color: "bg-blue-600", border: "border-blue-200", esLider: false,
-      descripcion: "🖇️ Facilita constelaciones grupales para visibilizar dinámicas inconscientes, restaurar el orden interno y liberar cargas emocionales que impactan la vida actual."
+      descripcion: "Facilita constelaciones grupales para visibilizar dinámicas inconscientes, restaurar el orden interno y liberar cargas emocionales que impactan la vida actual."
     },
     { 
       nombre: "Cindi Palma", rol: "Sanación Energética", especialidad: "Terapeuta Energética", img: cindiPImg, 
       color: "bg-green-600", border: "border-green-200", esLider: false,
-      descripcion: "✨ Acompaña la limpieza y protección del campo energético, liberando emociones atrapadas y restaurando el equilibrio emocional y vibracional del cuerpo."
+      descripcion: "Acompaña la limpieza y protección del campo energético, liberando emociones atrapadas y restaurando el equilibrio emocional y vibracional del cuerpo."
     },
     { 
       nombre: "Claudia Díaz", rol: "Respuesta Espiritual", especialidad: "Terapeuta de Respuesta Espiritual", img: claudiaDImg, 
       color: "bg-purple-600", border: "border-purple-200", esLider: false,
-      descripcion: "🕊️ Trabaja a nivel profundo de conciencia, identificando bloqueos del alma y facilitando la liberación de memorias que sostienen el dolor emocional y energético."
+      descripcion: "Trabaja a nivel profundo de conciencia, identificando bloqueos del alma y facilitando la liberación de memorias que sostienen el dolor emocional y energético."
     }
   ];
 

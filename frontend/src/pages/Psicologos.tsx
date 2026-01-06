@@ -30,22 +30,22 @@ export default function SemillaDeLuz() {
     { 
       nombre: "Paulina Villablanca", rol: "Líder del Programa", especialidad: "Terapeuta Holística", img: paulinaImg, 
       color: "bg-pink-600", border: "border-pink-200", esLider: true,
-      descripcion: "🌿 Educadora de párvulos y terapeuta holística. Guía el proceso desde la crianza consciente y la sanación del niño interior, acompañando a los adultos a observar su historia emocional."
+      descripcion: "Educadora de párvulos y terapeuta holística. Guía el proceso desde la crianza consciente y la sanación del niño interior, acompañando a los adultos a observar su historia emocional."
     },
     { 
       nombre: "Natalie Bonysson", rol: "Arteterapia y expresión emocional", especialidad: "Terapeuta Floral", img: natalieImg, 
       color: "bg-purple-600", border: "border-purple-200", esLider: false,
-      descripcion: "🎨 Facilita espacios de expresión emocional consciente para adultos, utilizando el arte como vía de observación, integración y comprensión interna."
+      descripcion: "Facilita espacios de expresión emocional consciente para adultos, utilizando el arte como vía de observación, integración y comprensión interna."
     },
     { 
       nombre: "Karla Flores", rol: "Movimiento y vínculo con la infancia", especialidad: "Yogui Infantil", img: karlaImg, 
       color: "bg-blue-600", border: "border-blue-200", esLider: false,
-      descripcion: "🌈 Yogui infantil y estudiante de psicología. Acompaña a las infancias a través del movimiento consciente, el juego y la expresión corporal."
+      descripcion: "Yogui infantil y estudiante de psicología. Acompaña a las infancias a través del movimiento consciente, el juego y la expresión corporal."
     },
     { 
       nombre: "Maria Jose Corvalán", rol: "Regulación emocional del adulto", especialidad: "Terapeuta de Liberación", img: mariajoseImg, 
       color: "bg-green-600", border: "border-green-200", esLider: false,
-      descripcion: "🌱 Especializada en liberación de emociones atrapadas y creencias limitantes. Acompaña a los adultos a reconocer y liberar cargas que interfieren en la crianza."
+      descripcion: "Especializada en liberación de emociones atrapadas y creencias limitantes. Acompaña a los adultos a reconocer y liberar cargas que interfieren en la crianza."
     }
   ];
 

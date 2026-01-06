@@ -37,17 +37,17 @@ export default function OraculoGuia() {
     { 
       nombre: "Paola Quintero", rol: "Líder del Programa", especialidad: "Lectura Consciente", img: paolaImg, 
       color: "bg-purple-600", border: "border-purple-200", esLider: true,
-      descripcion: "🔮 Sostiene el proceso completo, guía los encuentros grupales y acompaña la lectura consciente del proceso personal desde herramientas oraculares e intuitivas."
+      descripcion: "Sostiene el proceso completo, guía los encuentros grupales y acompaña la lectura consciente del proceso personal desde herramientas oraculares e intuitivas."
     },
     { 
       nombre: "Natalie Bonysson", rol: "Astrología China", especialidad: "Ciclos y Tiempos", img: natalieImg, 
       color: "bg-pink-600", border: "border-pink-200", esLider: false,
-      descripcion: "🧧 Aporta lectura de ciclos, tiempos y movimientos energéticos que ayudan a comprender procesos vitales y tomar decisiones con mayor conciencia."
+      descripcion: "Aporta lectura de ciclos, tiempos y movimientos energéticos que ayudan a comprender procesos vitales y tomar decisiones con mayor conciencia."
     },
     { 
       nombre: "Brenda Rivas", rol: "Canalización Energética", especialidad: "Integración Emocional", img: brendaImg, 
       color: "bg-blue-600", border: "border-blue-200", esLider: false,
-      descripcion: "✨ Acompaña la lectura energética y la integración emocional del proceso, facilitando claridad, contención y alineación interna."
+      descripcion: "Acompaña la lectura energética y la integración emocional del proceso, facilitando claridad, contención y alineación interna."
     }
   ];
 
