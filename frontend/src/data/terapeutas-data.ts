@@ -456,7 +456,7 @@ servicios: [
 
  title: "Terapia de grupo/reuniones o proyectos",
 
- terapeuta: "Claudia Diaz",
+ terapeuta: "Claudia Diaz", //ass
 
  terapeuta_id: 7,
 
