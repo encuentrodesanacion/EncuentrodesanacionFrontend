@@ -213,6 +213,32 @@ callToActionTextCard:
 
 "Sanar no es solo aliviar el dolor, es rediseñar el lugar donde habita tu alma. Con más de una década de experiencia acompañando procesos humanos, Claudia Ibarra Arias ha consolidado una metodología única: la Arquitectura de Transformación del Ser. En este espacio, Claudia utiliza el Orden Sistémico como plano fundamental para identificar los desequilibrios invisibles en la historia de cada consultante, permitiendo que la estructura personal recupere su fuerza y estabilidad original. Su enfoque especializado en Trauma y Sombras Internas garantiza un entorno de profunda seguridad, donde la Alquimia actúa como el motor de cambio. Para Claudia, la alquimia es el arte de transmutar las experiencias más densas y dolorosas en sabiduría y libertad, permitiendo reconstruir la vida desde una raíz sana, sólida y consciente. Claudia no solo ofrece acompañamiento; ofrece un diseño de vida donde el pasado deja de ser una carga para convertirse en el cimiento de un futuro con propósito.",
 
+ 
+
+
+
+  recursos: [
+
+  {
+
+   name: "Ver video: Presentación de Taller El Poder Mágico de las Brujas",
+
+   url: "https://youtube.com/shorts/qPzAOIMSm8U",
+
+  },
+
+  {
+
+   name: "Ver Video: 5 Magias de las brujas ancestrales",
+
+   url: "https://www.instagram.com/reel/DQmOoocjd6a/?igsh=YzA4emYxdW9va2Zy",
+
+  },
+
+  
+
+  ],
+
 servicios: [
 
 {

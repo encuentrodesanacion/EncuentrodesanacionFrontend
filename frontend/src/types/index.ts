@@ -76,4 +76,5 @@ export interface Terapeuta {
   enlaceMeet?: string;
   recursosPersonalizados?: string;
   recursos?: Recurso[];
+  videoUrl?: string;
 }
