@@ -47,7 +47,7 @@ import lazo from "../assets/lazo.png";
 
 import terapgrupo from "../assets/terapgrupo.png";
 
-import gaby from "../assets/gaby.jpeg";
+import gaby from "../assets/gabyy.png";
 
 import rehab from "../assets/gaby.png";
 

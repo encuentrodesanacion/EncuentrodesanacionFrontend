@@ -7,7 +7,7 @@ import CartIcon from "../components/CartIcon";
 import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes
-import gaby from "../assets/gaby.jpeg"; 
+import gaby from "../assets/gabyy.png"; 
 import fernanda from "../assets/fernanda.png"; 
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");

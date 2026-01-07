@@ -9,7 +9,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 import claudiaIImg from "../assets/clau.png"; 
 import leaPImg from "../assets/Lea.png"; 
 import cindiPImg from "../assets/cindy.png"; 
-import claudiaDImg from "../assets/claudiad.png";
+import claudiaDImg from "../assets/claudia.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
