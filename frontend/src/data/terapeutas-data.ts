@@ -221,9 +221,9 @@ callToActionTextCard:
 
   {
 
-   name: "Ver video: Presentación de Taller El Poder Mágico de las Brujas",
+   name: "Video Presentación de Taller: El Poder Mágico de las Brujas",
 
-   url: "https://youtube.com/shorts/qPzAOIMSm8U",
+   url: "https://www.instagram.com/reel/DQpesSPj3sE/?igsh=Y2kxcWE3a3JkdDE3",
 
   },
 
@@ -234,7 +234,20 @@ callToActionTextCard:
    url: "https://www.instagram.com/reel/DQmOoocjd6a/?igsh=YzA4emYxdW9va2Zy",
 
   },
+{
 
+   name: "¿Que es el Couseling Terapeútico?",
+
+   url: "https://www.instagram.com/reel/DMbRdhJx3kY/?igsh=eDE5bjdwMmhjeWw4",
+
+  },
+  {
+
+   name: "¿Qué genera el Couseling Terapeútico?",
+
+   url: "https://www.instagram.com/reel/DHRAVzAx_Eo/?igsh=MWFyYTM4aW5jOWt3eA==",
+
+  },
   
 
   ],
