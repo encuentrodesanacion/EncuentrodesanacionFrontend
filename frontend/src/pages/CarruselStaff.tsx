@@ -5,7 +5,7 @@ import "../styles/flipCards1.css";
 import claudiaI from "../assets/clau.png";
 import paola from "../assets/Terapeuta8.jpg"; // Ajustar según corresponda
 import paulina from "../assets/Terapeuta11.jpeg";
-import gabriela from "../assets/gaby.png";
+import gabriela from "../assets/gabyy.png";
 import fernanda from "../assets/fernanda.png";
 import cindy from "../assets/cindy.png";
 import brenda from "../assets/brenda.png";
@@ -13,10 +13,10 @@ import claudiad from "../assets/claudiadd.png";
 import mariajose from "../assets/cote.png";
 import natalie from "../assets/nataly.png";
 import lea from "../assets/Lea.png";
-import karla from "../assets/karla.jpg";
+import karla from "../assets/karla.png";
 import anaLuisa from "../assets/analuisa.jpg";
 import annete from "../assets/Annete.jpg";
-import carolina from "../assets/caro.jpg";
+import carolina from "../assets/caro.png";
 // ... (resto de tus imports de imágenes)
 
 interface StaffMember {

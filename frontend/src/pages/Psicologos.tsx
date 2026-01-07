@@ -7,7 +7,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes
 import paulinaImg from "../assets/Terapeuta11.jpeg"; 
-import karlaImg from "../assets/karla.jpg"; 
+import karlaImg from "../assets/karla.png"; 
 import natalieImg from "../assets/nataly.png"; 
 import mariajoseImg from "../assets/cote.png"; 
 

@@ -4,9 +4,9 @@ import yuniver from "../assets/Alquimia.jpeg";
 
 import yuniver2 from "../assets/tarotter.jpg";
 
-import karla from "../assets/karla.jpg";
+import karla from "../assets/karla.png";
 
-import caro from "../assets/caro.jpg";
+import caro from "../assets/caro.png";
 
 import paulina from "../assets/paulina.png";
 
@@ -19,7 +19,7 @@ import espejo from "../assets/Espej.png";
 import lea from "../assets/Lea.png";
 
 import constfam from "../assets/Constfam.png";
-import caritoef from "../assets/tupoder.png";
+import caritoef from "../assets/carito ef.png";
 
 import constfam1 from "../assets/constfamgrup.png";
 
@@ -49,7 +49,7 @@ import terapgrupo from "../assets/terapgrupo.png";
 
 import gaby from "../assets/gabyy.png";
 
-import rehab from "../assets/gaby.png";
+import rehab from "../assets/gabyy.png";
 
 import vago from "../assets/vago.png";
 
@@ -75,7 +75,7 @@ import fernanda from "../assets/fernanda.png";
 
 import lecturareg from "../assets/lecturareg.png";
 
-import tarotter from "../assets/tarotter.jpg";
+import tarotter from "../assets/tarotter.png";
 
 import limpiezaener from "../assets/limpiezaener.png";
 
@@ -86,6 +86,7 @@ import clau from "../assets/clau.png";
 import taller from "../assets/poderb.png";
 
 import counseling from "../assets/couselings.png";
+import counselin from "../assets/couselin.png";
 
 // import caro from "../assets/caro.jpg";
 
@@ -109,7 +110,7 @@ import annete from "../assets/Annete.jpg"
 
 import tameana from "../assets/Tameanani.png";
 
-import lecturarunas from "../assets/LecturaRunas.jpeg";
+import lecturarunas from "../assets/LecturaRunas.png";
 
 import sonoterapia from "../assets/Sonoterapia.png";
 
@@ -256,7 +257,7 @@ servicios: [
 
 {
 
- img: counseling,
+ img: counselin,
 
  title: "Constelaciones del Alma",
 
