@@ -90,7 +90,7 @@ export default function CuerpoConsciente() {
 
     const reservaData: Reserva = {
       clientBookingId: "cuerpo-consciente-" + Date.now(),
-      terapeuta: "Gabriela Pinto & Fernanda Arce",
+      terapeuta: "Gabriela Pinto",
       servicio: "Cuerpo Consciente",
       especialidad: selectedPlan.titulo,
   fecha: now.toLocaleDateString('sv-SE'),
@@ -235,11 +235,6 @@ const navLinks = [
         </div>
       </div>
 
-    Para incluir las descripciones en los perfiles de los terapeutas manteniendo la estructura visual profesional, he actualizado el bloque de código para que utilice un mapeo dinámico. Esto asegura que la descripción aparezca de forma elegante debajo de los roles.
-
-Aquí tienes el código para esa sección específica:
-
-TypeScript
 
 {/* --- SECCIÓN DE TERAPEUTAS CON DESCRIPCIÓN --- */}
 <div className="flex flex-wrap justify-center gap-10 mb-16 max-w-7xl mx-auto">
@@ -253,17 +248,8 @@ TypeScript
       border: "border-pink-200", 
       esLider: true,
       descripcion: "Kinesióloga apasionada por la salud integral. Guía el proceso de habitar el cuerpo con mayor conciencia, transformando el dolor y el estrés en libertad de movimiento."
-    },
-    { 
-      nombre: "Fernanda Arce", 
-      rol: "Nutrición Holística", 
-      especialidad: "Terapeuta Holística", 
-      img: fernanda, 
-      color: "bg-blue-600", 
-      border: "border-blue-200", 
-      esLider: false,
-      descripcion: "Especialista en bienestar integral y reconexión consciente. Integra la ciencia de la nutrición con la profundidad de la mente y la energía para sanar desde la raíz."
     }
+    
   ].map((t, index) => (
     <div key={index} className="w-80 text-center bg-white p-6 rounded-xl shadow-md border border-gray-100 relative overflow-hidden flex flex-col items-center">
       {/* Barra superior decorativa */}
