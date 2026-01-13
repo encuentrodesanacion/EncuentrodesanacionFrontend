@@ -325,20 +325,22 @@ const crearTransaccionInicial = async (req, res) => {
     return res.status(400).json({ error: "La hora es obligatoria." });
 }
 
-// 2. NUEVA VALIDACIÓN: Acepta formato HH:mm O el texto "A coordinar"
-const timestamp = new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime();
-const esHoraValida = !isNaN(timestamp);
-const esAcoordinar = resItem.hora === "A coordinar";
+// --- CORRECCIÓN CLAVE: VALIDACIÓN DE HORA FLEXIBLE ---
+      // Verificamos si la hora es parseable como fecha O si es el texto "A coordinar"
+      const isTimeParsable = !isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime());
+      const isAcoordinar = resItem.hora === "A coordinar";
 
-if (!esHoraValida && !esAcoordinar) {
-    console.error("DEBUG: Falló validación de hora para:", resItem.hora);
-    return res.status(400).json({
-        error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'."
-    });
-}
+      if (!isTimeParsable && !isAcoordinar) {
+        console.error(
+          "Error de validación: Fecha/hora de reserva no es un formato válido.",
+          resItem
+        );
+        return res.status(400).json({
+          error: "Formato de fecha u hora de reserva inválido (debe ser HH:mm o 'A coordinar').",
+        });
+      }
     }
 
-    // 3. Generación de identificadores de transacción
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
 
