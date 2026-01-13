@@ -320,28 +320,22 @@ const crearTransaccionInicial = async (req, res) => {
         return res.status(400).json({ error: "Reserva en carrito contiene una fecha inválida." });
       }
 
-      // Validaciones de Hora
-      if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
-        console.error("Error de validación: Reserva en carrito sin hora válida.", resItem);
-        return res.status(400).json({ error: "Reserva en carrito contiene una hora inválida." });
-      }
+    if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
+    console.error("Error: Hora de reserva vacía.", resItem);
+    return res.status(400).json({ error: "La hora es obligatoria." });
+}
 
-      // --- BLOQUE DE VALIDACIÓN FLEXIBLE (FECHA/HORA) ---
-      // Intentamos parsear la fecha combinada
-      const timestamp = new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime();
-      const esHoraValida = !isNaN(timestamp);
-      const esAcoordinar = resItem.hora === "A coordinar";
+// 2. NUEVA VALIDACIÓN: Acepta formato HH:mm O el texto "A coordinar"
+const timestamp = new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime();
+const esHoraValida = !isNaN(timestamp);
+const esAcoordinar = resItem.hora === "A coordinar";
 
-      // Si no es una hora HH:mm válida Y tampoco es el texto "A coordinar", lanzamos error
-      if (!esHoraValida && !esAcoordinar) {
-        console.error(
-          "Error de validación: Formato de hora no reconocido.",
-          resItem
-        );
-        return res.status(400).json({
-          error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'.",
-        });
-      }
+if (!esHoraValida && !esAcoordinar) {
+    console.error("DEBUG: Falló validación de hora para:", resItem.hora);
+    return res.status(400).json({
+        error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'."
+    });
+}
     }
 
     // 3. Generación de identificadores de transacción

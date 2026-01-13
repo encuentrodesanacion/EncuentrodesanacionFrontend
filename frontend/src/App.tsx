@@ -40,6 +40,7 @@ import "./index.css"; // Asegúrate de que esta línea esté presente y correcta
 export default function App() {
   return (
     <CartProvider>
+      
       <Router>
         <CartIcon />
 
