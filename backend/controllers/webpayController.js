@@ -290,99 +290,61 @@ const crearTransaccionInicial = async (req, res) => {
   try {
     const { monto, returnUrl, reservas } = req.body;
 
+    // 1. Validación de parámetros básicos
     if (!monto || !returnUrl || !reservas || reservas.length === 0) {
       return res.status(400).json({
-        error:
-          "Faltan parámetros: monto, returnUrl o reservas no contiene ítems.",
+        error: "Faltan parámetros: monto, returnUrl o reservas no contiene ítems.",
       });
     }
 
-    // Validate each reservation item from the frontend
+    // 2. Validación de cada ítem en el carrito
     for (const resItem of reservas) {
-      if (
-        typeof resItem.servicio !== "string" ||
-        resItem.servicio.trim() === ""
-      ) {
-        console.error(
-          "Error de validación: Reserva en carrito sin servicio válido.",
-          resItem
-        );
-        return res.status(400).json({
-          error:
-            "Reserva en carrito contiene un servicio inválido (vacío o no string).",
-        });
+      if (typeof resItem.servicio !== "string" || resItem.servicio.trim() === "") {
+        console.error("Error de validación: Reserva en carrito sin servicio válido.", resItem);
+        return res.status(400).json({ error: "Reserva en carrito contiene un servicio inválido." });
       }
-      if (
-        typeof resItem.precio !== "number" ||
-        isNaN(resItem.precio) ||
-        resItem.precio === null ||
-        resItem.precio <= 0
-      ) {
-        console.error(
-          "Error de validación: Reserva en carrito con precio inválido.",
-          resItem
-        );
-        return res.status(400).json({
-          error:
-            "Reserva en carrito contiene un precio inválido (no número, nulo o <= 0).",
-        });
+
+      if (typeof resItem.precio !== "number" || isNaN(resItem.precio) || resItem.precio <= 0) {
+        console.error("Error de validación: Reserva en carrito con precio inválido.", resItem);
+        return res.status(400).json({ error: "Reserva en carrito contiene un precio inválido." });
       }
-      if (
-        typeof resItem.terapeuta !== "string" ||
-        resItem.terapeuta.trim() === ""
-      ) {
-        console.error(
-          "Error de validación: Reserva en carrito sin terapeuta válido.",
-          resItem
-        );
-        return res.status(400).json({
-          error: "Reserva en carrito contiene un terapeuta inválido.",
-        });
+
+      if (typeof resItem.terapeuta !== "string" || resItem.terapeuta.trim() === "") {
+        console.error("Error de validación: Reserva en carrito sin terapeuta válido.", resItem);
+        return res.status(400).json({ error: "Reserva en carrito contiene un terapeuta inválido." });
       }
-      if (
-        typeof resItem.especialidad !== "string" ||
-        resItem.especialidad.trim() === ""
-      ) {
-        console.warn(
-          "Advertencia de validación: Reserva en carrito sin especialidad válida. Se usará un valor por defecto si el modelo lo permite."
-        );
-      }
-     // Validations for date and time
+
+      // Validaciones de Fecha
       if (typeof resItem.fecha !== "string" || resItem.fecha.trim() === "") {
-        console.error(
-          "Error de validación: Reserva en carrito sin fecha válida.",
-          resItem
-        );
-        return res.status(400).json({
-          error:
-            "Reserva en carrito contiene una fecha inválida (vacía o no string).",
-        });
+        console.error("Error de validación: Reserva en carrito sin fecha válida.", resItem);
+        return res.status(400).json({ error: "Reserva en carrito contiene una fecha inválida." });
       }
+
+      // Validaciones de Hora
       if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
+        console.error("Error de validación: Reserva en carrito sin hora válida.", resItem);
+        return res.status(400).json({ error: "Reserva en carrito contiene una hora inválida." });
+      }
+
+      // --- BLOQUE DE VALIDACIÓN FLEXIBLE (FECHA/HORA) ---
+      // Intentamos parsear la fecha combinada
+      const timestamp = new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime();
+      const esHoraValida = !isNaN(timestamp);
+      const esAcoordinar = resItem.hora === "A coordinar";
+
+      // Si no es una hora HH:mm válida Y tampoco es el texto "A coordinar", lanzamos error
+      if (!esHoraValida && !esAcoordinar) {
         console.error(
-          "Error de validación: Reserva en carrito sin hora válida.",
+          "Error de validación: Formato de hora no reconocido.",
           resItem
         );
         return res.status(400).json({
-          error:
-            "Reserva en carrito contiene una hora inválida (vacía o no string).",
+          error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'.",
         });
       }
+    }
 
-      // 🛡️ CORRECCIÓN: Solo validamos que fecha/hora sean parseables si NO es "A coordinar"
-      if (resItem.hora !== "A coordinar") {
-        if (isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime())) {
-          console.error(
-            "Error de validación: Fecha/hora de reserva no es un formato válido.",
-            resItem
-          );
-          return res.status(400).json({
-            error: "Formato de fecha u hora de reserva inválido.",
-          });
-        }
-      }
-    } // Fin del bucle for de reservas
-
+    // 3. Generación de identificadores de transacción
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
 
@@ -764,9 +726,9 @@ const especialidadesExcluidas = [
 ];
           // --- CORRECCIÓN DE DISPONIBILIDAD: CONDICIÓN COMPROBADA ---
  if (
-  serviciosExcluidosDeDisponibilidad.includes(servicio.trim()) || 
-  especialidadesExcluidas.includes(especialidad.trim()) || // 🛡️ Nueva validación
-  servicio.trim() === "GiftCard"
+    serviciosExcluidosDeDisponibilidad.includes(servicio) ||
+    servicio === "GiftCard" ||
+    hora === "A coordinar" // <--- NUEVA CONDICIÓN
 ) {
   console.log(
     `[INFO DISPONIBILIDAD] Saltando actualización para el servicio: "${servicio}" o especialidad: "${especialidad}".`
@@ -1076,8 +1038,8 @@ const waLink = `https://wa.me/${waNumber}`;
           servicio
         );
         // Excluir GiftCard de la creación de eventos de calendario
-        if (fecha && hora && servicio !== "GiftCard") {
-          try {
+      if (fecha && hora && hora !== "A coordinar" && servicio !== "GiftCard") {
+    try {
             const startDateTime = new Date(`${fecha}T${hora}:00`);
             const endDateTime = new Date(
               startDateTime.getTime() + 60 * 60 * 1000
