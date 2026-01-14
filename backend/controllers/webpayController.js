@@ -283,6 +283,9 @@ const crearReservaDirecta = async (req, res) => {
 };
 
 // --- Controlador para iniciar una transacción con Webpay ---
+
+// backend/controllers/webpayController.js
+
 const crearTransaccionInicial = async (req, res) => {
   console.log(
     "\n--- [WEBPAY] INICIO: Solicitud para crear transacción inicial ---"
@@ -299,50 +302,51 @@ const crearTransaccionInicial = async (req, res) => {
 
     // 2. Validación de cada ítem en el carrito
     for (const resItem of reservas) {
+      // Validaciones de tipo y contenido
       if (typeof resItem.servicio !== "string" || resItem.servicio.trim() === "") {
-        console.error("Error de validación: Reserva en carrito sin servicio válido.", resItem);
+        console.error("Error de validación: Servicio inválido.", resItem);
         return res.status(400).json({ error: "Reserva en carrito contiene un servicio inválido." });
       }
 
       if (typeof resItem.precio !== "number" || isNaN(resItem.precio) || resItem.precio <= 0) {
-        console.error("Error de validación: Reserva en carrito con precio inválido.", resItem);
+        console.error("Error de validación: Precio inválido.", resItem);
         return res.status(400).json({ error: "Reserva en carrito contiene un precio inválido." });
       }
 
       if (typeof resItem.terapeuta !== "string" || resItem.terapeuta.trim() === "") {
-        console.error("Error de validación: Reserva en carrito sin terapeuta válido.", resItem);
+        console.error("Error de validación: Terapeuta inválido.", resItem);
         return res.status(400).json({ error: "Reserva en carrito contiene un terapeuta inválido." });
       }
 
-      // Validaciones de Fecha
       if (typeof resItem.fecha !== "string" || resItem.fecha.trim() === "") {
-        console.error("Error de validación: Reserva en carrito sin fecha válida.", resItem);
+        console.error("Error de validación: Fecha inválida.", resItem);
         return res.status(400).json({ error: "Reserva en carrito contiene una fecha inválida." });
       }
 
-    if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
-    console.error("Error: Hora de reserva vacía.", resItem);
-    return res.status(400).json({ error: "La hora es obligatoria." });
-}
+      if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
+        console.error("Error: Hora de reserva vacía.", resItem);
+        return res.status(400).json({ error: "La hora es obligatoria." });
+      }
 
-// 2. NUEVA VALIDACIÓN: Acepta formato HH:mm O el texto "A coordinar"
-const timestamp = new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime();
-const esHoraValida = !isNaN(new Date(`${resItem.fecha}T${resItem.hora}:00`).getTime()); //
-const esAcoordinar = resItem.hora === "A coordinar"; //
+      // --- VALIDACIÓN DE HORA (HH:mm o "A coordinar") ---
+      // Creamos el objeto fecha una sola vez para ahorrar recursos
+      const dateCheck = new Date(`${resItem.fecha}T${resItem.hora}:00`);
+      const esHoraValida = !isNaN(dateCheck.getTime()); 
+      const esAcoordinar = resItem.hora === "A coordinar"; 
 
-if (!esHoraValida && !esAcoordinar) {
-    console.error("DEBUG: Falló validación de hora para:", resItem.hora);
-    return res.status(400).json({
-        error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'."
-    });
-}
+      if (!esHoraValida && !esAcoordinar) {
+        console.error("DEBUG: Falló validación de hora para:", resItem.hora);
+        return res.status(400).json({
+          error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'."
+        });
+      }
     }
 
     // 3. Generación de identificadores de transacción
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
 
-    // Create the transaction with Transbank
+    // 4. Crear la transacción en Transbank
     const response = await transaction.create(
       buyOrder,
       sessionId,
@@ -350,56 +354,41 @@ if (!esHoraValida && !esAcoordinar) {
       returnUrl
     );
 
-    console.log(
-      `[DEBUG - crearTransaccionInicial] Token Transbank recibido: ${response.token}`
-    );
-    console.log(`[DEBUG - crearTransaccionInicial] Monto: ${monto}`);
-    console.log(`[DEBUG - crearTransaccionInicial] Reservas:`, reservas);
+    console.log(`[DEBUG - Transbank] Token recibido: ${response.token}`);
 
-    // Save temporary reservation details to DB
+    // 5. Guardar reserva temporal en la DB
     try {
       const createdTempReserva = await TemporalReserva.create({
         token: response.token,
-        reservas: JSON.stringify(reservas), // Store as JSON string
+        reservas: JSON.stringify(reservas), 
         montoTotal: monto,
-        clienteId: reservas[0]?.telefonoCliente || null, // Assuming client ID is first reservation's phone
-        buyOrder: buyOrder, // <-- Guardar buyOrder aquí también es útil para referencia
+        clienteId: reservas[0]?.telefonoCliente || null, 
+        buyOrder: buyOrder,
       });
-      console.log(
-        `[DEBUG - crearTransaccionInicial] TemporalReserva creada en DB con ID: ${createdTempReserva.id} y token: ${createdTempReserva.token}`
-      );
+      console.log(`[DEBUG] TemporalReserva creada con ID: ${createdTempReserva.id}`);
     } catch (dbError) {
-      console.error(
-        "[ERROR - crearTransaccionInicial] Error al guardar TemporalReserva en DB:",
-        dbError
-      );
+      console.error("[ERROR DB] Falló guardar TemporalReserva:", dbError);
       return res.status(500).json({
         mensaje: "Error interno al guardar la reserva temporal.",
         error: dbError.message,
       });
     }
 
+    // 6. Respuesta al Frontend
     res.json({
       url: response.url,
       token: response.token,
     });
+
   } catch (error) {
-    console.error("Error al crear transacción inicial Webpay:", error);
-    if (error.constructor && error.constructor.name === "TransbankError") {
-      console.error("Detalles del error de Transbank:", error.message);
-      res.status(500).json({
-        mensaje: "Error de configuración o credenciales con Transbank.",
-        error: error.message,
-      });
-    } else {
-      res.status(500).json({
-        mensaje: "Error al iniciar la transacción.",
-        error: error.message,
-      });
-    }
+    console.error("Error general en Webpay:", error);
+    const status = error.constructor?.name === "TransbankError" ? 500 : 500;
+    res.status(status).json({
+      mensaje: "Error al iniciar la transacción.",
+      error: error.message,
+    });
   }
 };
-
 // --- Controlador para confirmar una transacción después de Webpay ---
 const confirmarTransaccion = async (req, res) => {
   let tokenWs =
