@@ -287,62 +287,38 @@ const crearReservaDirecta = async (req, res) => {
 // backend/controllers/webpayController.js
 
 const crearTransaccionInicial = async (req, res) => {
-  console.log(
-    "\n--- [WEBPAY] INICIO: Solicitud para crear transacción inicial ---"
-  );
+  // LOG DE CONTROL PARA CONFIRMAR DESPLIEGUE EXITOSO
+  console.log("\n--- [WEBPAY V2.0] INICIO: Procesando con Hora Flexible ---");
+
   try {
     const { monto, returnUrl, reservas } = req.body;
 
-    // 1. Validación de parámetros básicos
     if (!monto || !returnUrl || !reservas || reservas.length === 0) {
       return res.status(400).json({
         error: "Faltan parámetros: monto, returnUrl o reservas no contiene ítems.",
       });
     }
 
-    // 2. Validación de cada ítem en el carrito
     for (const resItem of reservas) {
-      // Validaciones de tipo y contenido
-      if (typeof resItem.servicio !== "string" || resItem.servicio.trim() === "") {
-        console.error("Error de validación: Servicio inválido.", resItem);
-        return res.status(400).json({ error: "Reserva en carrito contiene un servicio inválido." });
+      // Validaciones de existencia de campos
+      if (!resItem.fecha || !resItem.hora) {
+        return res.status(400).json({ error: "Falta fecha u hora en la reserva." });
       }
 
-      if (typeof resItem.precio !== "number" || isNaN(resItem.precio) || resItem.precio <= 0) {
-        console.error("Error de validación: Precio inválido.", resItem);
-        return res.status(400).json({ error: "Reserva en carrito contiene un precio inválido." });
-      }
-
-      if (typeof resItem.terapeuta !== "string" || resItem.terapeuta.trim() === "") {
-        console.error("Error de validación: Terapeuta inválido.", resItem);
-        return res.status(400).json({ error: "Reserva en carrito contiene un terapeuta inválido." });
-      }
-
-      if (typeof resItem.fecha !== "string" || resItem.fecha.trim() === "") {
-        console.error("Error de validación: Fecha inválida.", resItem);
-        return res.status(400).json({ error: "Reserva en carrito contiene una fecha inválida." });
-      }
-
-      if (typeof resItem.hora !== "string" || resItem.hora.trim() === "") {
-        console.error("Error: Hora de reserva vacía.", resItem);
-        return res.status(400).json({ error: "La hora es obligatoria." });
-      }
-
-      // --- VALIDACIÓN DE HORA (HH:mm o "A coordinar") ---
-      // Creamos el objeto fecha una sola vez para ahorrar recursos
+      // --- NUEVA LÓGICA DE VALIDACIÓN ---
       const dateCheck = new Date(`${resItem.fecha}T${resItem.hora}:00`);
       const esHoraValida = !isNaN(dateCheck.getTime()); 
       const esAcoordinar = resItem.hora === "A coordinar"; 
 
+      // Si no es un formato de hora (HH:mm) Y tampoco es el texto "A coordinar", falla.
       if (!esHoraValida && !esAcoordinar) {
-        console.error("DEBUG: Falló validación de hora para:", resItem.hora);
+        console.error(`[VALIDACIÓN FALLIDA] Hora recibida: "${resItem.hora}" no es válida.`);
         return res.status(400).json({
-          error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'."
+          error: "Formato de hora inválido. Debe ser HH:mm o 'A coordinar'.",
         });
       }
     }
 
-    // 3. Generación de identificadores de transacción
     const buyOrder = `orden_compra_${Date.now()}`;
     const sessionId = `sesion_${Date.now()}`;
 
