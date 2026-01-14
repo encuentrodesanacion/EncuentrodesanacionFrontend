@@ -120,29 +120,90 @@ export default function OraculoGuia() {
     } catch (e: any) { alert(`Error: ${e.message}`); } finally { setIsProcessing(false); }
   };
 
-  return (
+   return (
     <div className="min-h-screen bg-white">
-      {/* HEADER */}
-      <header className="fixed top-0 left-0 w-full bg-white shadow z-50 flex justify-between items-center px-6 py-4">
-        <h1 className="text-xl font-semibold text-gray-800 z-50">Oráculo & Guía</h1>
-        <div className="flex items-center gap-4 md:hidden ml-auto -mr-4">
-          <button className="p-2 text-gray-700 hover:text-pink-600 z-50" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+      {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
+      <header className="fixed top-0 left-0 w-full bg-white shadow z-20 flex justify-between items-center px-5 py-5">
+        {/* Título de la Página (Ajustado) */}
+        <h1 className="text-xl font-semibold text-gray-800 z-50">
+         Oraculos & Guía{" "}
+        </h1>
+        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
+        {/* Usamos ml-auto y -mr-4 para desplazar a la izquierda y separar del carrito */}
+        <div className="flex items-center gap-4 md:hidden ml-auto mr-14">
+          {/* 1. Botón Hamburguesa */}
+          <button
+            className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Abrir menú de navegación"
+          >
             {isMenuOpen ? (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+              // Icono X (Cerrar)
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M6 18L18 6M6 6l12 12"
+                ></path>
+              </svg>
             ) : (
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16" /></svg>
+              // Icono Menú Hamburguesa
+              <svg
+                className="w-6 h-6"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M4 6h16M4 12h16M4 18h16"
+                ></path>
+              </svg>
             )}
           </button>
+          {/* Icono del Carrito (se mantiene) */}
         </div>
-        <div className="hidden md:flex items-center justify-start gap-6 p-4 ml-auto md:mr-20">
-          {navLinks.map((link) => (
-            <Link key={link.to} to={link.to} className="text-blue-500 hover:text-gray-800 font-bold whitespace-nowrap">{link.label}</Link>
-          ))}
-          <CartIcon />
+        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
+        {/* Esto solo se muestra en PC (md:flex) */}
+        <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
+          <Link
+            to="/cuerpo-consciente"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Cuerpo Consciente
+          </Link>
+          <Link
+            to="/sanacion-profunda"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+           Sanación Profunda
+          </Link>
+          <Link
+            to="/oraculos-y-guia"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+           Oraculos & Guía
+          </Link>
+          <Link
+            to="/semillas-de-luz"
+            className="text-blue-500 hover:text-gray-800 font-bold"
+          >
+            Semillas de Luz
+          </Link>
+       
         </div>
       </header>
-
-      {/* MENÚ MÓVIL */}
+      {/* --- MENÚ MÓVIL --- */}
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
           {navLinks.map((link) => (
@@ -155,6 +216,7 @@ export default function OraculoGuia() {
       <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
         <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
 
+        {/* INTRODUCCIÓN */}
         {/* INTRODUCCIÓN */}
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold text-pink-700 mb-6">Oráculo & Guía</h2>
