@@ -221,7 +221,7 @@ export default function SemillaDeLuz() {
       <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
         <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
 
-        {/* INTRODUCCIÓN */}
+        {/* INTRODUCCIÓNassdsd */}
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold text-pink-700 mb-6">Semilla de Luz</h2>
           <div className="text-gray-700 text-lg leading-relaxed">
