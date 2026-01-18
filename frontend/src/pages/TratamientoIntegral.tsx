@@ -8,7 +8,7 @@ import { parsePhoneNumberFromString } from "libphonenumber-js";
 
 // Importaciones de imágenes
 import gaby from "../assets/gabyy.png"; 
-import fernanda from "../assets/fernanda.png"; 
+import daniela from "../assets/daniel.jpeg"; 
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
@@ -277,8 +277,17 @@ const navLinks = [
       border: "border-pink-200", 
       esLider: true,
       descripcion: "Kinesióloga apasionada por la salud integral. Guía el proceso de habitar el cuerpo con mayor conciencia, transformando el dolor y el estrés en libertad de movimiento."
+    },
+    { 
+      nombre: "Daniela Cornejo", 
+      rol: "Kinesióloga Integrativa", 
+      especialidad: "Movimiento consciente y regulación corporal", 
+      img: daniela, 
+      color: "bg-pink-600", 
+      border: "border-pink-200", 
+      esLider: false,
+      descripcion: "Kinesióloga integrativa que acompaña procesos de reconexión entre cuerpo, mente y emoción. Combina movimiento consciente, yoga y técnicas de regulación del sistema nervioso para aliviar el dolor, reducir el estrés y restaurar el equilibrio interno. Su enfoque promueve una relación amorosa y sostenida con el cuerpo como base del bienestar integral."
     }
-    
   ].map((t, index) => (
     <div key={index} className="w-80 text-center bg-white p-6 rounded-xl shadow-md border border-gray-100 relative overflow-hidden flex flex-col items-center">
       {/* Barra superior decorativa */}
