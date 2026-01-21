@@ -3,6 +3,10 @@ import TerapeutaPlaceholder from "../assets/ASTRONAUTA3.png";
 import yuniver from "../assets/Alquimia.jpeg";
 
 import yuniver2 from "../assets/tarotter.jpg";
+import daniela from "../assets/daniela.png";
+import movconsc from "../assets/movimientoconsc.png";
+import sanardesde from "../assets/sanardesder.png";
+import regulacion from "../assets/regulacioncorpo.png";
 
 import karla from "../assets/karla.png";
 
@@ -516,7 +520,92 @@ servicios: [
 
 },
   
+{
 
+id: 34,
+
+nombre: "Daniela Cornejo",
+isProfesional:true,
+email: "kine.raizconsciente@gmail.com",
+
+imagenPerfil: daniela,
+
+callToActionTextCard:
+
+"Mi trabajo se basa en la kinesiología integrativa, con un enfoque que aborda a la persona de manera global: cuerpo físico, sistema nervioso, emociones y hábitos de vida. Las sesiones combinan movimiento consciente y terapia corporal, adaptadas a las necesidades y posibilidades de cada persona. Utilizo herramientas como: Movimiento consciente, yoga adaptado y tai chi, orientados a mejorar la movilidad, disminuir el dolor y regular el sistema nervioso. Ejercicios integrativos, enfocados en la reconexión corporal, la respiración y la conciencia postural. Trabajo manual, incluyendo digitopresión y técnicas de liberación corporal. Tapping y abordaje emocional, para acompañar procesos de estrés, ansiedad, carga emocional y dolor persistente. Además, realizo una evaluación integral, que incluye: Análisis del cuerpo físico y sus compensaciones Revisión del estado bioquímico, hábitos diarios y alimentación Observación del vínculo entre síntomas físicos y aspectos emocionales Mi enfoque no se centra solo en aliviar el síntoma, sino en comprender el origen del malestar y acompañar procesos de cambio reales y sostenibles, promoviendo el empoderamiento de la persona sobre su propia salud. Trabajo especialmente con personas que presentan dolor crónico, estrés, desregulación del sistema nervioso y mujeres que buscan un acompañamiento consciente e integral, respetando siempre el ritmo y la historia de cada cuerpo.",
+
+servicios: [
+
+{
+
+ img: sanardesde,
+
+ title: "Seguimiento 1 a 1 Sana desde la Raíz",
+
+ terapeuta: "Daniela Cornejo",
+
+ terapeuta_id: 34,
+
+ description:
+
+   "🌿 Acompañamiento Integrativo 1:1 Sanar desde la Raíz Formato: 4 sesiones (1 por semana) Duración: 60 a 75 minutos por sesión Modalidad: online Un proceso mensual para personas que desean comprender el origen de su malestar y generar cambios reales y sostenibles en su salud, integrando cuerpo, sistema nervioso, emociones y hábitos de vida. 🧭 ¿Cómo funciona el proceso? El acompañamiento se realiza en 4 sesiones, 1 semanal, con un enfoque progresivo que permite primero comprender, luego regular, después movilizar y finalmente integrar. 📦 Material incluido (entregado desde el inicio) Desde el inicio del proceso, la persona recibe acceso a material digital de apoyo: Guía de hábitos conscientes y autocuidado Guía de alimentación con enfoque antiinflamatorio Meditaciones guiadas y prácticas de regulación emocional Ejercicios de movimiento consciente para el hogar Este material acompaña todo el proceso y permite sostener lo trabajado entre sesiones. 🌸 Beneficios del acompañamiento Mayor comprensión del propio cuerpo Disminución del dolor y la inflamación Regulación del sistema nervioso Cambios sostenibles en hábitos de vida Autonomía y confianza corporal",
+
+ precio: 140000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 4, precio: 140000 }],
+
+},
+
+{
+
+ img: movconsc,
+
+ title: "Movimiento Consciente y Regulación del Sistema Nervioso",
+
+ terapeuta: "Daniela Cornejo",
+
+ terapeuta_id: 34,
+
+ description:
+
+   "Un espacio terapéutico grupal para disminuir estrés, tensión y dolor, reconectar con el cuerpo y aprender herramientas prácticas de autorregulación.",
+
+ precio: 10000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 10000 }],
+
+},
+
+ {
+
+ img: regulacion,
+
+ title: "SESIÓN ÚNICA 1 a 1 Sana desde la raíz",
+
+ terapeuta: "Daniela Cornejo", //ass
+
+ terapeuta_id: 34,
+
+ description:
+
+   "Una sesión completa y consciente donde abordamos tu molestia principal desde una mirada integrativa. A través del movimiento, la respiración y la regulación del sistema nervioso, no solo buscamos alivio inmediato, sino que te llevas herramientas prácticas para que puedas cuidar y regular tu cuerpo en tu día a día, incluso después de la sesión.",
+
+ precio: 35000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 35000 }],
+
+},
+
+],
+
+},
+  
    {
 
 id: 5,
