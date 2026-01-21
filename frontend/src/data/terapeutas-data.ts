@@ -584,7 +584,7 @@ servicios: [
 
  img: regulacion,
 
- title: "SESIÓN ÚNICA 1 a 1 Sana desde la raíz",
+ title: "SESIÓN ÚNICA 1 a 1 Sana desde la Raíz",
 
  terapeuta: "Daniela Cornejo", //ass
 
