@@ -299,73 +299,103 @@ const App = () => {
       </nav>
 
       {/* --- SECCIÓN DE INICIO (HERO SECTION) --- */}
-      <section
-        id="inicio"
-        // Estilos finales sin animación de entrada
-        className="pt-32 pb-32 md:pt-48 md:pb-40 bg-gradient-to-r from-pastel-green/20 to-pastel-mint/20"
-      >
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          {/* Título Principal */}
-          <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight">
-            <span className=" bg-clip-text text-pink-600">
-              <strong> {t("hero_title")}</strong>
-            </span>
-          </h1>
+  
+{/* --- SECCIÓN DE INICIO (HERO SECTION CON ESTILO VALIENTES) --- */}
+<section
+  id="inicio"
+  className="pt-32 pb-32 md:pt-48 md:pb-50 bg-transparent"
+>
+  <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    {/* EL RECUADRO ESTILO "VALIENTES" */}
+    <div className="bg-white/10 backdrop-blur-md border border-pink-300/30 p-8 md:p-16 rounded-3xl shadow-2xl relative overflow-hidden text-center">
+      
+      {/* Decoración sutil para la "Pausa" visual */}
+      <div className="absolute -top-10 -right-10 w-64 h-64 bg-pink-500/10 rounded-full blur-3xl"></div>
+      <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cyan-500/10 rounded-full blur-3xl"></div>
 
-          {/* Subtítulo (Frase de apertura) */}
-          <p className="text-2xl md:text-4xl text-gray-1000 font-light mb-8 max-w-4xl mx-auto">
-            <strong> {t("hero_subtitle")}</strong>
-          </p>
+      {/* Título Principal */}
+      <h1 className="text-6xl md:text-9xl font-extrabold mb-6 leading-tight relative z-10">
+        <span className="bg-clip-text text-pink-600">
+          <strong>{t("hero_title")}</strong>
+        </span>
+      </h1>
 
-          {/* Descripción Principal y Lista de Profesionales */}
-          <div className="text-lg md:text-xl text-gray-900 max-w-3xl mx-auto font-medium mb-12 leading-relaxed">
-            <p className="mb-4">
-              {t("hero_description_p1")} {""}
-              <strong className="text-pink-600">
-                {t("hero_description_p2")} {""}
-              </strong>
-              {t("hero_description_p3")}
-            </p>
+      {/* Subtítulo */}
+      <p className="text-2xl md:text-4xl text-gray-800 font-bold mb-8 max-w-4xl mx-auto relative z-10 italic">
+        {t("hero_subtitle")}
+      </p>
 
-            {/* Mejora: Lista de profesionales con mejor formato (Tags/Badges) */}
-            <p className="font-semibold text-gray-800 mt-6 mb-3">
-              {t("expert_heading")}
-            </p>
-            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-base md:text-lg">
-              <span className="bg-pink-100 text-pink-700 px-3 py-1 rounded-full border border-pink-300">
-                {t("expert_psychologists")}
-              </span>
-              <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full border border-purple-300">
-                {t("expert_holistic_therapists")}
-              </span>
-              <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full border border-green-300">
-                {t("expert_coaches")}
-              </span>
-              <span className="bg-yellow-100 text-yellow-700 px-3 py-1 rounded-full border border-yellow-300">
-                {t("expert_yoga_fitness")}
-              </span>
-              <span className="bg-indigo-100 text-indigo-700 px-3 py-1 rounded-full border border-indigo-300">
-                {t("expert_plus")}
-              </span>
-            </div>
+      {/* Descripción Principal */}
+      <div className="text-lg md:text-xl text-gray-900 max-w-3xl mx-auto font-medium mb-12 leading-relaxed relative z-10">
+        <p className="mb-4">
+          {t("hero_description_p1")}{" "}
+          <strong className="text-pink-600">
+            {t("hero_description_p2")}
+          </strong>{" "}
+          {t("hero_description_p3")}
+        </p>
 
-            <p className="mt-6">{t("hero_description_p4")}</p>
-          </div>
-
-          {/* Imagen Centrada Debajo del Contenido */}
-          <div className="relative mt-20 max-w-xs mx-auto">
-            <img
-              src={Fondo3}
-              alt="Símbolo Holístico"
-              // Uso de rounded-full y anillo (ring) para destacar la imagen
-              className="object-cover w-full h-auto rounded-full shadow-2xl ring-4 ring-pink-400/50 ring-offset-4 ring-offset-pastel-green/10 transition duration-500 hover:shadow-pink-400/80"
-              style={{
-                aspectRatio: "1 / 1",
-              }}
-            />
-          </div>
+        {/* Lista de Profesionales (Badges) */}
+        <p className="font-semibold text-gray-800 mt-8 mb-4 uppercase tracking-wider text-sm">
+          {t("expert_heading")}
+        </p>
+        <div className="flex flex-wrap justify-center gap-x-4 gap-y-3 text-base md:text-lg mb-8">
+          <span className="bg-white/40 text-pink-700 px-4 py-1.5 rounded-full border border-pink-300/50 shadow-sm backdrop-blur-sm">
+            {t("expert_psychologists")}
+          </span>
+          <span className="bg-white/40 text-purple-700 px-4 py-1.5 rounded-full border border-purple-300/50 shadow-sm backdrop-blur-sm">
+            {t("expert_holistic_therapists")}
+          </span>
+          <span className="bg-white/40 text-green-700 px-4 py-1.5 rounded-full border border-green-300/50 shadow-sm backdrop-blur-sm">
+            {t("expert_coaches")}
+          </span>
+          <span className="bg-white/40 text-yellow-700 px-4 py-1.5 rounded-full border border-yellow-300/50 shadow-sm backdrop-blur-sm">
+            {t("expert_yoga_fitness")}
+          </span>
+          <span className="bg-white/40 text-indigo-700 px-4 py-1.5 rounded-full border border-indigo-300/50 shadow-sm backdrop-blur-sm">
+            {t("expert_plus")}
+          </span>
         </div>
-      </section>
+
+        <p className="mt-6 text-black-700 italic">{t("hero_description_p4")}</p>
+      </div>
+
+      {/* Imagen del Astronauta/Símbolo */}
+      <div className="relative mt-12 max-w-xs mx-auto z-10">
+        <img
+          src={Fondo3}
+          alt="Símbolo Holístico"
+          className="object-cover w-48 h-48 md:w-56 md:h-56 mx-auto rounded-full shadow-2xl ring-4 ring-pink-400/30 ring-offset-4 ring-offset-white/10 transition duration-500 hover:scale-105 hover:shadow-pink-400/50"
+          style={{ aspectRatio: "1 / 1" }}
+        />
+      </div>
+    </div>
+  </div>
+</section>
+      {/* --- SECCIÓN: EL MANIFIESTO DEL VALIENTE --- */}
+<div className="max-w-4xl mx-auto px-4 mb-20">
+  <div className="bg-white/10 backdrop-blur-md border border-pink-300/30 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+    {/* Decoración sutil para la "Pausa" visual */}
+    <div className="absolute -top-10 -right-10 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl"></div>
+    
+    <h3 className="text-pink-600 text-sm font-bold uppercase tracking-widest mb-4">
+      Nuestra Filosofía
+    </h3>
+    <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6 leading-tight">
+      Aquí no hay "pacientes", <br />
+      <span className="text-pink-600 italic">aquí hay valientes.</span>
+    </h2>
+    <p className="text-xl text-black-900 leading-relaxed font italic">
+      "Ser Valiente es reconocer que el bienestar no es un destino, sino un proceso de 
+      hacerse cargo. Es el acto de mirar hacia adentro, abrazar las sombras y 
+      decidir, cada día, caminar hacia la propia luz."
+    </p>
+    <div className="mt-8 flex items-center gap-4 text-black-500">
+      <div className="h-[1px] w-12 bg-pink-500"></div>
+      <span className="text-sm font-semibold">Encuentro de Sanación</span>
+    </div>
+  </div>
+</div>
       {/* Services Section */}
       <section
         id="servicios"

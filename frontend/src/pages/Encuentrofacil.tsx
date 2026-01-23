@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useNavigate, useLocation } from "react-router-dom"; // Se usa useLocation
+import { useNavigate, useLocation, Link } from "react-router-dom"; // Se usa useLocation
 import "../styles/encuentrofacil.css";
 import { useCart } from "./CartContext";
 import CartIcon from "../components/CartIcon";
@@ -341,6 +341,14 @@ export default function AgendaSanacion() {
       >
         {terapeutaSeleccionado ? "Volver a Terapeutas" : "Volver al Inicio"}
       </button>
+      {/* LINK DIRECTO FLOTANTE */}
+<Link
+  to="/cuerpo-consciente"
+  className="fixed top-20 left-48 z-10 bg-pink-600 text-white px-6 py-2 rounded-full font-bold shadow-1x1 hover:scale-90 transition-transform flex items-center gap-2"
+>
+  <span>Programas</span>
+</Link>
+      
 
       <h2 className="text-3xl font-bold text-center text-pink-700 mb-6">
         Agenda una sesión
@@ -538,6 +546,7 @@ export default function AgendaSanacion() {
           </div>
         </div>
       )}
+      
     </div>
   );
 }

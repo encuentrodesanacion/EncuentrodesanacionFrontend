@@ -200,6 +200,12 @@ export default function OraculoGuia() {
           >
             Semillas de Luz
           </Link>
+            <Link
+                          to="/encuentrofacil"
+                          className="text-blue-500 hover:text-gray-800 font-bold"
+                        >
+                        EncuentroFacil
+                        </Link>
        
         </div>
       </header>
