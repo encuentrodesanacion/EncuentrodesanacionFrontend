@@ -13,6 +13,18 @@ import mariajoseImg from "../assets/cote.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
+// Definimos la interfaz Plan para evitar errores de TypeScript
+interface Plan {
+  titulo: string;
+  subtitulo: string;
+  precio: number;
+  sesiones: number;
+  destacado: boolean;
+  objetivo: string;
+  paraQuienes: string[];
+  incluye: string[];
+}
+
 export default function SemillaDeLuz() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -23,7 +35,7 @@ export default function SemillaDeLuz() {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
   // --- DATOS PROFESIONALES ---
   const terapeutas = [
@@ -50,7 +62,7 @@ export default function SemillaDeLuz() {
   ];
 
   // --- DATOS DE PLANES ---
-  const planes = [
+  const planes: Plan[] = [
     { 
       titulo: "Programa 4 Semanas", 
       subtitulo: "Programa de conciencia y base emocional", 
@@ -227,7 +239,7 @@ export default function SemillaDeLuz() {
       <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
         <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
 
-        {/* INTRODUCCIÓNassdsd */}
+        {/* INTRODUCCIÓN */}
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold text-pink-700 mb-6">Semilla de Luz</h2>
           <div className="text-gray-700 text-lg leading-relaxed">
@@ -269,6 +281,65 @@ export default function SemillaDeLuz() {
               <p className="text-[11px] text-gray-600 text-center italic border-t pt-4 leading-relaxed">{t.descripcion}</p>
             </div>
           ))}
+        </div>
+
+        {/* --- CRONOGRAMA DEL PROCESO (NUEVO) --- */}
+        <div className="max-w-6xl mx-auto mb-20 px-4">
+          <h3 className="text-3xl font-bold text-center text-pink-700 mb-10">Cronograma del Proceso</h3>
+
+          {/* CICLO 1 */}
+          <div className="mb-12">
+            <div className="bg-green-600 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 1: Conciencia · Regulación · Base (4 Semanas)</h4>
+            </div>
+            <div className="bg-white border-2 border-green-600 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-green-800 font-semibold mb-6 italic">Objetivo: Tomar conciencia del rol adulto y comenzar a regularse emocionalmente.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "1", titulo: "Conciencia crianza", items: ["Rol del adulto", "Observar patrones", "Mirada consciente"] },
+                  { sem: "2", titulo: "Regulación adulta", items: ["Reconocer emociones", "Regular reacciones", "Sostener vínculo"] },
+                  { sem: "3", titulo: "Cuerpo y emoción", items: ["Expresión infantil", "Regulación corporal", "Seguridad y contención"] },
+                  { sem: "4", titulo: "Niño interior", items: ["Impacto historia propia", "Reparación interna", "Conciencia vincular"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-green-50 p-4 rounded-lg border border-green-100 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-green-600 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-green-200 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CICLO 2 */}
+          <div>
+            <div className="bg-orange-500 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 2: Integración · Profundización (8 Semanas)</h4>
+            </div>
+            <div className="bg-white border-2 border-orange-500 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Integrar cambios reales y fortalecer la presencia y coherencia en el vínculo.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "5", titulo: "Presencia y vínculo", items: ["Fortalecer escucha", "Presencia adulta", "Validación emocional"] },
+                  { sem: "6", titulo: "Creencias y patrones", items: ["Creencias limitantes", "Nuevas formas", "Criar desde conciencia"] },
+                  { sem: "7", titulo: "Regulación infantil", items: ["Emociones difíciles", "Seguridad emocional", "Acompañamiento"] },
+                  { sem: "8", titulo: "Cierre consciente", items: ["Integrar aprendizajes", "Consolidar herramientas", "Proyectar continuidad"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-orange-50 p-4 rounded-lg border border-orange-200 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-orange-600 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-orange-300 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* GRID PLANES */}
@@ -321,8 +392,14 @@ export default function SemillaDeLuz() {
             <input type="tel" placeholder="+56912345678" className="border rounded w-full py-2 px-3 mb-6 outline-none focus:ring-2 focus:ring-pink-500" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
             <div className="flex flex-col gap-3">
         
-              <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Añadir al Carrito</button>
-              <button onClick={() => { setShowContactModal(false); setSelectedPlan(null); }} className="bg-gray-200 py-2 rounded">Cancelar</button>
+              <button 
+                onClick={() => ejecutarAccionReserva("carrito")} 
+                disabled={isProcessing}
+                className={`bg-pink-600 text-white py-3 rounded font-bold ${isProcessing ? 'opacity-50' : ''}`}
+              >
+                {isProcessing ? 'Procesando...' : 'Añadir al Carrito'}
+              </button>
+              <button onClick={() => { setShowContactModal(false); setSelectedPlan(null); }} className="bg-gray-200 py-2 rounded text-gray-800">Cancelar</button>
             </div>
           </div>
         </div>

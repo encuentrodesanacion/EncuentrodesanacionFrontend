@@ -13,6 +13,18 @@ import claudiaDImg from "../assets/claudia.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
+// Definimos la interfaz Plan para evitar errores de TypeScript
+interface Plan {
+  titulo: string;
+  subtitulo: string;
+  precio: number;
+  sesiones: number;
+  destacado: boolean;
+  objetivo: string;
+  paraQuienes: string[];
+  incluye: string[];
+}
+
 export default function SanacionProfunda() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -22,7 +34,7 @@ export default function SanacionProfunda() {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
   const navLinks = [
     { to: "/cuerpo-consciente", label: "Cuerpo Consciente" },
@@ -54,7 +66,7 @@ export default function SanacionProfunda() {
     }
   ];
 
-  const planes = [
+  const planes: Plan[] = [
     { 
       titulo: "Programa 4 Semanas", 
       subtitulo: "Programa de contención, comprensión y base emocional",
@@ -98,7 +110,7 @@ export default function SanacionProfunda() {
     }
   ];
 
-  const abrirModalInscripcion = (plan: any) => {
+  const abrirModalInscripcion = (plan: Plan) => {
     setSelectedPlan(plan);
     setShowContactModal(true);
   };
@@ -169,90 +181,35 @@ export default function SanacionProfunda() {
     <div className="min-h-screen bg-white">
       {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-20 flex justify-between items-center px-5 py-5">
-        {/* Título de la Página (Ajustado) */}
         <h1 className="text-xl font-semibold text-gray-800 z-50">
           Sanación Profunda{" "}
         </h1>
-        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
-        {/* Usamos ml-auto y -mr-4 para desplazar a la izquierda y separar del carrito */}
         <div className="flex items-center gap-4 md:hidden ml-auto mr-14">
-          {/* 1. Botón Hamburguesa */}
           <button
             className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Abrir menú de navegación"
           >
             {isMenuOpen ? (
-              // Icono X (Cerrar)
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             ) : (
-              // Icono Menú Hamburguesa
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             )}
           </button>
-          {/* Icono del Carrito (se mantiene) */}
         </div>
-        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
-        {/* Esto solo se muestra en PC (md:flex) */}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link
-            to="/cuerpo-consciente"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Cuerpo Consciente
-          </Link>
-          <Link
-            to="/sanacion-profunda"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-           Sanación Profunda
-          </Link>
-          <Link
-            to="/oraculos-y-guia"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-           Oraculos & Guía
-          </Link>
-          <Link
-            to="/semillas-de-luz"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Semillas de Luz
-          </Link>
-        <Link
-                to="/encuentrofacil"
-                className="text-blue-500 hover:text-gray-800 font-bold"
-              >
-              EncuentroFacil
-              </Link>
+          <Link to="/cuerpo-consciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
+          <Link to="/sanacion-profunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
+          <Link to="/oraculos-y-guia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+          <Link to="/semillas-de-luz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
+          <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
         </div>
       </header>
+      
       {/* --- MENÚ MÓVIL --- */}
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
@@ -288,6 +245,7 @@ export default function SanacionProfunda() {
           </div>
         </div>
 
+        {/* GRID TERAPEUTAS */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16 max-w-7xl mx-auto">
           {terapeutas.map((t, idx) => (
             <div key={idx} className="bg-white p-6 rounded-xl shadow-md border border-gray-100 relative flex flex-col items-center overflow-hidden">
@@ -304,6 +262,66 @@ export default function SanacionProfunda() {
           ))}
         </div>
 
+        {/* --- CRONOGRAMA DEL PROCESO (NUEVO) --- */}
+        <div className="max-w-6xl mx-auto mb-20 px-4">
+          <h3 className="text-3xl font-bold text-center text-pink-700 mb-10">Cronograma del Proceso</h3>
+
+          {/* CICLO 1 */}
+          <div className="mb-12">
+            <div className="bg-blue-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 1: Orden · Estabilización · Conciencia (4 Semanas)</h4>
+            </div>
+            <div className="bg-white border-2 border-blue-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-blue-900 font-semibold mb-6 italic">Objetivo: Ordenar y estabilizar el campo emocional y energético, liberando cargas activas.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "1", titulo: "Apertura y observación", items: ["Reconocer estado actual", "Encuadre seguro", "Limpieza energética"] },
+                  { sem: "2", titulo: "Liberación inicial", items: ["Identificar cargas", "Liberar emociones", "Integración protegida"] },
+                  { sem: "3", titulo: "Orden sistémico", items: ["Origen del conflicto", "Dinámicas familiares", "Reorden interno"] },
+                  { sem: "4", titulo: "Integración y cierre", items: ["Integrar lo trabajado", "Reconocer cambios", "Cierre consciente"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-blue-50 p-4 rounded-lg border border-blue-100 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-blue-800 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-blue-200 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CICLO 2 */}
+          <div>
+            <div className="bg-purple-700 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 2: Profundización · Transformación (4 Semanas Adicionales)</h4>
+            </div>
+            <div className="bg-white border-2 border-purple-700 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Profundizar la sanación, integrando cambios y fortaleciendo la autonomía.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "5", titulo: "Reorganización interna", items: ["Observar cambios", "Reordenar energía", "Nueva estructura"] },
+                  { sem: "6", titulo: "Profundización emocional", items: ["Emociones emergentes", "Liberación focalizada", "Capas profundas"] },
+                  { sem: "7", titulo: "Impacto en vínculos", items: ["Cambios en relaciones", "Límites sanos", "Orden vincular"] },
+                  { sem: "8", titulo: "Cierre evolutivo", items: ["Integrar proceso completo", "Conciencia del recorrido", "Cierre energético"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-purple-50 p-4 rounded-lg border border-purple-200 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-purple-700 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-purple-300 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* GRID PLANES */}
         <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 items-stretch">
           {planes.map((plan, idx) => (
             <div key={idx} className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${plan.destacado ? 'border-pink-500 bg-pink-50 shadow-2xl scale-105 z-10' : 'border-pink-200 bg-white shadow-lg'}`}>
@@ -338,6 +356,7 @@ export default function SanacionProfunda() {
         </div>
       </div>
 
+      {/* MODAL INSCRIPCIÓN */}
       {showContactModal && selectedPlan && (
         <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
           <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
@@ -346,8 +365,13 @@ export default function SanacionProfunda() {
             <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4" value={clientName} onChange={(e) => setClientName(e.target.value)} />
             <input type="tel" placeholder="+569..." className="border rounded w-full py-2 px-3 mb-6" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
             <div className="flex flex-col space-y-3">
-           
-              <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Al Carrito</button>
+              <button 
+                onClick={() => ejecutarAccionReserva("carrito")} 
+                disabled={isProcessing}
+                className={`bg-pink-600 text-white py-3 rounded font-bold ${isProcessing ? 'opacity-50' : ''}`}
+              >
+                {isProcessing ? 'Procesando...' : 'Añadir al Carrito'}
+              </button>
               <button onClick={() => setShowContactModal(false)} className="bg-gray-200 py-2 rounded">Cancelar</button>
             </div>
           </div>

@@ -12,6 +12,18 @@ import brendaImg from "../assets/brenda.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
+// Definimos la interfaz para el Plan (para evitar errores de TypeScript)
+interface Plan {
+  titulo: string;
+  subtitulo: string;
+  precio: number;
+  sesiones: number;
+  destacado: boolean;
+  objetivo: string;
+  paraQuienes: string[];
+  incluye: string[];
+}
+
 export default function OraculoGuia() {
   const navigate = useNavigate();
   const { addToCart } = useCart();
@@ -22,7 +34,7 @@ export default function OraculoGuia() {
   const [clientName, setClientName] = useState("");
   const [clientPhone, setClientPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
-  const [selectedPlan, setSelectedPlan] = useState<any | null>(null);
+  const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
   // --- NAVEGACIÓN ---
   const navLinks = [
@@ -52,7 +64,7 @@ export default function OraculoGuia() {
   ];
 
   // --- DATOS DE PLANES ---
-  const planes = [
+  const planes: Plan[] = [
     { 
       titulo: "Programa 4 Semanas", 
       subtitulo: "Programa de claridad y enfoque interno", 
@@ -124,91 +136,35 @@ export default function OraculoGuia() {
     <div className="min-h-screen bg-white">
       {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-20 flex justify-between items-center px-5 py-5">
-        {/* Título de la Página (Ajustado) */}
         <h1 className="text-xl font-semibold text-gray-800 z-50">
          Oraculos & Guía{" "}
         </h1>
-        {/* ⬅️ CONTENEDOR FLEXIBLE DE ÍCONOS (Móvil) ⬅️ */}
-        {/* Usamos ml-auto y -mr-4 para desplazar a la izquierda y separar del carrito */}
         <div className="flex items-center gap-4 md:hidden ml-auto mr-14">
-          {/* 1. Botón Hamburguesa */}
           <button
             className="p-2 text-gray-700 hover:text-pink-600 focus:outline-none z-50"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="Abrir menú de navegación"
           >
             {isMenuOpen ? (
-              // Icono X (Cerrar)
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M6 18L18 6M6 6l12 12"
-                ></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
               </svg>
             ) : (
-              // Icono Menú Hamburguesa
-              <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M4 6h16M4 12h16M4 18h16"
-                ></path>
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h16M4 18h16"></path>
               </svg>
             )}
           </button>
-          {/* Icono del Carrito (se mantiene) */}
         </div>
-        {/* --- MENÚ ESCRITORIO (md:flex) --- */}
-        {/* Esto solo se muestra en PC (md:flex) */}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link
-            to="/cuerpo-consciente"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Cuerpo Consciente
-          </Link>
-          <Link
-            to="/sanacion-profunda"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-           Sanación Profunda
-          </Link>
-          <Link
-            to="/oraculos-y-guia"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-           Oraculos & Guía
-          </Link>
-          <Link
-            to="/semillas-de-luz"
-            className="text-blue-500 hover:text-gray-800 font-bold"
-          >
-            Semillas de Luz
-          </Link>
-            <Link
-                          to="/encuentrofacil"
-                          className="text-blue-500 hover:text-gray-800 font-bold"
-                        >
-                        EncuentroFacil
-                        </Link>
-       
+          <Link to="/cuerpo-consciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
+          <Link to="/sanacion-profunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
+          <Link to="/oraculos-y-guia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+          <Link to="/semillas-de-luz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
+          <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
         </div>
       </header>
+      
       {/* --- MENÚ MÓVIL --- */}
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
@@ -222,7 +178,6 @@ export default function OraculoGuia() {
       <div style={{ padding: "2rem", paddingTop: "8rem", backgroundColor: "#fefefe", minHeight: "100vh" }}>
         <button onClick={() => navigate("/servicios")} className="mb-8 px-4 py-2 bg-blue-500 text-white rounded">Volver a Servicios</button>
 
-        {/* INTRODUCCIÓN */}
         {/* INTRODUCCIÓN */}
         <div className="max-w-4xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-bold text-pink-700 mb-6">Oráculo & Guía</h2>
@@ -258,6 +213,65 @@ export default function OraculoGuia() {
               <p className="text-[11px] text-gray-600 text-center italic border-t pt-4 leading-relaxed">{t.descripcion}</p>
             </div>
           ))}
+        </div>
+
+        {/* --- CRONOGRAMA DEL PROCESO (NUEVO) --- */}
+        <div className="max-w-6xl mx-auto mb-20 px-4">
+          <h3 className="text-3xl font-bold text-center text-pink-700 mb-10">Cronograma del Proceso</h3>
+
+          {/* CICLO 1 */}
+          <div className="mb-12">
+            <div className="bg-purple-600 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 1: Claridad · Orden · Escucha (4 Semanas)</h4>
+            </div>
+            <div className="bg-white border-2 border-purple-600 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-purple-800 font-semibold mb-6 italic">Objetivo: Ordenar la visión interna y fortalecer la conexión con la intuición.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "1", titulo: "Apertura y claridad", items: ["Observar estado actual", "Identificar bloqueos", "Abrir escucha intuitiva"] },
+                  { sem: "2", titulo: "Lectura simbólica", items: ["Comprender símbolos", "Reconocer patrones", "Ordenar visión personal"] },
+                  { sem: "3", titulo: "Guía interna", items: ["Conexión con intuición", "Diferenciar del miedo", "Decisiones alineadas"] },
+                  { sem: "4", titulo: "Integración y cierre", items: ["Integrar el proceso", "Reconocer avances", "Cierre consciente"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-purple-50 p-4 rounded-lg border border-purple-100 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-purple-600 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-purple-200 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* CICLO 2 */}
+          <div>
+            <div className="bg-gray-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 2: Integración · Propósito · Confianza (8 Semanas)</h4>
+            </div>
+            <div className="bg-white border-2 border-gray-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Integrar el proceso, sostener decisiones y fortalecer el propósito.</p>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                {[
+                  { sem: "5", titulo: "Profundización", items: ["Afinar lectura interna", "Sostener decisiones", "Intuición aplicada"] },
+                  { sem: "6", titulo: "Propósito y dirección", items: ["Explorar propósito", "Visión a mediano plazo", "Orden y estructura"] },
+                  { sem: "7", titulo: "Integración diaria", items: ["Aplicar en lo cotidiano", "Coherencia interna", "Vida práctica"] },
+                  { sem: "8", titulo: "Cierre y proyección", items: ["Consolidar aprendizaje", "Proyectar siguiente ciclo", "Cierre del proceso"] },
+                ].map((s) => (
+                  <div key={s.sem} className="bg-gray-50 p-4 rounded-lg border border-gray-200 hover:shadow-md transition-shadow">
+                    <span className="text-xs font-bold text-gray-500 uppercase">Semana {s.sem}</span>
+                    <h5 className="font-bold text-gray-800 mb-2 border-b border-gray-300 pb-1">{s.titulo}</h5>
+                    <ul className="text-xs text-gray-600 space-y-1">
+                      {s.items.map((item, i) => <li key={i}>• {item}</li>)}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
         </div>
 
         {/* GRID PLANES */}
@@ -309,8 +323,13 @@ export default function OraculoGuia() {
             <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4 outline-none focus:ring-2 focus:ring-pink-500" value={clientName} onChange={(e) => setClientName(e.target.value)} />
             <input type="tel" placeholder="+56912345678" className="border rounded w-full py-2 px-3 mb-6 outline-none focus:ring-2 focus:ring-pink-500" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
             <div className="flex flex-col gap-3">
-       
-              <button onClick={() => ejecutarAccionReserva("carrito")} className="bg-pink-600 text-white py-3 rounded font-bold">Añadir al Carrito</button>
+              <button 
+                onClick={() => ejecutarAccionReserva("carrito")} 
+                disabled={isProcessing}
+                className={`bg-pink-600 text-white py-3 rounded font-bold ${isProcessing ? 'opacity-50' : ''}`}
+              >
+                 {isProcessing ? 'Procesando...' : 'Añadir al Carrito'}
+              </button>
               <button onClick={() => { setShowContactModal(false); setSelectedPlan(null); }} className="bg-gray-200 py-2 rounded text-gray-800">Cancelar</button>
             </div>
           </div>
