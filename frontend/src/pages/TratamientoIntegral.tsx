@@ -105,7 +105,7 @@ export default function CuerpoConsciente() {
     const now = new Date();
 
     const reservaData: Reserva = { // Aquí usamos el tipo Reserva importado
-      clientBookingId: "cuerpo-consciente-" + Date.now(),
+      clientBookingId: "cuerpoconsciente-" + Date.now(),
       terapeuta: "Gabriela Pinto",
       servicio: "Cuerpo Consciente",
       especialidad: selectedPlan.titulo,
@@ -151,10 +151,11 @@ export default function CuerpoConsciente() {
   };
 
   const navLinks = [
-    { to: "/cuerpo-consciente", label: "Cuerpo Consciente" },
-    { to: "/sanacion-profunda", label: "Sanación Profunda" },
-    { to: "/semillas-de-luz", label: "Semillas De Luz" },
-    { to: "/oraculos-y-guia", label: "Oráculos & Guía" },
+    { to: "/cuerpoconsciente", label: "Cuerpo Consciente" },
+    { to: "/sanacionprofunda", label: "Sanación Profunda" },
+    { to: "/semillasdeluz", label: "Semillas De Luz" },
+    { to: "/oraculosyguia", label: "Oráculos & Guía" },
+    { to: "https://encuentrodesanacion.com/encuentrofacil", label: "EncuentroFácil" },
   ];
 
   return (
@@ -182,10 +183,10 @@ export default function CuerpoConsciente() {
           </button>
         </div>
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link to="/cuerpo-consciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
-          <Link to="/sanacion-profunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
-          <Link to="/oraculos-y-guia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
-          <Link to="/semillas-de-luz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
+          <Link to="/cuerpoconsciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
+          <Link to="/sanacionprofunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
+          <Link to="/oraculosyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+          <Link to="/semillasdeluz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
           <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
         </div>
       </header>

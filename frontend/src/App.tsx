@@ -50,16 +50,16 @@ export default function App() {
           <Route path="/" element={<Home />} />
           <Route path="/trauma-dolor-reconexion" element={<Terapias />} />
           <Route
-            path="/cuerpo-consciente"
+            path="/cuerpoconsciente"
             element={<TratamientoHolistico />}
           />
           {/* <Route path="/Findetalleres" element={<Findetalleres />} /> */}
           {/* <Route path="/spalittle" element={<SpaLittle />} /> */}
-          <Route path="/sanacion-profunda" element={<TallerMensual />} />
+          <Route path="/sanacionprofunda" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
-          <Route path="/oraculos-y-guia" element={<Giftcard />} />
-          <Route path="/semillas-de-luz" element={<Psicologos />} />
+          <Route path="/oraculosyguia" element={<Giftcard />} />
+          <Route path="/semillasdeluz" element={<Psicologos />} />
 
           <Route
             path="/encuentrofacil/:slugTerapeuta?"

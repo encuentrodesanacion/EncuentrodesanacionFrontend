@@ -131,10 +131,11 @@ export default function SemillaDeLuz() {
   };
 
   const navLinks = [
-    { to: "/cuerpo-consciente", label: "Cuerpo Consciente" },
-    { to: "/sanacion-profunda", label: "Sanación Profunda" },
-    { to: "/semillas-de-luz", label: "Semillas De Luz" },
-    { to: "/oraculos-y-guia", label: "Oráculos & Guía" },
+    { to: "/cuerpoconsciente", label: "Cuerpo Consciente" },
+    { to: "/sanacionprofunda", label: "Sanación Profunda" },
+    { to: "/semillasdeluz", label: "Semillas De Luz" },
+    { to: "/oraculosyguia", label: "Oráculos & Guía" },
+    { to: "https://encuentrodesanacion.com/encuentrofacil", label: "EncuentroFácil" },
   ];
 
    return (
@@ -194,25 +195,25 @@ export default function SemillaDeLuz() {
         {/* Esto solo se muestra en PC (md:flex) */}
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link
-            to="/cuerpo-consciente"
+            to="/cuerpoconsciente"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
             Cuerpo Consciente
           </Link>
           <Link
-            to="/sanacion-profunda"
+            to="/sanacionprofunda"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
            Sanación Profunda
           </Link>
           <Link
-            to="/oraculos-y-guia"
+            to="/oraculosyguia"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
            Oraculos & Guía
           </Link>
           <Link
-            to="/semillas-de-luz"
+            to="/semillasdeluz"
             className="text-blue-500 hover:text-gray-800 font-bold"
           >
             Semillas de Luz

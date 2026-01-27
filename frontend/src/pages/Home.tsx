@@ -245,7 +245,7 @@ const App = () => {
                 onClick={() => setIsMenuOpen(false)}
                 className="block px-3 py-2 text-blue-300 hover:text-white font-bold"
               >
-                Servicios
+                Programas
               </a>
               {/* <a
                 href="#alianzas"
@@ -452,7 +452,7 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/cuerpo-consciente"
+                      to="/cuerpoconsciente"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -481,7 +481,7 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/sanacion-profunda"
+                      to="/sanacionprofunda"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -557,7 +557,7 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/oraculos-y-guia"
+                      to="/oraculosyguia"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>
@@ -588,7 +588,7 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/semillas-de-luz"
+                      to="/semillasdeluz"
                       className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
                     >
                       <h2>{t("formation_cta")}</h2>

@@ -343,7 +343,7 @@ export default function AgendaSanacion() {
       </button>
       {/* LINK DIRECTO FLOTANTE */}
 <Link
-  to="/cuerpo-consciente"
+  to="/cuerpoconsciente"
   className="fixed top-20 left-48 z-10 bg-pink-600 text-white px-6 py-2 rounded-full font-bold shadow-1x1 hover:scale-90 transition-transform flex items-center gap-2"
 >
   <span>Programas</span>
