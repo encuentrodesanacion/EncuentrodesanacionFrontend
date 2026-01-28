@@ -58,7 +58,7 @@ export default function App() {
           <Route path="/sanacionprofunda" element={<TallerMensual />} />
           <Route path="/quienes-somos" element={<QuienesSomosPage />} />
           <Route path="/staff-terapéutico" element={<TerapeutasPage />} />
-          <Route path="/oraculosyguia" element={<Giftcard />} />
+          <Route path="/oraculoyguia" element={<Giftcard />} />
           <Route path="/semillasdeluz" element={<Psicologos />} />
 
           <Route

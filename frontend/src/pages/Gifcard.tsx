@@ -12,7 +12,7 @@ import brendaImg from "../assets/brenda.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-// Definimos la interfaz para el Plan (para evitar errores de TypeScript)
+// Definimos la interfaz para el Plan
 interface Plan {
   titulo: string;
   subtitulo: string;
@@ -41,7 +41,7 @@ export default function OraculoGuia() {
     { to: "/cuerpoconsciente", label: "Cuerpo Consciente" },
     { to: "/sanacionprofunda", label: "Sanación Profunda" },
     { to: "/semillasdeluz", label: "Semillas De Luz" },
-    { to: "/oraculosyguia", label: "Oráculos & Guía" },
+   
     { to: "https://encuentrodesanacion.com/encuentrofacil", label: "EncuentroFácil" },
   ];
 
@@ -87,6 +87,11 @@ export default function OraculoGuia() {
       incluye: ["Todo lo de 4 semanas", "Profundización en propósito", "Trabajo con símbolos y arquetipos", "Espacios vivenciales de integración"]
     }
   ];
+
+  const abrirModalInscripcion = (plan: Plan) => {
+    setSelectedPlan(plan);
+    setShowContactModal(true);
+  };
 
   const ejecutarAccionReserva = async (modo: "pago" | "carrito") => {
     if (!selectedPlan || !clientName.trim() || !clientPhone.trim()) {
@@ -138,7 +143,7 @@ export default function OraculoGuia() {
       {/* --- INICIO DEL HEADER Y NAVEGACIÓN --- */}
       <header className="fixed top-0 left-0 w-full bg-white shadow z-20 flex justify-between items-center px-5 py-5">
         <h1 className="text-xl font-semibold text-gray-800 z-50">
-         Oraculos & Guía{" "}
+         Oráculos & Guía{" "}
         </h1>
         <div className="flex items-center gap-4 md:hidden ml-auto mr-14">
           <button
@@ -160,9 +165,9 @@ export default function OraculoGuia() {
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link to="/cuerpoconsciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
           <Link to="/sanacionprofunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
-          <Link to="/oraculosyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+          
           <Link to="/semillasdeluz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
-          <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
+          <a href="https://encuentrodesanacion.com/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFácil</a>
         </div>
       </header>
       
@@ -170,7 +175,25 @@ export default function OraculoGuia() {
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
           {navLinks.map((link) => (
-            <Link key={link.to} to={link.to} onClick={() => setIsMenuOpen(false)} className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100">{link.label}</Link>
+            link.to.startsWith("http") ? (
+              <a 
+                key={link.to} 
+                href={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link 
+                key={link.to} 
+                to={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </Link>
+            )
           ))}
           <div className="pt-2"><CartIcon /></div>
         </div>
@@ -228,7 +251,7 @@ export default function OraculoGuia() {
             <div className="bg-white border-2 border-purple-600 p-6 rounded-b-xl rounded-r-xl shadow-sm">
               <p className="text-purple-800 font-semibold mb-6 italic">Objetivo: Ordenar la visión interna y fortalecer la conexión con la intuición.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "1", titulo: "Apertura y claridad", items: ["Observar estado actual", "Identificar bloqueos", "Abrir escucha intuitiva"] },
                   { sem: "2", titulo: "Lectura simbólica", items: ["Comprender símbolos", "Reconocer patrones", "Ordenar visión personal"] },
@@ -244,18 +267,36 @@ export default function OraculoGuia() {
                   </div>
                 ))}
               </div>
+
+              {/* BOTÓN DE COMPRA CICLO 1 */}
+              <div className="text-center pt-4 border-t border-purple-100">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[0])}
+                  className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
+                >
+                  Inscribirme al Ciclo 1 (${planes[0].precio.toLocaleString()} CLP)
+                </button>
+              </div>
             </div>
           </div>
 
           {/* CICLO 2 */}
           <div>
-            <div className="bg-gray-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
-              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 2: Integración · Propósito · Confianza (8 Semanas)</h4>
+            <div className="flex items-center">
+              <div className="bg-gray-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+                <h4 className="font-bold uppercase tracking-wider flex items-center gap-2">
+                  🔹 CICLO 2: Integración · Propósito · Confianza (8 Semanas)
+                  <span className="bg-pink-600 text-[10px] px-2 py-0.5 rounded-full text-white ml-2 border border-white shadow-sm">
+                    MÁS COMPLETO
+                  </span>
+                </h4>
+              </div>
             </div>
             <div className="bg-white border-2 border-gray-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-purple-700 font-bold mb-2">✨ Incluye todo el Ciclo 1 (Semanas 1-4)</p>
               <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Integrar el proceso, sostener decisiones y fortalecer el propósito.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "5", titulo: "Profundización", items: ["Afinar lectura interna", "Sostener decisiones", "Intuición aplicada"] },
                   { sem: "6", titulo: "Propósito y dirección", items: ["Explorar propósito", "Visión a mediano plazo", "Orden y estructura"] },
@@ -271,47 +312,18 @@ export default function OraculoGuia() {
                   </div>
                 ))}
               </div>
+
+              {/* BOTÓN DE COMPRA CICLO 2 */}
+              <div className="text-center pt-4 border-t border-gray-200">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[1])}
+                  className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
+                >
+                  Inscribirme al Ciclo 2 (${planes[1].precio.toLocaleString()} CLP)
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-
-        {/* GRID PLANES */}
-        <div className="max-w-5xl mx-auto flex flex-col lg:flex-row gap-8 pb-10">
-          {planes.map((plan, idx) => (
-            <div key={idx} className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${plan.destacado ? 'border-pink-500 bg-pink-50 shadow-xl scale-105 z-10' : 'border-gray-200 bg-white shadow-lg'}`}>
-              
-              {plan.destacado && (
-                <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-1 rounded-full text-xs font-bold uppercase shadow-md">
-                  MÁS COMPLETO
-                </span>
-              )}
-
-              <h4 className="text-2xl font-bold text-pink-700 mb-2 text-center">{plan.titulo}</h4>
-              <p className="text-xs text-pink-600 font-bold mb-4 text-center italic uppercase">{plan.subtitulo}</p>
-              <p className="text-sm font-semibold text-gray-800 mb-6">{plan.objetivo}</p>
-
-              {/* --- 🛡️ SECCIÓN VISIBLE: PARA QUIÉNES 🛡️ --- */}
-              <div className="mb-6">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Pensado para quienes:</h5>
-                <ul className="text-sm text-gray-700 space-y-2 text-left list-disc pl-4">
-                  {plan.paraQuienes.map((item: string, i: number) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mb-8 flex-grow">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Qué incluye:</h5>
-                <ul className="text-sm text-gray-700 space-y-2 text-left">
-                  {plan.incluye.map((item: string, i: number) => <li key={i} className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span> {item}</li>)}
-                </ul>
-              </div>
-              <div className="text-center pt-6 border-t border-pink-100">
-                <p className="text-3xl font-black text-gray-800 mb-6">${plan.precio.toLocaleString()} CLP</p>
-                <button onClick={() => { setSelectedPlan(plan); setShowContactModal(true); }} className={`w-full py-4 rounded-xl font-bold ${plan.destacado ? 'bg-pink-700 text-white hover:bg-pink-800' : 'bg-pink-600 text-white hover:bg-pink-700'} shadow-md transition-all`}>Inscribirme</button>
-              </div>
-            </div>
-          ))}
         </div>
       </div>
 

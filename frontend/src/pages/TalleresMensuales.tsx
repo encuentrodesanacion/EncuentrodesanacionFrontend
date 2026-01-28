@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import "../styles/tratamientoIntegral.css"; 
 import { useCart, Reserva } from "./CartContext";
 import CartIcon from "../components/CartIcon";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+import parsePhoneNumberFromString from "libphonenumber-js";
 
 // Importaciones de imágenes
 import claudiaIImg from "../assets/clau.png"; 
@@ -13,7 +13,7 @@ import claudiaDImg from "../assets/claudia.png";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
-// Definimos la interfaz Plan para evitar errores de TypeScript
+// 1. DEFINICIÓN DE LA INTERFAZ PARA LOS PLANES
 interface Plan {
   titulo: string;
   subtitulo: string;
@@ -36,11 +36,12 @@ export default function SanacionProfunda() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
+  // --- NAVEGACIÓN ---
   const navLinks = [
     { to: "/cuerpoconsciente", label: "Cuerpo Consciente" },
-    { to: "/sanacionprofunda", label: "Sanación Profunda" },
+
     { to: "/semillasdeluz", label: "Semillas De Luz" },
-    { to: "/oraculosyguia", label: "Oráculos & Guía" },
+    { to: "/oraculoyguia", label: "Oráculos & Guía" },
     { to: "https://encuentrodesanacion.com/encuentrofacil", label: "EncuentroFácil" },
   ];
 
@@ -133,7 +134,7 @@ export default function SanacionProfunda() {
     const now = new Date();
 
     const reservaData: Reserva = {
-      clientBookingId: "sanacionprofunda-" + Date.now(),
+      clientBookingId: "sanacion-profunda-" + Date.now(),
       terapeuta: "Equipo Sanación Profunda",
       servicio: "Sanación Profunda",
       especialidad: selectedPlan.titulo,
@@ -204,10 +205,10 @@ export default function SanacionProfunda() {
         </div>
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
           <Link to="/cuerpoconsciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
-          <Link to="/sanacionprofunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
-          <Link to="/oraculosyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+        
+          <Link to="/oraculoyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oráculos & Guía</Link>
           <Link to="/semillasdeluz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
-          <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
+          <a href="https://encuentrodesanacion.com/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFácil</a>
         </div>
       </header>
       
@@ -215,7 +216,25 @@ export default function SanacionProfunda() {
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
           {navLinks.map((link) => (
-            <Link key={link.to} to={link.to} onClick={() => setIsMenuOpen(false)} className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100">{link.label}</Link>
+            link.to.startsWith("http") ? (
+              <a 
+                key={link.to} 
+                href={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link 
+                key={link.to} 
+                to={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </Link>
+            )
           ))}
           <div className="pt-2"><CartIcon /></div>
         </div>
@@ -263,7 +282,7 @@ export default function SanacionProfunda() {
           ))}
         </div>
 
-        {/* --- CRONOGRAMA DEL PROCESO (NUEVO) --- */}
+        {/* --- CRONOGRAMA DEL PROCESO --- */}
         <div className="max-w-6xl mx-auto mb-20 px-4">
           <h3 className="text-3xl font-bold text-center text-pink-700 mb-10">Cronograma del Proceso</h3>
 
@@ -275,7 +294,7 @@ export default function SanacionProfunda() {
             <div className="bg-white border-2 border-blue-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
               <p className="text-blue-900 font-semibold mb-6 italic">Objetivo: Ordenar y estabilizar el campo emocional y energético, liberando cargas activas.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "1", titulo: "Apertura y observación", items: ["Reconocer estado actual", "Encuadre seguro", "Limpieza energética"] },
                   { sem: "2", titulo: "Liberación inicial", items: ["Identificar cargas", "Liberar emociones", "Integración protegida"] },
@@ -291,18 +310,36 @@ export default function SanacionProfunda() {
                   </div>
                 ))}
               </div>
+
+              {/* BOTÓN DE COMPRA CICLO 1 */}
+              <div className="text-center pt-4 border-t border-blue-100">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[0])}
+                  className="bg-blue-700 hover:bg-blue-800 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
+                >
+                  Inscribirme al Ciclo 1 (${planes[0].precio.toLocaleString()} CLP)
+                </button>
+              </div>
             </div>
           </div>
 
           {/* CICLO 2 */}
           <div>
-            <div className="bg-purple-700 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
-              <h4 className="font-bold uppercase tracking-wider">🔹 CICLO 2: Profundización · Transformación (4 Semanas Adicionales)</h4>
+            <div className="flex items-center">
+              <div className="bg-purple-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+                <h4 className="font-bold uppercase tracking-wider flex items-center gap-2">
+                  🔹 CICLO 2: Profundización · Transformación (8 Semanas)
+                <span className="bg-pink-600 text-[10px] px-2 py-0.5 rounded-full text-white ml-2 border border-white shadow-sm">
+                    MÁS COMPLETO
+                  </span>
+                </h4>
+              </div>
             </div>
-            <div className="bg-white border-2 border-purple-700 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+            <div className="bg-white border-2 border-purple-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-purple-700 font-bold mb-2">✨ Incluye todo el Ciclo 1 (Semanas 1-4)</p>
               <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Profundizar la sanación, integrando cambios y fortaleciendo la autonomía.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "5", titulo: "Reorganización interna", items: ["Observar cambios", "Reordenar energía", "Nueva estructura"] },
                   { sem: "6", titulo: "Profundización emocional", items: ["Emociones emergentes", "Liberación focalizada", "Capas profundas"] },
@@ -318,66 +355,60 @@ export default function SanacionProfunda() {
                   </div>
                 ))}
               </div>
+
+              {/* BOTÓN DE COMPRA CICLO 2 */}
+              <div className="text-center pt-4 border-t border-purple-200">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[1])}
+                  className="bg-purple-800 hover:bg-purple-900 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
+                >
+                  Inscribirme al Ciclo 2 (${planes[1].precio.toLocaleString()} CLP)
+                </button>
+              </div>
             </div>
           </div>
         </div>
 
-        {/* GRID PLANES */}
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 items-stretch">
-          {planes.map((plan, idx) => (
-            <div key={idx} className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${plan.destacado ? 'border-pink-500 bg-pink-50 shadow-2xl scale-105 z-10' : 'border-pink-200 bg-white shadow-lg'}`}>
-              {plan.destacado && <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-1 rounded-full text-xs font-bold uppercase">Más Completo</span>}
-              <h4 className={`text-2xl font-bold mb-1 text-center ${plan.destacado ? 'text-pink-800' : 'text-pink-700'}`}>{plan.titulo}</h4>
-              <p className="text-center text-pink-600 font-bold text-xs mb-4 uppercase tracking-tighter italic">{plan.subtitulo}</p>
-              <div className="mb-6 h-px bg-pink-100 w-full" />
-              <p className="font-semibold text-gray-800 mb-6 text-sm leading-snug">{plan.objetivo}</p>
-
-              {/* 🛡️ SECCIÓN VISIBLE: PENSADO PARA QUIENES 🛡️ */}
-              <div className="mb-6">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Pensado para quienes:</h5>
-                <ul className="text-sm text-gray-700 space-y-2 text-left list-disc pl-4">
-                  {plan.paraQuienes.map((item: string, i: number) => (
-                    <li key={i}>{item}</li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="mb-8 flex-grow">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3 text-left">Qué incluye:</h5>
-                <ul className="text-sm text-gray-700 space-y-3 text-left">
-                  {plan.incluye.map((item, i) => <li key={i} className="flex items-start"><span className="text-green-500 mr-2 font-bold">✓</span> {item}</li>)}
-                </ul>
-              </div>
-              <div className="mt-auto pt-6 border-t text-center">
-                <p className="text-3xl font-black text-gray-800 mb-6">${plan.precio.toLocaleString()} CLP</p>
-                <button onClick={() => abrirModalInscripcion(plan)} className="w-full py-4 rounded-xl font-bold bg-pink-600 text-white hover:bg-pink-700">Inscribirme</button>
+        {/* Modal de Inscripción */}
+        {showContactModal && selectedPlan && (
+          <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
+            <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
+              <h3 className="text-xl font-semibold mb-2 text-center">Inscripción</h3>
+              <p className="text-sm text-center text-gray-500 mb-4">{selectedPlan.titulo}</p>
+              <input 
+                type="text" 
+                placeholder="Nombre Completo" 
+                className="border rounded w-full py-2 px-3 mb-4 focus:ring-2 focus:ring-pink-500 outline-none" 
+                value={clientName} 
+                onChange={(e) => setClientName(e.target.value)} 
+              />
+              <input 
+                type="tel" 
+                placeholder="Ej: +56912345678" 
+                className="border rounded w-full py-2 px-3 mb-6 focus:ring-2 focus:ring-pink-500 outline-none" 
+                value={clientPhone} 
+                onChange={(e) => setClientPhone(e.target.value)} 
+              />
+              <div className="flex flex-col space-y-3">
+                <button 
+                  onClick={() => ejecutarAccionReserva("carrito")} 
+                  disabled={isProcessing}
+                  className={`bg-pink-600 text-white py-3 rounded font-bold hover:bg-pink-700 ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}`}
+                >
+                  {isProcessing ? "Procesando..." : "Añadir al Carrito"}
+                </button>
+                <button 
+                  onClick={() => setShowContactModal(false)} 
+                  disabled={isProcessing}
+                  className="bg-gray-200 py-2 rounded text-gray-800"
+                >
+                  Cancelar
+                </button>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        )}
       </div>
-
-      {/* MODAL INSCRIPCIÓN */}
-      {showContactModal && selectedPlan && (
-        <div className="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-[100] p-4">
-          <div className="bg-white p-6 rounded-lg shadow-2xl max-w-sm w-full">
-            <h3 className="text-xl font-semibold mb-2 text-center">Inscripción</h3>
-            <p className="text-sm text-center text-gray-500 mb-4">{selectedPlan.titulo}</p>
-            <input type="text" placeholder="Nombre Completo" className="border rounded w-full py-2 px-3 mb-4" value={clientName} onChange={(e) => setClientName(e.target.value)} />
-            <input type="tel" placeholder="+569..." className="border rounded w-full py-2 px-3 mb-6" value={clientPhone} onChange={(e) => setClientPhone(e.target.value)} />
-            <div className="flex flex-col space-y-3">
-              <button 
-                onClick={() => ejecutarAccionReserva("carrito")} 
-                disabled={isProcessing}
-                className={`bg-pink-600 text-white py-3 rounded font-bold ${isProcessing ? 'opacity-50' : ''}`}
-              >
-                {isProcessing ? 'Procesando...' : 'Añadir al Carrito'}
-              </button>
-              <button onClick={() => setShowContactModal(false)} className="bg-gray-200 py-2 rounded">Cancelar</button>
-            </div>
-          </div>
-        </div>
-      )}
     </div>
   );
 }

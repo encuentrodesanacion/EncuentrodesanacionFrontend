@@ -18,7 +18,10 @@ import {
 import Whatsapp from "../assets/ASTRONAUTA3.png";
 // import CarruselAlianzas from "./CarruselAlianzas";
 import Fondo3 from "../assets/Fondo3.jpg";
-import SpaPrincipal from "../assets/SpaPrincipal.jpeg";
+import CuerpoConsciente from "../assets/CuerpoConsciente.png";
+import SanacionProfunda1 from "../assets/SanacionProfunda.png";
+import Oraculoyguia from "../assets/Oraculoyguia.png";
+import Semilladeluz from "../assets/Semilladeluz.png";
 import creadorvirtual from "../assets/creadorvirtual.jpg";
 import FindeTalleres from "../assets/FindeTalleres.jpeg";
 import { Link } from "react-router-dom";
@@ -32,6 +35,7 @@ import LanguageSwitcher from "../components/LanguageSwitcher";
 // Asegúrate de que la ruta sea correcta. Por ejemplo, si tu imagen se llama 'fondo_spa.jpg'
 // y está en la carpeta 'assets', la ruta sería:
 import Cristal from "../assets/Cristal.jpg"; // ¡Cambia esto por la ruta real de tu imagen!
+import SanacionProfunda from "./TalleresMensuales";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 const App = () => {
@@ -406,35 +410,13 @@ const App = () => {
             {t("main_services_title")}
           </h2>
 
-          <div className="grid md:grid-cols-2 gap-8">
+      <div className="grid md:grid-cols-2 gap-8">
             {[
-              // {
-              //   icon: <Star className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: <h2> {t("formation_title")}</h2>,
-
-              //   description: <h2>{t("formation_description")}</h2>,
-              //   price: <h2>{t("formation_price")}</h2>,
-              //   button: (
-              //     <div className="flex flex-col gap-2 mt-4">
-              //       <a
-              //         href="#reserva"
-              //         onClick={() => {
-              //           setServicioSeleccionado("Terapeutas de la luz");
-              //           setEspecialidadSeleccionada("");
-              //         }}
-              //       ></a>
-              //       <Link
-              //         to="/terapeutasdeluz"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-              //       >
-              //         <h2>{t("formation_cta")}</h2>
-              //       </Link>
-              //     </div>
-              //   ),
-              // },
               {
                 icon: <Heart className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: <h2>Cuerpo Consciente</h2>,
+                // AQUI AGREGAMOS LA IMAGEN DE FONDO
+                backgroundImage: CuerpoConsciente, // Cambia 'SpaPrincipal' por la variable de imagen que desees
                 description: (
                   <h2>
                     <strong>
@@ -453,7 +435,7 @@ const App = () => {
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/cuerpoconsciente"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 w-fit" // w-fit para que no ocupe todo el ancho
                     >
                       <h2>{t("formation_cta")}</h2>
                     </Link>
@@ -463,6 +445,7 @@ const App = () => {
               {
                 icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: <h2>Sanación Profunda</h2>,
+              backgroundImage: SanacionProfunda1,
                 description: (
                   <h2>
                     <strong>
@@ -482,63 +465,17 @@ const App = () => {
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/sanacionprofunda"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 w-fit"
                     >
                       <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
               },
-              // {
-              //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: <h2>Trauma, Dolor Y Reconexión</h2>,
-              //   description: (
-              //     <h2>
-              //       <strong>
-              //         A través de terapias especializadas con Psicologo,
-              //         Kinesiologo, Terapeuta Holístico,Coach de vida y Terapeuta
-              //         Somático{" "}
-              //       </strong>{" "}
-              //       , trabajamos para liberar memorias emocionales atrapadas.
-              //       Reconecta con partes de ti que quedaron fragmentadas.
-              //       Recupera tu sentido de pertenencia, Restauramos tu
-              //       confianza, la seguridad y el equilibrio emocional. Pensado
-              //       para quienes sienten que es momento de sanar heridas del
-              //       pasado.
-              //     </h2>
-              //   ),
-              //   price: "",
-              //   button: (
-              //     <div className="flex flex-col gap-2 mt-4">
-              //       <Link
-              //         to="/trauma-dolor-reconexion"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-              //       >
-              //         <h2>{t("formation_cta")}</h2>
-              //       </Link>
-              //     </div>
-              //   ),
-              // },
-              // {
-              //   icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: "Spa Holístico al Mundo",
-              //   description:
-              //     "Aprende a manejar tu propio Spa Holístico para poder expandir la Sanación en tu país. (excluye Chile)",
-              //   price: "Desde los €150 / $163USD",
-              //   button: (
-              //     <a
-              //       href="https://wa.me/56976557902?text=%C2%A1Quiero%20expandir%20la%20sanaci%C3%B3n%20en%20mi%20pa%C3%ADs!%2C%20por%20favor%2C%20dame%20mas%20informaci%C3%B3n."
-              //       target="_blank"
-              //       rel="noopener noreferrer"
-              //       className="inline-block mt-4 px-4 py-2 bg-cyan-400/60 text-black font-medium rounded-full hover:bg-pastel-green/80 transition"
-              //     >
-              //       Contáctanos
-              //     </a>
-              //   ),
-              // },
               {
                 icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: <h2>Oraculos & Guía</h2>,
+                backgroundImage: Oraculoyguia,
                 description: (
                   <h2>
                     <strong>Es un programa de acompañamiento espiritual</strong>{" "}
@@ -557,8 +494,8 @@ const App = () => {
                 button: (
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
-                      to="/oraculosyguia"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                      to="/oraculoyguia"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 w-fit"
                     >
                       <h2>{t("formation_cta")}</h2>
                     </Link>
@@ -568,6 +505,7 @@ const App = () => {
               {
                 icon: <SmilePlus className="w-8 h-8 mb-4 text-yellow-500" />,
                 title: <h2>Semillas De Luz</h2>,
+                backgroundImage: Semilladeluz,
                 description: (
                   <h2>
                     <strong>
@@ -589,81 +527,47 @@ const App = () => {
                   <div className="flex flex-col gap-2 mt-4">
                     <Link
                       to="/semillasdeluz"
-                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
+                      className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 w-fit"
                     >
                       <h2>{t("formation_cta")}</h2>
                     </Link>
                   </div>
                 ),
               },
-              //  {
-              //   icon: <Earth className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: <h2>Encuentro Facil</h2>,
-              //   description: (
-              //     <h2>
-              //       <strong>Es la plataforma de Agendamiento en línea de Encuentro de Sanación. </strong>{" "}
-              //      ¡Aqui puedes conocer a cada terapeuta y reservar sus sesiones de forma simple y directa.!{" "}
-              //       <strong>
-                    
-              //       </strong>{" "}
-                  
-              //     </h2>
-              //   ),
-              //   price: "",
-              //   button: (
-              //     <div className="flex flex-col gap-2 mt-4">
-              //       <Link
-              //         to="/encuentrofacil"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-              //       >
-              //         <h2>{t("formation_cta")}</h2>
-              //       </Link>
-              //     </div>
-              //   ),
-              // },
-              // {
-              //   icon: <Orbit className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: "Alianzas",
-              //   description:
-              //     "¿Tienes un proyecto, emprendimiento o servicio alineado con el bienestar, conciencia o la transformación personal? Te ofrecemos visibilidad real, contarás con mayor alcance y tus clientes podrán contar con beneficios en nuestro sitio web: ¡Cientos de personas podrán descubrirte!, Nos mueve la colaboración genuina. Únete y forma parte de una red de almas con propósito",
-
-              //   button: (
-              //     <div className="flex flex-col gap-2 mt-4">
-              //       <a
-              //         href="https://forms.gle/n9cKSVDw9vjzB8QC8"
-              //         target="_blank"
-              //         rel="noopener noreferrer"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700 text-center"
-              //       >
-              //         Realizar Formulario
-              //       </a>
-              //     </div>
-              //   ),
-              // },
-
-              // {
-              //   icon: <Brain className="w-8 h-8 mb-4 text-yellow-500" />,
-              //   title: <h2>{t("mind_and_being_title")}</h2>,
-              //   description: <h2>{t("mind_and_being_description")}</h2>,
-              //   price: <h2>{t("mind_and_being_price")}</h2>,
-              //   button: (
-              //     <div className="flex flex-col gap-2 mt-4">
-              //       <Link
-              //         to="/psicologos"
-              //         className="mt-2 px-3 py-1 bg-cyan-600 text-white text-sm rounded hover:bg-cyan-700"
-              //       >
-              //         <h2>{t("formation_cta")}</h2>
-              //       </Link>
-              //     </div>
-              //   ),
-              // },
             ].map((service, index) => (
-              <div key={index} className="bg-gray-900 p-8 rounded-2xl">
-                {service.icon}
-                <h3 className="text-xl font-light mb-4">{service.title}</h3>
-                <p className="text-gray-400 mb-4">{service.description}</p>
-                <p className="text-pastel-green font-light">{service.price}</p>
-                {service.button && service.button}
+              <div
+                key={index}
+                // LÓGICA CSS: Si tiene imagen, usa bg-cover. Si no, usa bg-gray-900.
+                className={`p-8 rounded-2xl relative overflow-hidden group ${
+                  service.backgroundImage
+                    ? "bg-cover bg-center"
+                    : "bg-gray-900"
+                }`}
+                style={
+                  service.backgroundImage
+                    ? { backgroundImage: `url(${service.backgroundImage})` }
+                    : {}
+                }
+              >
+                {/* CAPA OSCURA (OVERLAY): Solo se muestra si hay imagen de fondo para que el texto se lea */}
+                {service.backgroundImage && (
+                  <div className="absolute inset-0 bg-black/70 group-hover:bg-black/60 transition-all duration-500 z-0"></div>
+                )}
+
+                {/* CONTENIDO: z-10 para estar encima de la capa oscura */}
+                <div className="relative z-10 h-full flex flex-col">
+                  {service.icon}
+                  <h3 className="text-xl font-light mb-4 text-white">
+                    {service.title}
+                  </h3>
+                  <div className="text-gray-300 mb-4 flex-grow">
+                    {service.description}
+                  </div>
+                  <p className="text-pastel-green font-light">
+                    {service.price}
+                  </p>
+                  {service.button && service.button}
+                </div>
               </div>
             ))}
           </div>

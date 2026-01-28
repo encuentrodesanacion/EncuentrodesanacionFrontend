@@ -12,7 +12,6 @@ import daniela from "../assets/daniel.jpeg";
 const API_BASE_URL = import.meta.env.VITE_API_URL.replace(/\/+$/, "");
 
 // 1. DEFINICIÓN DE LA INTERFAZ PARA LOS PLANES
-// Esto soluciona los errores de "Property does not exist on type 'never'"
 interface Plan {
   titulo: string;
   subtitulo?: string;
@@ -34,10 +33,10 @@ export default function CuerpoConsciente() {
   const [clientPhone, setClientPhone] = useState("");
   const [isProcessing, setIsProcessing] = useState(false);
   
-  // 2. CORRECCIÓN DEL STATE
-  // Indicamos que selectedPlan puede ser de tipo 'Plan' o 'null'
   const [selectedPlan, setSelectedPlan] = useState<Plan | null>(null);
 
+  // --- DEFINICIÓN DE PLANES ---
+  // (Se mantienen los datos para usarlos en el modal de inscripción)
   const planes: Plan[] = [
     { 
       titulo: "Programa 4 Semanas", 
@@ -81,13 +80,11 @@ export default function CuerpoConsciente() {
     }
   ];
 
-  // 3. CORRECCIÓN DE PARÁMETRO PLAN
   const abrirModalInscripcion = (plan: Plan) => {
     setSelectedPlan(plan);
     setShowContactModal(true);
   };
 
-  // 4. CORRECCIÓN DE PARÁMETRO MODO
   const ejecutarAccionReserva = async (modo: "pago" | "carrito") => {
     if (!selectedPlan) return;
     if (clientName.trim() === "" || clientPhone.trim() === "") {
@@ -104,8 +101,8 @@ export default function CuerpoConsciente() {
     setIsProcessing(true);
     const now = new Date();
 
-    const reservaData: Reserva = { // Aquí usamos el tipo Reserva importado
-      clientBookingId: "cuerpoconsciente-" + Date.now(),
+    const reservaData: Reserva = {
+      clientBookingId: "cuerpo-consciente-" + Date.now(),
       terapeuta: "Gabriela Pinto",
       servicio: "Cuerpo Consciente",
       especialidad: selectedPlan.titulo,
@@ -143,18 +140,19 @@ export default function CuerpoConsciente() {
         alert("¡Programa añadido al carrito!");
         setShowContactModal(false);
       }
-    } catch (error: any) { // 5. CORRECCIÓN DEL TIPO ERROR
+    } catch (error: any) {
       alert(`Error: ${error.message}`);
     } finally {
       setIsProcessing(false);
     }
   };
 
+  // --- NAVEGACIÓN ---
   const navLinks = [
-    { to: "/cuerpoconsciente", label: "Cuerpo Consciente" },
+   
     { to: "/sanacionprofunda", label: "Sanación Profunda" },
     { to: "/semillasdeluz", label: "Semillas De Luz" },
-    { to: "/oraculosyguia", label: "Oráculos & Guía" },
+    { to: "/oraculoyguia", label: "Oráculos & Guía" },
     { to: "https://encuentrodesanacion.com/encuentrofacil", label: "EncuentroFácil" },
   ];
 
@@ -183,11 +181,12 @@ export default function CuerpoConsciente() {
           </button>
         </div>
         <div className="hidden md:flex items-center justify-start gap-6 p-4 pl-2 ml-auto md:mr-20">
-          <Link to="/cuerpoconsciente" className="text-blue-500 hover:text-gray-800 font-bold">Cuerpo Consciente</Link>
+          
           <Link to="/sanacionprofunda" className="text-blue-500 hover:text-gray-800 font-bold">Sanación Profunda</Link>
-          <Link to="/oraculosyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oraculos & Guía</Link>
+          <Link to="/oraculoyguia" className="text-blue-500 hover:text-gray-800 font-bold">Oráculos & Guía</Link>
           <Link to="/semillasdeluz" className="text-blue-500 hover:text-gray-800 font-bold">Semillas de Luz</Link>
-          <Link to="/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFacil</Link>
+          {/* Enlace externo a EncuentroFácil */}
+          <a href="https://encuentrodesanacion.com/encuentrofacil" className="text-blue-500 hover:text-gray-800 font-bold">EncuentroFácil</a>
         </div>
       </header>
       
@@ -195,7 +194,25 @@ export default function CuerpoConsciente() {
       <div className={`fixed top-16 left-0 w-full bg-white shadow-lg md:hidden transition-all duration-300 ease-in-out ${isMenuOpen ? "max-h-screen opacity-100 py-6" : "max-h-0 opacity-0 overflow-hidden"} z-40`}>
         <div className="flex flex-col items-center space-y-4 px-4">
           {navLinks.map((link) => (
-            <Link key={link.to} to={link.to} onClick={() => setIsMenuOpen(false)} className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100">{link.label}</Link>
+             link.to.startsWith("http") ? (
+              <a 
+                key={link.to} 
+                href={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </a>
+            ) : (
+              <Link 
+                key={link.to} 
+                to={link.to} 
+                onClick={() => setIsMenuOpen(false)} 
+                className="text-lg text-gray-800 hover:text-pink-600 font-semibold py-2 w-full text-center border-b border-gray-100"
+              >
+                {link.label}
+              </Link>
+            )
           ))}
           <div className="pt-2"><CartIcon /></div>
         </div>
@@ -296,7 +313,7 @@ export default function CuerpoConsciente() {
             <div className="bg-white border-2 border-pink-600 p-6 rounded-b-xl rounded-r-xl shadow-sm">
               <p className="text-pink-800 font-semibold mb-6 italic">Objetivo: Etapa de apertura y reconexión, orientada a escuchar y regular el sistema.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "1", titulo: "Escucha corporal", items: ["Reconocer estado actual", "Identificar tensiones", "Habitar con presencia"] },
                   { sem: "2", titulo: "Movimiento consciente", items: ["Toma de conciencia diaria", "Exploración respetuosa", "Cuerpo y respiración"] },
@@ -312,18 +329,37 @@ export default function CuerpoConsciente() {
                   </div>
                 ))}
               </div>
+
+              {/* BOTÓN DE COMPRA PARA EL CICLO 1 (PLAN 4 SEMANAS) */}
+              <div className="text-center pt-4 border-t border-pink-100">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[0])}
+                  className="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
+                >
+                  Inscribirme al Ciclo 1 (${planes[0].precio.toLocaleString()} CLP)
+                </button>
+              </div>
             </div>
           </div>
 
           {/* CICLO 2 */}
           <div>
-            <div className="bg-gray-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
-              <h4 className="font-bold uppercase tracking-wider">🔹 Ciclo 2: Integrar · Sostener · Transformar (8 Semanas)</h4>
+            <div className="flex items-center">
+              <div className="bg-gray-800 text-white px-6 py-3 rounded-t-xl inline-block shadow-md">
+                <h4 className="font-bold uppercase tracking-wider flex items-center gap-2">
+                  🔹 Ciclo 2: Integrar · Sostener · Transformar (8 Semanas)
+                  {/* BADGE MÁS COMPLETO AÑADIDO AQUÍ */}
+                  <span className="bg-pink-600 text-[10px] px-2 py-0.5 rounded-full text-white ml-2 border border-white shadow-sm">
+                    MÁS COMPLETO
+                  </span>
+                </h4>
+              </div>
             </div>
-            <div className="bg-white border-2 border-gray-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
-              <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Aprender a sostener el bienestar de forma autónoma y transformar hábitos.</p>
+            <div className="bg-white border-2 border-purple-800 p-6 rounded-b-xl rounded-r-xl shadow-sm">
+              <p className="text-pink-600 font-bold mb-2">✨ Incluye todo el Ciclo 1 (Semanas 1-4)</p>
+              <p className="text-gray-700 font-semibold mb-6 italic">Objetivo: Profundizar la sanación, integrando cambios y fortaleciendo la autonomía.</p>
               
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                 {[
                   { sem: "5", titulo: "Movimiento profundo", items: ["Impacto emocional", "Atención y respeto", "Fluidez consciente"] },
                   { sem: "6", titulo: "Alimentación y Energía", items: ["Relación SN y comida", "Hábitos conscientes", "Energía vital"] },
@@ -339,76 +375,21 @@ export default function CuerpoConsciente() {
                   </div>
                 ))}
               </div>
-            </div>
-          </div>
-        </div>
 
-        {/* --- PLANES (Restaurados) --- */}
-        <div className="max-w-6xl mx-auto flex flex-col lg:flex-row gap-8 items-stretch mb-16">
-          {planes.map((plan, idx) => (
-            <div 
-              key={idx} 
-              className={`flex-1 p-8 rounded-2xl border flex flex-col transition-all relative ${
-                plan.destacado 
-                  ? 'border-pink-500 bg-pink-50 shadow-2xl scale-105 z-10' 
-                  : 'border-pink-200 bg-white shadow-lg'
-              }`}
-            >
-              {plan.destacado && (
-                <span className="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-pink-600 text-white px-6 py-1 rounded-full text-xs font-bold uppercase shadow-md">
-                  Más Completo
-                </span>
-              )}
-              
-              <h4 className={`text-2xl font-bold mb-1 text-center ${plan.destacado ? 'text-pink-800' : 'text-pink-700'}`}>
-                {plan.titulo}
-              </h4>
-              
-              {plan.subtitulo && (
-                <p className="text-center text-pink-600 font-bold text-xs mb-4 uppercase tracking-tighter">
-                  {plan.subtitulo}
-                </p>
-              )}
-              
-              <div className="mb-6 h-px bg-pink-100 w-full" />
-
-              <p className="font-semibold text-gray-800 mb-6 text-sm leading-snug">{plan.objetivo}</p>
-              
-              <div className="mb-6">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3">Pensado para quienes:</h5>
-                <ul className="text-sm text-gray-700 space-y-2 list-disc pl-4">
-                  {plan.paraQuienes.map((item, i) => <li key={i}>{item}</li>)}
-                </ul>
-              </div>
-
-              <div className="mb-8 flex-grow">
-                <h5 className="text-xs font-bold text-pink-600 uppercase mb-3">Qué incluye:</h5>
-                <ul className="text-sm text-gray-700 space-y-3">
-                  {plan.incluye.map((item, i) => (
-                    <li key={i} className="flex items-start">
-                      <span className="text-green-500 mr-2 font-bold">✓</span> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className={`mt-auto pt-6 border-t text-center ${plan.destacado ? 'border-pink-200' : 'border-gray-100'}`}>
-                <p className="text-gray-500 text-xs mb-1 uppercase tracking-widest">{plan.sesiones} Semanas</p>
-                <p className="text-3xl font-black text-gray-800 mb-6">${plan.precio.toLocaleString()} CLP</p>
-                <button
-                  onClick={() => abrirModalInscripcion(plan)}
-                  className={`w-full py-4 rounded-xl font-bold text-lg transition-all shadow-md active:scale-95 ${
-                    plan.destacado 
-                      ? 'bg-pink-700 text-white hover:bg-pink-800' 
-                      : 'bg-pink-600 text-white hover:bg-pink-700'
-                  }`}
+               {/* BOTÓN DE COMPRA PARA EL CICLO 2 (PLAN 8 SEMANAS) */}
+               <div className="text-center pt-4 border-t border-gray-200">
+                <button 
+                  onClick={() => abrirModalInscripcion(planes[1])}
+                  className="bg-gray-800 hover:bg-gray-900 text-white font-bold py-3 px-8 rounded-full shadow-md transition-transform transform active:scale-95"
                 >
-                  Elegir este Plan
+                  Inscribirme al Ciclo 2 (${planes[1].precio.toLocaleString()} CLP)
                 </button>
               </div>
             </div>
-          ))}
+          </div>
         </div>
+        
+        {/* SECCIÓN DE PLANES ELIMINADA COMO SOLICITASTE */}
 
         {/* Modal de Inscripción */}
         {showContactModal && selectedPlan && (
