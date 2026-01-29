@@ -391,7 +391,7 @@ servicios: [
 
  img: vago,
 
- title: "Activa tu Nervio Vago, Regula tu Estrés",
+ title: "Activa tu Nervio Vago - Regula tu Estrés",
 
  terapeuta: "Gabriela Pinto",
 
