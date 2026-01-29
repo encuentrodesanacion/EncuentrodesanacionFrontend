@@ -74,7 +74,7 @@ export default function AgendaSanacion() {
     }
   };
 
-  // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (Mantenido) ---
+  // --- EFECTO 1: CARGAR Y PROCESAR DISPONIBILIDADES (MODIFICADO) ---
   useEffect(() => {
     const fetchAndProcessDisponibilidades = async () => {
       try {
@@ -91,13 +91,14 @@ export default function AgendaSanacion() {
         rawData.forEach((row: RawDisponibilidadDBItem) => {
           const nombreDelTerapeuta = row.nombreTerapeuta;
           const terapeutaIdDelRow = row.terapeutaId;
-          const servicioDelRow = row.especialidad_servicio;
+          // 1. Obtenemos el string crudo de la DB
+          const serviciosRaw = row.especialidad_servicio; 
 
           if (
             !nombreDelTerapeuta ||
             terapeutaIdDelRow === undefined ||
             terapeutaIdDelRow === null ||
-            !servicioDelRow
+            !serviciosRaw
           ) {
             console.warn(
               "Fila de disponibilidad incompleta para procesar. Ignorando.",
@@ -106,53 +107,50 @@ export default function AgendaSanacion() {
             return;
           }
 
-          if (!aggregatedDisponibilidades.has(nombreDelTerapeuta)) {
-            aggregatedDisponibilidades.set(nombreDelTerapeuta, {
-              nombreTerapeuta: nombreDelTerapeuta,
-              terapeutaId: terapeutaIdDelRow,
-              disponibilidadPorServicio: {},
-            });
-          }
+          // 2. AQUÍ ESTÁ LA MAGIA: Dividimos por coma y limpiamos espacios
+          const listaServicios = serviciosRaw.split(',').map(s => s.trim());
 
-          const currentTerapeutaDisp =
-            aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+          // 3. Iteramos por cada servicio individual encontrado en esa celda
+          listaServicios.forEach((servicioIndividual) => {
 
-          if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow]) {
-            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow] = {};
-          }
-          const dias = Array.isArray(row.diasDisponibles)
-            ? row.diasDisponibles
-            : [];
-          const horas = Array.isArray(row.horasDisponibles)
-            ? row.horasDisponibles
-            : [];
-
-          dias.forEach((dia: string) => {
-            if (
-              !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                dia
-              ]
-            ) {
-              currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                dia
-              ] = [];
+            // Aseguramos que el terapeuta exista en el mapa
+            if (!aggregatedDisponibilidades.has(nombreDelTerapeuta)) {
+              aggregatedDisponibilidades.set(nombreDelTerapeuta, {
+                nombreTerapeuta: nombreDelTerapeuta,
+                terapeutaId: terapeutaIdDelRow,
+                disponibilidadPorServicio: {},
+              });
             }
-            horas.forEach((hora: string) => {
-              if (
-                !currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                  dia
-                ].includes(hora)
-              ) {
-                currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-                  dia
-                ].push(hora);
+
+            const currentTerapeutaDisp = aggregatedDisponibilidades.get(nombreDelTerapeuta)!;
+
+            // Usamos 'servicioIndividual' como clave en lugar del string completo
+            if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual]) {
+              currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual] = {};
+            }
+
+            const dias = Array.isArray(row.diasDisponibles)
+              ? row.diasDisponibles
+              : [];
+            const horas = Array.isArray(row.horasDisponibles)
+              ? row.horasDisponibles
+              : [];
+
+            dias.forEach((dia: string) => {
+              if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual][dia]) {
+                currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual][dia] = [];
               }
+              horas.forEach((hora: string) => {
+                if (!currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual][dia].includes(hora)) {
+                  currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual][dia].push(hora);
+                }
+              });
+              currentTerapeutaDisp.disponibilidadPorServicio[servicioIndividual][dia].sort();
             });
-            currentTerapeutaDisp.disponibilidadPorServicio[servicioDelRow][
-              dia
-            ].sort();
-          });
+
+          }); // Fin del forEach de listaServicios
         });
+
         setDisponibilidadesProcesadas(aggregatedDisponibilidades);
       } catch (error) {
         console.error(
@@ -163,7 +161,6 @@ export default function AgendaSanacion() {
     };
     fetchAndProcessDisponibilidades();
   }, []);
-
   // --- EFECTO 2: LEER LA URL Y CARGAR AL TERAPEUTA ---
   useEffect(() => {
     // Se asume que la ruta es /encuentrofacil/nombre-del-terapeuta
@@ -217,18 +214,20 @@ export default function AgendaSanacion() {
   };
 
   const getDisponibilidadForTerapeutaAndService = (
-  terapeutaNombre: string,
-  servicioNombre: string
-): { [fecha: string]: string[] } | undefined => {
-  const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
-  if (!terapeutaDisp) return undefined;
+    terapeutaNombre: string,
+    servicioNombre: string
+  ): { [fecha: string]: string[] } | undefined => {
+    const terapeutaDisp = disponibilidadesProcesadas.get(terapeutaNombre);
+    if (!terapeutaDisp) return undefined;
 
-  const servicioKey = Object.keys(terapeutaDisp.disponibilidadPorServicio).find(
-    (key) => key.toLowerCase().includes(servicioNombre.toLowerCase().trim())
-  );
+    // Buscamos la clave que coincida exactamente (ignorando mayúsculas/minúsculas)
+    // ya que ahora en el mapa tenemos los servicios separados "Vortex Aura Healing", etc.
+    const servicioKey = Object.keys(terapeutaDisp.disponibilidadPorServicio).find(
+      (key) => key.toLowerCase() === servicioNombre.toLowerCase().trim()
+    );
 
-  return servicioKey ? terapeutaDisp.disponibilidadPorServicio[servicioKey] : undefined;
-};
+    return servicioKey ? terapeutaDisp.disponibilidadPorServicio[servicioKey] : undefined;
+  };
   const reservar = (terapiaItem: TerapiaItem) => {
     const terapeuta = terapeutasData.find(
   (t) => t.nombre.trim().toLowerCase() === terapiaItem.terapeuta.trim().toLowerCase()
