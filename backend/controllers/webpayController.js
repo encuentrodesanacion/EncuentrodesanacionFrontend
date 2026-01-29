@@ -694,23 +694,31 @@ const especialidadesExcluidas = [
   );
 } else {
             // Lógica para servicios que SÍ afectan la disponibilidad del terapeuta
-            try {
-              console.log(
-                `[DEBUG DISPONIBILIDAD] Buscando entrada de Disponibilidad para eliminar hora: Terapeuta ID: ${terapeutaId}, Fecha: ${fecha}, Hora: ${hora}`
-              );
-              const disponibilidadEntry = await Disponibilidad.findOne({
-                where: {
-                  terapeutaId: terapeutaId,
-                  diasDisponibles: {
-                    [Op.contains]: sequelize.literal(
-                      `ARRAY['${fecha}']::TEXT[]`
-                    ),
-                  },
-                  estado: "disponible", // Solo busca si está disponible
-                },
-                transaction: t,
-                lock: t.LOCK.UPDATE, // Bloquear la fila para evitar condiciones de carrera
-              });
+          try {
+  console.log(
+    `[DEBUG DISPONIBILIDAD] Buscando entrada de Disponibilidad para eliminar hora: Terapeuta ID: ${terapeutaId}, Fecha: ${fecha}, Hora: ${hora}, Servicio: ${especialidad}`
+  );
+
+  const disponibilidadEntry = await Disponibilidad.findOne({
+    where: {
+      terapeutaId: terapeutaId,
+      // --- AGREGADO: Filtro inteligente ---
+      // Busca una fila donde 'especialidad_servicio' CONTENGA el nombre de la terapia reservada.
+      // Así encuentra la fila "Liberación, Vortex" cuando reservan solo "Vortex".
+      especialidad_servicio: {
+        [Op.iLike]: `%${especialidad}%` 
+      },
+      // ------------------------------------
+      diasDisponibles: {
+        [Op.contains]: sequelize.literal(
+          `ARRAY['${fecha}']::TEXT[]`
+        ),
+      },
+      estado: "disponible",
+    },
+    transaction: t,
+    lock: t.LOCK.UPDATE,
+  });
 
               if (!disponibilidadEntry) {
                 const msg = `CRÍTICO: La entrada de disponibilidad para ${terapeutaData.nombre} el ${fecha} (hora: ${hora}) con estado 'disponible' NO FUE ENCONTRADA o ya fue reservada/modificada.`;
