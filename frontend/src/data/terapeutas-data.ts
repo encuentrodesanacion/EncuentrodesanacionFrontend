@@ -377,7 +377,7 @@ servicios: [
 
  description:
 
-   "La terapia de Bienestar emocional consite en una primera instancia en descongestionar la mente de pensamientos intrusivos, de sobrepensamientos, de recuerdos y preocupaciones que ya no son parte de nuestra realidad y que nos mantienen viviendo en modo alerta a través de las emociones que generan, alejandonos de la tranquilidad nececsaria para tener una buena calidad de vida. Es una terapia enfocada en educar tus propias habilidades para tomar desiciones alineadas con tu proposito y bienestar. El trabajo terapeutico contempla 4 fases: Conocerme - aceptarme - amarme y cuidarme. En este proceso se trabajan distintas tematicas desde tu presente y tu necesidad: patrones errados, experiencias influyentes, control de pensamientos, gestion emocional, autoconcepto, desapego, codependencia, aclaración de ideas y de conceptos predeterminados, manejo de relaciones interpersonales, crecimiento personal, desarrollo espiritual, expectativas, propósito. Es una herramienta abierta a reconectarte con la experiencia de la vida desde otra sintonía, desde un anclaje interior , desde tu evolución, experimentando una vida sin idealismos, pero mucha mas plena y desde tu realidad.",
+   "Si ya normalizaste tensión, inflamación y rigidez corporal, la rehabilitación kinésica es lo que necesitas para recuperar tu ruta corporal y moverte con libertad real. No confundas el entrenamiento de fitness tradicional con el movimiento específico que tu cuerpo necesita liberar. Da el siguiente paso: confía en un profesional experto en movimiento para diseñar un plan personalizado que te guíe de forma segura y eficaz hacia tu mejor versión. ¡Agenda una evaluación hoy y siente la diferencia en tu movimiento!",
 
  precio: 30000,
 
@@ -399,7 +399,7 @@ servicios: [
 
  description:
 
-   "La calma en el cuerpo es la llave para regular la mente. Como especialista en terapia corporal para la regulación del sistema nervioso, te ayudo a reducir los niveles de cortisol y combatir el estrés crónico. ¿Cuándo fue la última vez que sentiste una relajación profunda y real? Mi enfoque te permite resetear tu sistema y recuperar el equilibrio emocional desde lo corporal.",
+   "¿Cuándo fue la última vez que sentiste una relajación profunda y real? La calma y seguridad en el cuerpo es la llave para regular la mente. Como especialista en terapia corporal para la regulación del sistema nervioso, te ayudo a reducir los niveles de cortisol y combatir el estrés crónico. Mi enfoque te permite resetear tu sistema nervioso y recuperar el equilibrio emocional desde lo corporal. Empieza tu viaje hacia una vida más tranquila y equilibrada hoy mismo: agenda tu sesión ahora y descubre cómo puedes sentir alivio real desde el primer encuentro. Haz clic aquí para reservar tu consulta y dar el primer paso hacia tu bienestar.",
 
  precio: 25000,
 
@@ -421,7 +421,7 @@ servicios: [
 
  description:
 
-   "Acompaño y apoyo a mujeres en todas sus etapas vitales. Brindo atención especializada en necesidades musculoesqueléticas críticas, desde el manejo de dolencias durante el embarazo y la recuperación en el postparto, hasta el tratamiento de disfunciones pelviperineales como incontinencia y prolapsos. Mi objetivo es que habites tu cuerpo con confianza, seguridad y salud en cada ciclo de tu vida.",
+   "Acompaño y apoyo a mujeres en cada etapa de su vida. Te ayudo con molestias frecuentes que muchas veces se viven en silencio, como: -Escapes de orina al toser, reír o hacer fuerza (incontinencia urinaria). -Sensación de peso o de que “algo baja” en la zona íntima (prolapso de órganos). -Dificultad para controlar gases o heces. -Dolor pélvico o molestias en las relaciones sexuales. Estas cosas pueden pasar cuando los músculos que sostienen la vejiga, el útero y el recto están débiles o no funcionan bien, y no deberían ser simplemente “algo con lo que hay que vivir”. Si te cuesta controlar la orina, tienes sensación de presión o dolor, no lo ignores. Agenda una evaluación profesional para recibir un plan de rehabilitación personalizado que te ayude a recuperar control, confianza y comodidad en tu cuerpo.",
 
  precio: 30000,
 
