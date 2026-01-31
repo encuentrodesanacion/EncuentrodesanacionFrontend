@@ -1,24 +1,27 @@
 import TerapeutaPlaceholder from "../assets/ASTRONAUTA3.png";
 
 import yuniver from "../assets/Alquimia.jpeg";
-
+import amoryconciencia from "../assets/amorycrianza.jpg"
 import yuniver2 from "../assets/tarotter.jpg";
 import daniela from "../assets/daniela.png";
 import movconsc from "../assets/movimientoconsc.png";
 import sanardesde from "../assets/sanardesder.png";
 import regulacion from "../assets/regulacioncorpo.png";
-
-import karla from "../assets/karla.png";
-
+import sanacion from "../assets/sanacionniño.jpg"
+import paola from "../assets/Paolanuevo.png";
+import mapeoener from "../assets/mapeoenerget.jpg";
+import pactoalma from "../assets/pactoalma.png";
+import cerrandociclo from "../assets/cerrandociclo.jpg";
+import constelacionclaudia from "../assets/constelacionclaudia.png";
 import caro from "../assets/caro.png";
 
-import paulina from "../assets/paulina.png";
+import paulina from "../assets/paulinanuevo.jpg";
 
 import constelacion from "../assets/Constelacionfam.png";
 
 import tarot from "../assets/tarott.png";
 
-import espejo from "../assets/Espej.png";
+import terapiaflor from "../assets/terapiafloral.jpg";
 
 import lea from "../assets/Lea.png";
 
@@ -43,13 +46,13 @@ import Reset from "../assets/reset.png";
 
 import ansiedad from "../assets/ansiedad.png";
 
-import claudiad from "../assets/claudia.png";
+import lissette from "../assets/Lissette.jpg";
 
-import tre from "../assets/tre.png";
+import ankh from "../assets/AnhkPr.png";
 
-import lazo from "../assets/lazo.png";
+import vagal from "../assets/Vagal.png";
 
-import terapgrupo from "../assets/terapgrupo.png";
+import alquimiavib from "../assets/Alquimiavib.png";
 
 import gaby from "../assets/gabyy.png";
 
@@ -65,15 +68,15 @@ import vortex from "../assets/vortex.png";
 
 import liberacion from "../assets/liberacion.png";
 
-import brenda from "../assets/brenda.png";
+import brenda from "../assets/brenda.jpg";
 
-import trazos from "../assets/trazos.png";
+import canalizacionb from "../assets/canalizacion.jpg";
 
-import relajacion from "../assets/relajacion.png";
+import tarotttt from "../assets/Tarotpao.png";
 
-import bach from "../assets/bach.png";
+import registro from "../assets/Registrospao.png";
 
-import yogar from "../assets/yogar.png";
+import constelacionfam from "../assets/constelacionespao.png";
 
 import fernanda from "../assets/fernanda.png";
 
@@ -85,11 +88,11 @@ import limpiezaener from "../assets/limpiezaener.png";
 
 import constel from "../assets/constel.png";
 
-import clau from "../assets/clau.png";
+import clau from "../assets/claudiaibarra.jpg";
 
-import taller from "../assets/poderb.png";
+import taller from "../assets/egipto.jpg";
 
-import counseling from "../assets/couselings.png";
+import llamavioleta from "../assets/llamavioleta.png";
 import counselin from "../assets/couselin.png";
 
 // import caro from "../assets/caro.jpg";
@@ -108,7 +111,7 @@ import elevacion from "../assets/elevacionenergia.png";
 
 import abundancia1 from "../assets/abundancia1.png";
 
-import analuisa from "../assets/analuisa.jpg"
+import irene from "../assets/Irene.jpg"
 
 import annete from "../assets/Annete.jpg"
 
@@ -133,11 +136,11 @@ id: 4,
 nombre: "Paulina Villablanca",
 isElite: true,
 
-email: "paulina@email.com",
+email: "Paulinavipe@gmail.com",
 
 imagenPerfil: paulina, // Reemplaza con la imagen real
 
-callToActionTextCard: "Si quieres resolver y sanar diversos aspectos de tu vida como son tu niñez, tu relacion con los linajes paternos y/o maternos e incusive si te cuesta mucho tomar decisiones;  yo te puedo acompañar en este proceso; a traves de una  escucha atenta, acogedora y empatica; ideal para quienes quieren sanar buscando espacios de contencion.",
+callToActionTextCard: "Hola…soy Pauly terapeuta holística y educadora de Parvulos Durante varios años me he dedicado a apoyar procesos de sanación de consultantes, entregándoles las herramientas necesarias para que de esa manera puedan sanar aquello que pesa y no deja avanzar. Principalmente me dedico a constelaciones familiares individuales y grupales, lectura de tarot predictivo y terapéutico, sanación de heridas de infancia, terapia floral. Espero que en este camino también te reencuentres con tu esencia.",
 
 servicios: [
 
@@ -145,7 +148,7 @@ servicios: [
 
  img: constelacion,
 
- title: "Constelaciones Familiares Individuales",
+ title: "Constelacion Familiar Individual",
 
  terapeuta: "Paulina Villablanca",
 
@@ -164,33 +167,13 @@ precio: 24000,
 
  img: tarot,
 
- title: "Lectura Predictiva Y Terapéutica de Tarot",
+ title: "Lectura de Tarot Terapéutico",
 
  terapeuta: "Paulina Villablanca",
 
  terapeuta_id: 4,
 
- description: "A traves de esta tirada de tarot de 30 minutos; podras resolver tus conflictos de alguna situacion determinada, te permitira visualizar situaciones bloqueadas y que poder hacer para salir de o emergentes.",
-
- precio: 20000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 20000 }],
-
-},
-
-{
-
- img: espejo,
-
- title: "Diagnostico Heridas de Infancia",
-
- terapeuta: "Paulina Villablanca",
-
- terapeuta_id: 4,
-
- description: "Por que es importante conocer y sanar tus heridas de infancia; te permite entender lo que te toco vivir y comprendiendolo desde el amor, aprendiendo a confiar en ti mismo y en tus sentimientos, entendiendo que debes priorizar tus necesidades hablando de lo que te pasa o paso, aprendiendo a pedir ayuda, de esta manera podras crecer, madurar y ser feliz  ",
+ description: "Tarot Terapeutico (30 minutos):Es una herramienta de autoconocimiento y reflexion.Ayuda a explorar la energia y a reflexionar sobre el presente. Es una guia para conectar con la intuicion y descubrir nuevas perspectivas . No predice, sino que ilumina.",
 
  precio: 16000,
 
@@ -200,6 +183,63 @@ precio: 24000,
 
 },
 
+{
+
+ img: terapiaflor,
+
+ title: "Terapia Floral",
+
+ terapeuta: "Paulina Villablanca",
+
+ terapeuta_id: 4,
+
+ description: "Terapia floral: Es una medicina complementaria que tiene por finalidad reestablcer el equilibrio fisico, emocional, mental y espiritual. En cada sesion se identifica el estado emocional actual y se seleccionan las flores mas apropiadas pra cada caso y asi preparar el frasco floral personalizado.",
+
+ precio: 20000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 20000 }],
+
+},
+{
+
+ img: sanacion,
+
+ title: "Sanación niño/a interior",
+
+ terapeuta: "Paulina Villablanca",
+
+ terapeuta_id: 4,
+
+ description: "Sanacion niño/a interior: Terapia que utiliza diversas tecnicas y herramientas para procesar y sanar las heridas de infancia (abandono , rechazo, humillacion, traicion y justicia), al reconectar con nuestras heridas de infancia, nos damos a nosotros mismos la oportunidad de sanar, perdonar y amarnos de forma mas profunda.",
+
+ precio: 16000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 16000 }],
+
+},
+{
+
+ img: mapeoener,
+
+ title: "Mapeo Energético a través de las cartas del Tarot",
+
+ terapeuta: "Paulina Villablanca",
+
+ terapeuta_id: 4,
+
+ description: "Mapeo energetico a traves de las cartas del tarot: A traves de esta tirada de tarot podremos visualizar como esta nuestra energia, por medio de 12 aspectos que son; tu ser, el valor, comunicacion, hogar, placr, salud, relaciones interpersonales , lecciones de la vida, espiritualidad, carrera o profesion, vision de futuro y que nos menciona tu subconciente.",
+
+ precio: 16000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 16000 }],
+
+},
 ],
 
   },
@@ -216,54 +256,54 @@ imagenPerfil: clau,
 
 callToActionTextCard:
 
-"Sanar no es solo aliviar el dolor, es rediseñar el lugar donde habita tu alma. Con más de una década de experiencia acompañando procesos humanos, Claudia Ibarra Arias ha consolidado una metodología única: la Arquitectura de Transformación del Ser. En este espacio, Claudia utiliza el Orden Sistémico como plano fundamental para identificar los desequilibrios invisibles en la historia de cada consultante, permitiendo que la estructura personal recupere su fuerza y estabilidad original. Su enfoque especializado en Trauma y Sombras Internas garantiza un entorno de profunda seguridad, donde la Alquimia actúa como el motor de cambio. Para Claudia, la alquimia es el arte de transmutar las experiencias más densas y dolorosas en sabiduría y libertad, permitiendo reconstruir la vida desde una raíz sana, sólida y consciente. Claudia no solo ofrece acompañamiento; ofrece un diseño de vida donde el pasado deja de ser una carga para convertirse en el cimiento de un futuro con propósito.",
+"Febrero: Rediseña tu Arquitectura del Amor 🏛️✨ El amor no es solo una emoción; es una estructura. Y si los cimientos están dañados, el vínculo no puede sostenerse. Como  Transformación del Ser, este mes te invito a dejar de 'intentar y empezar a ordenar. En @encuentrosdealmas, transmutamos las sombras de la relación en pilares de libertad consciente. ¿Qué conceptos trabajaremos este mes? • Cierre de Ciclos: Liberar el espacio que aún ocupan tus historias pasadas. • Acuerdos de Almas: Identificar los contratos invisibles que rigen tus vínculos. • Alquimia de Sanación: Desimpregnar obstáculos energéticos que bloquean tu fluir con el Amor • Consicencia Sistémica: Revelar la raíz oculta detrás de los celos, la infidelidad y los quiebres en la comunicación. No busques afuera lo que se soluciona en tu diseño interno. Es momento de que el pasado deje de ser una carga y se convierta en el cimiento de un amor con propósito. Sanar es rediseñar el lugar donde habita tu alma con Claudia Ibarra",
 
  
 
 
 
-  recursos: [
+//   recursos: [
 
-  {
+//   {
 
-   name: "Video Presentación de Taller: El Poder Mágico de las Brujas",
+//    name: "Video Presentación de Taller: El Poder Mágico de las Brujas",
 
-   url: "https://www.instagram.com/reel/DQpesSPj3sE/?igsh=Y2kxcWE3a3JkdDE3",
+//    url: "https://www.instagram.com/reel/DQpesSPj3sE/?igsh=Y2kxcWE3a3JkdDE3",
 
-  },
+//   },
 
-  {
+//   {
 
-   name: "Ver Video: 5 Magias de las brujas ancestrales",
+//    name: "Ver Video: 5 Magias de las brujas ancestrales",
 
-   url: "https://www.instagram.com/reel/DQmOoocjd6a/?igsh=YzA4emYxdW9va2Zy",
+//    url: "https://www.instagram.com/reel/DQmOoocjd6a/?igsh=YzA4emYxdW9va2Zy",
 
-  },
-{
+//   },
+// {
 
-   name: "¿Que es el Couseling Terapeútico?",
+//    name: "¿Que es el Couseling Terapeútico?",
 
-   url: "https://www.instagram.com/reel/DMbRdhJx3kY/?igsh=eDE5bjdwMmhjeWw4",
+//    url: "https://www.instagram.com/reel/DMbRdhJx3kY/?igsh=eDE5bjdwMmhjeWw4",
 
-  },
-  {
+//   },
+//   {
 
-   name: "¿Qué genera el Couseling Terapeútico?",
+//    name: "¿Qué genera el Couseling Terapeútico?",
 
-   url: "https://www.instagram.com/reel/DHRAVzAx_Eo/?igsh=MWFyYTM4aW5jOWt3eA==",
+//    url: "https://www.instagram.com/reel/DHRAVzAx_Eo/?igsh=MWFyYTM4aW5jOWt3eA==",
 
-  },
+//   },
   
 
-  ],
+//   ],
 
 servicios: [
 
 {
 
- img: counselin,
+ img: pactoalma,
 
- title: "Constelaciones del Alma",
+ title: "Constelaciones Familiares-Acuerdos de Almas",
 
  terapeuta: "Claudia Ibarra",
 
@@ -271,21 +311,21 @@ servicios: [
 
  description:
 
-   "CONSTELACIONES DEL ALMA – HONRANDO LOS HILOS PARA TRANSFORMAR TU DESTINO ¿Sientes que avanzas con un peso que no te pertenece o que tropiezas con muros invisibles en tu presente? Como Transformadora del Ser, entiendo que para habitar una vida plena, primero debemos ordenar los cimientos de nuestra historia. Una sesión de Constelaciones Familiares del Alma es un espacio sagrado de observación profunda. Nos permite identificar aquellos nudos de conflicto irresuelto en el pasado de tus ancestros que hoy actúan como obstáculos en tu camino. El Arte de Ordenar tu Herencia A través del Orden Sistémico, te acompaño en un proceso de Alquimia personal donde logramos: • Honrar los hilos de la vida: Reconocer tu origen con amor para dejar de repetir sus sombras. • Liberar Fidelidades: Soltar roles y obligaciones que has cargado por generaciones pero que no te corresponden. • Transformar tu destino: Rediseñar tu presente para entrar en un camino personal mucho más libre, auténtico y en calma. Es el momento de observar lo que genera desbalance para restaurar el orden que tu alma tanto necesita. Acompaña: Claudia Ibarra Arias Arquitecta de Transformación del Ser | CEO Encuentros de Almas",
+   "ACUERDOS DE ALMAS El Origen y la Evolución del Vínculo de tu Alma Gemela ¿Alguna vez has sentido que tu encuentro con alguien fue un pacto previo al tiempo? Nada es casualidad. En el nivel del alma, las relaciones no son eventos fortuitos, sino contratos sagrados diseñados para nuestra máxima evolución. Este encuentro te invita a mirar el símbolo detrás del vínculo. Nos sumergimos en la dimensión del alma para comprender el acuerdo de tu relación: Beneficio Encuentro: Descubrimos la lección nque ambas almas acordaron trabajar en el conflicto que están presentando Trascender el Conflicto: Entendemos los desafíos actuales no como obstáculos, sino como los catalizadores de crecimiento pactados. Evolución en Pareja: Alineamos la voluntad humana con el acuerdo espiritual para transitar el vínculo desde la sabiduría, lo que aporto y me aporta mi pareja en esta relación ¿Para quién es esta Terapia? Ideal para quienes sienten que 'algo' externo o pesado les impide sentir y amar en sus relaciones, y buscan una intervención de alquimia energética rápida y profunda para recuperar su brillo original. Descubre el Acuerdo Sagrado del Alma de tu relación Sesión Online Zoom : 120 min",
 
- precio: 58000,
+ precio: 60000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 58000 }],
+ opciones: [{ sesiones: 1, precio: 60000 }],
 
 },
 
 {
 
- img: constel,
+ img: cerrandociclo,
 
- title: "El Poder de la Diosa 2026",
+ title: "Terapia ISA-Cerrando Ciclo con mi Ex",
 
  terapeuta: "Claudia Ibarra",
 
@@ -293,19 +333,19 @@ servicios: [
 
  description:
 
-   "El Poder de la Diosa: Tu Potencial Femenino para el 2026 ¿Sientes el llamado a dejar de ser espectadora para descubrir la inmensidad de tu Potencial Femenino en este nuevo ciclo? Como Transformadora del Ser y Conectora de la Diosa, te presento un acompañamiento exclusivo nacido de mi formación: Despertar del Divino Femenino. Este no es un proceso genérico; es un diseño de Alquimia propia para que tú, #Mujer, desarrolles la cualidad que las Diosas nos piden manifestar este nuevo año: Fomentar las cualidades escondidas que tienes que sacar a brillar. Tu Plan Maestro de Reconexión A través de mi Arte de Acompañar, ejecutaremos una acción múltiple sobre tu estructura interna para que logres:  RECONOCER LOS ROLES DESAFIANTES: Identificaremos aquellos obstáculos en tus propias actitudes y patrones que bloquean la conexión con tu poder real. 🌟 ACTIVAR EL POTENCIAL FEMENINO: Aperturar la consciencia de la fuerza que ya habita en ti, preparándote para afrontar los desafíos de este ciclo con la sabiduría ancestral de la Diosa. 🌟 VINCULARTE CON TU SER DIVINO: Restablecer la conexión directa con tu Ser Divino Femenino, permitiendo que tu intuición, desde un nuevo rol soberano, sea la que guíe tus pasos. 🌟 SOSTENER TU PRESENCIA: Integrar acciones de Alquimia cotidiana que favorezcan el florecimiento de esta nueva cualidad femenina que ha de nacer para ti en este 2026. Honrando tu Herencia para Transformar tu Destino Este desarrollo propio es una invitación a dejar de lado las estructuras impuestas y comenzar a construir desde tu verdad más profunda. Es el momento de ocupar tu lugar en el mundo, honrando tu historia y reclamando tu herencia femenina. Acompaña: Claudia Ibarra Arias Arquitecta de Transformación del Ser | Creadora de la Formación Despertar del Divino Femenino.",
+   "TERAPIA ISA Cerrando Ciclos con los Ex ¿Sientes que una parte de ti sigue anclada a una historia que ya terminó? Para que lo nuevo llegue, lo viejo debe haber ocupado su lugar en el corazón. La Terapia ISA es una intervención profunda de Orden Metafórico y Sistémico diseñada para quienes sienten que, aunque quieren avanzar, siguen emocionalmente 'ocupados' por el pasado. A través de esta metodología, trabajamos la alquimia del cierre definitivo: Identificación de Hilos: Detectamos el vínculo o duelo no resuelto que mantienen tu energía fragmentada. Honrar para Soltar: Aplicamos los principios del orden para dar un lugar digno a lo vivido, lo bueno, lo que dejar e lo que integrar Apertura de Espacio: Vaciamos el recipiente emocional para que la energía del presente se transforme en algo nuevo y esté disponible para ti. ¿Para quién es esta Terapia? Ideal para quienes sienten que su vida se quedó atascada en una relación pasada o sienten que soltaron pero aún hay algo pendiente que no pueden determinar. • La fuerza de estar presente en tu propia vida. Sesión Online Zoom : 120 min",
 
- precio: 30000,
+ precio: 45000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 30000 }],
+ opciones: [{ sesiones: 1, precio: 45000 }],
 
 },   {
 
  img: taller,
 
- title: "Taller El Poder Mágico de las Brujas",
+ title: "Terapia Sanación Solar Egipcia-Desimpregnando Obstaculos con el Amor",
 
  terapeuta: "Claudia Ibarra",
 
@@ -313,21 +353,21 @@ servicios: [
 
  description:
 
-   "¡DESPIERTA la HECHICERA QUE HAY EN TI! 🔮 ¿Lista para reconectar con tu magia ancestral? A tí Maga de todo Chile y Latinoamérica ¿sientes un llamado profundo a tu esencia, a ese poder olvidado que habita en ti? ✨ En un mundo que nos pide ser perfectas, es hora de recordar la fuerza de quienes vinieron antes, de esas mujeres sabias, intuitivas y poderosas: ¡las Brujas! TALLER ONLINE  El PODER MÁGICO de las BRUJAS: Reconectando la Magia del Pasado. Un taller de 2 jornadas que podrás vivenciar en formato Online sincrónico Martes 20 y 27 de enero Prepárate para: 🔮 Despierta tu intuición  y voz interior mágica 🔮 Conectar con el CLAN de tu magia 🔮 Redescubre tu estilo de magia que reside en tí 🔮 Celebrar tu autenticidad y el don de Ser Bruja como lo fueron otras en el pasado Este no es un taller más, es una experiencia de inmersión y reconexión con la parte más mágica y auténtica de ti misma, con Constelaciones del Alma Femenina Deja atrás lo que te limita y abraza tu verdadero poder. 🧙‍♀️ Incluye tu Sombrero de Bruja de Regalo ¡No dejes que tu magia duerma más! 👉 Reserva tu lugar ahora mismo en el link de nuestro perfil",
+   "SANACIÓN SOLAR EGIPCIA Limpieza de Obstáculos en el Amor ¿Sientes una densidad que no te permite conectar desde el corazón? A menudo, el amor no fluye no por falta de ganas, sino por impregnaciones y bloqueos energéticos que vienen desde mucho antes, de otras vidas y que actúan como muros invisibles entre tú y el amor. Es momento de derribar esos muros con la fuerza solar A través de la frecuencia de la Sanación Solar Egipcia, trabajamos en un nivel vibratorio superior para: Desimpregnación Profunda: Limpiamos las energías residuales y densidades que se han adherido a tu campo áurico por experiencias en tus vidas Armonización de Obstáculos: Al liberar las energías de historias impregnadas, restauramos tu capacidad de amar que estaba bloqueado. Alineación con la Luz: Utilizar la geometría y la frecuencia solar para restaurar tu conexión con el amor mayor que habita en ti. ¿Para quién es esta Terapia? Ideal para quienes sienten que 'algo' externo o pesado les impide sentir y amar en sus relaciones, y buscan una intervención de alquimia energética rápida y profunda para recuperar su brillo original. Conectar desde un corazón ligero, libre de muros invisibles. Sesión Online Zoom : 120 min",
 
- precio: 30000,
+ precio: 45000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 30000 }],
+ opciones: [{ sesiones: 1, precio: 45000 }],
 
 },
 
 {
 
- img: counseling,
+ img: llamavioleta,
 
- title: "Counseling Terapéutico",
+ title: "Taller Conexión y Activación Llama Violeta",
 
  terapeuta: "Claudia Ibarra",
 
@@ -335,13 +375,34 @@ servicios: [
 
  description:
 
-   "Counseling Terapéutico: El Diseño de tu Ruta de Sanación ¿Sientes el llamado a iniciar un trabajo terapéutico pero te encuentras ante un mapa confuso? Como Experta en Transformación, entiendo que para construir una nueva realidad, primero necesitamos poner orden en el terreno actual. Esta terapia es la respuesta para quienes se preguntan: ¿Por dónde iniciar mi trabajo de sanación? ¿Cuál de todas mis temáticas tiene mayor prioridad? ¿Qué herramienta holística es la mejor para mi tema prioritario? Mi Propuesta: Orden para tu Evolución El Counseling es el espacio de Orden Sistémico donde trazamos el plano maestro de tu bienestar. Con más de 10 años de experiencia, aplico el Arte de Acompañar para: INICIAR tu camino de Evolución Espiritual con cimientos sólidos. ORIENTAR en aquel tema de trabajo que sea más urgente para ti en este momento vital. GUIAR en la selección de las mejores alternativas terapéuticas, creando un programa de trabajo personalizado según lo que tu Alma requiera. ¿Cómo se ejecuta? Tal como se visualiza en mi práctica, el Counseling es un proceso dinámico de Alquimia donde la palabra y la escucha activa actúan como herramientas de construcción. No es solo hablar; es diseñar soluciones para que el pasado deje de ser una carga y se convierta en la base de tu libertad. Modalidad: Sesiones Online - 90 minutos Acompaña: Claudia Ibarra Arias Arquitecta de Transformación del Ser | Conector Puente Akáshico.",
+   "ACTIVACIÓN DE LA LLAMA VIOLETA Transmutación y Anclaje en Amatista ¿Qué es?  Un taller grupal práctico Online diseñado para quienes buscan limpiar su campo energético y transformar su energía Es el encuentro donde el conocimiento teórico se une al anclaje físico. Lo que viviremos: Origen e INFO: Conocerás las bases y la fuerza espiritual de la Llama Violeta, sus maestros y su propósito cósmico. Transmutación Activa: Aprenderás a utilizar esta frecuencia para transmutar tus energías negativas cuando las sientas y elevar tu vibración personal. El Ritual de Anclaje: Activaremos y sellaremos la energía de la Llama directamente en una drusa de amatista, para que lleves contigo un portal de transmutación permanente a tu espacio sagrado. ¿Para quién es este Taller? Ideal para: Quienes desean una herramienta tangible de limpieza y transmutación energética y un espacio de alquimia sencillo pero profundo. Requisitos: tener una drusa de amatista. Sesión Online Zoom : 150 min",
 
- precio: 30000,
+ precio: 15000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 30000 }],
+ opciones: [{ sesiones: 1, precio: 15000 }],
+
+},
+{
+
+ img: constelacionclaudia,
+
+ title: "Taller Constelaciones Familiares",
+
+ terapeuta: "Claudia Ibarra",
+
+ terapeuta_id: 1,
+
+ description:
+
+   "LA SOMBRA SISTÉMICA EN EL AMOR Soltando los Hilos Invisibles del Clan ¿Repites patrones que no te pertenecen pero que parecen dirigir tu vida amorosa? A veces, no amamos desde nuestra libertad, sino desde la lealtad a los dolores no resueltos de nuestros ancestros. La Sombra Sistémica es todo aquello que el clan ha excluido o silenciado, y que hoy busca ser visto a través de tus relaciones. En estos talleres grupales, utilizamos el Orden Sistémico y la alquimia del grupo para: Identificar la Fidelidad: Reconocer qué historias de pareja de tus padres o abuelos estás replicando inconscientemente: los Celos, la Infidelidad y la Comunicación Congelada en la pareja. Mirar lo Excluido: Darle un lugar a los 'secretos' o dolores del pasado que están creando muros en tus vínculos actuales. Liberar el Hilo: Realizar movimientos sistémicos de honra para devolver el destino a quien le pertenece y liberarte para tu propio destino. ¿Para quienes son estos Talleres? Para buscadores que están cansados de tropezar con la misma piedra y están listos para mirar más allá de lo individual, comprendiendo que sanar el origen es la clave para liberar el presente. Fechas de los Talleres: Comunicación Congelada: lunes 2 de febrero La Telaraña de Celos: lunes 9 de febrero Las Redes de la Infidelidad: lunes 23 de febrero Honrar a tu familia sin tener que sacrificar tu propia felicidad Sesión Online Zoom : 180 min cada Taller",
+
+ precio: 20000,
+
+ isDisabled: false,
+
+ opciones: [{ sesiones: 1, precio: 20000 }],
 
 },
 
@@ -436,83 +497,83 @@ servicios: [
 },
 {
 
-id: 7,
+id: 36,
 
-nombre: "Claudia Diaz",
+nombre: "Lissette Ramirez",
 isProfesional:true,
-email: "dcclaudia21@gmail.com",
+email: "vegetalizz2016@gmail.com",
 
-imagenPerfil: claudiad,
+imagenPerfil: lissette,
 
 callToActionTextCard:
 
-"Soy Claudia Díaz Catalán, docente y terapeuta en Terapia de Respuesta Espiritual, y acompaño procesos de sanación energética orientados a identificar y liberar bloqueos, programas y lazos que afectan el bienestar emocional, fisico y mental. Trabajo en equipo, junto a tus guías  espiruales, quienes nos muestran programas , energías y bloqueos que te afectan.Facilitando procesos que permiten orden interno, cierre de ciclos y reconexión con tu propósito, siempre alineados al bien más elevado del alma de cada persona.",
+"'Especialista en Reconfiguración Vital y Soberanía Somática.' Acompaño principalmente a mujeres a salir del estado de sometimiento biológico y emocional para reclamar su soberanía vital. A través del método ANKIALIS, integro la ingeniería del sistema nervioso y la medicina de frecuencia para reconfigurar la arquitectura del ser. Mi enfoque permite que cada mujer desbloquee su potencial de gozo y creación, transformando una existencia de supervivencia en una vida de expansión consciente y libertad profunda.",
 
 servicios: [
 
 {
 
- img: tre,
+ img: ankh,
 
- title: "Terapia de Respuesta Espiritual",
+ title: "Anhk Precisión",
 
- terapeuta: "Claudia Diaz",
+ terapeuta: "Lissette Ramirez",
 
- terapeuta_id: 7,
+ terapeuta_id: 36,
 
  description:
 
-   "¿Sientes cansancio, bloqueos o confusión sin una causa clara? A través de la Terapia de Respuesta Espiritual  y con ayuda de tus guías espirituales, accedemos a la información del Yo Superior para identificar y liberar programas y cargas energéticas que afectan tu bienestar, ayudándote a recuperar claridad, equilibrio y paz interior. “En Terapia de Respuesta Espiritual trabajamos programas, lazos kármicos, votos, pactos y bloqueos energéticos que muchas veces no son conscientes, pero que siguen influyendo en tu vida.",
+   "Ank Presicion (Reordenamineto de laestructura eneregetica) Es una técnica de alta precisión vibracional que utiliza la geometría sagrada como tecnología de bio-resonancia. A través de la Cruz de Ankh, realizamos un escaneo y diagnóstico de las fugas de vitalidad en el campo electromagnético. No es una terapia pasiva; es una reconfiguración de la arquitectura sutil de cada valiente, eliminando interferencias de baja frecuencia y restaurando el flujo de energía hacia los órganos y sistemas vitales. ¿Qué beneficios entrega? Optimización Energética: Recuperación de la fuerza vital y eliminación del agotamiento crónico. Coherencia Interna: Alineación inmediata entre la intención mental y la capacidad de ejecución física.",
 
- precio: 35000,
+ precio: 25000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 35000 }],
+ opciones: [{ sesiones: 1, precio: 25000 }],
 
 },
 
 {
 
- img: lazo,
+ img: vagal,
 
- title: "Cortar Lazos Familiares, Lealtades Ancestrales y Lazos Kármicos",
+ title: "Vagal Flow",
 
- terapeuta: "Claudia Diaz",
+ terapeuta: "Lissette Ramirez",
 
- terapeuta_id: 7,
+ terapeuta_id: 36,
 
  description:
 
-   "¿Sientes lazos que te atan o limitan o situaciones que te drenan y no logras soltar? Mediante la Terapia de Respuesta Espiritual, con ayuda de tus guías espirituales, se trabaja la liberación de lazos kármicos asociados a relaciones, emociones o experiencias del pasado que hoy interfieren en tu vida, permitiéndote cerrar ciclos y avanzar con mayor libertad.",
+   "Vagal Flow' Una metodología de liberación de memoria celular basada en la neurofisiología y el movimiento consciente. Utilizamos patrones de movimiento específicos para estimular el nervio vago y procesar el trauma almacenado en la fascia. Al movilizar la energía a través de los centros de poder (chakras), logramos una regulación del sistema nervioso que la palabra no puede alcanzar. Es neurobiología en movimiento. ¿Qué beneficios entrega? Resiliencia Polivagal: Capacidad de retornar a un estado de calma y seguridad tras picos de estrés. Soberanía Corporal: Desbloqueo de la pelvis y el torso, permitiendo que el cuerpo vuelva a ser un territorio de placer y no de defensa.",
 
- precio: 35000,
+ precio: 25000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 35000 }],
+ opciones: [{ sesiones: 1, precio: 25000 }],
 
 },
 
  {
 
- img: terapgrupo,
+ img: alquimiavib,
 
- title: "Terapia de grupo/reuniones o proyectos",
+ title: "Alquimia Vibracional",
 
- terapeuta: "Claudia Diaz", //ass
+ terapeuta: "Lissette Ramirez", //ass
 
- terapeuta_id: 7,
+ terapeuta_id: 36,
 
  description:
 
-   "¿Tu grupo, equipo o proyecto está estancado o con tensiones invisibles? Usando la Terapia de Respuesta Espiritual se armoniza la energía grupal, liberando bloqueos individuales y colectivos, favoreciendo claridad, fluidez, cooperación y un propósito común alineado.",
+   "'Alquimia Vibracional'   Un sistema de modulación emocional mediante el uso de elixires florales de alta pureza. La medicina floral no se receta de forma aislada; se diseña como un soporte vibracional personalizado para sostener los cambios producidos con la Cruz de Ankh y el trabajo somático de 'Vagal Flow'. Es el 'anclaje' químico y energético necesario para que la nueva configuración del ser se estabilice en el día a día. ¿Qué beneficios entrega? Estabilización de Procesos: Evita las crisis de sanación bruscas, permitiendo una transición suave hacia estados de mayor consciencia. Mantenimiento de la Frecuencia: Prolonga los efectos de la sesión presencial u online, creando un campo de protección y claridad mental.",
 
- precio: 35000,
+ precio: 25000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 35000 }],
+ opciones: [{ sesiones: 1, precio: 25000 }],
 
 },
 
@@ -618,12 +679,12 @@ imagenPerfil: brenda, // Reemplaza con la imagen real
 
 callToActionTextCard:
 
-"Mi nombre es brenda rivas, en mi trayectoria en el campo de la salud evidencie como las enfermedades o padecimientos fisicos ,constituian el pilar en los cuidados de enfermeria restando importancia al cuerpo energetico por lo que me interese en e estudio de el individuo en sus distintos cuerpos (enrgetico /fisco /emocional ) llevandome a profundizar en la filosofia holistica ,tratando asi al paciente en su totalidad ,espiritu ,alma y cuerpo.",
+"En mi trayectoria en el campo de la salud evidencie como las enfermedades o padecimientos fisicos ,constituian los pilares en los cuidados de enfermeria ,restando importancia al cuerpo energetico por lo que me interese en el estudio de la biodecodificacion emocional,llevandome a profundizar en la filosofia holistica tratando asi al paciente en su totalidad espiritu alma y cuerpo .",
 servicios: [
 
 {
 
- img: trazos,
+ img: canalizacionb,
 
  title: "Canalización Energética",
 
@@ -648,33 +709,33 @@ precio: 25000,
 
   {
 
-id: 16,
+id: 3,
 
-nombre: "Karla Flores",
+nombre: "Paola Quintero",
 isProfesional:true,
 
-email: "ckarlaflorencia5@gmail.com",
+email: "paolaq81@gmail.com",
 
-imagenPerfil: karla, // Reemplaza con la imagen real
+imagenPerfil: paola, // Reemplaza con la imagen real
 
 callToActionTextCard:
 
-"Terapeuta holística, estudiante de último año de Psicología y deportista, con formación y experiencia en el ámbito educacional, donde ha realizado su práctica profesional. Cuenta con una trayectoria sostenida en el acompañamiento terapéutico de personas que presentan duelos no resueltos, crisis de ansiedad, trastornos de pánico y procesos de regulación emocional. Se ha especializado en la aplicación de terapias complementarias, tales como Flores de Bach, reiki, cuenco terapia,mindfulness (meditaciones guiadas), yoga restaurativo para adultos , embarazadas y yoga para niños, con énfasis en la autorregulación emocional. Asimismo, desarrolla talleres psicoeducativos de educación emocional, y otros. Talleres orientados a la promoción del bienestar integral en contextos individuales y grupales. Su enfoque de trabajo integra una mirada sistémica, incorporando herramientas de terapia de constelaciones familiares, junto con fundamentos psicológicos y prácticas corporales conscientes, lo que le permite ofrecer un abordaje restaurativo e integral, centrado en la persona y su contexto. Es autora del libro “De la oscuridad hacia la luz” y practica yoga de manera continua desde los 16 años, disciplina que, junto a su formación académica y experiencia profesional, sustenta una propuesta terapéutica coherente, ética y orientada al bienestar integral. Entre sus estudios tiene un diplomado en terapia de sistema, terapia ABA y TTO.   Neurodesarrollo. Si bien, también apoya procesos gestacionales y post parto. Se reserva la propiedad intelectual ante cualquier actividad o archivo informativo enviado al centro.",
+"Acompaño procesos de crecimiento espiritual y autoconocimiento a través del Tarot y la lectura de Registros Akáshicos. Mi intención no es decirle a las personas qué hacer, sino guiarlas con respeto y amor para que puedan reconectar con su intuición, su sabiduría interna y su propio camino. Creo profundamente que cada persona tiene su propia verdad y su propia grandeza. Mi trabajo es ofrecer un espacio seguro, donde puedas mirarte con honestidad, integrar aprendizajes y recordar el poder que ya vive dentro de ti.",
 servicios: [
 
 {
 
- img: relajacion,
+ img: tarotttt,
 
- title: "Sesión Relajación y Reconexión",
+ title: "Tarot",
 
- terapeuta: "Karla Flores",
+ terapeuta: "Paola Quintero",
 
- terapeuta_id: 16,
+ terapeuta_id: 3,
 
  description:
 
-   "Actividad orientada a la promoción del bienestar integral, que consiste en una meditación guiada centrada en el enfoque mindfulness, favoreciendo la atención plena al momento presente y la escucha consciente del yo interior. A través de ejercicios de respiración, focalización corporal y visualizaciones guiadas, se busca fortalecer la autorregulación emocional, la reducción del estrés y la ansiedad, y el desarrollo de una mayor conciencia personal. De manera complementaria, la actividad puede incorporar Reiki como práctica energética de apoyo, orientada a facilitar la relajación profunda, el equilibrio emocional y la armonización del bienestar físico, emocional y mental. La actividad es adaptable a distintos rangos etarios y contextos (individual o grupal), y se enmarca en un enfoque integrativo y restaurativo, respetando los ritmos y necesidades de cada participante.",
+   "La lectura de Tarot es un espacio de orientación y claridad que puede ser terapéutico, predictivo o evolutivo, adaptándose a lo que cada persona necesite. A través de las cartas, te acompaño a ordenar ideas, comprender situaciones y encontrar nuevas perspectivas cuando sientes confusión o ciclos repetitivos. El Tarot funciona como una guía que ayuda a tomar decisiones con mayor consciencia. Durante la sesión también integro saberes como la astrología y mensajes de tus guías espirituales, brindando un acompañamiento respetuoso y personalizado.",
 precio: 25000,
 
  isDisabled: false,
@@ -685,43 +746,42 @@ precio: 25000,
 
 {
 
- img: bach,
+ img: registro,
 
- title: "Terapia Esencia Flores de DR.BACH",
+ title: "Registros Akashicos",
 
- terapeuta: "Karla Flores",
+ terapeuta: "Paola Quintero",
 
- terapeuta_id: 16,
+ terapeuta_id: 3,
 
  description:
 
-   "Actividad terapéutica orientada al acompañamiento emocional y al autoconocimiento, basada en un espacio de diálogo consciente y escucha activa, donde la persona puede explorar sus vivencias, emociones y procesos internos en un entorno seguro y contenido. La intervención se apoya, de manera complementaria, en el uso de Flores de Bach, como herramienta natural para favorecer el equilibrio emocional, así como en la lectura simbólica del inconsciente mediante oráculos (por ejemplo, oráculo de ángeles), utilizada como recurso reflexivo que facilita la toma de conciencia, la resignificación de experiencias y la conexión con recursos personales. La actividad se desarrolla desde un enfoque integrativo y respetuoso, considerando a la persona en su dimensión emocional, mental y espiritual, sin sustituir procesos clínicos cuando estos sean necesarios. Está dirigida a personas que buscan orientación emocional, claridad personal y fortalecimiento del bienestar integral, y puede realizarse de forma individual o grupal, según el contexto.",
-precio: 25000,
+   "La lectura de Registros Akáshicos es un espacio profundo de reencuentro con tu alma, donde puedes conectar con tus dones, reconocer tus virtudes y recibir guía de tus maestros espirituales y animales de poder. Esta terapia te permite comprender el plan y los deseos que tu alma ha diseñado para ti. A través de la lectura, también es posible identificar y liberar patrones limitantes, creencias basadas en el miedo y estructuras obsoletas que pueden estar frenando tu crecimiento. Además, facilita comprender el origen de ciertos conflictos, dinámicas familiares o aprendizajes kármicos que siguen influyendo en tu presente, brindándote claridad, integración y mayor conexión contigo misma.",
+precio: 35000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 25000 }],
+ opciones: [{ sesiones: 1, precio: 35000 }],
 
 },
 
 {
 
- img: yogar,
+ img: constelacionfam,
 
- title: "Yoga Restaurativo",
+ title: "Constelaciones Familiares",
+ terapeuta: "Paola Quintero",
 
- terapeuta: "Karla Flores",
-
- terapeuta_id: 16,
+ terapeuta_id: 3,
 
  description:
 
-   "Actividad orientada a la liberación de la tensión corporal y la promoción del bienestar físico y emocional, a través de una práctica de yoga adaptada a las necesidades y características de niños, personas gestantes y adultos. La sesión integra movimientos conscientes, posturas suaves, ejercicios de respiración y momentos de relajación guiada, favoreciendo la conexión cuerpo–mente, la autorregulación emocional y la disminución del estrés acumulado. En el caso de niños, se incorporan dinámicas lúdicas que facilitan la participación y el desarrollo de la conciencia corporal; en personas gestantes, la práctica prioriza el cuidado, la seguridad y el acompañamiento del proceso corporal; y en adultos, se enfoca en la liberación de tensiones y el equilibrio integral. La actividad se desarrolla desde un enfoque respetuoso y restaurativo, adaptable a distintos niveles de experiencia, y orientada a fortalecer hábitos de autocuidado y bienestar integral, tanto en modalidad individual como grupal.",
-precio: 25000,
+   "Las Constelaciones Familiares son un espacio terapéutico que permite observar con amor las dinámicas y vínculos dentro del sistema familiar, ayudando a comprender el origen de conflictos, emociones o patrones que suelen repetirse en la vida. Este trabajo puede ayudar a liberar cargas generacionales, comprender el rol de las “ovejas negras” dentro del árbol genealógico y ordenar energéticamente el sistema familiar, favoreciendo que temas como el amor, el dinero y los vínculos puedan fluir con mayor armonía. También permite reconocer cuando una persona ha tomado roles que no le corresponden, como sentirse responsable emocionalmente de sus padres.",
+precio: 35000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 25000 }],
+ opciones: [{ sesiones: 1, precio: 35000 }],
 
 },
 
@@ -754,7 +814,7 @@ servicios: [
 
  img: constfam,
 
- title: "Constelaciones Familiares",
+ title: "Constelación Individual",
 
  terapeuta: "Lea Parra",
 
@@ -764,17 +824,17 @@ servicios: [
 
    "Las Constelaciones Familiares son una herramienta terapeutica que permite observar dinamicas inconscientes heredadas del sistema familiar que hoy impactan en nuestras relaciones, emociones, salud, prosperidad y proposito. Durante el encuentro: exploramos el motivo de consulta, observamos la dinamica del sistema, permitimos que emerja la informacion necesaria y acompaño el proceso de integracion. El objetivo no es revivir el dolor, sino darle un nuevo lugar.",
 
- precio: 34000,
+ precio: 40000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 34000 }],
+ opciones: [{ sesiones: 1, precio: 40000 }],
 
 },{
 
  img: constfam1,
 
- title: "Constelaciones Familiares Grupal",
+ title: "Constelaciones Grupales",
 
  terapeuta: "Lea Parra",
 
@@ -784,11 +844,11 @@ servicios: [
 
    "Las Constelaciones Familiares grupales de manera presencial, se realizan con un minimo de 5 personas maximo 10, lo que permite una dinamica intima y profunda. a traves de estas constelaciones, acompaño a las personas en el descubrimiento y la resolucion de dinamicas familiares, promoviendo la sanacion y el bienestar integral.",
 
- precio: 20000,
+ precio: 25000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 20000 }],
+ opciones: [{ sesiones: 1, precio: 25000 }],
 
 },
 
@@ -944,89 +1004,10 @@ servicios: [
 
 ],
 
-},
 
-{
 
-id: 8,
-nombre: "Maria José Corvalán",
-isProfesional:true,
-email: "mariajose.cp.flga@gmail.com",
-imagenPerfil: cote,
 
-callToActionTextCard:
 
-"Soy María José, fonoaudióloga, coach y terapeuta, acompaño a personas en procesos de liberación emocional y transformación de creencias, ayudándolas a soltar lo que hoy les pesa y a reconectar con mayor calma, claridad y bienestar. Trabajo desde un enfoque cercano y consciente, facilitando la liberación de bloqueos internos y la armonización emocional, permitiendo que la energía se ordene y que los cambios se integren de manera suave y natural en la vida diaria, para que las personas puedan sentirse más livianas, en equilibrio y alineadas con la vida que desean vivir.",
-
-servicios: [
-
-{
-
- img: liberar,
-
- title: "Liberación de Creencias Limitantes",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Sientes que algún área de tu vida no fluye como a ti te gustaría? ¿A través de qué lentes estás viendo tu vida? Mediante esta terapia podrás tomar conciencia y comenzar a soltar creencias que estén alejándote de lo que si quieres atraer a tu vida. Revisaremos en base a un tema cuántas tienes activas, cuáles son, sus causas, que áreas están afectando y más. Luego de ser liberadas se implantarán en ti creencias potenciadoras y se te entregarán estrategias, con el fin de que puedas abrirte a nuevas posibilidades y comenzar a cambiar tu realidad ¿Vienes?",
-
- precio: 30000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 30000 }],
-
-},
-
-{
-
- img: Reset,
-
- title: "Reset Emocional",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Y si algunas emociones que no has podido soltar aún estuvieran influyendo en tu bienestar y en tu vida actual? Es una terapia que utiliza diferentes herramientas, para favorecer tu salud, bienestar y equilibrio energético, mediante la liberación de emociones que por distintos motivos han quedado atrapadas en tu cuerpo y campo energético, y que pueden debilitar el sistema inmune, generar malestares físicos, manifestarse como enfermedades o estar limitando distintas áreas de tu vida; al liberarlas, la energía comenzará a fluir con mayor armonía, lo que podrá reflejarse incluso en mejoras en tus relaciones y en cambios positivos en tu realidad, y además durante la sesión se realizará la limpieza de dos creencias limitantes que podrían estar interfiriendo en tu bienestar ¿Y si funciona para ti?",
-
- precio: 29000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 29000 }],
-
-},  {
-
- img: ansiedad,
-
- title: "Sanación Ansiedad",
-
- terapeuta: "Maria José Corvalán",
-
- terapeuta_id: 8,
-
- description:
-
-   "¿Sientes que la ansiedad te desconecta de tu paz y tu poder? La Mesa de Sanación de Ansiedad es una experiencia transformadora que te ayuda a liberar emociones atrapadas que generan ansiedad, angustia o sensación de descontrol, ayuda también en ataques de pánico, a regular tu sistema nervioso y protegerte de energías externas que generan desequilibrio. Además, te permite soltar creencias limitantes, romper con pensamientos repetitivos y cortar lazos energéticos que sostienen miedos o bloqueos. ¿Y si es el momento de volver a tu centro, recuperar tu tranquilidad y habitar tu vida con presencia, confianza y mayor serenidad?",
-
- precio: 29000,
-
- isDisabled: false,
-
- opciones: [{ sesiones: 1, precio: 29000 }],
-
-},
-
- 
-
-],
 
 
 },
@@ -1074,38 +1055,38 @@ servicios: [
 },
 {
 
-id: 12,
+id: 35,
 
-nombre: "Ana Luisa Solervicens",
+nombre: "Carolina Ortega",
 isBasic:true,
 
-email: "analuisasr@gmail.com",
+email: "medimapualternativa@gmail.com",
 
-imagenPerfil: analuisa, // Reemplaza con la imagen real
+imagenPerfil: irene, // Reemplaza con la imagen real
 
 callToActionTextCard:
 
-"Las lecturas de runas están orientadas a entregar claridad, guía y comprensión profunda de los procesos que estás viviendo. A través de la sabiduría ancestral nórdica, la intuición terapéutica y un espacio de escucha consciente, te acompaño a reconocer bloqueos, tomar decisiones con mayor seguridad y reconectar con tu propósito. Cada lectura es un encuentro respetuoso y personalizado, enfocado en abrir caminos y traer luz a tu presente.",
+"Mi nombre es Carolina Ortega, mujer, madre, emprendedora, conocedora y amante de las plantas. Soy una apasionada por el bienestar integral, complementando mis saberes de Terapeuta Holística, Orientadora Familiar y Coach Parental. Con más de 20 años de experiencia trabajando con familias y niñeces en el sector público y privado, descubrí en el año 2019 el poder transformador de las terapias holísticas. Desde entonces, me dedico a acompañar a cada persona en su camino hacia el equilibrio y la armonía en todo su ser. Para acompañarte en tu bienestar realizo las siguientes sesiones: 🪷 Asesoría ma-parental 🪷 Círculos de mujeres 🪷 Reiki Unitario 🪷 Reiki Angélico 🪷 Registros Akáshicos 🪷 Cristales Atlantes 🪷 Péndulo Hebreo 🪷 Biodescodificación Holística 🪷 Flores de Bach 🪷 Sahumerios Mi enfoque es integral, respetuoso y desde el amor, buscando despertar el potencial de cada persona para vivir una vida plena y consciente.",
 servicios: [
 
 {
 
- img: lecturarunas,
+ img: amoryconciencia,
 
- title: "Lectura de Runas",
+ title: "Amor y consciencia para la crianza",
 
- terapeuta: "Ana Luisa Solervicens",
+ terapeuta: "Carolina Ortega",
 
- terapeuta_id: 12,
+ terapeuta_id: 35,
 
  description:
 
-   "La lectura de runas es una práctica milenaria de origen nórdico que va más allá de la simple adivinación. Cada runa es un símbolo sagrado que guarda en sí mismo un poder espiritual, representando fuerzas de la naturaleza, energías cósmicas y la guía de los dioses.",
-precio: 18000,
+   "Amor y conciencia para la crianza es un espacio que integra la asesoría ma-parental con terapias holísticas, apoyando la maravillosa experiencia de la crianza y sus momentos desafiantes. Por otro lado es un espacio de acompañamiento para niños, niñas y adolescentes con el objetivo de contribuir en el desarrollo sano y saludable de cada pequeñ@ valiente. Con el fin de llegar a mejores resultados y realizar un acompañamiento integral, cada sesión incluye la asesoría ma-parental y una técnica holística a elección; Flores de Bach, Reiki, Cristales Atlantes o Péndulo Hebreo. En el caso de elegir Flores de Bach, estas pueden ser enviadas a tu domicilio 'por pagar' o bien se te entrega la receta floral y puedes acudir a farmacias naturales para su elaboración.",
+precio: 30000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 18000 }],
+ opciones: [{ sesiones: 1, precio: 30000 }],
 
 },
 
@@ -1133,7 +1114,7 @@ servicios: [
 
  img: sonoterapia,
 
- title: "Sonoterapia con meditación",
+ title: "Limpieza Energética",
 
  terapeuta: "Annette Wanninger",
 
@@ -1143,11 +1124,11 @@ servicios: [
 
    "La sonoterapia es un método médico holístico y alternativo que utiliza específicamente vibraciones, tonos y sonidos (por ejemplo, de cuencos tibetanos) para promover una relajación profunda, reducir el estrés, liberar bloqueos internos y aumentar el bienestar físico y mental al poner el cuerpo y la mente en resonancia y estimular los procesos de autocuración. A menudo afecta a todo el cuerpo, ya que se compone aproximadamente de un 75 % de agua, que conduce las vibraciones y se utiliza para aliviar el estrés, la tensión, las molestias psicosomáticas o para favorecer la circulación sanguínea. La sonoterapia se acompaña de una meditación guiada, que tiene un efecto muy relajante y abre el cuerpo y la mente a la sonoterapia.",
 
- precio: 16000,
+ precio: 20000,
 
  isDisabled: false,
 
- opciones: [{ sesiones: 1, precio: 16000 }],
+ opciones: [{ sesiones: 1, precio: 20000 }],
 
 },
 
