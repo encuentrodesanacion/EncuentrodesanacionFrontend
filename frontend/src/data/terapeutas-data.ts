@@ -523,7 +523,7 @@ servicios: [
 
  description:
 
-   "Ank Presicion (Reordenamineto de laestructura eneregetica) Es una técnica de alta precisión vibracional que utiliza la geometría sagrada como tecnología de bio-resonancia. A través de la Cruz de Ankh, realizamos un escaneo y diagnóstico de las fugas de vitalidad en el campo electromagnético. No es una terapia pasiva; es una reconfiguración de la arquitectura sutil de cada valiente, eliminando interferencias de baja frecuencia y restaurando el flujo de energía hacia los órganos y sistemas vitales. ¿Qué beneficios entrega? Optimización Energética: Recuperación de la fuerza vital y eliminación del agotamiento crónico. Coherencia Interna: Alineación inmediata entre la intención mental y la capacidad de ejecución física.",
+   "Ank Presicion (Reordenamiento de la estructura energética) Es una técnica de alta precisión vibracional que utiliza la geometría sagrada como tecnología de bio-resonancia. A través de la Cruz de Ankh, realizamos un escaneo y diagnóstico de las fugas de vitalidad en el campo electromagnético. No es una terapia pasiva; es una reconfiguración de la arquitectura sutil de cada valiente, eliminando interferencias de baja frecuencia y restaurando el flujo de energía hacia los órganos y sistemas vitales. ¿Qué beneficios entrega? Optimización Energética: Recuperación de la fuerza vital y eliminación del agotamiento crónico. Coherencia Interna: Alineación inmediata entre la intención mental y la capacidad de ejecución física.",
 
  precio: 25000,
 
