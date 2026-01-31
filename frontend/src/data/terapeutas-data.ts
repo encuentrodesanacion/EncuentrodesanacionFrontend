@@ -1067,7 +1067,42 @@ imagenPerfil: irene, // Reemplaza con la imagen real
 callToActionTextCard:
 
 "Mi nombre es Carolina Ortega, mujer, madre, emprendedora, conocedora y amante de las plantas. Soy una apasionada por el bienestar integral, complementando mis saberes de Terapeuta Holística, Orientadora Familiar y Coach Parental. Con más de 20 años de experiencia trabajando con familias y niñeces en el sector público y privado, descubrí en el año 2019 el poder transformador de las terapias holísticas. Desde entonces, me dedico a acompañar a cada persona en su camino hacia el equilibrio y la armonía en todo su ser. Para acompañarte en tu bienestar realizo las siguientes sesiones: 🪷 Asesoría ma-parental 🪷 Círculos de mujeres 🪷 Reiki Unitario 🪷 Reiki Angélico 🪷 Registros Akáshicos 🪷 Cristales Atlantes 🪷 Péndulo Hebreo 🪷 Biodescodificación Holística 🪷 Flores de Bach 🪷 Sahumerios Mi enfoque es integral, respetuoso y desde el amor, buscando despertar el potencial de cada persona para vivir una vida plena y consciente.",
-servicios: [
+
+  recursos: [
+
+   {
+
+    name: "Video Presentación: ¿Qué es un Coach Ma-Parental?",
+
+   url: "https://youtube.com/shorts/5th8jDuwfnY?feature=share",
+
+   },
+
+//   {
+
+//    name: "Ver Video: 5 Magias de las brujas ancestrales",
+
+//    url: "https://www.instagram.com/reel/DQmOoocjd6a/?igsh=YzA4emYxdW9va2Zy",
+
+//   },
+// {
+
+//    name: "¿Que es el Couseling Terapeútico?",
+
+//    url: "https://www.instagram.com/reel/DMbRdhJx3kY/?igsh=eDE5bjdwMmhjeWw4",
+
+//   },
+//   {
+
+//    name: "¿Qué genera el Couseling Terapeútico?",
+
+//    url: "https://www.instagram.com/reel/DHRAVzAx_Eo/?igsh=MWFyYTM4aW5jOWt3eA==",
+
+//   },
+  
+
+   ], 
+ servicios: [
 
 {
 
